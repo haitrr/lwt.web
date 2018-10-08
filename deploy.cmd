@@ -107,8 +107,8 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
 )
 
 :: 4. Install client libraries
-IF EXIST "%DEPLOYMENT_TARGET%\client\package.json" (
-  pushd "%DEPLOYMENT_TARGET%\client"
+IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
+  pushd "%DEPLOYMENT_TARGET%"
   call :ExecuteCmd !NPM_CMD! install
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
@@ -116,7 +116,7 @@ IF EXIST "%DEPLOYMENT_TARGET%\client\package.json" (
 
 :: 5. Build client
 IF EXIST "%DEPLOYMENT_TARGET%\node_modules" (
-  pushd "%DEPLOYMENT_TARGET%\client"
+  pushd "%DEPLOYMENT_TARGET%"
   call .\node_modules\.bin\react-scripts-ts.cmd build
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
