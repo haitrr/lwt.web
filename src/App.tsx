@@ -9,6 +9,7 @@ import Footer from "./Components/Footer";
 import Header from "./Components/Header";
 import HomePage from './Components/Pages/HomePage';
 import LoginPage from './Components/Pages/LoginPage';
+import RegisterPage from './Components/Pages/RegisterPage';
 import RootReducer from "./RootReducer";
 
 const store = createStore(
@@ -26,9 +27,10 @@ class App extends React.Component {
             <Layout.Header>
               <Header/>
             </Layout.Header>
-            <Layout.Content>
+            <Layout.Content className="Content">
               <Route path="/" exact={true} component={HomePage}/>
               <Route path="/login" exact={true} component={LoginPage}/>
+              <Route path="/register" exact={true} component={RegisterPage}/>
             </Layout.Content>
             <Layout.Footer>
               <Footer/>
