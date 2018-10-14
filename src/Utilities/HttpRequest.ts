@@ -1,9 +1,11 @@
-import {API_ROOT} from "./Constants";
-
-const post = (url: string = ``, data = {}) => {
-  // Default options are marked with *
+/**
+ * perform a post request
+ * @param url the request url
+ * @param body body of the request
+ */
+export function postAsync(url: string, body: object): object {
   return fetch(url, {
-    body: JSON.stringify(data), // body data type must match "Content-Type" header
+    body: JSON.stringify(body), // body data type must match "Content-Type" header
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
     credentials: "same-origin", // include, same-origin, *omit
     headers: {
@@ -14,11 +16,10 @@ const post = (url: string = ``, data = {}) => {
     mode: "cors", // no-cors, cors, *same-origin
     redirect: "follow", // manual, *follow, error
     referrer: "no-referrer", // no-referrer, *client
-  }).then(response => response.json()); // parses response to JSON
-};
+  }).then((response: Response): object => response.json()); // parses response to JSON
+}
 
-export default {
-  user: {
-    login: (credentials: object) => post(`${API_ROOT}/user/login`, credentials)
+export function getAsync(url: string, param: object): object {
+  return {
   }
-};
+}

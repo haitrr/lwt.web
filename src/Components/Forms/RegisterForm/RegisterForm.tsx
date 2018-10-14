@@ -1,7 +1,7 @@
 import {Button, Form, Input} from "antd";
 import {FormComponentProps} from 'antd/lib/form/Form';
 import * as React from "react";
-import "./RegisterForm.css"
+import "src/Components/Forms/RegisterForm/RegisterForm.css"
 
 interface IRegisterFormProps {
   onSubmit: (data: object) => void,
