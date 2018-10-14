@@ -26,6 +26,7 @@
       true,
       120
     ],
-    "no-import-side-effect": [true, {"ignore-module": "(\\.html|\\.css)$"}]
+    "no-import-side-effect": [true, {"ignore-module": "(\\.html|\\.css)$"}],
+    "no-relative-imports":["allow-siblings"]
   }
 }

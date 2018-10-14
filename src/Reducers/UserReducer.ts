@@ -1,13 +1,17 @@
-import {handleActions} from "redux-actions";
+import {handleActions, Reducer} from "redux-actions";
 
-const defaultState = {
+/**
+ * default state
+ */
+const defaultState : object = {
   isLoggedIn: false,
   userName: null,
 };
 
-const UserReducer = handleActions(
+/**
+ * user reducer
+ */
+export const userReducer:Reducer<object,object> = handleActions(
   {},
   defaultState
 );
-
-export default UserReducer

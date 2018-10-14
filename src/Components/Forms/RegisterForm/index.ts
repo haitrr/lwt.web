@@ -1,3 +1,6 @@
-import RegisterForm from './RegisterForm';
+/**
+ * export register form
+ */
+import { RegisterForm } from './RegisterForm';
 
-export default RegisterForm
+export { RegisterForm }

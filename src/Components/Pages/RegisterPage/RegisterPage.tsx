@@ -1,6 +1,9 @@
 import * as React from 'react';
-import RegisterForm from 'src/Components/Forms/RegisterForm';
+import { RegisterForm } from 'src/Components/Forms/RegisterForm';
 
+/**
+ * register page
+ */
 class RegisterPage extends React.Component {
   public handleRegister(data: object) {
     // todo: implement
