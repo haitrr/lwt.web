@@ -1,10 +1,8 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { loginAction } from "src/Actions/UserAction";
-import LoginForm from "src/Components/Forms/LoginForm";
-import { ILoginPageProps } from 'src/Interfaces/ILoginPageProps';
-
-
+import { ILoginPageProps } from "src/Interfaces/ILoginPageProps";
+import { LoginForm } from "../Forms/LoginForm/LoginForm";
 
 /**
  * Login page

@@ -1,18 +1,24 @@
-import * as React from 'react';
-import { RegisterForm } from 'src/Components/Forms/RegisterForm';
+import * as React from "react";
+import { RegisterForm } from "src/Components/Forms/RegisterForm";
 
 /**
  * register page
  */
 class RegisterPage extends React.Component {
-  public handleRegister(data: object) {
+  constructor(props: object) {
+    super(props);
+    this.handleRegister = this.handleRegister.bind(this);
+  }
+  public handleRegister(): void {
     // todo: implement
   }
-  public render():React.ReactNode {
-    return <div>
-      <h1>Register Page</h1>
-      <RegisterForm onSubmit={this.handleRegister} />
-    </div>
+  public render(): React.ReactNode {
+    return (
+      <div>
+        <h1>Register Page</h1>
+        <RegisterForm onSubmit={this.handleRegister} />
+      </div>
+    );
   }
 }
 

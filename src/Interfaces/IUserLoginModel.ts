@@ -2,6 +2,6 @@
  * user login model
  */
 export interface IUserLoginModel {
-  userName: string,
-  password: string
+  userName: string;
+  password: string;
 }

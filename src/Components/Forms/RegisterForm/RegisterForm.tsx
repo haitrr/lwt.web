@@ -1,28 +1,37 @@
 import { Button, Form, Input } from "antd";
-import { FormComponentProps } from 'antd/lib/form/Form';
+import { FormComponentProps, RcBaseFormProps } from "antd/lib/form/Form";
 import * as React from "react";
-import "src/Components/Forms/RegisterForm/RegisterForm.css"
+import "src/Components/Forms/RegisterForm/RegisterForm.css";
 
 interface IRegisterFormProps {
-  onSubmit: (data: object) => void,
+  onSubmit(data: object): void;
 }
 
 /**
  * Register form
  */
-class RegisterForm extends React.Component<IRegisterFormProps & FormComponentProps> {
-  public handleSubmit = (e: any) => {
+class RegisterForm extends React.Component<
+  IRegisterFormProps & FormComponentProps
+> {
+  constructor(props: IRegisterFormProps & FormComponentProps) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  public handleSubmit(e: React.FormEvent): void {
     e.preventDefault();
     const { form, onSubmit } = this.props;
-    form.validateFields((err: any, values: any) => {
-      if (!err) {
+    form.validateFields((err: string[], values: object) => {
+      if (err !== null && err.length > 0) {
         onSubmit(values);
       }
     });
-  };
+  }
 
-  public render() {
-    const { form: { getFieldDecorator } } = this.props;
+  public render(): React.ReactNode {
+    const {
+      form: { getFieldDecorator }
+    } = this.props;
+
     return (
       <Form onSubmit={this.handleSubmit}>
         <Form.Item>
@@ -32,7 +41,9 @@ class RegisterForm extends React.Component<IRegisterFormProps & FormComponentPro
           {getFieldDecorator("password")(<Input placeholder="Password" />)}
         </Form.Item>
         <Form.Item>
-          {getFieldDecorator("repeatPassword")(<Input placeholder="Retype password" />)}
+          {getFieldDecorator("repeatPassword")(
+            <Input placeholder="Retype password" />
+          )}
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
@@ -43,5 +54,8 @@ class RegisterForm extends React.Component<IRegisterFormProps & FormComponentPro
     );
   }
 }
-const form = Form.create()(RegisterForm);
-export { form as RegisterForm };
+const registerForm: React.ComponentClass<
+  RcBaseFormProps & Pick<IRegisterFormProps & FormComponentProps, "onSubmit">,
+  any
+> = Form.create()(RegisterForm);
+export { registerForm as RegisterForm };

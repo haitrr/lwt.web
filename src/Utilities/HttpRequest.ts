@@ -15,11 +15,10 @@ export function postAsync(url: string, body: object): object {
     method: "POST", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, cors, *same-origin
     redirect: "follow", // manual, *follow, error
-    referrer: "no-referrer", // no-referrer, *client
+    referrer: "no-referrer" // no-referrer, *client
   }).then((response: Response): object => response.json()); // parses response to JSON
 }
 
-export function getAsync(url: string, param: object): object {
-  return {
-  }
+export function getAsync(): object {
+  return {};
 }

@@ -2,9 +2,12 @@
   "compilerOptions": {
     "plugins": [
       {
-        "name": "tslint-language-service"
+        "name": "tslint-language-service",
+        "ignoreDefinitionFiles": true,
+        "disableNoUnusedVariableRule": true
       }
     ],
+    "noUnusedParameters": true,
     "baseUrl": ".",
     "outDir": "build/dist",
     "module": "esnext",

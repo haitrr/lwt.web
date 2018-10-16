@@ -1,32 +1,42 @@
-import {Button, Form, Input} from "antd";
-import {FormComponentProps} from 'antd/lib/form/Form';
+import { Button, Form, Input } from "antd";
+import { FormComponentProps, RcBaseFormProps } from "antd/lib/form/Form";
 import * as React from "react";
-import "./LoginForm.css"
+import "./LoginForm.css";
 
 interface ILoginFormProps {
-  onSubmit: (data: object) => void,
+  onSubmit(data: object): void;
 }
 
+/**
+ * login form.
+ */
 class LoginForm extends React.Component<ILoginFormProps & FormComponentProps> {
-  public handleSubmit = (e: any) => {
+  constructor(props: ILoginFormProps & FormComponentProps) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  public handleSubmit(e: React.FormEvent): void {
     e.preventDefault();
-    const {form, onSubmit} = this.props;
-    form.validateFields((err: any, values: any) => {
-      if (!err) {
+    const { form, onSubmit } = this.props;
+    form.validateFields((err: string[], values: object) => {
+      if (err != null && err.length > 0) {
         onSubmit(values);
       }
     });
-  };
+  }
 
-  public render() {
-    const {form: {getFieldDecorator}} = this.props;
+  public render(): React.ReactNode {
+    const {
+      form: { getFieldDecorator }
+    } = this.props;
+
     return (
       <Form onSubmit={this.handleSubmit}>
         <Form.Item>
-          {getFieldDecorator("userName")(<Input placeholder="UserName"/>)}
+          {getFieldDecorator("userName")(<Input placeholder="UserName" />)}
         </Form.Item>
         <Form.Item>
-          {getFieldDecorator("password")(<Input placeholder="Password"/>)}
+          {getFieldDecorator("password")(<Input placeholder="Password" />)}
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
@@ -38,4 +48,9 @@ class LoginForm extends React.Component<ILoginFormProps & FormComponentProps> {
   }
 }
 
-export default Form.create()(LoginForm);
+const loginForm: React.ComponentClass<
+  RcBaseFormProps & Pick<any, string | number | symbol>,
+  any
+> = Form.create()(LoginForm);
+
+export { loginForm as LoginForm };
