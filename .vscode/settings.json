@@ -3,5 +3,6 @@
     "DEVTOOLS",
     "antd",
     "codestyle"
-  ]
+  ],
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }
