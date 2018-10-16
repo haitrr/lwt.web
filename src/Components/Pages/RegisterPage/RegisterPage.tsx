@@ -4,7 +4,7 @@ import { RegisterForm } from "src/Components/Forms/RegisterForm";
 /**
  * register page
  */
-class RegisterPage extends React.Component {
+export class RegisterPage extends React.Component {
   constructor(props: object) {
     super(props);
     this.handleRegister = this.handleRegister.bind(this);
@@ -21,5 +21,3 @@ class RegisterPage extends React.Component {
     );
   }
 }
-
-export default RegisterPage;

@@ -1,9 +1,10 @@
 import * as React from "react";
 
-class Footer extends React.Component {
-  public render() {
-    return "Free software"
+/**
+ * Footer
+ */
+export class Footer extends React.Component {
+  public render(): React.ReactNode {
+    return "Free software";
   }
 }
-
-export default Footer

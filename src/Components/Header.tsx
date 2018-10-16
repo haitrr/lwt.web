@@ -1,9 +1,10 @@
 import * as React from "react";
 
-class Header extends React.Component {
-  public render() {
+/**
+ * Header
+ */
+export class Header extends React.Component {
+  public render(): React.ReactNode {
     return "Learning with texts";
   }
 }
-
-export default Header;

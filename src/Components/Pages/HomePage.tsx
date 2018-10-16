@@ -1,7 +1,10 @@
-import * as React from 'react';
-import {Link} from 'react-router-dom';
+import * as React from "react";
+import { Link } from "react-router-dom";
 
-const HomePage = () => (
+/**
+ * Home page
+ */
+const homePage: React.SFC = (): React.ReactElement<{}> => (
   <div>
     <h1>Home Page</h1>
     <Link to="/login">Login</Link>
@@ -9,4 +12,4 @@ const HomePage = () => (
   </div>
 );
 
-export default HomePage;
+export { homePage as HomePage };

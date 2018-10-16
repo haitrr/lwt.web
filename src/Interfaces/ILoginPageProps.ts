@@ -1,6 +1,8 @@
+import { IUserLoginModel } from "./IUserLoginModel";
+
 /**
  * prop for login page
  */
 export interface ILoginPageProps {
-  loginAction: Function;
+  login(data: IUserLoginModel): void;
 }

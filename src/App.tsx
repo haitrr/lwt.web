@@ -1,16 +1,16 @@
 import { Layout } from "antd";
-import * as React from 'react';
-import { Provider } from "react-redux"
+import * as React from "react";
+import { Provider } from "react-redux";
 import { Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import { createStore, Store } from "redux";
-import 'src/App.css';
-import Footer from "src/Components/Footer";
-import Header from "src/Components/Header";
-import HomePage from 'src/Components/Pages/HomePage';
-import LoginPage from 'src/Components/Pages/LoginPage';
-import RegisterPage from 'src/Components/Pages/RegisterPage';
+import "src/App.css";
 import { rootReducer } from "src/RootReducer";
+import { Footer } from "./Components/Footer";
+import { Header } from "./Components/Header";
+import { HomePage } from "./Components/Pages/HomePage";
+import { LoginPage } from "./Components/Pages/LoginPage";
+import { RegisterPage } from "./Components/Pages/RegisterPage/RegisterPage";
 
 const store: Store = createStore(
   rootReducer,

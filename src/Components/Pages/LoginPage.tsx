@@ -1,19 +1,20 @@
 import * as React from "react";
-import { connect } from "react-redux";
+import { connect, ConnectedComponentClass } from "react-redux";
 import { loginAction } from "src/Actions/UserAction";
 import { ILoginPageProps } from "src/Interfaces/ILoginPageProps";
+import { IUserLoginModel } from "src/Interfaces/IUserLoginModel";
 import { LoginForm } from "../Forms/LoginForm/LoginForm";
 
 /**
  * Login page
  */
 class LoginPage extends React.Component<ILoginPageProps> {
-  public handleLogin = (data: object) => {
-    const { loginAction } = this.props;
-    loginAction(data);
+  public handleLogin = (data: IUserLoginModel): void => {
+    const { login } = this.props;
+    login(data);
   };
 
-  public render() {
+  public render(): React.ReactNode {
     return (
       <div>
         <h1>Login Page</h1>
@@ -23,7 +24,11 @@ class LoginPage extends React.Component<ILoginPageProps> {
   }
 }
 
-export default connect(
+const connectedLoginPage: ConnectedComponentClass<
+  typeof LoginPage,
+  Pick<ILoginPageProps, never>
+> = connect(
   null,
   { login: loginAction }
 )(LoginPage);
+export { connectedLoginPage as LoginPage };
