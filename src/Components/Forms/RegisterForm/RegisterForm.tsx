@@ -2,9 +2,10 @@ import { Button, Form, Input } from "antd";
 import { FormComponentProps, RcBaseFormProps } from "antd/lib/form/Form";
 import * as React from "react";
 import "src/Components/Forms/RegisterForm/RegisterForm.css";
+import { IUserRegisterModel } from "src/Interfaces/IUserRegisterModel";
 
 interface IRegisterFormProps {
-  onSubmit(data: object): void;
+  onSubmit(data: IUserRegisterModel): void;
 }
 
 /**
@@ -20,8 +21,8 @@ class RegisterForm extends React.Component<
   public handleSubmit(e: React.FormEvent): void {
     e.preventDefault();
     const { form, onSubmit } = this.props;
-    form.validateFields((err: string[], values: object) => {
-      if (err !== null && err.length > 0) {
+    form.validateFields((err: string[], values: IUserRegisterModel) => {
+      if (err == null || err.length === 0) {
         onSubmit(values);
       }
     });

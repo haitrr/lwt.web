@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import "./HomePage.css";
 
 /**
  * Home page
@@ -7,8 +7,6 @@ import { Link } from "react-router-dom";
 const homePage: React.SFC = (): React.ReactElement<{}> => (
   <div>
     <h1>Home Page</h1>
-    <Link to="/login">Login</Link>
-    <Link to="/register">Register</Link>
   </div>
 );
 

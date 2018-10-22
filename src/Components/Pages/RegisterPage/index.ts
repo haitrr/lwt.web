@@ -1,3 +1,6 @@
-import RegisterPage from './RegisterPage';
+/**
+ * register page
+ */
+import { RegisterPage } from "./RegisterPage";
 
-export default RegisterPage;
+export { RegisterPage };

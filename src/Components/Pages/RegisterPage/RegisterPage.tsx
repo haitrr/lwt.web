@@ -1,16 +1,23 @@
 import * as React from "react";
+import { connect, ConnectedComponentClass } from "react-redux";
+import { registerAction } from "src/Actions/UserAction";
 import { RegisterForm } from "src/Components/Forms/RegisterForm";
+import { IUserRegisterModel } from "src/Interfaces/IUserRegisterModel";
+
+interface IRegisterPageProps {
+  register(data: IUserRegisterModel): void;
+}
 
 /**
  * register page
  */
-export class RegisterPage extends React.Component {
-  constructor(props: object) {
+class RegisterPage extends React.Component<IRegisterPageProps> {
+  constructor(props: IRegisterPageProps) {
     super(props);
     this.handleRegister = this.handleRegister.bind(this);
   }
-  public handleRegister(): void {
-    // todo: implement
+  public handleRegister(data: IUserRegisterModel): void {
+    this.props.register(data);
   }
   public render(): React.ReactNode {
     return (
@@ -21,3 +28,13 @@ export class RegisterPage extends React.Component {
     );
   }
 }
+
+const registerPageConnected: ConnectedComponentClass<
+  typeof RegisterPage,
+  Pick<IRegisterPageProps, never>
+> = connect(
+  null,
+  { register: registerAction }
+)(RegisterPage);
+
+export { registerPageConnected as RegisterPage };

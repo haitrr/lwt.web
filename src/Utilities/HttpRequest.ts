@@ -3,7 +3,7 @@
  * @param url the request url
  * @param body body of the request
  */
-export function postAsync(url: string, body: object): object {
+export async function postAsync(url: string, body: object): Promise<object> {
   return fetch(url, {
     body: JSON.stringify(body), // body data type must match "Content-Type" header
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached

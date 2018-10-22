@@ -25,6 +25,8 @@
     "no-import-side-effect": [true, { "ignore-module": "(\\.html|\\.css)$" }],
     "no-relative-imports": ["allow-siblings"],
     "prettier": true,
-    "no-default-export": true
+    "no-default-export": true,
+    "no-unsafe-any": false,
+    "no-any": false
   }
 }

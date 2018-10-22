@@ -7,7 +7,7 @@ import { createStore, Store } from "redux";
 import "src/App.css";
 import { rootReducer } from "src/RootReducer";
 import { Footer } from "./Components/Footer";
-import { Header } from "./Components/Header";
+import { Header } from "./Components/Header/Header";
 import { HomePage } from "./Components/Pages/HomePage";
 import { LoginPage } from "./Components/Pages/LoginPage";
 import { RegisterPage } from "./Components/Pages/RegisterPage/RegisterPage";
