@@ -3,7 +3,7 @@
  * @param url the request url
  * @param body body of the request
  */
-export async function postAsync(url: string, body: object): Promise<object> {
+export async function postAsync<T>(url: string, body: object): Promise<T> {
   return fetch(url, {
     body: JSON.stringify(body), // body data type must match "Content-Type" header
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -16,7 +16,10 @@ export async function postAsync(url: string, body: object): Promise<object> {
     mode: "cors", // no-cors, cors, *same-origin
     redirect: "follow", // manual, *follow, error
     referrer: "no-referrer" // no-referrer, *client
-  }).then((response: Response): object => response.json()); // parses response to JSON
+  }).then(
+    async (response: Response): Promise<T> =>
+      response.json().then((json: any): T => <T>json)
+  ); // parses response to JSON
 }
 
 export function getAsync(): object {

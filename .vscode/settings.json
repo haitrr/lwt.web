@@ -2,7 +2,9 @@
   "cSpell.words": [
     "DEVTOOLS",
     "antd",
-    "codestyle"
+    "codestyle",
+    "lcov",
+    "submodule"
   ],
   "typescript.tsdk": "node_modules\\typescript\\lib"
 }
