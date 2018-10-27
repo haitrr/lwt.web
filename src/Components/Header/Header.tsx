@@ -9,13 +9,14 @@ export class Header extends React.Component {
   public render(): React.ReactNode {
     return (
       <div className="header">
-        <Link to="/">LWT</Link>
-        <Link to="/login" className="right">
-          Login
-        </Link>
-        <Link to="/register" className="right">
-          Register
-        </Link>
+        <span className="left-menu menu">
+          <Link to="/">LWT</Link>
+          <Link to="/text">Text</Link>
+        </span>
+        <span className="right-menu menu">
+          <Link to="/login">Login</Link>
+          <Link to="/register">Register</Link>
+        </span>
       </div>
     );
   }

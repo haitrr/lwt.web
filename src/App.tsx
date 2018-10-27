@@ -11,6 +11,7 @@ import { Header } from "./Components/Header/Header";
 import { HomePage } from "./Components/Pages/HomePage";
 import { LoginPage } from "./Components/Pages/LoginPage";
 import { RegisterPage } from "./Components/Pages/RegisterPage/RegisterPage";
+import { TextPage } from './Components/Pages/TextPage';
 
 const store: Store = createStore(
   rootReducer,
@@ -34,6 +35,7 @@ export class App extends React.Component {
               <Route path="/" exact={true} component={HomePage} />
               <Route path="/login" exact={true} component={LoginPage} />
               <Route path="/register" exact={true} component={RegisterPage} />
+              <Route path="/text" exact={true} component={TextPage} />
             </Layout.Content>
             <Layout.Footer>
               <Footer />

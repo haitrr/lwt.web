@@ -1,7 +1,11 @@
-.header > * {
-  margin-right: 10px;
+.right-menu {
+  float: right;
 }
 
-.right {
-  float: right;
+.left-menu {
+  float: left;
+}
+
+.menu > * {
+  margin-right: 10px;
 }
