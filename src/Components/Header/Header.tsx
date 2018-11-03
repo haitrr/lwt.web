@@ -6,8 +6,10 @@ import "./Header.css";
 /**
  * Header
  */
-class Header extends React.Component {
+class Header extends React.Component<any> {
   public render(): React.ReactNode {
+    const { isLoggedIn, userName } = this.props;
+
     return (
       <div className="header">
         <span className="left-menu menu">
@@ -15,8 +17,14 @@ class Header extends React.Component {
           <Link to="/text">Text</Link>
         </span>
         <span className="right-menu menu">
-          <Link to="/login">Login</Link>
-          <Link to="/register">Register</Link>
+          {isLoggedIn ? (
+            <Link to="/profile">{userName}</Link>
+          ) : (
+            <React.Fragment>
+              <Link to="/login">Login</Link>
+              <Link to="/register">Register</Link>
+            </React.Fragment>
+          )}
         </span>
       </div>
     );
@@ -24,7 +32,10 @@ class Header extends React.Component {
 }
 
 const connectedHeader: any = connect(
-  null,
+  (state: any) => ({
+    isLoggedIn: state.user.isLoggedIn,
+    userName: state.user.userName
+  }),
   {}
 )(Header);
 
