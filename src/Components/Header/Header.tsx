@@ -1,11 +1,12 @@
 import * as React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import "./Header.css";
 
 /**
  * Header
  */
-export class Header extends React.Component {
+class Header extends React.Component {
   public render(): React.ReactNode {
     return (
       <div className="header">
@@ -21,3 +22,10 @@ export class Header extends React.Component {
     );
   }
 }
+
+const connectedHeader: any = connect(
+  null,
+  {}
+)(Header);
+
+export { connectedHeader as Header };

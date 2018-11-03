@@ -17,7 +17,7 @@ export const userReducer: Reducer<any, any> = handleActions(
     [USER_LOGGED_IN]: (state: any, action: any): any => {
       return {
         ...state,
-        isLoggedIn: action.payload
+        ...action.payload
       };
     }
   },

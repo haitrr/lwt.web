@@ -12,7 +12,14 @@ export const USER_REGISTERED: string = "USER_REGISTERED";
 export const loginAction: any = createAction(
   USER_LOGGED_IN,
   async (credentials: IUserLoginModel) => {
-    return loginAsync(credentials);
+    if (await loginAsync(credentials)) {
+      return {
+        isLoggedIn: true,
+        userName: credentials.userName
+      };
+    } else {
+      return {};
+    }
   }
 );
 
