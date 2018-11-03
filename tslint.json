@@ -27,6 +27,7 @@
     "prettier": true,
     "no-default-export": true,
     "no-unsafe-any": false,
-    "no-any": false
+    "no-any": false,
+    "no-suspicious-comment": false
   }
 }

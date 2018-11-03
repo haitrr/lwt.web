@@ -7,11 +7,13 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-redux": "latest",
+    "redux-devtools-extension": "^2.13.5",
     "react-router": "latest",
     "react-router-dom": "^4.3.1",
     "react-scripts-ts": "3.1.0",
     "redux": "latest",
-    "redux-actions": "latest"
+    "redux-actions": "latest",
+    "redux-promise": "0.6.0"
   },
   "scripts": {
     "start": "react-scripts-ts start",
@@ -29,6 +31,7 @@
     "@types/react-router": "^4.0.31",
     "@types/react-router-dom": "^4.3.1",
     "@types/redux-actions": "^2.3.0",
+    "@types/redux-promise": "^0.5.28",
     "prettier": "^1.14.3",
     "tslint": "5.11.0",
     "tslint-consistent-codestyle": "^1.13.3",

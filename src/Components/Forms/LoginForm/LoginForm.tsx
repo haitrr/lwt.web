@@ -20,8 +20,10 @@ class LoginForm extends React.Component<ILoginFormProps & FormComponentProps> {
     const { form, onSubmit } = this.props;
     form.validateFields((err: string[], values: object) => {
       if (err != null && err.length > 0) {
-        onSubmit(values);
+        // todo: error
       }
+
+      onSubmit(values);
     });
   }
 

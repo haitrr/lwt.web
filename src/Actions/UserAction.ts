@@ -9,18 +9,12 @@ export const USER_REGISTERED: string = "USER_REGISTERED";
 /**
  * user login action.
  */
-export const loginAction: ActionFunction1<
-  IUserLoginModel,
-  Action<Promise<boolean>>
-> = createAction(USER_LOGGED_IN, async (credentials: IUserLoginModel) => {
-  try {
-    await loginAsync(credentials);
-
-    return true;
-  } catch (e) {
-    return false;
+export const loginAction: any = createAction(
+  USER_LOGGED_IN,
+  async (credentials: IUserLoginModel) => {
+    return loginAsync(credentials);
   }
-});
+);
 
 export const registerAction: ActionFunction1<
   IUserRegisterModel,

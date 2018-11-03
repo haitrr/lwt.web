@@ -3,7 +3,9 @@ import * as React from "react";
 import { Provider } from "react-redux";
 import { Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
-import { createStore, Store } from "redux";
+import { applyMiddleware, createStore, Store } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import * as promiseMiddleware from "redux-promise";
 import "src/App.css";
 import { rootReducer } from "src/RootReducer";
 import { Footer } from "./Components/Footer";
@@ -11,12 +13,12 @@ import { Header } from "./Components/Header/Header";
 import { HomePage } from "./Components/Pages/HomePage";
 import { LoginPage } from "./Components/Pages/LoginPage";
 import { RegisterPage } from "./Components/Pages/RegisterPage/RegisterPage";
-import { TextPage } from './Components/Pages/TextPage';
+import { TextPage } from "./Components/Pages/TextPage";
 
 const store: Store = createStore(
   rootReducer,
-  // @ts-ignore
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  // tslint:disable-next-line
+  composeWithDevTools(applyMiddleware((promiseMiddleware as any).default))
 );
 
 /**
