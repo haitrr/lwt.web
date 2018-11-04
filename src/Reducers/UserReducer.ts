@@ -1,5 +1,5 @@
 import { handleActions, Reducer } from "redux-actions";
-import { USER_LOGGED_IN } from "src/Actions/UserAction";
+import { USER_LOGGED_IN, USER_LOGGED_OUT } from "src/Actions/UserAction";
 
 /**
  * default state
@@ -19,6 +19,13 @@ export const userReducer: Reducer<any, any> = handleActions(
         ...state,
         ...action.payload
       };
+    },
+    [USER_LOGGED_OUT]: (state: any, action: any): any => {
+      if (action.payload) {
+        return defaultState;
+      } else {
+        return state;
+      }
     }
   },
   defaultState

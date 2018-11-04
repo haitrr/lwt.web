@@ -4,7 +4,7 @@ function defaultResponseErrorHandler(response: Response): never {
   );
 }
 function defaultResponseHandler(response: Response): any {
-  if (response.status === 200) {
+  if (response.ok) {
     return response.json();
   } else {
     throw response;
@@ -23,7 +23,7 @@ export async function postAsync<T>(
   return fetch(url, {
     body: JSON.stringify(body), // body data type must match "Content-Type" header
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "same-origin", // include, same-origin, *omit
+    credentials: "include", // include, same-origin, *omit
     headers: {
       "Content-Type": "application/json; charset=utf-8"
       // "Content-Type": "application/x-www-form-urlencoded",
@@ -50,7 +50,7 @@ export async function getAsync<T>(
 
   return fetch(fullUrl, {
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "same-origin", // include, same-origin, *omit
+    credentials: "include", // include, same-origin, *omit
     headers: {
       "Content-Type": "application/json; charset=utf-8"
       // "Content-Type": "application/x-www-form-urlencoded",

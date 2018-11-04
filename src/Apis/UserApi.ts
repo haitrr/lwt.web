@@ -1,4 +1,4 @@
-import { API_ROOT } from "src/Constants";
+import { API_ROOT, LOGOUT_API } from "src/Constants";
 import { IUserLoginModel } from "src/Interfaces/IUserLoginModel";
 import { IUserRegisterModel } from "src/Interfaces/IUserRegisterModel";
 import { postAsync } from "src/Utilities/HttpRequest";
@@ -13,6 +13,16 @@ export async function loginAsync(data: IUserLoginModel): Promise<boolean> {
 
     return true;
   } catch (e) {
+    return false;
+  }
+}
+
+export async function logoutAsync(): Promise<boolean> {
+  try {
+    await postAsync(LOGOUT_API, {});
+
+    return true;
+  } catch {
     return false;
   }
 }
