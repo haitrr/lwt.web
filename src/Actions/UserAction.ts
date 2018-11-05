@@ -1,5 +1,5 @@
 import { Action, ActionFunction1, createAction } from "redux-actions";
-import { loginAsync, logoutAsync, registerAsync } from "src/Apis/UserApi";
+import { loginAsync, logout, registerAsync } from "src/Apis/UserApi";
 import { IUserLoginModel } from "src/Interfaces/IUserLoginModel";
 import { IUserRegisterModel } from "src/Interfaces/IUserRegisterModel";
 
@@ -13,10 +13,11 @@ export const USER_LOGGED_OUT: string = "USER_LOGGED_OUT";
 export const loginAction: any = createAction(
   USER_LOGGED_IN,
   async (credentials: IUserLoginModel) => {
-    if (await loginAsync(credentials)) {
+    const user: any = await loginAsync(credentials);
+    if (user !== undefined) {
       return {
         isLoggedIn: true,
-        userName: credentials.userName
+        ...user
       };
     } else {
       return {};
@@ -24,9 +25,12 @@ export const loginAction: any = createAction(
   }
 );
 
-export const logoutAction: any = createAction(USER_LOGGED_OUT, async () => {
-  return logoutAsync();
-});
+export const logoutAction: any = createAction(
+  USER_LOGGED_OUT,
+  (): void => {
+    logout();
+  }
+);
 
 export const registerAction: ActionFunction1<
   IUserRegisterModel,

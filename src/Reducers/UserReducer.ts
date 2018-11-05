@@ -20,12 +20,8 @@ export const userReducer: Reducer<any, any> = handleActions(
         ...action.payload
       };
     },
-    [USER_LOGGED_OUT]: (state: any, action: any): any => {
-      if (action.payload) {
-        return defaultState;
-      } else {
-        return state;
-      }
+    [USER_LOGGED_OUT]: (): any => {
+      return defaultState;
     }
   },
   defaultState

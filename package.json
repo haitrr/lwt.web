@@ -4,15 +4,16 @@
   "private": true,
   "dependencies": {
     "antd": "latest",
+    "jwt-decode": "^2.2.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-redux": "latest",
-    "redux-devtools-extension": "^2.13.5",
     "react-router": "latest",
     "react-router-dom": "^4.3.1",
     "react-scripts-ts": "3.1.0",
     "redux": "latest",
     "redux-actions": "latest",
+    "redux-devtools-extension": "^2.13.5",
     "redux-promise": "0.6.0"
   },
   "scripts": {
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "@types/jest": "^23.3.3",
+    "@types/jwt-decode": "^2.2.1",
     "@types/node": "^10.11.4",
     "@types/react": "^16.4.15",
     "@types/react-dom": "^16.0.8",

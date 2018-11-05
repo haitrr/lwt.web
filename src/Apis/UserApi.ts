@@ -1,30 +1,34 @@
-import { API_ROOT, LOGOUT_API } from "src/Constants";
+import * as decode from "jwt-decode";
+import { API_ROOT, TOKEN_LOCAL_STORAGE_KEY } from "src/Constants";
 import { IUserLoginModel } from "src/Interfaces/IUserLoginModel";
 import { IUserRegisterModel } from "src/Interfaces/IUserRegisterModel";
 import { postAsync } from "src/Utilities/HttpRequest";
+
+interface IUser {
+  id: string;
+  userName: string;
+}
 
 /**
  * login a user async
  * @param data login data
  */
-export async function loginAsync(data: IUserLoginModel): Promise<boolean> {
+export async function loginAsync(
+  data: IUserLoginModel
+): Promise<IUser | undefined> {
   try {
-    await postAsync(`${API_ROOT}/user/login`, data);
+    const result: any = await postAsync<any>(`${API_ROOT}/user/login`, data);
+    const token: string = result.token;
+    localStorage.setItem(TOKEN_LOCAL_STORAGE_KEY, token);
 
-    return true;
+    return decode<IUser>(token);
   } catch (e) {
-    return false;
+    return undefined;
   }
 }
 
-export async function logoutAsync(): Promise<boolean> {
-  try {
-    await postAsync(LOGOUT_API, {});
-
-    return true;
-  } catch {
-    return false;
-  }
+export function logout(): void {
+  localStorage.removeItem(TOKEN_LOCAL_STORAGE_KEY);
 }
 
 export async function registerAsync(data: IUserRegisterModel): Promise<void> {
