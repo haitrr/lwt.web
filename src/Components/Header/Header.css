@@ -9,3 +9,7 @@
 .menu > * {
   margin-right: 10px;
 }
+
+.logout-button {
+  border: none;
+}

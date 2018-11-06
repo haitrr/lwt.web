@@ -26,7 +26,9 @@ class Header extends React.Component<any> {
           <Link to="/profile">Profile</Link>
         </Menu.Item>
         <Menu.Item>
-          <Button onClick={this.handleLogout}>Logout</Button>
+          <Button className="logout-button" onClick={this.handleLogout}>
+            Logout
+          </Button>
         </Menu.Item>
       </Menu>
     );

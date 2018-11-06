@@ -1,13 +1,9 @@
 import * as decode from "jwt-decode";
 import { API_ROOT, TOKEN_LOCAL_STORAGE_KEY } from "src/Constants";
+import { IUser } from "src/Interfaces/IUser";
 import { IUserLoginModel } from "src/Interfaces/IUserLoginModel";
 import { IUserRegisterModel } from "src/Interfaces/IUserRegisterModel";
 import { postAsync } from "src/Utilities/HttpRequest";
-
-interface IUser {
-  id: string;
-  userName: string;
-}
 
 /**
  * login a user async
