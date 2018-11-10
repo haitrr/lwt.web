@@ -1,3 +1,5 @@
+import { TOKEN_LOCAL_STORAGE_KEY } from "../Constants";
+
 function defaultResponseErrorHandler(response: Response): never {
   throw new Error(
     `Error connecting with server ${response.status}:${response.statusText}`
@@ -10,10 +12,21 @@ function defaultResponseHandler(response: Response): any {
     throw response;
   }
 }
+
+function getAuthenticationHeader(): object {
+  const token: string | null = localStorage.getItem(TOKEN_LOCAL_STORAGE_KEY);
+  if (token != null) {
+    return { Authorization: `bearer ${token}` };
+  }
+
+  return {};
+}
+
 /**
  * perform a post request
  * @param url the request url
  * @param body body of the request
+ * @param handleResponse response handler
  */
 export async function postAsync<T>(
   url: string,
@@ -25,7 +38,8 @@ export async function postAsync<T>(
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
     credentials: "include", // include, same-origin, *omit
     headers: {
-      "Content-Type": "application/json; charset=utf-8"
+      "Content-Type": "application/json; charset=utf-8",
+      ...getAuthenticationHeader()
       // "Content-Type": "application/x-www-form-urlencoded",
     },
     method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -52,7 +66,8 @@ export async function getAsync<T>(
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
     credentials: "include", // include, same-origin, *omit
     headers: {
-      "Content-Type": "application/json; charset=utf-8"
+      "Content-Type": "application/json; charset=utf-8",
+      ...getAuthenticationHeader()
       // "Content-Type": "application/x-www-form-urlencoded",
     },
     method: "GET", // *GET, POST, PUT, DELETE, etc.
