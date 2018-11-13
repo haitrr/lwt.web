@@ -54,13 +54,18 @@ export async function postAsync<T>(
 
 export async function getAsync<T>(
   url: string,
-  params: object,
+  params: object | null,
   handleResponse: (response: Response) => any = defaultResponseHandler
 ): Promise<T> {
-  let fullUrl: string = `${url}?`;
-  Object.keys(params).forEach((key: string) => {
-    fullUrl += `${key}=${params[key]}`;
-  });
+  let fullUrl: string = url;
+  if (params != null) {
+    fullUrl += "?";
+    Object.keys(params).forEach((key: string) => {
+      if (params[key] != null) {
+        fullUrl += `${key}=${params[key]}&`;
+      }
+    });
+  }
 
   return fetch(fullUrl, {
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached

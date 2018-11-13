@@ -1,5 +1,6 @@
 import { combineReducers, Reducer } from "redux";
 import { languageReducer } from "./Reducers/LanguageReducer";
+import { textReducer } from "./Reducers/TextReducer";
 import { userReducer } from "./Reducers/UserReducer";
 
 /**
@@ -7,5 +8,6 @@ import { userReducer } from "./Reducers/UserReducer";
  */
 export const rootReducer: Reducer = combineReducers({
   user: userReducer,
-  language: languageReducer
+  language: languageReducer,
+  text: textReducer
 });
