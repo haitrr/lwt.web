@@ -28,6 +28,11 @@ class TextPage extends React.Component<ITextPageProps, ITextPageState> {
       title: "Title",
       dataIndex: "title",
       key: "title"
+    },
+    {
+      title: "Language",
+      dataIndex: "language",
+      key: "language"
     }
   ];
   public constructor(props: ITextPageProps) {
