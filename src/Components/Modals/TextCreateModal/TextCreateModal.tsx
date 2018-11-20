@@ -7,6 +7,7 @@ import { createTextAction } from "../../../Actions/TextAction";
 interface ITextCreateModalProps {
   visible: boolean;
   createText(data: any): void;
+  hide(): void;
 }
 /**
  * text create modal
@@ -17,19 +18,28 @@ class TextCreateModal extends React.Component<ITextCreateModalProps> {
     super(props);
     this.saveFormRef = this.saveFormRef.bind(this);
     this.handleOk = this.handleOk.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
   public handleOk(): void {
     const { form } = this.formRef.props;
-    const { createText } = this.props;
+    const { createText, hide } = this.props;
     form.validateFields((err: any, values: any) => {
       if (err) {
         return;
       }
       createText(values);
       form.resetFields();
-      this.setState({ visible: false });
+      hide();
     });
   }
+
+  public handleCancel(): void {
+    const { hide } = this.props;
+    const { form } = this.formRef.props;
+    form.resetFields();
+    hide();
+  }
+
   public saveFormRef(formRef: any): void {
     this.formRef = formRef;
   }
@@ -43,6 +53,7 @@ class TextCreateModal extends React.Component<ITextCreateModalProps> {
         title="Add new text"
         okText="Add"
         onOk={this.handleOk}
+        onCancel={this.handleCancel}
       >
         <TextCreateForm wrappedComponentRef={this.saveFormRef} />
       </Modal>

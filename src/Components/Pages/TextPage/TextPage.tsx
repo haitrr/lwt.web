@@ -38,6 +38,7 @@ class TextPage extends React.Component<ITextPageProps, ITextPageState> {
   public constructor(props: ITextPageProps) {
     super(props);
     this.showCreateModal = this.showCreateModal.bind(this);
+    this.hideCreateModal = this.hideCreateModal.bind(this);
     this.state = { createModalVisible: false };
   }
   public componentDidMount(): void {
@@ -49,13 +50,20 @@ class TextPage extends React.Component<ITextPageProps, ITextPageState> {
     this.setState({ ...this.state, createModalVisible: true });
   }
 
+  public hideCreateModal(): void {
+    this.setState({ ...this.state, createModalVisible: false });
+  }
+
   public render(): React.ReactNode {
     const { texts, filters, page, total, languages } = this.props;
     const { createModalVisible } = this.state;
 
     return (
       <React.Fragment>
-        <TextCreateModal visible={createModalVisible} />
+        <TextCreateModal
+          hide={this.hideCreateModal}
+          visible={createModalVisible}
+        />
         <Button onClick={this.showCreateModal}>Add text</Button>
         <Button>Add long text</Button>
         <TextFilterForm languages={languages} value={filters} />
