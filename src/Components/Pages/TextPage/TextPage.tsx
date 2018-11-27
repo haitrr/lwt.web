@@ -1,6 +1,7 @@
 import { Button, Pagination, Table } from "antd";
 import * as React from "react";
 import { connect, ConnectedComponentClass } from "react-redux";
+import { getLanguageAction } from "../../../Actions/LanguageAction";
 import { getTextsAction } from "../../../Actions/TextAction";
 import { TextFilterForm } from "../../Forms/TextFilterForm";
 import { TextCreateModal } from "../../Modals/TextCreateModal";
@@ -13,6 +14,7 @@ interface ITextPageProps {
   total: number;
   languages: any[];
   getTexts(filters: object, page: number, itemPerPage: number): any;
+  getLanguages(): void;
 }
 
 interface ITextPageState {
@@ -42,7 +44,12 @@ class TextPage extends React.Component<ITextPageProps, ITextPageState> {
     this.state = { createModalVisible: false };
   }
   public componentDidMount(): void {
-    const { filters, page, itemPerPage } = this.props;
+    const { filters, itemPerPage } = this.props;
+    this.props.getTexts(filters, 1, itemPerPage);
+  }
+
+  public filterTexts(filters: object): void {
+    const { page, itemPerPage } = this.props;
     this.props.getTexts(filters, page, itemPerPage);
   }
 
@@ -68,7 +75,7 @@ class TextPage extends React.Component<ITextPageProps, ITextPageState> {
         <Button>Add long text</Button>
         <TextFilterForm languages={languages} value={filters} />
         <Table dataSource={texts} pagination={false} columns={this.columns} />
-        <Pagination total={total} current={page} hideOnSinglePage={true} />
+        <Pagination total={total} current={page} hideOnSinglePage={false} />
       </React.Fragment>
     );
   }
@@ -89,7 +96,8 @@ const connectedTextPage: ConnectedComponentClass<
     };
   },
   {
-    getTexts: getTextsAction
+    getTexts: getTextsAction,
+    getLanguages: getLanguageAction
   }
 )(TextPage);
 export { connectedTextPage as TextPage };

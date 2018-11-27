@@ -10,8 +10,17 @@ export const TEXT_CREATED: string = "TEXT_CREATED";
  */
 export const getTextsAction: any = createAction(
   TEXT_FETCHED,
-  async (filters: ITextFilters, page: number, itemPerPage: number) =>
-    getTextsAsync(filters, page, itemPerPage)
+  async (filters: ITextFilters, page: number, itemPerPage: number) => {
+    const result: any = await getTextsAsync(filters, page, itemPerPage);
+
+    return {
+      texts: result.items,
+      total: result.total,
+      page,
+      itemPerPage,
+      filters
+    };
+  }
 );
 
 /**

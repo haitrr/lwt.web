@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d6521220-0800-44ef-bb08-9bb033e118ee" name="Default Changelist" comment="display language in text list">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="d6521220-0800-44ef-bb08-9bb033e118ee" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Modals/TextCreateModal/TextCreateModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Modals/TextCreateModal/TextCreateModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Actions/TextAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Actions/TextAction.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Forms/TextFilterForm/TextFilterForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Forms/TextFilterForm/TextFilterForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/Pages/TextPage/TextPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Pages/TextPage/TextPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Reducers/TextReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Reducers/TextReducer.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -18,20 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Components/Forms/TextCreateForm/TextCreateForm.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="24" column="40" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Components/Modals/TextCreateModal/TextCreateModal.tsx">
+        <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextPage/TextPage.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
-              <caret line="22" column="27" lean-forward="true" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
+            <state relative-caret-position="452">
+              <caret line="82" lean-forward="true" selection-start-line="82" selection-end-line="82" />
             </state>
           </provider>
         </entry>
@@ -39,17 +31,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Components/Forms/TextFilterForm/TextFilterForm.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="40" column="6" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="6" />
+            <state relative-caret-position="-95">
+              <caret line="13" column="42" lean-forward="true" selection-start-line="13" selection-start-column="42" selection-end-line="13" selection-end-column="42" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextPage/TextPage.tsx">
+        <entry file="file://$PROJECT_DIR$/src/Actions/TextAction.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="40" column="59" selection-start-line="40" selection-start-column="59" selection-end-line="40" selection-end-column="59" />
+            <state relative-caret-position="445">
+              <caret line="28" column="23" selection-start-line="28" selection-start-column="23" selection-end-line="28" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -57,8 +49,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Reducers/TextReducer.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="648">
-              <caret line="27" column="33" selection-start-line="27" selection-start-column="33" selection-end-line="27" selection-end-column="33" />
+            <state relative-caret-position="315">
+              <caret line="28" column="29" lean-forward="true" selection-start-line="28" selection-start-column="29" selection-end-line="28" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Apis/TextApi.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="304">
+              <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Utilities/HttpRequest.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="37">
+              <caret line="54" column="22" selection-start-line="54" selection-start-column="22" selection-end-line="54" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -109,7 +119,6 @@
         <option value="$PROJECT_DIR$/src/App.css" />
         <option value="$PROJECT_DIR$/src/Components/Pages/LoginPage.tsx" />
         <option value="$PROJECT_DIR$/src/Components/Pages/HomePage/HomePage.tsx" />
-        <option value="$PROJECT_DIR$/src/Components/Forms/TextFilterForm/TextFilterForm.tsx" />
         <option value="$PROJECT_DIR$/src/Components/Forms/TextFilterForm/index.ts" />
         <option value="$PROJECT_DIR$/src/RootReducer.ts" />
         <option value="$PROJECT_DIR$/src/Components/Forms/TextCreateForm/TextCreateForm.ts" />
@@ -118,14 +127,15 @@
         <option value="$PROJECT_DIR$/src/Components/Forms/TextCreateForm/index.ts" />
         <option value="$PROJECT_DIR$/src/Components/Modals/TextCreateModal/index.ts" />
         <option value="$PROJECT_DIR$/src/Components/Inputs/LanguageSelect/LanguageSelect.tsx" />
-        <option value="$PROJECT_DIR$/src/Components/Forms/TextCreateForm/TextCreateForm.tsx" />
         <option value="$PROJECT_DIR$/src/Interfaces/ITextFilters.ts" />
-        <option value="$PROJECT_DIR$/src/Actions/TextAction.ts" />
         <option value="$PROJECT_DIR$/src/Utilities/HttpRequest.ts" />
-        <option value="$PROJECT_DIR$/src/Reducers/TextReducer.ts" />
         <option value="$PROJECT_DIR$/src/Apis/TextApi.ts" />
-        <option value="$PROJECT_DIR$/src/Components/Pages/TextPage/TextPage.tsx" />
+        <option value="$PROJECT_DIR$/src/Components/Forms/TextCreateForm/TextCreateForm.tsx" />
         <option value="$PROJECT_DIR$/src/Components/Modals/TextCreateModal/TextCreateModal.tsx" />
+        <option value="$PROJECT_DIR$/src/Reducers/TextReducer.ts" />
+        <option value="$PROJECT_DIR$/src/Actions/TextAction.ts" />
+        <option value="$PROJECT_DIR$/src/Components/Forms/TextFilterForm/TextFilterForm.tsx" />
+        <option value="$PROJECT_DIR$/src/Components/Pages/TextPage/TextPage.tsx" />
       </list>
     </option>
   </component>
@@ -336,7 +346,8 @@
       <workItem from="1541821329091" duration="21820000" />
       <workItem from="1542202407048" duration="642000" />
       <workItem from="1542441480153" duration="1490000" />
-      <workItem from="1542727608371" duration="707000" />
+      <workItem from="1542727608371" duration="951000" />
+      <workItem from="1543325698278" duration="1854000" />
     </task>
     <task id="LOCAL-00001" summary="implement register page">
       <created>1539255985682</created>
@@ -366,11 +377,25 @@
       <option name="project" value="LOCAL" />
       <updated>1542246726678</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="handle cancel and ok in text create modal">
+      <created>1542729844847</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1542729844847</updated>
+    </task>
+    <task id="LOCAL-00006" summary="change languageId to language in search create form">
+      <created>1543326677462</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1543326677462</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39484000" />
+    <option name="totallyTimeSpent" value="41582000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -383,6 +408,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14647378" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -390,7 +416,7 @@
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4996986" weight="0.32987553" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4989339" weight="0.3279483" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4989339" weight="0.32780084" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -461,7 +487,9 @@
     <MESSAGE value="display languages in homepage" />
     <MESSAGE value="basic text page" />
     <MESSAGE value="display language in text list" />
-    <option name="LAST_COMMIT_MESSAGE" value="display language in text list" />
+    <MESSAGE value="handle cancel and ok in text create modal" />
+    <MESSAGE value="change languageId to language in search create form" />
+    <option name="LAST_COMMIT_MESSAGE" value="change languageId to language in search create form" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/Components/Forms/RegisterForm/RegisterForm.css">
@@ -658,13 +686,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Utilities/HttpRequest.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="64" column="42" selection-start-line="64" selection-start-column="42" selection-end-line="64" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Interfaces/ILanguage.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -721,57 +742,64 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Actions/TextAction.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="12" column="69" lean-forward="true" selection-start-line="12" selection-start-column="69" selection-end-line="12" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Apis/TextApi.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="16" column="2" selection-start-line="16" selection-start-column="2" selection-end-line="16" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1555" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Reducers/TextReducer.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="648">
-          <caret line="27" column="33" selection-start-line="27" selection-start-column="33" selection-end-line="27" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/Forms/TextFilterForm/TextFilterForm.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="40" column="6" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/Forms/TextCreateForm/TextCreateForm.tsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="24" column="40" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextPage/TextPage.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="40" column="59" selection-start-line="40" selection-start-column="59" selection-end-line="40" selection-end-column="59" />
+        <state relative-caret-position="96">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/Modals/TextCreateModal/TextCreateModal.tsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="22" column="27" lean-forward="true" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
+        <state relative-caret-position="455">
+          <caret line="33" column="1" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Apis/TextApi.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Utilities/HttpRequest.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="37">
+          <caret line="54" column="22" selection-start-line="54" selection-start-column="22" selection-end-line="54" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Reducers/TextReducer.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="28" column="29" lean-forward="true" selection-start-line="28" selection-start-column="29" selection-end-line="28" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Actions/TextAction.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="445">
+          <caret line="28" column="23" selection-start-line="28" selection-start-column="23" selection-end-line="28" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Components/Forms/TextFilterForm/TextFilterForm.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-95">
+          <caret line="13" column="42" lean-forward="true" selection-start-line="13" selection-start-column="42" selection-end-line="13" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextPage/TextPage.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="452">
+          <caret line="82" lean-forward="true" selection-start-line="82" selection-end-line="82" />
         </state>
       </provider>
     </entry>

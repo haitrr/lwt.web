@@ -4,6 +4,7 @@ import * as React from "react";
 
 interface ITextFilterFormProps {
   languages: any[];
+  onChange(data: object): void;
 }
 
 /**
@@ -12,6 +13,15 @@ interface ITextFilterFormProps {
 class TextFilterForm extends React.Component<
   ITextFilterFormProps & FormComponentProps
 > {
+  constructor(props: any) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  public handleChange(): void {
+    const data: object = this.props.form.getFieldsValue();
+    this.props.onChange(data);
+  }
+
   public render(): React.ReactNode {
     const {
       form: { getFieldDecorator },
@@ -19,7 +29,7 @@ class TextFilterForm extends React.Component<
     } = this.props;
 
     return (
-      <Form>
+      <Form onChange={this.handleChange}>
         <Form.Item>
           {getFieldDecorator("language")(
             <Select>

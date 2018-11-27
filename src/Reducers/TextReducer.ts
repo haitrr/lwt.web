@@ -29,7 +29,7 @@ export const textReducer: any = handleActions(
       if (payload === null) {
         return { ...state, texts: [] };
       } else {
-        return { texts: payload.items, total: payload.total };
+        return { ...payload };
       }
     }
   },
