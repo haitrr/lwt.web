@@ -22,7 +22,7 @@ class TextCreateForm extends React.Component<
     return (
       <Form onSubmit={onSubmit}>
         <Form.Item>
-          {getFieldDecorator("languageId")(<LanguageSelect />)}
+          {getFieldDecorator("language")(<LanguageSelect />)}
         </Form.Item>
         <Form.Item>
           {getFieldDecorator("title")(<Input placeholder="Title" />)}
