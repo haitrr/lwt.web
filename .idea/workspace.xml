@@ -22,11 +22,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextPage/TextPage.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="146">
-              <caret line="95" column="37" lean-forward="true" selection-start-line="95" selection-start-column="37" selection-end-line="95" selection-end-column="37" />
+            <state relative-caret-position="386">
+              <caret line="105" column="9" selection-start-line="105" selection-start-column="9" selection-end-line="105" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -36,15 +36,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="483">
               <caret line="21" column="26" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/App.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="37" column="66" selection-start-line="37" selection-start-column="66" selection-end-line="37" selection-end-column="66" />
             </state>
           </provider>
         </entry>
@@ -63,6 +54,15 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="533">
               <caret line="35" column="5" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-14174">
+              <caret selection-end-line="838" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -363,7 +363,7 @@
       <workItem from="1543325698278" duration="2275000" />
       <workItem from="1543422661599" duration="155000" />
       <workItem from="1543595401428" duration="4417000" />
-      <workItem from="1543678999960" duration="1388000" />
+      <workItem from="1543678999960" duration="1476000" />
     </task>
     <task id="LOCAL-00001" summary="implement register page">
       <created>1539255985682</created>
@@ -418,7 +418,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47963000" />
+    <option name="totallyTimeSpent" value="48051000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -431,7 +431,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14647378" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -447,8 +446,8 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49427366" weight="0.32572615" />
       <window_info anchor="bottom" id="TypeScript" order="9" sideWeight="0.49246535" weight="0.3226141" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5111513" side_tool="true" weight="0.29045644" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.48884872" visible="true" weight="0.29045644" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5117541" side_tool="true" visible="true" weight="0.29045644" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.48824593" visible="true" weight="0.29045644" />
       <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.32956383" />
       <window_info anchor="bottom" id="Messages" order="13" weight="0.32956383" />
       <window_info anchor="bottom" id="SonarLint" order="14" weight="0.32963374" />
@@ -753,11 +752,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1555" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/Forms/TextCreateForm/TextCreateForm.tsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="96">
@@ -786,24 +780,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="37" column="66" selection-start-line="37" selection-start-column="66" selection-end-line="37" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextReadPage/index.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="3" lean-forward="true" selection-start-column="3" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Apis/TextApi.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="51" column="58" selection-start-line="51" selection-start-column="58" selection-end-line="51" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Reducers/TextReducer.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="533">
-          <caret line="35" column="5" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -814,10 +801,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.tsx">
+    <entry file="file://$PROJECT_DIR$/src/Apis/TextApi.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="37" column="66" selection-start-line="37" selection-start-column="66" selection-end-line="37" selection-end-column="66" />
+        <state relative-caret-position="306">
+          <caret line="51" column="58" selection-start-line="51" selection-start-column="58" selection-end-line="51" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextPage/TextPage.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="386">
+          <caret line="105" column="9" selection-start-line="105" selection-start-column="9" selection-end-line="105" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -828,10 +822,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextPage/TextPage.tsx">
+    <entry file="file://$PROJECT_DIR$/src/Reducers/TextReducer.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="95" column="37" lean-forward="true" selection-start-line="95" selection-start-column="37" selection-end-line="95" selection-end-column="37" />
+        <state relative-caret-position="533">
+          <caret line="35" column="5" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-14174">
+          <caret selection-end-line="838" selection-end-column="10" />
         </state>
       </provider>
     </entry>
