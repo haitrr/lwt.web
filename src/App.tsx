@@ -14,6 +14,7 @@ import { HomePage } from "./Components/Pages/HomePage";
 import { LoginPage } from "./Components/Pages/LoginPage";
 import { RegisterPage } from "./Components/Pages/RegisterPage/RegisterPage";
 import { TextPage } from "./Components/Pages/TextPage";
+import { TextReadPage } from "./Components/Pages/TextReadPage";
 
 const store: Store = createStore(
   rootReducer,
@@ -38,6 +39,11 @@ export class App extends React.Component {
               <Route path="/login" exact={true} component={LoginPage} />
               <Route path="/register" exact={true} component={RegisterPage} />
               <Route path="/text" exact={true} component={TextPage} />
+              <Route
+                path="/text/read/:textId"
+                exact={true}
+                component={TextReadPage}
+              />
             </Layout.Content>
             <Layout.Footer>
               <Footer />

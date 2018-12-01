@@ -44,3 +44,15 @@ export async function createTextAsync(text: any): Promise<boolean> {
     return false;
   }
 }
+
+/**
+ * create a text
+ * @param textId the text id to get
+ */
+export async function getTextReadAsync(textId: string): Promise<any> {
+  try {
+    return await getAsync(`${TEXT_API}/${textId}`, null);
+  } catch (e) {
+    return false;
+  }
+}

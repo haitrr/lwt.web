@@ -1,9 +1,14 @@
 import { createAction } from "redux-actions";
-import { createTextAsync, getTextsAsync } from "src/Apis/TextApi";
+import {
+  createTextAsync,
+  getTextReadAsync,
+  getTextsAsync
+} from "src/Apis/TextApi";
 import { ITextFilters } from "../Interfaces/ITextFilters";
 
 export const TEXT_FETCHED: string = "TEXT_FETCHED";
 export const TEXT_CREATED: string = "TEXT_CREATED";
+export const TEXT_READ: string = "TEXT_READ";
 
 /**
  * get texts action
@@ -21,6 +26,15 @@ export const getTextsAction: any = createAction(
       filters
     };
   }
+);
+
+/**
+ * set reading text.
+ */
+
+export const readTextAction: any = createAction(
+  TEXT_READ,
+  async (textId: string) => getTextReadAsync(textId)
 );
 
 /**

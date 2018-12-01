@@ -1,5 +1,5 @@
 import { handleActions } from "redux-actions";
-import { TEXT_FETCHED } from "../Actions/TextAction";
+import { TEXT_FETCHED, TEXT_READ } from "../Actions/TextAction";
 import { ITextFilters } from "../Interfaces/ITextFilters";
 
 /**
@@ -12,6 +12,7 @@ interface ITextState {
   itemPerPage: number;
   total: number;
   filters: ITextFilters;
+  readingText: any;
 }
 
 const defaultState: ITextState = {
@@ -19,7 +20,8 @@ const defaultState: ITextState = {
   page: 1,
   itemPerPage: 10,
   total: 0,
-  filters: { languageId: "" }
+  filters: { languageId: "" },
+  readingText: null
 };
 
 export const textReducer: any = handleActions(
@@ -31,6 +33,9 @@ export const textReducer: any = handleActions(
       } else {
         return { ...payload };
       }
+    },
+    [TEXT_READ]: (state: any, action: any): any => {
+      return { ...state, readingText: action.payload };
     }
   },
   defaultState
