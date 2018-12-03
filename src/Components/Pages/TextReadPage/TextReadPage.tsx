@@ -1,6 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { readTextAction } from "../../../Actions/TextAction";
+import "./TextReadPage.css";
 
 /**
  * text read page.
@@ -19,7 +20,9 @@ class TextReadPage extends React.Component<any> {
         <div>{readingText.title}</div>
         <hr />
         {readingText.terms.map((term: any, index: number) => (
-          <span key={index}>{term.content}</span>
+          <span className={`term term-${term.learningLevel}`} key={index}>
+            {term.content}
+          </span>
         ))}
       </div>
     ) : null;
