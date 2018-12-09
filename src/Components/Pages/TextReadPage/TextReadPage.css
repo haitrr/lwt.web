@@ -32,3 +32,10 @@
 .term-7 {
   background: white;
 }
+
+.readPane {
+  height: 80vh;
+  width: 100%;
+  position: relative;
+}
+

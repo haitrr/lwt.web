@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/lwt.iml" filepath="$PROJECT_DIR$/.idea/lwt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/lwt.web.iml" filepath="$PROJECT_DIR$/.idea/lwt.web.iml" />
     </modules>
   </component>
 </project>

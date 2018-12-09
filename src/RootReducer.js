@@ -1,0 +1,15 @@
+import { combineReducers } from "redux";
+import { languageReducer } from "./Reducers/LanguageReducer";
+import { textReducer } from "./Reducers/TextReducer";
+import { userReducer } from "./Reducers/UserReducer";
+import { termReducer } from "./Reducers/TermReducer";
+
+/**
+ * root reducer
+ */
+export const rootReducer = combineReducers({
+  user: userReducer,
+  language: languageReducer,
+  text: textReducer,
+  term: termReducer
+});
