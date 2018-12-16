@@ -28,7 +28,7 @@ class LoginPage extends React.Component {
 }
 
 const connectedLoginPage = connect(
-  (state: any) => ({
+  state => ({
     isLoggedIn: state.user.isLoggedIn
   }),
   { login: loginAction }

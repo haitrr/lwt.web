@@ -49,7 +49,13 @@ class TextReadPage extends React.Component {
             </SplitPane>
           </div>
           <SplitPane split="horizontal" defaultSize="50%">
-            {editingTerm ? <TermEditForm value={editingTerm} /> : <div />}
+            <div>
+              {editingTerm ? (
+                <TermEditForm/>
+              ) : (
+                <div />
+              )}
+            </div>
             <div>The dictionary should be here</div>
           </SplitPane>
         </SplitPane>

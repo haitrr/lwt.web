@@ -1,15 +1,37 @@
 import React from "react";
-import { Form, Input } from "antd";
+import { connect } from "react-redux";
+import { Form, Input, Button } from "antd";
+import LearningLevelSelect from "../../Inputs/LearningLevelSelect";
+import {
+  createTermAction,
+  editTermAction,
+  setEditingTermAction
+} from "../../../Actions/TermAction";
 
 class TermEditForm extends React.Component {
+  handleSubmit = e => {
+    const {
+      form: { getFieldsValue },
+      value,
+      createTerm,
+      editTerm
+    } = this.props;
+    e.preventDefault();
+    const editedData = getFieldsValue();
+    const editedTerm = { ...value, ...editedData };
+    if (!value.id) {
+      createTerm(editedTerm);
+    } else {
+      editTerm(editedTerm);
+    }
+  };
   render() {
     const {
       form: { getFieldDecorator },
-      value,
-      onSubmit
+      value
     } = this.props;
     return (
-      <Form onSubmit={onSubmit}>
+      <Form onSubmit={this.handleSubmit} layout="vertical">
         <Form.Item label="Content">
           {getFieldDecorator("content", { initialValue: value.content })(
             <Input disabled />
@@ -23,11 +45,27 @@ class TermEditForm extends React.Component {
         <Form.Item label="Learning Level">
           {getFieldDecorator("learningLevel", {
             initialValue: value.learningLevel
-          })(<Input placeholder="Meaning" />)}
+          })(<LearningLevelSelect />)}
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Save
+          </Button>
         </Form.Item>
       </Form>
     );
   }
 }
 
-export default Form.create()(TermEditForm);
+export default connect(
+  state => {
+    return {
+      value: state.term.editingTerm
+    };
+  },
+  {
+    setEditingTerm: setEditingTermAction,
+    createTerm: createTermAction,
+    editTerm: editTermAction
+  }
+)(Form.create()(TermEditForm));

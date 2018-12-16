@@ -2,81 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ac520e9-853b-4498-878f-54956aff067e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Components/Forms/TermEditForm/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.deployment" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Hai.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/lwt.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/typescript-compiler.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Components/Inputs/LearningLevelSelect/LearningLevelSelect.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Components/Inputs/LearningLevelSelect/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/deploy.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Actions/LanguageAction.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Actions/TextAction.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Actions/UserAction.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Apis/LanguageApi.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Apis/TextApi.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Apis/UserApi.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Actions/TermAction.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Actions/TermAction.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Apis/TermApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Apis/TermApi.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.test.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Footer.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Forms/LoginForm/LoginForm.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Forms/LoginForm/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Forms/RegisterForm/RegisterForm.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Forms/RegisterForm/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Forms/TextCreateForm/TextCreateForm.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Forms/TextCreateForm/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Forms/TextFilterForm/TextFilterForm.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Forms/TextFilterForm/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Header/Header.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Header/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Inputs/LanguageSelect/LanguageSelect.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Inputs/LanguageSelect/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Modals/TextCreateModal/TextCreateModal.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Modals/TextCreateModal/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Pages/HomePage/HomePage.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Pages/HomePage/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Pages/LoginPage.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Pages/RegisterPage/RegisterPage.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Pages/RegisterPage/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Pages/TextPage/TextPage.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Pages/TextPage/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Constants.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Interfaces/ILanguage.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Interfaces/ILoginPageProps.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Interfaces/ITextFilters.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Interfaces/IUser.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Interfaces/IUserLoginModel.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Interfaces/IUserRegisterModel.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Reducers/LanguageReducer.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Reducers/TextReducer.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Reducers/UserReducer.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RootReducer.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utilities/HttpRequest.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utilities/JwtTokenHelper.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/registerServiceWorker.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.prod.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.test.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tslint.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Forms/TermEditForm/TermEditForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Forms/TermEditForm/TermEditForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Pages/LoginPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Pages/LoginPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Reducers/TermReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Reducers/TermReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Reducers/TextReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Reducers/TextReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Utilities/HttpRequest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/HttpRequest.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -90,43 +31,56 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/package.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1032">
-              <caret line="43" column="20" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Components/Pages/TermEditPage/TermEditPage.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="11" column="28" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Components/Forms/TermEditForm/TermEditForm.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="274">
-              <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+            <state relative-caret-position="331">
+              <caret line="14" column="11" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Components/Forms/TermEditForm/index.js">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/src/Actions/TermAction.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="648">
+              <caret line="27" column="16" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="16" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Components/Forms/LoginForm/LoginForm.jsx">
+        <entry file="file://$PROJECT_DIR$/src/Reducers/TermReducer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="624">
-              <caret line="26" column="9" selection-start-line="26" selection-start-column="9" selection-end-line="26" selection-end-column="9" />
+            <state relative-caret-position="264">
+              <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Reducers/TextReducer.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="328">
+              <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Apis/TermApi.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="144">
+              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="23" column="22" selection-start-line="23" selection-start-column="22" selection-end-line="23" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -141,6 +95,12 @@
       <list>
         <option value="$PROJECT_DIR$/src/Components/Forms/TermEditForm/TermEditForm.js" />
         <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.jsx" />
+        <option value="$PROJECT_DIR$/src/Apis/TermApi.js" />
+        <option value="$PROJECT_DIR$/src/Actions/TermAction.js" />
+        <option value="$PROJECT_DIR$/src/Reducers/TermReducer.js" />
+        <option value="$PROJECT_DIR$/src/Reducers/TextReducer.js" />
+        <option value="$PROJECT_DIR$/src/Components/Forms/TermEditForm/TermEditForm.jsx" />
       </list>
     </option>
   </component>
@@ -241,7 +201,7 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RunDashboard">
@@ -270,21 +230,22 @@
       <workItem from="1544371995957" duration="8000" />
       <workItem from="1544372052501" duration="55000" />
       <workItem from="1544372119419" duration="928000" />
+      <workItem from="1544980487978" duration="153000" />
+      <workItem from="1544981417612" duration="2371000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1957000" />
+    <option name="totallyTimeSpent" value="4481000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24954791" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.24954791" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info anchor="bottom" id="TypeScript" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49849308" weight="0.32987553" />
@@ -294,11 +255,12 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5015069" side_tool="true" visible="true" weight="0.32987553" />
-      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49909583" weight="0.32987553" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.501221" side_tool="true" weight="0.32911393" />
+      <window_info anchor="bottom" id="TypeScript" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info active="true" anchor="right" id="Terminal" order="3" sideWeight="0.498779" visible="true" weight="0.32905984" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -312,10 +274,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/Forms/TermEditForm/TermEditForm.js">
+    <entry file="file://$PROJECT_DIR$/src/Components/Forms/TermEditForm/TermEditForm.js" />
+    <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="15" column="3" lean-forward="true" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
+        <state relative-caret-position="1032">
+          <caret line="43" column="20" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -329,13 +292,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1032">
-          <caret line="43" column="20" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/Pages/TermEditPage/TermEditPage.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
@@ -343,10 +299,45 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Apis/TermApi.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Actions/TermAction.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="648">
+          <caret line="27" column="16" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="23" column="22" selection-start-line="23" selection-start-column="22" selection-end-line="23" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Reducers/TermReducer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Reducers/TextReducer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="328">
+          <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/Forms/TermEditForm/TermEditForm.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+        <state relative-caret-position="331">
+          <caret line="14" column="11" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
         </state>
       </provider>
     </entry>

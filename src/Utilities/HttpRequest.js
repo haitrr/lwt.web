@@ -1,6 +1,8 @@
 import { TOKEN_LOCAL_STORAGE_KEY } from "../Constants";
+import { notification } from "antd";
 
 function defaultResponseErrorHandler(response) {
+  notification.error({ message: "Failed to connect to server." });
   throw new Error(
     `Error connecting with server ${response.status}:${response.statusText}`
   );
@@ -36,7 +38,7 @@ export async function postAsync(
   return fetch(url, {
     body: JSON.stringify(body), // body data type must match "Content-Type" header
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "include", // include, same-origin, *omit
+    //credentials: "include", // include, same-origin, *omit
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       ...getAuthenticationHeader()
@@ -48,7 +50,6 @@ export async function postAsync(
     referrer: "no-referrer" // no-referrer, *client
   })
     .then(handleResponse)
-    .then(json => json)
     .catch(defaultResponseErrorHandler);
 }
 
@@ -69,7 +70,7 @@ export async function getAsync(
 
   return fetch(fullUrl, {
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "include", // include, same-origin, *omit
+    //credentials: "include", // include, same-origin, *omit
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       ...getAuthenticationHeader()
@@ -81,6 +82,5 @@ export async function getAsync(
     referrer: "no-referrer" // no-referrer, *client
   })
     .then(handleResponse)
-    .then(json => json)
     .catch(defaultResponseErrorHandler);
 }

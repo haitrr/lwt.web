@@ -1,9 +1,10 @@
 import { createAction } from "redux-actions";
 import { notification } from "antd";
-import { getTermAsync } from "../Apis/TermApi";
+import { createTermAsync, getTermAsync } from "../Apis/TermApi";
 
 export const TERM_GET = "TERM_GET";
 export const TERM_SET = "TERM_SET";
+export const TERM_CREATED = "TERM_CREATED";
 
 export const getTermAction = createAction(TERM_GET, async id => {
   try {
@@ -14,3 +15,22 @@ export const getTermAction = createAction(TERM_GET, async id => {
 });
 
 export const setEditingTermAction = createAction(TERM_SET, term => term);
+export const createTermAction = createAction(TERM_CREATED, async term => {
+  try {
+    const id = await createTermAsync(term);
+    term.id = id;
+    notification.success({
+      message: "Term is saved"
+    });
+    return term;
+  } catch (e) {
+    notification.error({
+      message: "Can't create term",
+      description: e.message
+    });
+  }
+});
+export const editTermAction = createAction(TERM_SET, term => {
+  console.log(term);
+  return {};
+});
