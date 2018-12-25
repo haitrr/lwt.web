@@ -7,6 +7,7 @@ import {
   selectLanguageAction
 } from "../../../Actions/LanguageAction";
 import "./HomePage.css";
+import {API_ROOT} from "../../../Constants";
 
 /**
  * Home page
@@ -17,6 +18,8 @@ class HomePage extends React.Component {
     if (isLoggedIn) {
       getLanguage();
     }
+    console.log(process.env.NODE_ENV);
+    console.log(API_ROOT)
   }
 
    render(){
