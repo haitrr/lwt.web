@@ -1,6 +1,6 @@
 import { handleActions } from "redux-actions";
 import { TEXT_FETCHED, TEXT_READ } from "../Actions/TextAction";
-import { TERM_CREATED } from "../Actions/TermAction";
+import { TERM_CREATED, TERM_EDITED } from "../Actions/TermAction";
 
 /**
  * text reducer
@@ -34,6 +34,17 @@ export const textReducer = handleActions(
       const newTerms = readingText.terms.map(term => {
         if (term.content === createdTerm.content) {
           return createdTerm;
+        }
+        return term;
+      });
+      return { ...state, readingText: { ...readingText, terms: newTerms } };
+    },
+    [TERM_EDITED]: (state, action) => {
+      const editedTerm = action.payload;
+      const readingText = state.readingText;
+      const newTerms = readingText.terms.map(term => {
+        if (term.id === editedTerm.id) {
+          return editedTerm;
         }
         return term;
       });

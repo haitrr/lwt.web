@@ -7,9 +7,13 @@ function defaultResponseErrorHandler(response) {
     `Error connecting with server ${response.status}:${response.statusText}`
   );
 }
-function defaultResponseHandler(response) {
+async function defaultResponseHandler(response) {
   if (response.ok) {
-    return response.json();
+    try {
+      return await response.json();
+    } catch (e) {
+      return null;
+    }
   } else {
     throw response;
   }
@@ -45,6 +49,30 @@ export async function postAsync(
       // "Content-Type": "application/x-www-form-urlencoded",
     },
     method: "POST", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, cors, *same-origin
+    redirect: "follow", // manual, *follow, error
+    referrer: "no-referrer" // no-referrer, *client
+  })
+    .then(handleResponse)
+    .catch(defaultResponseErrorHandler);
+}
+
+export async function putAsync(
+  url,
+  id,
+  body,
+  handleResponse = defaultResponseHandler
+) {
+  return fetch(`${url}/${id}`, {
+    body: JSON.stringify(body), // body data type must match "Content-Type" header
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    //credentials: "include", // include, same-origin, *omit
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      ...getAuthenticationHeader()
+      // "Content-Type": "application/x-www-form-urlencoded",
+    },
+    method: "PUT", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, cors, *same-origin
     redirect: "follow", // manual, *follow, error
     referrer: "no-referrer" // no-referrer, *client
