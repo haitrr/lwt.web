@@ -1,3 +1,3 @@
 # lwt.web
 Web ui for lwt
- Demo server : http://35.237.23.105
+ Demo server : http://vroyibg.ml
