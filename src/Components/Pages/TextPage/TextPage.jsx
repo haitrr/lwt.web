@@ -21,8 +21,15 @@ class TextPage extends React.Component {
       title: "Language",
       dataIndex: "language",
       key: "language",
-      render: value =>
-        this.props.languages.filter(language => language.id === value)[0].name
+      render: value => {
+        const language = this.props.languages.find(
+          language => language.id === value
+        );
+        if (language) {
+          return language.name;
+        }
+        return "Unknown language";
+      }
     },
     {
       title: "Actions",
@@ -45,8 +52,8 @@ class TextPage extends React.Component {
     this.state = { createModalVisible: false };
   }
   componentDidMount() {
-    const { filters, itemPerPage, getLanguages } = this.props;
-    this.props.getTexts(filters, 1, itemPerPage);
+    const { filters, getTexts, itemPerPage, getLanguages } = this.props;
+    getTexts(filters, 1, itemPerPage);
     getLanguages();
   }
 
