@@ -18,8 +18,7 @@ export const getTermAction = createAction(TERM_GET, async id => {
 export const setEditingTermAction = createAction(TERM_SET, term => term);
 export const createTermAction = createAction(TERM_CREATED, async term => {
   try {
-    const id = await createTermAsync(term);
-    term.id = id;
+    term.id = await createTermAsync(term);
     notification.success({
       message: "Term is saved"
     });

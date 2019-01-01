@@ -33,7 +33,7 @@ export const textReducer = handleActions(
       const readingText = state.readingText;
       const newTerms = readingText.terms.map(term => {
         if (term.content === createdTerm.content) {
-          return createdTerm;
+          return { ...createdTerm, content: term.content };
         }
         return term;
       });
@@ -44,7 +44,7 @@ export const textReducer = handleActions(
       const readingText = state.readingText;
       const newTerms = readingText.terms.map(term => {
         if (term.id === editedTerm.id) {
-          return editedTerm;
+          return { ...editedTerm, content: term.content };
         }
         return term;
       });

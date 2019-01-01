@@ -7,10 +7,10 @@ const defaultState = {
 export const termReducer = handleActions(
   {
     [TERM_GET]: (state, action) => {
-      return { ...state, editingTerm: action.payload };
+      return { ...state, editingTerm: { ...action.payload } };
     },
     [TERM_SET]: (state, action) => {
-      return { ...state, editingTerm: action.payload };
+      return { ...state, editingTerm: { ...action.payload } };
     },
     [TERM_CREATED]: state => {
       return {
