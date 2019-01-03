@@ -8,6 +8,7 @@ import {
   getTermAction,
   setEditingTermAction
 } from "../../../Actions/TermAction";
+import Term from "../../Term";
 
 /**
  * text read page.
@@ -17,15 +18,6 @@ class TextReadPage extends React.Component {
     const { readText } = this.props;
     readText(this.props.match.params.textId);
   }
-
-  handleTermClick = term => {
-    const { getTerm, setEditingTerm } = this.props;
-    if (term.id) {
-      getTerm(term.id);
-    } else {
-      setEditingTerm(term);
-    }
-  };
 
   render() {
     const { readingText, editingTerm } = this.props;
@@ -37,13 +29,7 @@ class TextReadPage extends React.Component {
               <div>{readingText.title}</div>
               <div>
                 {readingText.terms.map((term, index) => (
-                  <span
-                    className={`term term-${term.learningLevel}`}
-                    key={index}
-                    onClick={() => this.handleTermClick(term)}
-                  >
-                    {term.content}
-                  </span>
+                  <Term term={term} index={index} />
                 ))}
               </div>
             </SplitPane>
