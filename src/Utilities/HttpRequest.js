@@ -2,10 +2,17 @@ import { TOKEN_LOCAL_STORAGE_KEY } from "../Constants";
 import { notification } from "antd";
 
 function defaultResponseErrorHandler(response) {
-  notification.error({ message: "Failed to connect to server." });
-  throw new Error(
-    `Error connecting with server ${response.status}:${response.statusText}`
-  );
+  if (
+    response.statusCode === 404 ||
+    response.statusCode === 502 ||
+    response.statusCode === 503
+  ) {
+    notification.error({ message: "Failed to connect to server." });
+  } else {
+    throw new Error(
+      `Error connecting with server ${response.status}:${response.statusText}`
+    );
+  }
 }
 async function defaultResponseHandler(response) {
   if (response.ok) {

@@ -7,22 +7,22 @@ import {
   selectLanguageAction
 } from "../../../Actions/LanguageAction";
 import "./HomePage.css";
-import {API_ROOT} from "../../../Constants";
+import { API_ROOT } from "../../../Constants";
 
 /**
  * Home page
  */
 class HomePage extends React.Component {
-   componentDidMount() {
+  componentDidMount() {
     const { getLanguage, isLoggedIn } = this.props;
     if (isLoggedIn) {
       getLanguage();
     }
     console.log(process.env.NODE_ENV);
-    console.log(API_ROOT)
+    console.log(API_ROOT);
   }
 
-   render(){
+  render() {
     const {
       isLoggedIn,
       languages,
@@ -36,7 +36,7 @@ class HomePage extends React.Component {
         <div>
           <strong>Language : </strong>
           <Select value={currentLanguage} onChange={selectLanguage}>
-            {languages.map((language) => (
+            {languages.map(language => (
               <Select.Option value={language.id} key={language.id}>
                 {language.name}
               </Select.Option>
@@ -51,7 +51,7 @@ class HomePage extends React.Component {
 }
 
 const connectedHomePage = connect(
-  (state) => ({
+  state => ({
     isLoggedIn: state.user.isLoggedIn,
     languages: state.language.languages,
     currentLanguage: state.language.currentLanguage
