@@ -6,6 +6,7 @@ import { getLanguageAction } from "../../../Actions/LanguageAction";
 import { getTextsAction } from "../../../Actions/TextAction";
 import { TextFilterForm } from "../../Forms/TextFilterForm";
 import { TextCreateModal } from "../../Modals/TextCreateModal";
+import { TermLearningLevel } from "../../../Enums";
 
 /**
  * text page
@@ -15,7 +16,20 @@ class TextPage extends React.Component {
     {
       title: "Title",
       dataIndex: "title",
-      key: "title"
+      key: "title",
+      width: 300,
+      render: value => (
+        <div
+          style={{
+            width: "300px",
+            "white-space": "nowrap",
+            overflow: "hidden",
+            "text-overflow": "ellipsis"
+          }}
+        >
+          {value}
+        </div>
+      )
     },
     {
       title: "Language",
@@ -46,43 +60,49 @@ class TextPage extends React.Component {
       title: "Unknow",
       key: "unknow",
       dataIndex: "counts.UnKnow",
-      render: this.renderTermNumber
+      render: (value, record) => this.renderTermNumber(value, record, "UnKnow")
     },
     {
       title: "Learning1",
       key: "Learning1",
       dataIndex: "counts.Learning1",
-      render: this.renderTermNumber
+      render: (value, record) =>
+        this.renderTermNumber(value, record, "Learning1")
     },
     {
       title: "Learning2",
       key: "Learning2",
       dataIndex: "counts.Learning2",
-      render: this.renderTermNumber
+      render: (value, record) =>
+        this.renderTermNumber(value, record, "Learning2")
     },
     {
       title: "Learning3",
       key: "Learning3",
       dataIndex: "counts.Learning3",
-      render: this.renderTermNumber
+      render: (value, record) =>
+        this.renderTermNumber(value, record, "Learning3")
     },
     {
       title: "Learning4",
       key: "Learning4",
       dataIndex: "counts.Learning4",
-      render: this.renderTermNumber
+      render: (value, record) =>
+        this.renderTermNumber(value, record, "Learning4")
     },
     {
       title: "Learning5",
       key: "Learning5",
       dataIndex: "counts.Learning5",
-      render: this.renderTermNumber
+      render: (value, record) =>
+        this.renderTermNumber(value, record, "Learning5")
     },
     {
       title: "WellKnow",
       key: "WellKnow",
       dataIndex: "counts.WellKnow",
-      render: this.renderTermNumber
+      render: (value, record) =>
+        this.renderTermNumber(value, record, "WellKnow")
     },
     {
       title: "Ignored",
@@ -104,7 +124,7 @@ class TextPage extends React.Component {
     getLanguages();
   }
 
-  renderTermNumber(current, record) {
+  renderTermNumber(current, record, level) {
     if (!current) {
       return 0;
     }
@@ -116,7 +136,11 @@ class TextPage extends React.Component {
       }
       return null;
     });
-    return `${current}(${Math.round((current / sum) * 1000) / 10}%)`;
+    return (
+      <span className={`term-${TermLearningLevel[level]}`}>
+        {`${current}(${Math.round((current / sum) * 1000) / 10}%)`}
+      </span>
+    );
   }
 
   filterTexts(filters) {
