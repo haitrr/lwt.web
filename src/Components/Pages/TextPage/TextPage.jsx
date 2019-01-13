@@ -41,6 +41,46 @@ class TextPage extends React.Component {
           </span>
         );
       }
+    },
+    {
+      title: "Unknow",
+      key: "unknow",
+      dataIndex: "counts.UnKnow"
+    },
+    {
+      title: "Learning1",
+      key: "Learning1",
+      dataIndex: "counts.Learning1"
+    },
+    {
+      title: "Learning2",
+      key: "Learning2",
+      dataIndex: "counts.Learning2"
+    },
+    {
+      title: "Learning3",
+      key: "Learning3",
+      dataIndex: "counts.Learning3"
+    },
+    {
+      title: "Learning4",
+      key: "Learning4",
+      dataIndex: "counts.Learning4"
+    },
+    {
+      title: "Learning5",
+      key: "Learning5",
+      dataIndex: "counts.Learning5"
+    },
+    {
+      title: "WellKnow",
+      key: "WellKnow",
+      dataIndex: "counts.WellKnow"
+    },
+    {
+      title: "Ignored",
+      key: "Ignored",
+      dataIndex: "counts.Ignored"
     }
   ];
   constructor(props) {
