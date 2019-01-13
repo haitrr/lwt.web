@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ac520e9-853b-4498-878f-54956aff067e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Enums.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/Pages/TextPage/TextPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Pages/TextPage/TextPage.jsx" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
@@ -21,8 +19,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextPage/TextPage.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="369">
-              <caret line="59" column="5" lean-forward="true" selection-start-line="59" selection-start-column="5" selection-end-line="59" selection-end-column="5" />
+            <state relative-caret-position="207">
+              <caret line="111" column="16" lean-forward="true" selection-start-line="111" selection-start-column="16" selection-end-line="111" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -266,12 +264,12 @@
       <workItem from="1545445495147" duration="8385000" />
       <workItem from="1546178885572" duration="19000" />
       <workItem from="1546178916073" duration="7191000" />
-      <workItem from="1547355815855" duration="814000" />
+      <workItem from="1547355815855" duration="2260000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22237000" />
+    <option name="totallyTimeSpent" value="23683000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
@@ -566,8 +564,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextPage/TextPage.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="59" column="5" lean-forward="true" selection-start-line="59" selection-start-column="5" selection-end-line="59" selection-end-column="5" />
+        <state relative-caret-position="207">
+          <caret line="111" column="16" lean-forward="true" selection-start-line="111" selection-start-column="16" selection-end-line="111" selection-end-column="16" />
         </state>
       </provider>
     </entry>

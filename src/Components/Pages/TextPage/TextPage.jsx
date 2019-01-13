@@ -45,37 +45,44 @@ class TextPage extends React.Component {
     {
       title: "Unknow",
       key: "unknow",
-      dataIndex: "counts.UnKnow"
+      dataIndex: "counts.UnKnow",
+      render: this.renderTermNumber
     },
     {
       title: "Learning1",
       key: "Learning1",
-      dataIndex: "counts.Learning1"
+      dataIndex: "counts.Learning1",
+      render: this.renderTermNumber
     },
     {
       title: "Learning2",
       key: "Learning2",
-      dataIndex: "counts.Learning2"
+      dataIndex: "counts.Learning2",
+      render: this.renderTermNumber
     },
     {
       title: "Learning3",
       key: "Learning3",
-      dataIndex: "counts.Learning3"
+      dataIndex: "counts.Learning3",
+      render: this.renderTermNumber
     },
     {
       title: "Learning4",
       key: "Learning4",
-      dataIndex: "counts.Learning4"
+      dataIndex: "counts.Learning4",
+      render: this.renderTermNumber
     },
     {
       title: "Learning5",
       key: "Learning5",
-      dataIndex: "counts.Learning5"
+      dataIndex: "counts.Learning5",
+      render: this.renderTermNumber
     },
     {
       title: "WellKnow",
       key: "WellKnow",
-      dataIndex: "counts.WellKnow"
+      dataIndex: "counts.WellKnow",
+      render: this.renderTermNumber
     },
     {
       title: "Ignored",
@@ -95,6 +102,21 @@ class TextPage extends React.Component {
     const { filters, getTexts, itemPerPage, getLanguages } = this.props;
     getTexts(filters, 1, itemPerPage);
     getLanguages();
+  }
+
+  renderTermNumber(current, record) {
+    if (!current) {
+      return 0;
+    }
+    const { counts } = record;
+    let sum = 0;
+    Object.keys(counts).map(key => {
+      if (key !== "Ignored") {
+        sum += counts[key];
+      }
+      return null;
+    });
+    return `${current}(${Math.round((current / sum) * 1000) / 10}%)`;
   }
 
   filterTexts(filters) {
