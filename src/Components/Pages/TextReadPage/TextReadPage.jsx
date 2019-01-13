@@ -23,18 +23,18 @@ class TextReadPage extends React.Component {
     const { readingText, editingTerm } = this.props;
     return readingText ? (
       <div className="readPane">
-        <SplitPane split="vertical" defaultSize="50%">
+        <SplitPane split="vertical" defaultSize="40vw">
           <div>
-            <SplitPane split="horizontal">
+            <SplitPane split="horizontal" defaultSize="10vh">
               <div>{readingText.title}</div>
-              <div>
+              <div className="text-read-container">
                 {readingText.terms.map((term, index) => (
                   <Term term={term} index={index} />
                 ))}
               </div>
             </SplitPane>
           </div>
-          <SplitPane split="horizontal" defaultSize="50%">
+          <SplitPane split="horizontal" defaultSize="40vh">
             <div>{editingTerm ? <TermEditForm /> : <div />}</div>
             <div>The dictionary should be here</div>
           </SplitPane>

@@ -4,3 +4,10 @@
   position: relative;
 }
 
+.text-read-container {
+  overflow: hidden;
+  overflow-y: auto;
+  height: 70vh;
+  display: block;
+  position:relative;
+}
