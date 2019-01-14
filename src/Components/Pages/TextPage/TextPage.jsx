@@ -138,7 +138,7 @@ class TextPage extends React.Component {
     });
     return (
       <span className={`term-${TermLearningLevel[level]}`}>
-        {`${current}(${Math.round((current / sum) * 1000) / 10}%)`}
+        {`${current}(${Math.round((current / sum) * 100)}%)`}
       </span>
     );
   }
