@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { getTermAction, setEditingTermAction } from "../../Actions/TermAction";
 import { Tooltip } from "antd";
 import "./term.css";
+import { TermLearningLevel } from "../../Enums";
 
 class Term extends React.Component {
   handleTermClick = term => {
@@ -16,6 +17,9 @@ class Term extends React.Component {
 
   render() {
     const { term, index } = this.props;
+    if (term.learningLevel === TermLearningLevel.Skipped) {
+      return <span className="term">{term.content}</span>;
+    }
     return (
       <Tooltip title={term.meaning}>
         <a
@@ -24,7 +28,6 @@ class Term extends React.Component {
           href
           onClick={() => this.handleTermClick(term)}
         >
-          {" "}
           {term.content}
         </a>
       </Tooltip>

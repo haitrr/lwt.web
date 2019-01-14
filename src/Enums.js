@@ -1,4 +1,5 @@
 export const TermLearningLevel = {
+  Skipped: -1,
   /// <summary>
   /// ignored terms.
   /// </summary>

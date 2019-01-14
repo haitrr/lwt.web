@@ -28,9 +28,9 @@ class TextReadPage extends React.Component {
             <SplitPane split="horizontal" defaultSize="10vh">
               <div>{readingText.title}</div>
               <div className="text-read-container">
-                {readingText.terms.map((term, index) => (
-                  <Term term={term} index={index} />
-                ))}
+                {readingText.terms.map((term, index) => {
+                  return <Term term={term} index={index} />;
+                })}
               </div>
             </SplitPane>
           </div>

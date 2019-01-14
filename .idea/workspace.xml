@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ac520e9-853b-4498-878f-54956aff067e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Term/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Term/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Enums.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enums.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -20,17 +21,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextPage/TextPage.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-545">
-              <caret line="8" column="1" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
+            <state relative-caret-position="359">
+              <caret line="52" column="16" lean-forward="true" selection-start-line="52" selection-start-column="16" selection-end-line="52" selection-end-column="16" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="478">
-              <caret line="36" column="54" selection-start-line="36" selection-start-column="54" selection-end-line="36" selection-end-column="54" />
+            <state relative-caret-position="7">
+              <caret line="11" selection-start-line="11" selection-end-line="11" />
             </state>
           </provider>
         </entry>
@@ -53,20 +54,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Enums.js">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Components/Term/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
-              <caret line="4" column="8" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Reducers/TextReducer.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1032">
-              <caret line="43" column="44" lean-forward="true" selection-start-line="43" selection-start-column="44" selection-end-line="43" selection-end-column="44" />
+            <state relative-caret-position="632">
+              <caret line="30" selection-start-line="30" selection-end-line="30" />
             </state>
           </provider>
         </entry>
@@ -92,7 +84,6 @@
         <option value="$PROJECT_DIR$/src/Actions/TermAction.js" />
         <option value="$PROJECT_DIR$/src/Reducers/TermReducer.js" />
         <option value="$PROJECT_DIR$/src/Reducers/TextReducer.js" />
-        <option value="$PROJECT_DIR$/src/Components/Term/index.js" />
         <option value="$PROJECT_DIR$/src/Components/Footer.jsx" />
         <option value="$PROJECT_DIR$/src/Components/Footer/index.jsx" />
         <option value="$PROJECT_DIR$/src/Components/Footer/footer.css" />
@@ -101,11 +92,12 @@
         <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/Utilities/HttpRequest.js" />
         <option value="$USER_HOME$/.hyper.js" />
-        <option value="$PROJECT_DIR$/src/Enums.js" />
         <option value="$PROJECT_DIR$/src/Components/Pages/TextPage/TextPage.jsx" />
         <option value="$PROJECT_DIR$/src/Components/Term/term.css" />
         <option value="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.css" />
+        <option value="$PROJECT_DIR$/src/Enums.js" />
         <option value="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.jsx" />
+        <option value="$PROJECT_DIR$/src/Components/Term/index.js" />
       </list>
     </option>
   </component>
@@ -284,12 +276,12 @@
       <workItem from="1545445495147" duration="8385000" />
       <workItem from="1546178885572" duration="19000" />
       <workItem from="1546178916073" duration="7191000" />
-      <workItem from="1547355815855" duration="5716000" />
+      <workItem from="1547355815855" duration="6784000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27139000" />
+    <option name="totallyTimeSpent" value="28207000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
@@ -459,13 +451,6 @@
     <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextReadPage/index.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/Term/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/Footer/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="24">
@@ -558,24 +543,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Enums.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="4" column="8" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/Term/term.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextPage/TextPage.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-545">
-          <caret line="8" column="1" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
+        <state relative-caret-position="359">
+          <caret line="52" column="16" lean-forward="true" selection-start-line="52" selection-start-column="16" selection-end-line="52" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -586,10 +557,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Components/Term/term.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="478">
-          <caret line="36" column="54" selection-start-line="36" selection-start-column="54" selection-end-line="36" selection-end-column="54" />
+        <state relative-caret-position="7">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Enums.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="4" column="16" lean-forward="true" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Components/Term/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="632">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
         </state>
       </provider>
     </entry>
