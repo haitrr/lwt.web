@@ -7,10 +7,14 @@ import { connect } from "react-redux";
  */
 class LanguageSelect extends React.Component {
   render() {
-    const { languages, onChange, value } = this.props;
+    const { languages, onChange, value, disabled } = this.props;
 
     return (
-      <Select onChange={onChange} value={value}>
+      <Select
+        onChange={onChange}
+        value={value}
+        disabled={disabled ? disabled : false}
+      >
         {languages.map(language => {
           return (
             <Select.Option value={language.id} key={language.id}>

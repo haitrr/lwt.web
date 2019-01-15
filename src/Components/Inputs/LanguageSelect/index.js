@@ -3,4 +3,4 @@
  */
 import { LanguageSelect } from "./LanguageSelect";
 
-export { LanguageSelect };
+export default LanguageSelect;

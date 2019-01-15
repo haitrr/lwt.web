@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { readTextAction } from "../../../Actions/TextAction";
 import SplitPane from "react-split-pane";
 import "./TextReadPage.css";
-import TermEditForm from "../../Forms/TermEditForm/TermEditForm";
+import TermEditForm from "../../Forms/TermEditForm";
 import {
   getTermAction,
   setEditingTermAction
@@ -29,15 +29,12 @@ class TextReadPage extends React.Component {
               <div>{readingText.title}</div>
               <div className="text-read-container">
                 {readingText.terms.map((term, index) => {
-                  return <Term term={term} index={index} />;
+                  return <Term key={index} term={term} index={index} />;
                 })}
               </div>
             </SplitPane>
           </div>
-          <SplitPane split="horizontal" defaultSize="40vh">
-            <div>{editingTerm ? <TermEditForm /> : <div />}</div>
-            <div>The dictionary should be here</div>
-          </SplitPane>
+          <div>{editingTerm ? <TermEditForm /> : <div />}</div>
         </SplitPane>
       </div>
     ) : null;

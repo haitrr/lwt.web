@@ -32,7 +32,7 @@ export const textReducer = handleActions(
       const createdTerm = action.payload;
       const readingText = state.readingText;
       const newTerms = readingText.terms.map(term => {
-        if (term.content === createdTerm.content) {
+        if (term.content.toUpperCase() === createdTerm.content.toUpperCase()) {
           return { ...createdTerm, content: term.content };
         }
         return term;

@@ -4,7 +4,6 @@ import { Radio } from "antd";
 class LearningLevelSelect extends React.Component {
   render() {
     const { value, onChange } = this.props;
-    console.log(value);
     return (
       <Radio.Group onChange={onChange} value={value} buttonStyle="solid">
         <Radio.Button value={2}> Learning 1</Radio.Button>
