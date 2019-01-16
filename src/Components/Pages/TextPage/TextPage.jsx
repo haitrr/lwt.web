@@ -108,6 +108,19 @@ class TextPage extends React.Component {
       title: "Ignored",
       key: "Ignored",
       dataIndex: "counts.Ignored"
+    },
+    {
+      title: "Total",
+      key: "total",
+      dataIndex: "counts",
+      render: value => {
+        let sum = 0;
+        Object.keys(value).map(key => {
+          sum += value[key];
+          return null;
+        });
+        return sum;
+      }
     }
   ];
   constructor(props) {
