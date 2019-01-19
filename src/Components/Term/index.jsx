@@ -1,16 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getTermAction, setEditingTermAction } from "../../Actions/TermAction";
 import { Button, Tooltip } from "antd";
+import PropTypes from "prop-types";
+import { getTermAction, setEditingTermAction } from "../../Actions/TermAction";
 import "./term.css";
 import { TermLearningLevel } from "../../Enums";
 
 class Term extends React.Component {
   handleTermClick = term => {
-    const { getTerm, setEditingTerm } = this.props;
+    const { setEditingTerm } = this.props;
     if (term.id) {
-      getTerm(term.id);
-    } else {
       setEditingTerm(term);
     }
   };
@@ -23,7 +22,7 @@ class Term extends React.Component {
     return (
       <Tooltip
         title={
-          !!term.meaning ? (
+          term.meaning ? (
             <p style={{ "white-space": "pre-line" }}>{term.meaning}</p>
           ) : null
         }
@@ -31,6 +30,7 @@ class Term extends React.Component {
         <Button
           className={`term term-${term.learningLevel}`}
           onClick={() => this.handleTermClick(term)}
+          htmlType="normal"
         >
           {term.content}
         </Button>
@@ -38,6 +38,14 @@ class Term extends React.Component {
     );
   }
 }
+
+Term.propTypes = {
+  setEditingTerm: PropTypes.func.isRequired,
+  term: PropTypes.shape({
+    learningLevel: PropTypes.number.isRequired,
+    meaning: PropTypes.string.isRequired
+  }).isRequired
+};
 
 export default connect(
   null,

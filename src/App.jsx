@@ -25,32 +25,26 @@ const store = createStore(
 /**
  * app.
  */
-export default class App extends React.Component {
-  render() {
-    return (
-      <BrowserRouter>
-        <Provider store={store}>
-          <Layout>
-            <Layout.Header>
-              <Header />
-            </Layout.Header>
-            <Layout.Content className="Content">
-              <Route path="/" exact={true} component={HomePage} />
-              <Route path="/login" exact={true} component={LoginPage} />
-              <Route path="/register" exact={true} component={RegisterPage} />
-              <Route path="/text" exact={true} component={TextPage} />
-              <Route
-                path="/text/read/:textId"
-                exact={true}
-                component={TextReadPage}
-              />
-            </Layout.Content>
-            <Layout.Footer>
-              <Footer />
-            </Layout.Footer>
-          </Layout>
-        </Provider>
-      </BrowserRouter>
-    );
-  }
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Provider store={store}>
+        <Layout>
+          <Layout.Header>
+            <Header />
+          </Layout.Header>
+          <Layout.Content className="Content">
+            <Route path="/" exact component={HomePage} />
+            <Route path="/login" exact component={LoginPage} />
+            <Route path="/register" exact component={RegisterPage} />
+            <Route path="/text" exact component={TextPage} />
+            <Route path="/text/read/:textId" exact component={TextReadPage} />
+          </Layout.Content>
+          <Layout.Footer>
+            <Footer />
+          </Layout.Footer>
+        </Layout>
+      </Provider>
+    </BrowserRouter>
+  );
 }
