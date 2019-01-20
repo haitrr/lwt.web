@@ -30,7 +30,7 @@ export default function App() {
     <BrowserRouter>
       <Provider store={store}>
         <Layout>
-          <Layout.Header>
+          <Layout.Header style={{ padding: 0 }}>
             <Header />
           </Layout.Header>
           <Layout.Content className="Content">

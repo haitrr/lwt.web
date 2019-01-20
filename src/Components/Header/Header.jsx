@@ -1,9 +1,10 @@
-import { Button, Dropdown, Menu } from "antd";
+import { Button, Dropdown, Icon, Menu } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logoutAction } from "../../Actions/UserAction";
-import "./Header.css";
+import styles from "./Header.module.scss";
+import UserMenu from "./UserMenu";
 
 /**
  * Header
@@ -14,19 +15,20 @@ class Header extends React.Component {
     this.handleLogout = this.handleLogout.bind(this);
   }
 
-   handleLogout(){
+  handleLogout() {
     const { logout } = this.props;
     logout();
   }
-   render(){
+
+  render() {
     const { isLoggedIn, userName } = this.props;
-    const menu= (
+    const menu = (
       <Menu>
         <Menu.Item>
           <Link to="/profile">Profile</Link>
         </Menu.Item>
         <Menu.Item>
-          <Button className="logout-button" onClick={this.handleLogout}>
+          <Button className={styles.logoutButton} onClick={this.handleLogout}>
             Logout
           </Button>
         </Menu.Item>
@@ -34,20 +36,26 @@ class Header extends React.Component {
     );
 
     return (
-      <div className="header">
-        <span className="left-menu menu">
-          <Link to="/">LWT</Link>
-          <Link to="/text">Text</Link>
+      <div className={styles.header}>
+        <span className={styles.leftMenu}>
+          <Link className={styles.navigationLink} to="/">
+            Home
+          </Link>
+          <Link className={styles.navigationLink} to="/text">
+            Text
+          </Link>
         </span>
-        <span className="right-menu menu">
+        <span className={styles.rightMenu}>
           {isLoggedIn ? (
-            <Dropdown overlay={menu}>
-              <Link to="/profile">{userName}</Link>
-            </Dropdown>
+            <UserMenu/>
           ) : (
             <React.Fragment>
-              <Link to="/login">Login</Link>
-              <Link to="/register">Register</Link>
+              <Link className={styles.navigationLink} to="/login">
+                Login
+              </Link>
+              <Link className={styles.navigationLink} to="/register">
+                Register
+              </Link>
             </React.Fragment>
           )}
         </span>
@@ -57,7 +65,7 @@ class Header extends React.Component {
 }
 
 const connectedHeader = connect(
-  (state) => ({
+  state => ({
     isLoggedIn: state.user.isLoggedIn,
     userName: state.user.userName
   }),

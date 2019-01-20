@@ -12,22 +12,25 @@ export const getTermAction = createAction(TERM_GET, async id => {
     return await getTermAsync(id);
   } catch (e) {
     notification.error({ message: "Can't get term", description: e.message });
+    return null;
   }
 });
 
 export const setEditingTermAction = createAction(TERM_SET, term => term);
 export const createTermAction = createAction(TERM_CREATED, async term => {
   try {
-    term.id = await createTermAsync(term);
+    const newTerm = { ...term };
+    newTerm.id = await createTermAsync(term);
     notification.success({
       message: "Term is saved"
     });
-    return term;
+    return newTerm;
   } catch (e) {
     notification.error({
       message: "Can't create term",
       description: e.message
     });
+    return null;
   }
 });
 export const editTermAction = createAction(TERM_EDITED, async term => {
@@ -42,5 +45,6 @@ export const editTermAction = createAction(TERM_EDITED, async term => {
       message: "Can't edit term",
       description: e.message
     });
+    return null;
   }
 });
