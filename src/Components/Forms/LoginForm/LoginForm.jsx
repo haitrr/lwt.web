@@ -1,6 +1,7 @@
 import { Button, Form, Input } from "antd";
 import React from "react";
 import "./LoginForm.css";
+import PropTypes from "prop-types";
 
 /**
  * login form.
@@ -10,6 +11,7 @@ class LoginForm extends React.Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   handleSubmit(e) {
     e.preventDefault();
     const { form, onSubmit } = this.props;
@@ -24,11 +26,13 @@ class LoginForm extends React.Component {
 
   render() {
     const {
-      form: { getFieldDecorator }
+      form: { getFieldDecorator },
+      className
     } = this.props;
 
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form className={className} onSubmit={this.handleSubmit}>
+        <h1>LOGIN</h1>
         <Form.Item>
           {getFieldDecorator("userName")(<Input placeholder="UserName" />)}
         </Form.Item>
@@ -45,6 +49,14 @@ class LoginForm extends React.Component {
   }
 }
 
-const loginForm = Form.create()(LoginForm);
+LoginForm.propTypes = {
+  className: PropTypes.string,
+  form: PropTypes.shape({}).isRequired,
+  onSubmit: PropTypes.func.isRequired
+};
 
-export { loginForm as LoginForm };
+LoginForm.defaultProps = {
+  className: ""
+};
+
+export default Form.create()(LoginForm);

@@ -1,4 +1,4 @@
-import { Button, Dropdown, Icon, Menu } from "antd";
+import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -21,20 +21,7 @@ class Header extends React.Component {
   }
 
   render() {
-    const { isLoggedIn, userName } = this.props;
-    const menu = (
-      <Menu>
-        <Menu.Item>
-          <Link to="/profile">Profile</Link>
-        </Menu.Item>
-        <Menu.Item>
-          <Button className={styles.logoutButton} onClick={this.handleLogout}>
-            Logout
-          </Button>
-        </Menu.Item>
-      </Menu>
-    );
-
+    const { isLoggedIn } = this.props;
     return (
       <div className={styles.header}>
         <span className={styles.leftMenu}>
@@ -47,7 +34,7 @@ class Header extends React.Component {
         </span>
         <span className={styles.rightMenu}>
           {isLoggedIn ? (
-            <UserMenu/>
+            <UserMenu />
           ) : (
             <React.Fragment>
               <Link className={styles.navigationLink} to="/login">
@@ -64,7 +51,16 @@ class Header extends React.Component {
   }
 }
 
-const connectedHeader = connect(
+Header.propTypes = {
+  isLoggedIn: PropTypes.bool,
+  logout: PropTypes.func.isRequired
+};
+
+Header.defaultProps = {
+  isLoggedIn: false
+};
+
+export default connect(
   state => ({
     isLoggedIn: state.user.isLoggedIn,
     userName: state.user.userName
@@ -73,5 +69,3 @@ const connectedHeader = connect(
     logout: logoutAction
   }
 )(Header);
-
-export { connectedHeader as Header };

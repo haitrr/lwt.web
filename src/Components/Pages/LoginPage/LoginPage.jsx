@@ -1,8 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
-import { loginAction } from "../../Actions/UserAction";
-import { LoginForm } from "../Forms/LoginForm/LoginForm";
+import PropTypes from "prop-types";
+import { loginAction } from "../../../Actions/UserAction";
+import LoginForm from "../../Forms/LoginForm/LoginForm";
+import styles from "./LoginPage.module.scss";
 
 /**
  * Login page
@@ -19,18 +21,21 @@ class LoginPage extends React.Component {
     return isLoggedIn ? (
       <Redirect to="/" />
     ) : (
-      <div>
-        <h1>Login Page</h1>
-        <LoginForm onSubmit={this.handleLogin} />
+      <div className={styles.loginPage}>
+        <LoginForm className={styles.form} onSubmit={this.handleLogin} />
       </div>
     );
   }
 }
 
-const connectedLoginPage = connect(
+LoginPage.propTypes = {
+  login: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired
+};
+
+export default connect(
   state => ({
     isLoggedIn: state.user.isLoggedIn
   }),
   { login: loginAction }
 )(LoginPage);
-export { connectedLoginPage as LoginPage };

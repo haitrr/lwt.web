@@ -1,5 +1,6 @@
+import PropTypes from "prop-types";
 import React from "react";
-import { Button, Dropdown, Icon, Menu } from "antd";
+import { Dropdown, Icon, Menu } from "antd";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styles from "./UserMenu.module.scss";
@@ -29,6 +30,12 @@ const UserMenu = ({ userName, logout }) => {
     </Dropdown>
   );
 };
+
+UserMenu.propTypes = {
+  logout: PropTypes.func.isRequired,
+  userName: PropTypes.string.isRequired
+};
+
 export default connect(
   state => ({
     userName: state.user.userName
