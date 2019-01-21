@@ -27,7 +27,8 @@ class TermEditForm extends React.Component {
       form: { getFieldsValue },
       value,
       createTerm,
-      editTerm
+      editTerm,
+      setEditingTerm
     } = this.props;
     e.preventDefault();
     const editedData = getFieldsValue();
@@ -37,6 +38,7 @@ class TermEditForm extends React.Component {
     } else {
       editTerm(editedTerm);
     }
+    setEditingTerm(null);
   };
 
   render() {
@@ -97,7 +99,8 @@ export default connect(
 TermEditForm.propTypes = {
   form: PropTypes.shape({}).isRequired,
   createTerm: PropTypes.func.isRequired,
+  setEditingTerm: PropTypes.func.isRequired,
   editTerm: PropTypes.func.isRequired,
-  language: PropTypes.func.isRequired,
-  value: PropTypes.func.isRequired
+  language: PropTypes.number.isRequired,
+  value: PropTypes.shape({}).isRequired
 };

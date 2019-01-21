@@ -25,7 +25,7 @@ class Term extends React.Component {
       <Tooltip
         title={
           term.meaning ? (
-            <p style={{ "white-space": "pre-line" }}>{term.meaning}</p>
+            <p style={{ whiteSpace: "pre-line" }}>{term.meaning}</p>
           ) : null
         }
       >
@@ -46,7 +46,7 @@ Term.propTypes = {
   getTerm: PropTypes.func.isRequired,
   term: PropTypes.shape({
     learningLevel: PropTypes.number.isRequired,
-    meaning: PropTypes.string.isRequired
+    meaning: PropTypes.string
   }).isRequired
 };
 

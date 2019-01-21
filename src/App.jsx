@@ -8,7 +8,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import promiseMiddleware from "redux-promise";
 import "antd/dist/antd.css";
 import "./App.css";
-import { rootReducer } from "./RootReducer";
+import rootReducer from "./RootReducer";
 import { Footer } from "./Components/Footer";
 import Header from "./Components/Header/Header";
 import { HomePage } from "./Components/Pages/HomePage";
