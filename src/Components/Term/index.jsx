@@ -8,8 +8,10 @@ import { TermLearningLevel } from "../../Enums";
 
 class Term extends React.Component {
   handleTermClick = term => {
-    const { setEditingTerm } = this.props;
+    const { getTerm, setEditingTerm } = this.props;
     if (term.id) {
+      getTerm(term.id);
+    } else {
       setEditingTerm(term);
     }
   };
@@ -30,7 +32,7 @@ class Term extends React.Component {
         <Button
           className={`term term-${term.learningLevel}`}
           onClick={() => this.handleTermClick(term)}
-          htmlType="normal"
+          htmlType="button"
         >
           {term.content}
         </Button>
@@ -41,6 +43,7 @@ class Term extends React.Component {
 
 Term.propTypes = {
   setEditingTerm: PropTypes.func.isRequired,
+  getTerm: PropTypes.func.isRequired,
   term: PropTypes.shape({
     learningLevel: PropTypes.number.isRequired,
     meaning: PropTypes.string.isRequired
