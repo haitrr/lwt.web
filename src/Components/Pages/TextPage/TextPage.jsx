@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { getLanguageAction } from "../../../Actions/LanguageAction";
 import { getTextsAction } from "../../../Actions/TextAction";
 import { TextFilterForm } from "../../Forms/TextFilterForm";
-import { TextCreateModal } from "../../Modals/TextCreateModal";
+import TextCreateModal from "../../Modals/TextCreateModal";
 import { TermLearningLevel } from "../../../Enums";
 
 /**
@@ -17,19 +17,7 @@ class TextPage extends React.Component {
       title: "Title",
       dataIndex: "title",
       key: "title",
-      width: 300,
-      render: value => (
-        <div
-          style={{
-            width: "300px",
-            "white-space": "nowrap",
-            overflow: "hidden",
-            "text-overflow": "ellipsis"
-          }}
-        >
-          {value}
-        </div>
-      )
+      width: 300
     },
     {
       title: "Language",
@@ -48,13 +36,11 @@ class TextPage extends React.Component {
     {
       title: "Actions",
       key: "actions",
-      render: (_, text) => {
-        return (
-          <span>
-            <Link to={`/text/read/${text.id}`}>Read</Link>
-          </span>
-        );
-      }
+      render: (_, text) => (
+        <span>
+          <Link to={`/text/read/${text.id}`}>Read</Link>
+        </span>
+      )
     },
     {
       title: "Unknow",
@@ -123,6 +109,7 @@ class TextPage extends React.Component {
       }
     }
   ];
+
   constructor(props) {
     super(props);
     this.showCreateModal = this.showCreateModal.bind(this);
@@ -131,6 +118,7 @@ class TextPage extends React.Component {
     this.filterTexts = this.filterTexts.bind(this);
     this.state = { createModalVisible: false };
   }
+
   componentDidMount() {
     const { filters, getTexts, itemPerPage, getLanguages } = this.props;
     getTexts(filters, 1, itemPerPage);
@@ -206,16 +194,14 @@ class TextPage extends React.Component {
 }
 
 const connectedTextPage = connect(
-  state => {
-    return {
-      texts: state.text.texts,
-      filters: state.text.filters,
-      page: state.text.page,
-      itemPerPage: state.text.itemPerPage,
-      total: state.text.total,
-      languages: state.language.languages
-    };
-  },
+  state => ({
+    texts: state.text.texts,
+    filters: state.text.filters,
+    page: state.text.page,
+    itemPerPage: state.text.itemPerPage,
+    total: state.text.total,
+    languages: state.language.languages
+  }),
   {
     getTexts: getTextsAction,
     getLanguages: getLanguageAction

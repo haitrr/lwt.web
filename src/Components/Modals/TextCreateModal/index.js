@@ -1,6 +1,6 @@
 /**
  * export
  */
-import { TextCreateModal } from "./TextCreateModal";
+import TextCreateModal from "./TextCreateModal";
 
-export { TextCreateModal };
+export default TextCreateModal;

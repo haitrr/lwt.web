@@ -1,38 +1,52 @@
+import PropTypes from "prop-types";
 import { Form, Input } from "antd";
 import React from "react";
+import { connect } from "react-redux";
 import { LanguageSelect } from "../../Inputs/LanguageSelect/LanguageSelect";
 
 /**
  * text create form
  */
-class TextCreateForm extends React.Component {
-  render() {
-    const {
-      form: { getFieldDecorator },
-      onSubmit
-    } = this.props;
+function TextCreateForm(props) {
+  const {
+    form: { getFieldDecorator },
+    onSubmit,
+    currentLanguage
+  } = props;
 
-    return (
-      <Form onSubmit={onSubmit}>
-        <Form.Item>
-          {getFieldDecorator("language")(<LanguageSelect />)}
-        </Form.Item>
-        <Form.Item>
-          {getFieldDecorator("title")(<Input placeholder="Title" />)}
-        </Form.Item>
-        <Form.Item>
-          {getFieldDecorator("content")(
-            <Input.TextArea
-              autosize={{ minRows: 10, maxRows: 20 }}
-              placeholder="Please input text content here ..."
-            />
-          )}
-        </Form.Item>
-      </Form>
-    );
-  }
+  return (
+    <Form onSubmit={onSubmit}>
+      <Form.Item>
+        {getFieldDecorator("language", { initialValue: currentLanguage })(
+          <LanguageSelect />
+        )}
+      </Form.Item>
+      <Form.Item>
+        {getFieldDecorator("title")(<Input placeholder="Title" />)}
+      </Form.Item>
+      <Form.Item>
+        {getFieldDecorator("content")(
+          <Input.TextArea
+            autosize={{ minRows: 10, maxRows: 20 }}
+            placeholder="Please input text content here ..."
+          />
+        )}
+      </Form.Item>
+    </Form>
+  );
 }
 
-const textCreateForm = Form.create()(TextCreateForm);
+export default Form.create()(
+  connect(
+    state => ({
+      currentLanguage: state.language.currentLanguage
+    }),
+    null
+  )(TextCreateForm)
+);
 
-export { textCreateForm as TextCreateForm };
+TextCreateForm.propTypes = {
+  currentLanguage: PropTypes.number.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  form: PropTypes.shape({})
+};
