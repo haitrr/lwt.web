@@ -23,6 +23,7 @@ class Term extends React.Component {
     }
     return (
       <Tooltip
+        overlayStyle={{ pointerEvents: "none" }}
         title={
           term.meaning ? (
             <p style={{ whiteSpace: "pre-line" }}>{term.meaning}</p>
