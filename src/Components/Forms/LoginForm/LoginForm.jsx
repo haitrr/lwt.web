@@ -37,7 +37,9 @@ class LoginForm extends React.Component {
           {getFieldDecorator("userName")(<Input placeholder="UserName" />)}
         </Form.Item>
         <Form.Item>
-          {getFieldDecorator("password")(<Input placeholder="Password" />)}
+          {getFieldDecorator("password")(
+            <Input.Password placeholder="Password" />
+          )}
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
