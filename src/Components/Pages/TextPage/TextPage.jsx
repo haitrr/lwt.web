@@ -1,12 +1,33 @@
-import { Button, Pagination, Table } from "antd";
+import PropTypes from "prop-types";
+import { Button, Pagination, Popover, Table } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { PieChart } from "react-chartkick";
 import { getLanguageAction } from "../../../Actions/LanguageAction";
 import { getTextsAction } from "../../../Actions/TextAction";
 import { TextFilterForm } from "../../Forms/TextFilterForm";
 import TextCreateModal from "../../Modals/TextCreateModal";
 import { TermLearningLevel } from "../../../Enums";
+
+function renderTermNumber(current, record, level) {
+  if (!current) {
+    return 0;
+  }
+  const { counts } = record;
+  let sum = 0;
+  Object.keys(counts).map(key => {
+    if (key !== "Ignored") {
+      sum += counts[key];
+    }
+    return null;
+  });
+  return (
+    <span className={`term-${TermLearningLevel[level]}`}>
+      {`${current}(${Math.round((current / sum) * 100)}%)`}
+    </span>
+  );
+}
 
 /**
  * text page
@@ -24,9 +45,8 @@ class TextPage extends React.Component {
       dataIndex: "language",
       key: "language",
       render: value => {
-        const language = this.props.languages.find(
-          language => language.id === value
-        );
+        const { languages } = this.props;
+        const language = languages.find(lang => lang.id === value);
         if (language) {
           return language.name;
         }
@@ -46,49 +66,43 @@ class TextPage extends React.Component {
       title: "Unknow",
       key: "unknow",
       dataIndex: "counts.UnKnow",
-      render: (value, record) => this.renderTermNumber(value, record, "UnKnow")
+      render: (value, record) => renderTermNumber(value, record, "UnKnow")
     },
     {
       title: "Learning1",
       key: "Learning1",
       dataIndex: "counts.Learning1",
-      render: (value, record) =>
-        this.renderTermNumber(value, record, "Learning1")
+      render: (value, record) => renderTermNumber(value, record, "Learning1")
     },
     {
       title: "Learning2",
       key: "Learning2",
       dataIndex: "counts.Learning2",
-      render: (value, record) =>
-        this.renderTermNumber(value, record, "Learning2")
+      render: (value, record) => renderTermNumber(value, record, "Learning2")
     },
     {
       title: "Learning3",
       key: "Learning3",
       dataIndex: "counts.Learning3",
-      render: (value, record) =>
-        this.renderTermNumber(value, record, "Learning3")
+      render: (value, record) => renderTermNumber(value, record, "Learning3")
     },
     {
       title: "Learning4",
       key: "Learning4",
       dataIndex: "counts.Learning4",
-      render: (value, record) =>
-        this.renderTermNumber(value, record, "Learning4")
+      render: (value, record) => renderTermNumber(value, record, "Learning4")
     },
     {
       title: "Learning5",
       key: "Learning5",
       dataIndex: "counts.Learning5",
-      render: (value, record) =>
-        this.renderTermNumber(value, record, "Learning5")
+      render: (value, record) => renderTermNumber(value, record, "Learning5")
     },
     {
       title: "WellKnow",
       key: "WellKnow",
       dataIndex: "counts.WellKnow",
-      render: (value, record) =>
-        this.renderTermNumber(value, record, "WellKnow")
+      render: (value, record) => renderTermNumber(value, record, "WellKnow")
     },
     {
       title: "Ignored",
@@ -99,13 +113,21 @@ class TextPage extends React.Component {
       title: "Total",
       key: "total",
       dataIndex: "counts",
-      render: value => {
+      render: (value, record) => {
         let sum = 0;
         Object.keys(value).map(key => {
           sum += value[key];
           return null;
         });
-        return sum;
+        return (
+          <Popover
+            content={
+              <PieChart width="500px" height="500px" data={record.counts} />
+            }
+          >
+            {sum}
+          </Popover>
+        );
       }
     }
   ];
@@ -125,41 +147,22 @@ class TextPage extends React.Component {
     getLanguages();
   }
 
-  renderTermNumber(current, record, level) {
-    if (!current) {
-      return 0;
-    }
-    const { counts } = record;
-    let sum = 0;
-    Object.keys(counts).map(key => {
-      if (key !== "Ignored") {
-        sum += counts[key];
-      }
-      return null;
-    });
-    return (
-      <span className={`term-${TermLearningLevel[level]}`}>
-        {`${current}(${Math.round((current / sum) * 100)}%)`}
-      </span>
-    );
+  handlePageChange(page) {
+    const { filters, itemPerPage, getTexts } = this.props;
+    getTexts(filters, page, itemPerPage);
   }
 
   filterTexts(filters) {
-    const { page, itemPerPage } = this.props;
-    this.props.getTexts(filters, page, itemPerPage);
+    const { page, getTexts, itemPerPage } = this.props;
+    getTexts(filters, page, itemPerPage);
   }
 
   showCreateModal() {
-    this.setState({ ...this.state, createModalVisible: true });
+    this.setState(prevState => ({ ...prevState, createModalVisible: true }));
   }
 
   hideCreateModal() {
-    this.setState({ ...this.state, createModalVisible: false });
-  }
-
-  handlePageChange(page) {
-    const { filters, itemPerPage } = this.props;
-    this.props.getTexts(filters, page, itemPerPage);
+    this.setState(prevState => ({ prevState, createModalVisible: false }));
   }
 
   render() {
@@ -193,7 +196,7 @@ class TextPage extends React.Component {
   }
 }
 
-const connectedTextPage = connect(
+export default connect(
   state => ({
     texts: state.text.texts,
     filters: state.text.filters,
@@ -207,4 +210,18 @@ const connectedTextPage = connect(
     getLanguages: getLanguageAction
   }
 )(TextPage);
-export { connectedTextPage as TextPage };
+
+TextPage.propTypes = {
+  filters: PropTypes.shape(),
+  getLanguages: PropTypes.func.isRequired,
+  getTexts: PropTypes.func.isRequired,
+  itemPerPage: PropTypes.number.isRequired,
+  languages: PropTypes.arrayOf().isRequired,
+  page: PropTypes.number.isRequired,
+  texts: PropTypes.arrayOf().isRequired,
+  total: PropTypes.number.isRequired
+};
+
+TextPage.defaultProps = {
+  filters: null
+};

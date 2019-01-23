@@ -8,14 +8,18 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import promiseMiddleware from "redux-promise";
 import "antd/dist/antd.css";
 import "./App.css";
+import ReactChartkick from "react-chartkick";
+import Chart from "chart.js";
 import rootReducer from "./RootReducer";
 import { Footer } from "./Components/Footer";
 import Header from "./Components/Header/Header";
 import { HomePage } from "./Components/Pages/HomePage";
 import LoginPage from "./Components/Pages/LoginPage/LoginPage";
 import { RegisterPage } from "./Components/Pages/RegisterPage/RegisterPage";
-import { TextPage } from "./Components/Pages/TextPage";
+import TextPage from "./Components/Pages/TextPage";
 import TextReadPage from "./Components/Pages/TextReadPage";
+
+ReactChartkick.addAdapter(Chart);
 
 const store = createStore(
   rootReducer,
