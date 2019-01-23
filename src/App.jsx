@@ -15,7 +15,7 @@ import { HomePage } from "./Components/Pages/HomePage";
 import LoginPage from "./Components/Pages/LoginPage/LoginPage";
 import { RegisterPage } from "./Components/Pages/RegisterPage/RegisterPage";
 import { TextPage } from "./Components/Pages/TextPage";
-import { TextReadPage } from "./Components/Pages/TextReadPage";
+import TextReadPage from "./Components/Pages/TextReadPage";
 
 const store = createStore(
   rootReducer,

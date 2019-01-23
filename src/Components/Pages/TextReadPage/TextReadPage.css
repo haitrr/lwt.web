@@ -1,5 +1,5 @@
 .readPane {
-  height: 80vh;
+  height: 85vh;
   width: 100%;
   position: relative;
 }
@@ -7,7 +7,5 @@
 .text-read-container {
   overflow: hidden;
   overflow-y: auto;
-  height: 70vh;
-  display: block;
-  position:relative;
+  height: 100%;
 }

@@ -61,7 +61,10 @@ class TermEditForm extends React.Component {
         </Form.Item>
         <Form.Item {...formItemLayout} label="Meaning">
           {getFieldDecorator("meaning", { initialValue: value.meaning })(
-            <Input.TextArea placeholder="Meaning" />
+            <Input.TextArea
+              autosize={{ maxRows: 10, minRows: 3 }}
+              placeholder="Meaning"
+            />
           )}
         </Form.Item>
         <Form.Item {...formItemLayout} label="Learning Level">
