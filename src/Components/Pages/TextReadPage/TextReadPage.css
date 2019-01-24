@@ -6,6 +6,7 @@
 
 .text-read-container {
   overflow: hidden;
+  white-space: pre-line;
   overflow-y: auto;
   height: 100%;
 }
