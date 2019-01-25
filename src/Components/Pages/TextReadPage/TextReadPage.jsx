@@ -29,9 +29,13 @@ class TextReadPage extends React.Component {
     const { readingText, editingTerm } = this.props;
     return readingText ? (
       <Row>
-        <Col md={16}>
+        <Col md={16} className={styles.contentPanel}>
           <h2 className={styles.titleSection}>{readingText.title}</h2>
-          <div className={styles.textReadContainer}>
+          <div
+            className={`${styles.textReadContainer} ${
+              editingTerm ? styles.editing : ""
+            }`}
+          >
             {readingText.terms.map((term, index) => (
               // eslint-disable-next-line react/no-array-index-key
               <Term key={index} term={term} index={index} />
