@@ -29,7 +29,7 @@ class TextReadPage extends React.Component {
     const { readingText, editingTerm } = this.props;
     return readingText ? (
       <Row>
-        <Col md={12}>
+        <Col md={16}>
           <h2 className={styles.titleSection}>{readingText.title}</h2>
           <div className={styles.textReadContainer}>
             {readingText.terms.map((term, index) => (
@@ -38,9 +38,11 @@ class TextReadPage extends React.Component {
             ))}
           </div>
         </Col>
-        <Col md={12} className={styles.termEditSection}>
-          {editingTerm ? <TermEditForm /> : <div />}
-        </Col>
+        {editingTerm ? (
+          <Col md={8} className={styles.termEditSection}>
+            <TermEditForm />
+          </Col>
+        ) : null}
       </Row>
     ) : null;
   }
