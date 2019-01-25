@@ -4,6 +4,9 @@
   border: none;
   padding: 0;
   margin-bottom:2px;
+  &:first-letter {
+   letter-spacing: 0;
+ }
 }
 .term-0 {
   background: white;

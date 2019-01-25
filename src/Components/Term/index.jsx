@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Button, Tooltip } from "antd";
 import PropTypes from "prop-types";
 import { getTermAction, setEditingTermAction } from "../../Actions/TermAction";
-import "./term.css";
+import "./term.scss";
 import { TermLearningLevel } from "../../Enums";
 
 class Term extends React.Component {
@@ -35,7 +35,10 @@ class Term extends React.Component {
           onClick={() => this.handleTermClick(term)}
           htmlType="button"
         >
-          {term.content}
+          {// need react fragment here to prevent stupid ant design
+          // to insert a space between two chinese characters.
+            }
+          <React.Fragment>{term.content}</React.Fragment>
         </Button>
       </Tooltip>
     );
