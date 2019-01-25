@@ -1,7 +1,7 @@
 .content {
   margin-left: 100px;
   margin-right: 100px;
-  min-height: 85vh;
+  min-height: 90vh;
   @media only screen and (max-width: 600px) {
     margin-left : 5px;
     margin-right : 5px;
@@ -9,5 +9,11 @@
 }
 
 .header {
+  padding: 0;
+  height: 8vh;
+}
+
+.footer {
+  height: 2vh;
   padding: 0;
 }

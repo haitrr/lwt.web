@@ -7,28 +7,27 @@ import { connect } from "react-redux";
  */
 class LanguageSelect extends React.Component {
   render() {
-    const { languages, onChange, value, disabled } = this.props;
+    const { languages, className, onChange, value, disabled } = this.props;
 
     return (
       <Select
         onChange={onChange}
         value={value}
-        disabled={disabled ? disabled : false}
+        disabled={disabled || false}
+        className={className}
       >
-        {languages.map(language => {
-          return (
-            <Select.Option value={language.id} key={language.id}>
-              {language.name}
-            </Select.Option>
-          );
-        })}
+        {languages.map(language => (
+          <Select.Option value={language.id} key={language.id}>
+            {language.name}
+          </Select.Option>
+        ))}
       </Select>
     );
   }
 }
 
-const connectedLanguageSelect = connect(state => {
-  return { languages: state.language.languages };
-})(LanguageSelect);
+const connectedLanguageSelect = connect(state => ({
+  languages: state.language.languages
+}))(LanguageSelect);
 
 export { connectedLanguageSelect as LanguageSelect };

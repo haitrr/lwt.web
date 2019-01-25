@@ -30,7 +30,7 @@ class TextReadPage extends React.Component {
     return readingText ? (
       <Row>
         <Col md={12}>
-          <div>{readingText.title}</div>
+          <h2 className={styles.titleSection}>{readingText.title}</h2>
           <div className={styles.textReadContainer}>
             {readingText.terms.map((term, index) => (
               // eslint-disable-next-line react/no-array-index-key
@@ -38,7 +38,9 @@ class TextReadPage extends React.Component {
             ))}
           </div>
         </Col>
-        <Col md={12}>{editingTerm ? <TermEditForm /> : <div />}</Col>
+        <Col md={12} className={styles.termEditSection}>
+          {editingTerm ? <TermEditForm /> : <div />}
+        </Col>
       </Row>
     ) : null;
   }

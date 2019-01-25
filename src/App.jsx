@@ -44,7 +44,7 @@ export default function App() {
             <Route path="/text" exact component={TextPage} />
             <Route path="/text/read/:textId" exact component={TextReadPage} />
           </Layout.Content>
-          <Layout.Footer>
+          <Layout.Footer className={styles.footer}>
             <Footer />
           </Layout.Footer>
         </Layout>

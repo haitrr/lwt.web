@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Form, Input, Button } from "antd";
 import LearningLevelSelect from "../../Inputs/LearningLevelSelect";
 import LanguageSelect from "../../Inputs/LanguageSelect";
+import styles from "./TermEditForm.module.scss";
 import {
   createTermAction,
   editTermAction,
@@ -48,13 +49,21 @@ class TermEditForm extends React.Component {
       language
     } = this.props;
     return (
-      <Form onSubmit={this.handleSubmit}>
-        <Form.Item {...formItemLayout} label="Content">
+      <Form onSubmit={this.handleSubmit} className={styles.form}>
+        <Form.Item
+          className={styles.content}
+          {...formItemLayout}
+          label="Content"
+        >
           {getFieldDecorator("content", { initialValue: value.content })(
             <Input disabled />
           )}
         </Form.Item>
-        <Form.Item {...formItemLayout} label="Language">
+        <Form.Item
+          {...formItemLayout}
+          className={styles.language}
+          label="Language"
+        >
           {getFieldDecorator("language", { initialValue: language })(
             <LanguageSelect disabled />
           )}
