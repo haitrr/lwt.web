@@ -35,9 +35,10 @@ class Term extends React.Component {
           onClick={() => this.handleTermClick(term)}
           htmlType="button"
         >
-          {// need react fragment here to prevent stupid ant design
-          // to insert a space between two chinese characters.
-            }
+          {
+            // need react fragment here to prevent stupid ant design
+            // to insert a space between two chinese characters.
+          }
           <React.Fragment>{term.content}</React.Fragment>
         </Button>
       </Tooltip>
