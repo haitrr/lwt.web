@@ -9,6 +9,7 @@ import { getTextsAction } from "../../../Actions/TextAction";
 import { TextFilterForm } from "../../Forms/TextFilterForm";
 import TextCreateModal from "../../Modals/TextCreateModal";
 import { TermLearningLevel } from "../../../Enums";
+import styles from "./TextPage.module.scss";
 
 function renderTermNumber(current, record, level) {
   if (!current) {
@@ -38,7 +39,24 @@ class TextPage extends React.Component {
       title: "Title",
       dataIndex: "title",
       key: "title",
-      width: 300
+      fixed: "left",
+      width: 200,
+      render: (value, record) => {
+        let sum = 0;
+        Object.keys(value).map(key => {
+          sum += value[key];
+          return null;
+        });
+        return (
+          <Popover
+            content={
+              <PieChart width="50vw" height="50vh" data={record.counts} />
+            }
+          >
+            {sum}
+          </Popover>
+        );
+      }
     },
     {
       title: "Language",
@@ -122,7 +140,7 @@ class TextPage extends React.Component {
         return (
           <Popover
             content={
-              <PieChart width="500px" height="500px" data={record.counts} />
+              <PieChart width="50vw" height="50vh" data={record.counts} />
             }
           >
             {sum}
@@ -184,6 +202,8 @@ class TextPage extends React.Component {
           pagination={false}
           columns={this.columns}
           rowKey="id"
+          className={styles.table}
+          scroll={{ x: true }}
         />
         <Pagination
           total={total}
