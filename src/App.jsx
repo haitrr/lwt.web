@@ -7,7 +7,7 @@ import { applyMiddleware, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import promiseMiddleware from "redux-promise";
 import "antd/dist/antd.css";
-import "./App.css";
+import styles from "./App.module.scss";
 import ReactChartkick from "react-chartkick";
 import Chart from "chart.js";
 import rootReducer from "./RootReducer";
@@ -34,10 +34,10 @@ export default function App() {
     <BrowserRouter>
       <Provider store={store}>
         <Layout>
-          <Layout.Header style={{ padding: 0 }}>
+          <Layout.Header className={styles.header}>
             <Header />
           </Layout.Header>
-          <Layout.Content className="Content">
+          <Layout.Content className={styles.content}>
             <Route path="/" exact component={HomePage} />
             <Route path="/login" exact component={LoginPage} />
             <Route path="/register" exact component={RegisterPage} />

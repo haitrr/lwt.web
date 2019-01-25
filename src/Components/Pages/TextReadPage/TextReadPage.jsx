@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
-import SplitPane from "react-split-pane";
+import { Col, Row } from "antd";
 import { readTextAction } from "../../../Actions/TextAction";
-import "./TextReadPage.css";
+import styles from "./TextReadPage.module.scss";
 import TermEditForm from "../../Forms/TermEditForm";
 import {
   getTermAction,
@@ -28,26 +28,18 @@ class TextReadPage extends React.Component {
   render() {
     const { readingText, editingTerm } = this.props;
     return readingText ? (
-      <div className="readPane">
-        <SplitPane split="vertical" defaultSize="60vw">
-          <div>
-            <SplitPane
-              split="horizontal"
-              pane2Style={{ height: "74vh" }}
-              defaultSize="10vh"
-            >
-              <h2>{readingText.title}</h2>
-              <div className="text-read-container">
-                {readingText.terms.map((term, index) => (
-                  // eslint-disable-next-line react/no-array-index-key
-                  <Term key={index} term={term} index={index} />
-                ))}
-              </div>
-            </SplitPane>
+      <Row>
+        <Col md={12}>
+          <div>{readingText.title}</div>
+          <div className={styles.textReadContainer}>
+            {readingText.terms.map((term, index) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <Term key={index} term={term} index={index} />
+            ))}
           </div>
-          <div>{editingTerm ? <TermEditForm /> : <div />}</div>
-        </SplitPane>
-      </div>
+        </Col>
+        <Col md={12}>{editingTerm ? <TermEditForm /> : <div />}</Col>
+      </Row>
     ) : null;
   }
 }

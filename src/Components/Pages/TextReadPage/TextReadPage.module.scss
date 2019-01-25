@@ -4,9 +4,13 @@
   position: relative;
 }
 
-.text-read-container {
+.textReadContainer {
   overflow: hidden;
   white-space: pre-line;
   overflow-y: auto;
   height: 100%;
+  max-height: 85vh;
+  @media only screen and (max-width: 768px) {
+    max-height: 50vh;
+  }
 }
