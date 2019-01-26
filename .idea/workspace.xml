@@ -2,19 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ac520e9-853b-4498-878f-54956aff067e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/hai.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/index.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Actions/TermAction.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Actions/TermAction.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Apis/TermApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Apis/TermApi.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/Forms/TermEditForm/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Forms/TermEditForm/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Inputs/LearningLevelSelect/LearningLevelSelect.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Inputs/LearningLevelSelect/LearningLevelSelect.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Reducers/TermReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Reducers/TermReducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utilities/HttpRequest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities/HttpRequest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -28,38 +18,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Apis/TermApi.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Components/Forms/TermEditForm/index.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="482">
-              <caret line="93" column="24" lean-forward="true" selection-start-line="93" selection-start-column="24" selection-end-line="93" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Components/Inputs/LearningLevelSelect/LearningLevelSelect.jsx">
+        <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="370">
-              <caret line="23" column="56" selection-start-line="23" selection-start-column="56" selection-end-line="23" selection-end-column="56" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/App.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-878">
-              <caret line="7" column="44" selection-start-line="7" selection-start-column="44" selection-end-line="7" selection-end-column="44" />
+            <state relative-caret-position="400">
+              <caret line="20" column="27" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -82,6 +45,15 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Components/Forms/TermEditForm/index.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="312">
+              <caret line="27" column="65" selection-start-line="27" selection-start-column="65" selection-end-line="27" selection-end-column="65" />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
@@ -89,6 +61,7 @@
       <find>chart</find>
       <find>pie</find>
       <find>span</find>
+      <find>styled</find>
     </findStrings>
     <replaceStrings>
       <replace>colSpan</replace>
@@ -132,7 +105,6 @@
         <option value="$PROJECT_DIR$/src/Components/Term/term.scss" />
         <option value="$PROJECT_DIR$/src/App.css" />
         <option value="$PROJECT_DIR$/src/App.scss" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/Components/Forms/TermEditForm/TermEditForm.scss" />
         <option value="$PROJECT_DIR$/src/Components/Inputs/LanguageSelect/LanguageSelect.jsx" />
         <option value="$PROJECT_DIR$/src/Components/Forms/TermEditForm/TermEditForm.module.scss" />
@@ -149,8 +121,9 @@
         <option value="$PROJECT_DIR$/src/Actions/TermAction.js" />
         <option value="$PROJECT_DIR$/src/App.jsx" />
         <option value="$PROJECT_DIR$/src/Apis/TermApi.js" />
-        <option value="$PROJECT_DIR$/src/Components/Forms/TermEditForm/index.jsx" />
         <option value="$PROJECT_DIR$/src/Components/Inputs/LearningLevelSelect/LearningLevelSelect.jsx" />
+        <option value="$PROJECT_DIR$/src/Components/Forms/TermEditForm/index.jsx" />
+        <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
@@ -366,12 +339,12 @@
       <workItem from="1547355815855" duration="10869000" />
       <workItem from="1547914123444" duration="9790000" />
       <workItem from="1548002765459" duration="7421000" />
-      <workItem from="1548251681177" duration="22949000" />
+      <workItem from="1548251681177" duration="23214000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="75516000" />
+    <option name="totallyTimeSpent" value="75781000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -398,14 +371,14 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.4993895" weight="0.32987553" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="8" sideWeight="0.4945055" visible="true" weight="0.32987553" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50549453" side_tool="true" visible="true" weight="0.32987553" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.4945055" visible="true" weight="0.32987553" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50549453" side_tool="true" weight="0.32987553" />
       <window_info anchor="bottom" id="TypeScript" order="10" />
       <window_info anchor="bottom" id="Messages" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Terminal" order="3" sideWeight="0.498779" visible="true" weight="0.2820513" />
+      <window_info active="true" anchor="right" id="Terminal" order="3" sideWeight="0.498779" visible="true" weight="0.2820513" />
     </layout>
     <layout-to-restore>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26129428" />
@@ -588,16 +561,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package-lock.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="16" column="32" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
@@ -758,17 +721,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/Forms/TermEditForm/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="482">
-          <caret line="93" column="24" lean-forward="true" selection-start-line="93" selection-start-column="24" selection-end-line="93" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/Inputs/LearningLevelSelect/LearningLevelSelect.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="370">
           <caret line="23" column="56" selection-start-line="23" selection-start-column="56" selection-end-line="23" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package-lock.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-895" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Components/Forms/TermEditForm/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="27" column="65" selection-start-line="27" selection-start-column="65" selection-end-line="27" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="20" column="27" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
         </state>
       </provider>
     </entry>
