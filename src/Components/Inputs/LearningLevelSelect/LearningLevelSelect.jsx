@@ -19,6 +19,8 @@ export default function LearningLevelSelect(props) {
 }
 
 LearningLevelSelect.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.number.isRequired
+  // eslint-disable-next-line react/require-default-props
+  onChange: PropTypes.func,
+  // eslint-disable-next-line react/require-default-props
+  value: PropTypes.number
 };

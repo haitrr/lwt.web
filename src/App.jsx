@@ -1,16 +1,13 @@
+import PropTypes from "prop-types";
 import { Layout } from "antd";
 import React from "react";
-import { Provider } from "react-redux";
+import { connect } from "react-redux";
 import { Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
-import { applyMiddleware, createStore } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import promiseMiddleware from "redux-promise";
 import "antd/dist/antd.css";
 import ReactChartkick from "react-chartkick";
 import Chart from "chart.js";
 import styles from "./App.module.scss";
-import rootReducer from "./RootReducer";
 import { Footer } from "./Components/Footer";
 import Header from "./Components/Header/Header";
 import { HomePage } from "./Components/Pages/HomePage";
@@ -18,21 +15,22 @@ import LoginPage from "./Components/Pages/LoginPage/LoginPage";
 import { RegisterPage } from "./Components/Pages/RegisterPage/RegisterPage";
 import TextPage from "./Components/Pages/TextPage";
 import TextReadPage from "./Components/Pages/TextReadPage";
+import { getLanguageAction } from "./Actions/LanguageAction";
 
 ReactChartkick.addAdapter(Chart);
-
-const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(promiseMiddleware))
-);
 
 /**
  * app.
  */
-export default function App() {
-  return (
-    <BrowserRouter>
-      <Provider store={store}>
+class App extends React.Component {
+  componentDidMount() {
+    const { getLanguages } = this.props;
+    getLanguages();
+  }
+
+  render() {
+    return (
+      <BrowserRouter>
         <Layout>
           <Layout.Header className={styles.header}>
             <Header />
@@ -48,7 +46,17 @@ export default function App() {
             <Footer />
           </Layout.Footer>
         </Layout>
-      </Provider>
-    </BrowserRouter>
-  );
+      </BrowserRouter>
+    );
+  }
 }
+export default connect(
+  null,
+  {
+    getLanguages: getLanguageAction
+  }
+)(App);
+
+App.propTypes = {
+  getLanguages: PropTypes.func.isRequired
+};

@@ -1,11 +1,17 @@
 import { createAction } from "redux-actions";
 import { notification } from "antd";
-import { createTermAsync, editTermAsync, getTermAsync } from "../Apis/TermApi";
+import {
+  createTermAsync,
+  editTermAsync,
+  getMeaningAsync,
+  getTermAsync
+} from "../Apis/TermApi";
 
 export const TERM_GET = "TERM_GET";
 export const TERM_SET = "TERM_SET";
 export const TERM_CREATED = "TERM_CREATED";
 export const TERM_EDITED = "TERM_EDITED";
+export const TERM_GET_MEANING = "TERM_GET_MEANING";
 
 export const getTermAction = createAction(TERM_GET, async id => {
   try {
@@ -17,6 +23,21 @@ export const getTermAction = createAction(TERM_GET, async id => {
 });
 
 export const setEditingTermAction = createAction(TERM_SET, term => term);
+export const getEditingTermMeaningAction = createAction(
+  TERM_GET_MEANING,
+  async (content, from) => {
+    const rs = await getMeaningAsync(content.toLowerCase(), from, "vi");
+    if (!rs) {
+      return "";
+    }
+    return rs.result === "ok"
+      ? rs.tuc
+          .filter(o => o.phrase)
+          .map(o => o.phrase.text)
+          .join(", ")
+      : "";
+  }
+);
 export const createTermAction = createAction(TERM_CREATED, async term => {
   try {
     const newTerm = { ...term };

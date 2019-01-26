@@ -8,6 +8,7 @@ import styles from "./TermEditForm.module.scss";
 import {
   createTermAction,
   editTermAction,
+  getEditingTermMeaningAction,
   setEditingTermAction
 } from "../../../Actions/TermAction";
 
@@ -23,6 +24,16 @@ const formItemLayout = {
 };
 
 class TermEditForm extends React.Component {
+    componentDidUpdate(prevProps) {
+    const { value, getEditingTermMeaning, languages, language } = this.props;
+    if (value !== prevProps.value && value.meaning === null) {
+      getEditingTermMeaning(
+        value.content,
+        languages.find(l => l.id === language).code
+      );
+    }
+  }
+
   handleSubmit = e => {
     const {
       form: { getFieldsValue },
@@ -41,6 +52,7 @@ class TermEditForm extends React.Component {
     }
     setEditingTerm(null);
   };
+
 
   render() {
     const {
@@ -99,12 +111,14 @@ class TermEditForm extends React.Component {
 export default connect(
   state => ({
     value: state.term.editingTerm,
-    language: state.text.readingText.language
+    language: state.text.readingText.language,
+    languages: state.language.languages
   }),
   {
     setEditingTerm: setEditingTermAction,
     createTerm: createTermAction,
-    editTerm: editTermAction
+    editTerm: editTermAction,
+    getEditingTermMeaning: getEditingTermMeaningAction
   }
 )(Form.create()(TermEditForm));
 
@@ -112,7 +126,9 @@ TermEditForm.propTypes = {
   form: PropTypes.shape({}).isRequired,
   createTerm: PropTypes.func.isRequired,
   setEditingTerm: PropTypes.func.isRequired,
+  getEditingTermMeaning: PropTypes.func.isRequired,
   editTerm: PropTypes.func.isRequired,
   language: PropTypes.number.isRequired,
+  languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   value: PropTypes.shape({}).isRequired
 };

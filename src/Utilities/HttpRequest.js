@@ -1,5 +1,6 @@
-import { TOKEN_LOCAL_STORAGE_KEY } from "../Constants";
 import { notification } from "antd";
+import fetchJsonp from "fetch-jsonp";
+import { TOKEN_LOCAL_STORAGE_KEY } from "../Constants";
 
 function defaultResponseErrorHandler(response) {
   if (
@@ -9,9 +10,11 @@ function defaultResponseErrorHandler(response) {
   ) {
     notification.error({ message: "Failed to connect to server." });
   } else {
-    throw new Error(
-      `Error connecting with server ${response.status}:${response.statusText}`
-    );
+    notification.error({
+      message: `Error connecting with server ${response.status}:${
+        response.statusText
+      }`
+    });
   }
 }
 async function defaultResponseHandler(response) {
@@ -49,7 +52,7 @@ export async function postAsync(
   return fetch(url, {
     body: JSON.stringify(body), // body data type must match "Content-Type" header
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    //credentials: "include", // include, same-origin, *omit
+    // credentials: "include", // include, same-origin, *omit
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       ...getAuthenticationHeader()
@@ -73,7 +76,7 @@ export async function putAsync(
   return fetch(`${url}/${id}`, {
     body: JSON.stringify(body), // body data type must match "Content-Type" header
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    //credentials: "include", // include, same-origin, *omit
+    // credentials: "include", // include, same-origin, *omit
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       ...getAuthenticationHeader()
@@ -105,7 +108,7 @@ export async function getAsync(
 
   return fetch(fullUrl, {
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    //credentials: "include", // include, same-origin, *omit
+    // credentials: "include", // include, same-origin, *omit
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       ...getAuthenticationHeader()
@@ -116,6 +119,26 @@ export async function getAsync(
     redirect: "follow", // manual, *follow, error
     referrer: "no-referrer" // no-referrer, *client
   })
+    .then(handleResponse)
+    .catch(defaultResponseErrorHandler);
+}
+
+export async function getJsonpAsync(
+  url,
+  params,
+  handleResponse = defaultResponseHandler
+) {
+  let fullUrl = url;
+  if (params != null) {
+    fullUrl += "?";
+    Object.keys(params).forEach(key => {
+      if (params[key] != null) {
+        fullUrl += `${key}=${params[key]}&`;
+      }
+    });
+  }
+
+  return fetchJsonp(fullUrl)
     .then(handleResponse)
     .catch(defaultResponseErrorHandler);
 }
