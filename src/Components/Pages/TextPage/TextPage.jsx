@@ -41,22 +41,13 @@ class TextPage extends React.Component {
       key: "title",
       fixed: "left",
       width: 200,
-      render: (value, record) => {
-        let sum = 0;
-        Object.keys(value).map(key => {
-          sum += value[key];
-          return null;
-        });
-        return (
-          <Popover
-            content={
-              <PieChart width="50vw" height="50vh" data={record.counts} />
-            }
-          >
-            {sum}
-          </Popover>
-        );
-      }
+      render: (value, record) => (
+        <Popover
+          content={<PieChart width="50vw" height="50vh" data={record.counts} />}
+        >
+          {value}
+        </Popover>
+      )
     },
     {
       title: "Language",
