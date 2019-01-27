@@ -227,9 +227,9 @@ TextPage.propTypes = {
   getLanguages: PropTypes.func.isRequired,
   getTexts: PropTypes.func.isRequired,
   itemPerPage: PropTypes.number.isRequired,
-  languages: PropTypes.arrayOf().isRequired,
+  languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   page: PropTypes.number.isRequired,
-  texts: PropTypes.arrayOf().isRequired,
+  texts: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   total: PropTypes.number.isRequired
 };
 

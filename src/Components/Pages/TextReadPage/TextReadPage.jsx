@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 import { Col, Row } from "antd";
+import Speech from "speak-tts";
 import { readTextAction } from "../../../Actions/TextAction";
 import styles from "./TextReadPage.module.scss";
 import TermEditForm from "../../Forms/TermEditForm";
@@ -23,7 +24,27 @@ class TextReadPage extends React.Component {
       }
     } = this.props;
     readText(textId);
+    this.speech = new Speech();
+    this.speech.init();
   }
+
+  componentDidUpdate(prevProps) {
+    const { readingText, languages } = this.props;
+    if (
+      readingText &&
+      (prevProps.languages !== languages ||
+        prevProps.readingText !== readingText)
+    ) {
+      const language = languages.find(l => l.id === readingText.language);
+      if (language) {
+        this.speech.setLanguage(language.speakCode);
+      }
+    }
+  }
+
+  onTermClick = term => {
+    this.speech.speak({ text: term.content });
+  };
 
   render() {
     const { readingText, editingTerm } = this.props;
@@ -37,8 +58,13 @@ class TextReadPage extends React.Component {
             }`}
           >
             {readingText.terms.map((term, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <Term key={index} term={term} index={index} />
+              <Term
+                onTermClick={this.onTermClick}
+                // eslint-disable-next-line react/no-array-index-key
+                key={index}
+                term={term}
+                index={index}
+              />
             ))}
           </div>
         </Col>
@@ -55,7 +81,8 @@ class TextReadPage extends React.Component {
 export default connect(
   state => ({
     readingText: state.text.readingText,
-    editingTerm: state.term.editingTerm
+    editingTerm: state.term.editingTerm,
+    languages: state.language.languages
   }),
   {
     readText: readTextAction,
@@ -63,10 +90,15 @@ export default connect(
     setEditingTerm: setEditingTermAction
   }
 )(TextReadPage);
+TextReadPage.defaultProps = {
+  editingTerm: null,
+  readingText: null
+};
 
 TextReadPage.propTypes = {
-  editingTerm: PropTypes.shape().isRequired,
+  editingTerm: PropTypes.shape(),
   match: PropTypes.shape().isRequired,
   readText: PropTypes.func.isRequired,
-  readingText: PropTypes.shape().isRequired
+  readingText: PropTypes.shape(),
+  languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired
 };

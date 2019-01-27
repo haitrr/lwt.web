@@ -8,7 +8,8 @@ import { TermLearningLevel } from "../../Enums";
 
 class Term extends React.Component {
   handleTermClick = term => {
-    const { getTerm, setEditingTerm } = this.props;
+    const { getTerm, setEditingTerm, onTermClick } = this.props;
+    onTermClick(term);
     if (term.id) {
       getTerm(term.id);
     } else {
@@ -52,7 +53,8 @@ Term.propTypes = {
   term: PropTypes.shape({
     learningLevel: PropTypes.number.isRequired,
     meaning: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  onTermClick: PropTypes.func.isRequired
 };
 
 export default connect(
