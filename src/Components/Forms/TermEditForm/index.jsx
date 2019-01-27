@@ -24,6 +24,16 @@ const formItemLayout = {
 };
 
 class TermEditForm extends React.Component {
+  componentDidMount() {
+    const { value, getEditingTermMeaning, languages, language } = this.props;
+    if (value.meaning === null) {
+      getEditingTermMeaning(
+        value.content,
+        languages.find(l => l.id === language).code
+      );
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const { value, getEditingTermMeaning, languages, language } = this.props;
     if (value !== prevProps.value && value.meaning === null) {
