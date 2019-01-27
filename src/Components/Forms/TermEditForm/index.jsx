@@ -12,17 +12,6 @@ import {
   setEditingTermAction
 } from "../../../Actions/TermAction";
 
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 8 }
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 16 }
-  }
-};
-
 class TermEditForm extends React.Component {
   componentDidMount() {
     const { value, getEditingTermMeaning, languages, language } = this.props;
@@ -70,45 +59,41 @@ class TermEditForm extends React.Component {
       language
     } = this.props;
     return (
-      <Form onSubmit={this.handleSubmit} className={styles.form}>
-        <Form.Item
-          className={styles.content}
-          {...formItemLayout}
-          label="Content"
-        >
+      <Form
+        onSubmit={this.handleSubmit}
+        layout="inline"
+        className={styles.form}
+      >
+        <Form.Item className={styles.content} label="Content">
           {getFieldDecorator("content", { initialValue: value.content })(
             <Input disabled />
           )}
         </Form.Item>
-        <Form.Item
-          {...formItemLayout}
-          className={styles.language}
-          label="Language"
-        >
+        <Form.Item className={styles.language} label="Language">
           {getFieldDecorator("language", { initialValue: language })(
             <LanguageSelect disabled />
           )}
         </Form.Item>
-        <Form.Item {...formItemLayout} label="Meaning">
+        <Form.Item label="Meaning" className={styles.meaning}>
           {getFieldDecorator("meaning", { initialValue: value.meaning })(
             <Input.TextArea
-              autosize={{ maxRows: 10, minRows: 3 }}
+              autosize={{ maxRows: 4, minRows: 1 }}
               placeholder="Meaning"
+              cols={60}
             />
           )}
         </Form.Item>
-        <Form.Item {...formItemLayout} label="Learning Level">
+        <Form.Item label="Learning Level">
           {getFieldDecorator("learningLevel", {
             initialValue: value.learningLevel
           })(<LearningLevelSelect />)}
         </Form.Item>
-        <Form.Item
-          wrapperCol={{
-            xs: { span: 24, offset: 0 },
-            sm: { span: 16, offset: 8 }
-          }}
-        >
-          <Button type="primary" htmlType="submit">
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className={styles.saveButton}
+          >
             Save
           </Button>
         </Form.Item>

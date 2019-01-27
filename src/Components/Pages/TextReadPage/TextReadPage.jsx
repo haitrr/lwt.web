@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
-import { Col, Row } from "antd";
 import Speech from "speak-tts";
 import { readTextAction } from "../../../Actions/TextAction";
 import styles from "./TextReadPage.module.scss";
@@ -49,14 +48,12 @@ class TextReadPage extends React.Component {
   render() {
     const { readingText, editingTerm } = this.props;
     return readingText ? (
-      <Row>
-        <Col md={16} className={styles.contentPanel}>
+      <div className={styles.readPane}>
+        <div>
           <h2 className={styles.titleSection}>{readingText.title}</h2>
-          <div
-            className={`${styles.textReadContainer} ${
-              editingTerm ? styles.editing : ""
-            }`}
-          >
+        </div>
+        <div className={styles.contentPanel}>
+          <div>
             {readingText.terms.map((term, index) => (
               <Term
                 onTermClick={this.onTermClick}
@@ -67,13 +64,13 @@ class TextReadPage extends React.Component {
               />
             ))}
           </div>
-        </Col>
+        </div>
         {editingTerm ? (
-          <Col md={8} className={styles.termEditSection}>
+          <div>
             <TermEditForm />
-          </Col>
+          </div>
         ) : null}
-      </Row>
+      </div>
     ) : null;
   }
 }

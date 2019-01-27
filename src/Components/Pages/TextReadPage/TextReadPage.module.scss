@@ -1,40 +1,16 @@
 .readPane {
-  height: 85vh;
-  width: 100%;
-  position: relative;
-}
-
-.textReadContainer {
-  overflow: hidden;
-  white-space: pre-line;
-  overflow-y: auto;
-  height: 100%;
-  max-height: 85vh;
-
-  &.editing {
-    @media only screen and (max-width: 768px) {
-      max-height: 50vh;
-    }
-  }
-}
-
-.termEditSection {
-  overflow: scroll;
-  max-height: 90vh;
-
-  @media only screen and (max-width: 768px) {
-    max-height: 30vh;
-  }
+  height: 90vh;
+  display: flex;
+  flex: auto;
+  flex-direction: column;
 }
 
 .titleSection {
-  max-height: 5vh;
-  display: inline-block;
-  @media only screen and (max-width: 768px) {
-    max-height: 10vh;
-  }
+  max-height: 2.8em;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .contentPanel {
-  max-height: 90vh;
+  overflow-y: auto;
 }

@@ -9,14 +9,14 @@ export default class LearningLevelSelect extends Component {
     const { value, onChange } = this.props;
     return (
       <Radio.Group onChange={onChange} value={value}>
-        <Radio.Button value={1}>Unknown</Radio.Button>
-        <Radio.Button value={2}>Learning 1</Radio.Button>
-        <Radio.Button value={3}>Learning 2</Radio.Button>
-        <Radio.Button value={4}>Learning 3</Radio.Button>
-        <Radio.Button value={5}>Learning 4</Radio.Button>
-        <Radio.Button value={6}>Learning 5</Radio.Button>
-        <Radio.Button value={7}>Well Known</Radio.Button>
-        <Radio.Button value={0}>Ignore</Radio.Button>
+        <Radio.Button value={1}>UK</Radio.Button>
+        <Radio.Button value={2}>L1</Radio.Button>
+        <Radio.Button value={3}>L2</Radio.Button>
+        <Radio.Button value={4}>L3</Radio.Button>
+        <Radio.Button value={5}>L4</Radio.Button>
+        <Radio.Button value={6}>L5</Radio.Button>
+        <Radio.Button value={7}>WK</Radio.Button>
+        <Radio.Button value={0}>I</Radio.Button>
       </Radio.Group>
     );
   }
