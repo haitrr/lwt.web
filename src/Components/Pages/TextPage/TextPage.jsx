@@ -151,7 +151,7 @@ class TextPage extends React.Component {
   }
 
   componentDidMount() {
-    const { filters, getTexts,page, itemPerPage, getLanguages } = this.props;
+    const { filters, getTexts, page, itemPerPage, getLanguages } = this.props;
     getTexts(filters, page, itemPerPage);
     getLanguages();
   }
