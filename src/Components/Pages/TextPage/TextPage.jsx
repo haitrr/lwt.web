@@ -151,8 +151,8 @@ class TextPage extends React.Component {
   }
 
   componentDidMount() {
-    const { filters, getTexts, itemPerPage, getLanguages } = this.props;
-    getTexts(filters, 1, itemPerPage);
+    const { filters, getTexts,page, itemPerPage, getLanguages } = this.props;
+    getTexts(filters, page, itemPerPage);
     getLanguages();
   }
 
@@ -184,6 +184,7 @@ class TextPage extends React.Component {
           onChange={this.filterTexts}
           hide={this.hideCreateModal}
           visible={createModalVisible}
+          onCreate={this.filterTexts}
         />
         <Button onClick={this.showCreateModal}>Add text</Button>
         <Button>Add long text</Button>

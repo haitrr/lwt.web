@@ -3,7 +3,7 @@ import { Modal } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 import TextCreateForm from "../../Forms/TextCreateForm";
-import { createTextAction } from "../../../Actions/TextAction";
+import {createTextAction, getTextsAction} from "../../../Actions/TextAction";
 
 /**
  * text create modal
@@ -20,12 +20,12 @@ class TextCreateModal extends React.Component {
 
   handleOk() {
     const { form } = this.formRef.props;
-    const { createText, hide } = this.props;
+    const { createText, hide, onCreate } = this.props;
     form.validateFields((err, values) => {
       if (err) {
         return;
       }
-      createText(values);
+      createText(values).then(onCreate);
       form.resetFields();
       hide();
     });
@@ -62,12 +62,14 @@ class TextCreateModal extends React.Component {
 export default connect(
   null,
   {
-    createText: createTextAction
+    createText: createTextAction,
+    getTexts: getTextsAction
   }
 )(TextCreateModal);
 
 TextCreateModal.propTypes = {
   createText: PropTypes.func.isRequired,
   hide: PropTypes.func.isRequired,
-  visible: PropTypes.bool.isRequired
+  visible: PropTypes.bool.isRequired,
+  onCreate: PropTypes.func.isRequired
 };
