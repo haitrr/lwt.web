@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Radio } from "antd";
+import styles from "./LearningLevelSelect.module.scss";
 
 // form item need to be class component.
 // eslint-disable-next-line react/prefer-stateless-function
@@ -8,7 +9,7 @@ export default class LearningLevelSelect extends Component {
   render() {
     const { value, onChange } = this.props;
     return (
-      <Radio.Group onChange={onChange} value={value}>
+      <Radio.Group onChange={onChange} className={styles.select} value={value}>
         <Radio.Button value={1}>UK</Radio.Button>
         <Radio.Button value={2}>L1</Radio.Button>
         <Radio.Button value={3}>L2</Radio.Button>
