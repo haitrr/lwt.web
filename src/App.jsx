@@ -16,6 +16,7 @@ import { RegisterPage } from "./Components/Pages/RegisterPage/RegisterPage";
 import TextPage from "./Components/Pages/TextPage";
 import TextReadPage from "./Components/Pages/TextReadPage";
 import { getLanguageAction } from "./Actions/LanguageAction";
+import {Helmet} from "react-helmet";
 
 ReactChartkick.addAdapter(Chart);
 
@@ -32,6 +33,9 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <Layout>
+          <Helmet>
+            <title>Lwt</title>
+          </Helmet>
           <Layout.Header className={styles.header}>
             <Header />
           </Layout.Header>
