@@ -73,8 +73,9 @@ class TextReadPage extends React.Component {
     });
 
     const practice = statistic.map(i => i.value).reduce((a, b) => a + b);
-    const total = readingText.terms.filter(t => t.learningLevel !== "Skipped")
-      .length;
+    const total = readingText.terms.filter(
+      t => t.learningLevel !== TermLearningLevel.Skipped
+    ).length;
 
     return (
       <div className={styles.readPane}>
