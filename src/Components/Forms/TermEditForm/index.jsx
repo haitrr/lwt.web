@@ -64,7 +64,7 @@ class TermEditForm extends React.Component {
         layout="inline"
         className={styles.form}
       >
-        <div>{value.content}</div>
+        <div className={styles.title}>{value.content}</div>
         <Form.Item className={styles.content} label="Content">
           {getFieldDecorator("content", { initialValue: value.content })(
             <Input disabled />
