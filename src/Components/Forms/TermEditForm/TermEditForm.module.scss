@@ -1,10 +1,14 @@
 .form {
   > div {
     margin:0;
+    > div {
+      padding-bottom: 1px;
+    }
   }
 }
 
 .content {
+  display: none !important;
 }
 
 .language {

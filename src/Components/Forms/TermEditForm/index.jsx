@@ -64,6 +64,7 @@ class TermEditForm extends React.Component {
         layout="inline"
         className={styles.form}
       >
+        <div>{value.content}</div>
         <Form.Item className={styles.content} label="Content">
           {getFieldDecorator("content", { initialValue: value.content })(
             <Input disabled />
@@ -77,7 +78,7 @@ class TermEditForm extends React.Component {
         <Form.Item label="Meaning" className={styles.meaning}>
           {getFieldDecorator("meaning", { initialValue: value.meaning })(
             <Input.TextArea
-              autosize={{ maxRows: 4, minRows: 1 }}
+              autosize={{ maxRows: 3, minRows: 1 }}
               placeholder="Meaning"
               cols={60}
             />
