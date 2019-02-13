@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, notification } from "antd";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import LearningLevelSelect from "../../Inputs/LearningLevelSelect";
 import LanguageSelect from "../../Inputs/LanguageSelect";
 import styles from "./TermEditForm.module.scss";
@@ -64,7 +65,12 @@ class TermEditForm extends React.Component {
         layout="inline"
         className={styles.form}
       >
-        <div className={styles.title}>{value.content}</div>
+        <CopyToClipboard
+          text={value.content}
+          onCopy={() => notification.info({ message: "Copied to clipboard." })}
+        >
+          <div className={styles.title}>{value.content}</div>
+        </CopyToClipboard>
         <Form.Item className={styles.content} label="Content">
           {getFieldDecorator("content", { initialValue: value.content })(
             <Input disabled />

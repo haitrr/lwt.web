@@ -12,6 +12,7 @@
     "prop-types": "latest",
     "react": "^16.7.0",
     "react-chartkick": "^0.3.0",
+    "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.7.0",
     "react-helmet": "^5.2.0",
     "react-redux": "^6.0.0",
