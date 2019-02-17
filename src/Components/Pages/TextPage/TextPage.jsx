@@ -1,13 +1,14 @@
 import PropTypes from "prop-types";
-import { Button, Pagination, Popover, Table } from "antd";
+import { Button, Icon, Pagination, Popconfirm, Popover, Table } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { PieChart } from "react-chartkick";
 import { getLanguageAction } from "../../../Actions/LanguageAction";
-import { getTextsAction } from "../../../Actions/TextAction";
+import { deleteTextAction, getTextsAction } from "../../../Actions/TextAction";
 import { TextFilterForm } from "../../Forms/TextFilterForm";
 import TextCreateModal from "../../Modals/TextCreateModal";
+import TextEditModal from "../../Modals/TextEditModal";
 import { TermLearningLevel } from "../../../Enums";
 import styles from "./TextPage.module.scss";
 
@@ -25,7 +26,9 @@ function renderTermNumber(current, record, level) {
   });
   return (
     <span className={`term-${TermLearningLevel[level]}`}>
-      {`${current}(${Math.round((current / sum) * 100)}%)`}
+      {`${current}`}
+      <br />
+      {`${Math.round((current / sum) * 100)}%`}
     </span>
   );
 }
@@ -67,7 +70,22 @@ class TextPage extends React.Component {
       key: "actions",
       render: (_, text) => (
         <span>
-          <Link to={`/text/read/${text.id}`}>Read</Link>
+          <Link className={styles.actionButton} to={`/text/read/${text.id}`}>
+            <Icon type="read" />
+          </Link>
+          <Popconfirm
+            title="Confirm to delete this text."
+            onConfirm={() => this.handleDelete(text.id)}
+            okText="Delete"
+            okType="danger"
+          >
+            <Icon type="delete" className={styles.deleteButton} />
+          </Popconfirm>
+          <Icon
+            type="edit"
+            className={styles.editButton}
+            onClick={() => this.handleEdit(text.id)}
+          />
         </span>
       )
     },
@@ -147,7 +165,7 @@ class TextPage extends React.Component {
     this.hideCreateModal = this.hideCreateModal.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
     this.filterTexts = this.filterTexts.bind(this);
-    this.state = { createModalVisible: false };
+    this.state = { createModalVisible: false, editModalVisible: false };
   }
 
   componentDidMount() {
@@ -155,6 +173,28 @@ class TextPage extends React.Component {
     getTexts(filters, page, itemPerPage);
     getLanguages();
   }
+
+  onEdit = () => {
+    this.filterTexts();
+    this.setState(state => ({ ...state, editingText: null }));
+  };
+
+  hideEditModal = () => {
+    this.setState(prevState => ({ prevState, editModalVisible: false }));
+  };
+
+  handleDelete = textId => {
+    const { deleteText } = this.props;
+    deleteText(textId);
+  };
+
+  handleEdit = textId => {
+    this.setState(state => ({
+      ...state,
+      editingText: textId,
+      editModalVisible: true
+    }));
+  };
 
   handlePageChange(page) {
     const { filters, itemPerPage, getTexts } = this.props;
@@ -166,20 +206,26 @@ class TextPage extends React.Component {
     getTexts(filters, page, itemPerPage);
   }
 
-  showCreateModal() {
-    this.setState(prevState => ({ ...prevState, createModalVisible: true }));
-  }
-
   hideCreateModal() {
     this.setState(prevState => ({ prevState, createModalVisible: false }));
   }
 
+  showCreateModal() {
+    this.setState(prevState => ({ ...prevState, createModalVisible: true }));
+  }
+
   render() {
     const { texts, filters, page, total, languages } = this.props;
-    const { createModalVisible } = this.state;
+    const { createModalVisible, editModalVisible, editingText } = this.state;
 
     return (
       <React.Fragment>
+        <TextEditModal
+          hide={this.hideEditModal}
+          onEdit={this.onEdit}
+          editingText={editingText}
+          visible={editModalVisible}
+        />
         <TextCreateModal
           onChange={this.filterTexts}
           hide={this.hideCreateModal}
@@ -195,6 +241,7 @@ class TextPage extends React.Component {
           columns={this.columns}
           rowKey="id"
           className={styles.table}
+          rowClassName={styles.row}
           scroll={{ x: true }}
         />
         <Pagination
@@ -219,7 +266,8 @@ export default connect(
   }),
   {
     getTexts: getTextsAction,
-    getLanguages: getLanguageAction
+    getLanguages: getLanguageAction,
+    deleteText: deleteTextAction
   }
 )(TextPage);
 
@@ -227,6 +275,7 @@ TextPage.propTypes = {
   filters: PropTypes.shape(),
   getLanguages: PropTypes.func.isRequired,
   getTexts: PropTypes.func.isRequired,
+  deleteText: PropTypes.func.isRequired,
   itemPerPage: PropTypes.number.isRequired,
   languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   page: PropTypes.number.isRequired,

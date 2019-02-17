@@ -1,5 +1,10 @@
 import { TEXT_API } from "../Constants";
-import { getAsync, postAsync } from "../Utilities/HttpRequest";
+import {
+  deleteAsync,
+  getAsync,
+  postAsync,
+  putAsync
+} from "../Utilities/HttpRequest";
 
 /**
  * Get the list of text
@@ -40,4 +45,16 @@ export async function getTextReadAsync(textId) {
   } catch (e) {
     return false;
   }
+}
+
+export async function deleteTextAsync(textId) {
+  return deleteAsync(`${TEXT_API}/${textId}`);
+}
+
+export async function editTextAsync(id, text) {
+  return putAsync(TEXT_API, id, text);
+}
+
+export async function getTextEditDetailAsync(textId) {
+  return getAsync(`${TEXT_API}/edit-detail/${textId}`);
 }

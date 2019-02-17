@@ -1,5 +1,10 @@
 import { handleActions } from "redux-actions";
-import { TEXT_FETCHED, TEXT_READ } from "../Actions/TextAction";
+import {
+  TEXT_DELETED,
+  TEXT_EDIT_DETAIL_FETCHED,
+  TEXT_FETCHED,
+  TEXT_READ
+} from "../Actions/TextAction";
 import { TERM_CREATED, TERM_EDITED } from "../Actions/TermAction";
 
 /**
@@ -15,22 +20,19 @@ const defaultState = {
   readingText: null
 };
 
-export const textReducer = handleActions(
+const textReducer = handleActions(
   {
     [TEXT_FETCHED]: (state, action) => {
       const { payload } = action;
       if (payload === null) {
         return { ...state, texts: [] };
-      } else {
-        return { ...payload };
       }
+      return { ...payload };
     },
-    [TEXT_READ]: (state, action) => {
-      return { ...state, readingText: action.payload };
-    },
+    [TEXT_READ]: (state, action) => ({ ...state, readingText: action.payload }),
     [TERM_CREATED]: (state, action) => {
       const createdTerm = action.payload;
-      const readingText = state.readingText;
+      const { readingText } = state;
       const newTerms = readingText.terms.map(term => {
         if (term.content.toUpperCase() === createdTerm.content.toUpperCase()) {
           return { ...createdTerm, content: term.content };
@@ -41,7 +43,7 @@ export const textReducer = handleActions(
     },
     [TERM_EDITED]: (state, action) => {
       const editedTerm = action.payload;
-      const readingText = state.readingText;
+      const { readingText } = state;
       const newTerms = readingText.terms.map(term => {
         if (term.id === editedTerm.id) {
           return { ...editedTerm, content: term.content };
@@ -49,7 +51,29 @@ export const textReducer = handleActions(
         return term;
       });
       return { ...state, readingText: { ...readingText, terms: newTerms } };
+    },
+    [TEXT_DELETED]: (state, action) => {
+      if (action.payload) {
+        return {
+          ...state,
+          texts: state.texts.filter(t => t.id !== action.payload)
+        };
+      }
+      return state;
+    },
+    [TEXT_EDIT_DETAIL_FETCHED]: (state, action) => {
+      if (action.payload) {
+        return {
+          ...state,
+          editDetail: action.payload
+        };
+      }
+      return state;
     }
   },
   defaultState
 );
+
+export default textReducer;
+
+export const selectEditDetail = state => state.text.editDetail;

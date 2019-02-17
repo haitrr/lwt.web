@@ -4,11 +4,15 @@ import { TOKEN_LOCAL_STORAGE_KEY } from "../Constants";
 
 function defaultResponseErrorHandler(response) {
   if (
-    response.statusCode === 404 ||
-    response.statusCode === 502 ||
-    response.statusCode === 503
+    response.status === 404 ||
+    response.status === 502 ||
+    response.status === 503
   ) {
-    notification.error({ message: "Failed to connect to server." });
+    notification.error({
+      message: "Failed to connect to server, please try again later."
+    });
+  } else if (response.status === 400) {
+    notification.error({ message: response.json().message });
   } else {
     notification.error({
       message: `Error connecting with server ${response.status}:${
@@ -115,6 +119,38 @@ export async function getAsync(
       // "Content-Type": "application/x-www-form-urlencoded",
     },
     method: "GET", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, cors, *same-origin
+    redirect: "follow", // manual, *follow, error
+    referrer: "no-referrer" // no-referrer, *client
+  })
+    .then(handleResponse)
+    .catch(defaultResponseErrorHandler);
+}
+
+export async function deleteAsync(
+  url,
+  params,
+  handleResponse = defaultResponseHandler
+) {
+  let fullUrl = url;
+  if (params != null) {
+    fullUrl += "?";
+    Object.keys(params).forEach(key => {
+      if (params[key] != null) {
+        fullUrl += `${key}=${params[key]}&`;
+      }
+    });
+  }
+
+  return fetch(fullUrl, {
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    // credentials: "include", // include, same-origin, *omit
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      ...getAuthenticationHeader()
+      // "Content-Type": "application/x-www-form-urlencoded",
+    },
+    method: "DELETE", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, cors, *same-origin
     redirect: "follow", // manual, *follow, error
     referrer: "no-referrer" // no-referrer, *client

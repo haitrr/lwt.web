@@ -5,4 +5,31 @@
 }
 
 .table {
+  thead > tr > th {
+    text-align: center;
+  }
+}
+
+.row {
+  text-align: center;
+}
+
+.editButton {
+  color: yellowgreen;
+  font-size: 25px;
+  display: block;
+  cursor: pointer;
+}
+
+.deleteButton {
+  color: red;
+  font-size: 25px;
+  display: block;
+  cursor: pointer;
+  margin-bottom:6px;
+}
+
+.actionButton {
+  display: block;
+  font-size: 25px;
 }
