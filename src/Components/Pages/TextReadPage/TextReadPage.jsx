@@ -42,6 +42,16 @@ class TextReadPage extends React.Component {
       const language = languages.find(l => l.id === readingText.language);
       if (language) {
         this.speech.setLanguage(language.speakCode);
+        try {
+          if (language.speakCode === "zh-CN") {
+            this.speech.setVoice("Google 普通话（中国大陆）");
+          }
+          if (language.speakCode === "en-US") {
+            this.speech.setVoice("Google US English");
+          }
+        } catch {
+          // skip
+        }
       }
     }
     if (!prevProps.readingText && this.bookmark.current) {
