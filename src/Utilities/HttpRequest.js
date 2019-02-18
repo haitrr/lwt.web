@@ -178,3 +178,28 @@ export async function getJsonpAsync(
     .then(handleResponse)
     .catch(defaultResponseErrorHandler);
 }
+
+export async function patchAsync(
+  url,
+  id,
+  field,
+  body,
+  handleResponse = defaultResponseHandler
+) {
+  return fetch(`${url}/${id}/${field}`, {
+    body: JSON.stringify(body), // body data type must match "Content-Type" header
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    // credentials: "include", // include, same-origin, *omit
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      ...getAuthenticationHeader()
+      // "Content-Type": "application/x-www-form-urlencoded",
+    },
+    method: "PATCH", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, cors, *same-origin
+    redirect: "follow", // manual, *follow, error
+    referrer: "no-referrer" // no-referrer, *client
+  })
+    .then(handleResponse)
+    .catch(defaultResponseErrorHandler);
+}

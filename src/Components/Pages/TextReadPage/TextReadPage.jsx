@@ -3,7 +3,8 @@ import React from "react";
 import { connect } from "react-redux";
 import Speech from "speak-tts";
 import { Tooltip } from "antd";
-import { readTextAction } from "../../../Actions/TextAction";
+import { animateScroll } from "react-scroll";
+import { readTextAction, setBookmarkAction } from "../../../Actions/TextAction";
 import styles from "./TextReadPage.module.scss";
 import TermEditForm from "../../Forms/TermEditForm";
 import {
@@ -27,6 +28,7 @@ class TextReadPage extends React.Component {
     } = this.props;
     readText(textId);
     this.speech = new Speech();
+    this.bookmark = React.createRef();
     this.speech.init();
   }
 
@@ -42,10 +44,22 @@ class TextReadPage extends React.Component {
         this.speech.setLanguage(language.speakCode);
       }
     }
+    if (!prevProps.readingText && this.bookmark.current) {
+      animateScroll.scrollTo(
+        this.bookmark.current.offsetTop -
+          this.bookmark.current.parentNode.offsetTop,
+        {
+          containerId: "contentPanel",
+          smooth: true
+        }
+      );
+    }
   }
 
-  onTermClick = term => {
+  onTermClick = (term, index) => {
     this.speech.speak({ text: term.content });
+    const { setBookmark, readingText } = this.props;
+    setBookmark(readingText.id, index);
   };
 
   render() {
@@ -90,18 +104,32 @@ class TextReadPage extends React.Component {
           <span>{}</span>
           <SingleBarChart data={statistic} />
         </Tooltip>
-        <div className={styles.contentPanel}>
-          <div>
-            {readingText.terms.map((term, index) => (
+        <div id="contentPanel" className={styles.contentPanel}>
+          {readingText.terms.map((term, index) => {
+            if (index === readingText.bookmark) {
+              return (
+                // eslint-disable-next-line react/no-array-index-key
+                <span key={index} ref={this.bookmark}>
+                  <Term
+                    onTermClick={t => this.onTermClick(t, index)}
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={index}
+                    term={term}
+                    index={index}
+                  />
+                </span>
+              );
+            }
+            return (
               <Term
-                onTermClick={this.onTermClick}
+                onTermClick={t => this.onTermClick(t, index)}
                 // eslint-disable-next-line react/no-array-index-key
                 key={index}
                 term={term}
                 index={index}
               />
-            ))}
-          </div>
+            );
+          })}
         </div>
         {editingTerm ? (
           <div>
@@ -122,7 +150,8 @@ export default connect(
   {
     readText: readTextAction,
     getTerm: getTermAction,
-    setEditingTerm: setEditingTermAction
+    setEditingTerm: setEditingTermAction,
+    setBookmark: setBookmarkAction
   }
 )(TextReadPage);
 TextReadPage.defaultProps = {
@@ -135,5 +164,6 @@ TextReadPage.propTypes = {
   match: PropTypes.shape().isRequired,
   readText: PropTypes.func.isRequired,
   readingText: PropTypes.shape(),
-  languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired
+  languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  setBookmark: PropTypes.func.isRequired
 };

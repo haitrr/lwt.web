@@ -6,7 +6,8 @@ import {
   editTextAsync,
   getTextEditDetailAsync,
   getTextReadAsync,
-  getTextsAsync
+  getTextsAsync,
+  setTextBookmarkAsync
 } from "../Apis/TextApi";
 
 export const TEXT_FETCHED = "TEXT_FETCHED";
@@ -15,6 +16,7 @@ export const TEXT_DELETED = "TEXT_DELETED";
 export const TEXT_READ = "TEXT_READ";
 export const TEXT_EDITED = "TEXT_EDITED";
 export const TEXT_EDIT_DETAIL_FETCHED = "TEXT_EDIT_DETAIL_FETCHED";
+export const TEXT_BOOKMARK_SET = "TEXT_BOOKMARK_SET";
 
 /**
  * get texts action
@@ -83,4 +85,9 @@ export const getTextEditDetailAction = createAction(
       return null;
     }
   }
+);
+
+export const setBookmarkAction = createAction(
+  TEXT_BOOKMARK_SET,
+  async (id, index) => setTextBookmarkAsync(id, index)
 );

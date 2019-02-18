@@ -3,7 +3,8 @@ import {
   deleteAsync,
   getAsync,
   postAsync,
-  putAsync
+  putAsync,
+  patchAsync
 } from "../Utilities/HttpRequest";
 
 /**
@@ -57,4 +58,8 @@ export async function editTextAsync(id, text) {
 
 export async function getTextEditDetailAsync(textId) {
   return getAsync(`${TEXT_API}/edit-detail/${textId}`);
+}
+
+export async function setTextBookmarkAsync(id, index) {
+  return patchAsync(`${TEXT_API}`, id, "bookmark", { termIndex: index });
 }
