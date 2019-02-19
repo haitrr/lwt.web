@@ -9,9 +9,10 @@ import { TermLearningLevel } from "../../Enums";
 class Term extends React.Component {
   shouldComponentUpdate(nextProps) {
     const { term } = this.props;
-    return nextProps.term.learningLevel !== term.learningLevel ||
-      nextProps.term.meaning !== term.meaning;
-    
+    return (
+      nextProps.term.learningLevel !== term.learningLevel ||
+      nextProps.term.meaning !== term.meaning
+    );
   }
 
   handleTermClick = term => {
@@ -26,7 +27,6 @@ class Term extends React.Component {
 
   render() {
     const { term } = this.props;
-    console.log(term.content);
     if (term.learningLevel === TermLearningLevel.Skipped) {
       return <span className="term">{term.content}</span>;
     }
