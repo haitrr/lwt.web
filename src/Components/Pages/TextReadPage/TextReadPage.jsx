@@ -1,8 +1,8 @@
+/* eslint-disable react/no-multi-comp */
 import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 import Speech from "speak-tts";
-import { Tooltip } from "antd";
 import { animateScroll } from "react-scroll";
 import { readTextAction, setBookmarkAction } from "../../../Actions/TextAction";
 import styles from "./TextReadPage.module.scss";
@@ -11,9 +11,8 @@ import {
   getTermAction,
   setEditingTermAction
 } from "../../../Actions/TermAction";
-import Term from "../../Term";
-import { TermLearningColor, TermLearningLevel } from "../../../Enums";
-import SingleBarChart from "../../SingleBarChart";
+import ContentPanel from "./ContentPanel";
+import TextStatistic from "./TextStatistic";
 
 /**
  * text read page.
@@ -78,71 +77,17 @@ class TextReadPage extends React.Component {
       return null;
     }
 
-    // todo: optimize
-    const statistic = [];
-    Object.keys(TermLearningLevel).forEach(learningLevel => {
-      if (
-        learningLevel === "Skipped" ||
-        learningLevel === "Ignored" ||
-        learningLevel === "WellKnow"
-      )
-        return;
-      statistic.push({
-        name: learningLevel,
-        value: readingText.terms.filter(
-          t => t.learningLevel === TermLearningLevel[learningLevel]
-        ).length,
-        color: TermLearningColor[learningLevel]
-      });
-    });
-
-    const practice = statistic.map(i => i.value).reduce((a, b) => a + b);
-    const total = readingText.terms.filter(
-      t => t.learningLevel !== TermLearningLevel.Skipped
-    ).length;
-
     return (
       <div className={styles.readPane}>
         <div>
           <h2 className={styles.titleSection}>{readingText.title}</h2>
         </div>
-        <Tooltip
-          title={`${practice}/${total} ~ ${Math.round(
-            (practice * 100) / total
-          )} %`}
-        >
-          <span>{}</span>
-          <SingleBarChart data={statistic} />
-        </Tooltip>
-        <div id="contentPanel" className={styles.contentPanel}>
-          {readingText.terms.map((term, index) => {
-            if (term.learningLevel === TermLearningLevel.Skipped) {
-              return term.content;
-            }
-            if (index === readingText.bookmark) {
-              return (
-                // eslint-disable-next-line react/no-array-index-key
-                <span key={index} ref={this.bookmark}>
-                  <Term
-                    onTermClick={t => this.onTermClick(t, index)}
-                    // eslint-disable-next-line react/no-array-index-key
-                    key={index}
-                    term={term}
-                  />
-                </span>
-              );
-            }
-            return (
-              <Term
-                onTermClick={t => this.onTermClick(t, index)}
-                // eslint-disable-next-line react/no-array-index-key
-                key={index}
-                term={term}
-                index={index}
-              />
-            );
-          })}
-        </div>
+        <TextStatistic terms={readingText.terms} />
+        <ContentPanel
+          readingText={readingText}
+          onTermClick={this.onTermClick}
+          bookmark={this.bookmark}
+        />
         {editingTerm ? (
           <div>
             <TermEditForm />
