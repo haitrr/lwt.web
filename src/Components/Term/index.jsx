@@ -32,12 +32,8 @@ class Term extends React.Component {
     }
     return (
       <Tooltip
-        overlayStyle={{ pointerEvents: "none" }}
-        title={
-          term.meaning ? (
-            <p style={{ whiteSpace: "pre-line" }}>{term.meaning}</p>
-          ) : null
-        }
+        overlayStyle={{ pointerEvents: "none", whiteSpace: "pre-line" }}
+        title={term.meaning ? term.meaning : null}
       >
         <Button
           className={`term term-${term.learningLevel}`}

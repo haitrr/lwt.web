@@ -37,17 +37,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Components/Term/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="348">
-              <caret line="29" selection-start-line="29" selection-end-line="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node_modules/speak-tts/lib/speak-tts.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="168" column="24" selection-start-line="168" selection-start-column="24" selection-end-line="168" selection-end-column="24" />
+            <state relative-caret-position="206">
+              <caret line="36" column="7" selection-start-line="36" selection-start-column="7" selection-end-line="36" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -393,12 +384,12 @@
       <workItem from="1550166256667" duration="9000" />
       <workItem from="1550166286784" duration="5600000" />
       <workItem from="1550340224407" duration="70000" />
-      <workItem from="1550340305659" duration="17854000" />
+      <workItem from="1550340305659" duration="18048000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="123739000" />
+    <option name="totallyTimeSpent" value="123933000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -773,8 +764,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/Term/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
+        <state relative-caret-position="206">
+          <caret line="36" column="7" selection-start-line="36" selection-start-column="7" selection-end-line="36" selection-end-column="7" />
         </state>
       </provider>
     </entry>
