@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ac520e9-853b-4498-878f-54956aff067e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/ContentPanel.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextStatistic.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.jsx" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
@@ -19,15 +16,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
+            <state relative-caret-position="-2558" />
           </provider>
         </entry>
       </file>
@@ -40,10 +32,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextStatistic.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
+            <state relative-caret-position="394">
               <caret line="45" column="45" selection-start-line="45" selection-start-column="45" selection-end-line="45" selection-end-column="45" />
             </state>
           </provider>
@@ -61,7 +53,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextReadPage/ContentPanel.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
+            <state relative-caret-position="960">
               <caret line="40" column="1" lean-forward="true" selection-start-line="40" selection-start-column="1" selection-end-line="40" selection-end-column="1" />
             </state>
           </provider>
@@ -144,8 +136,8 @@
         <option value="$PROJECT_DIR$/src/Components/Term/index.jsx" />
         <option value="$PROJECT_DIR$/src/Components/Term/Term.module.scss" />
         <option value="$PROJECT_DIR$/src/Components/Pages/TextReadPage/ContentPanel.jsx" />
-        <option value="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.jsx" />
         <option value="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextStatistic.jsx" />
+        <option value="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.jsx" />
       </list>
     </option>
   </component>
@@ -361,12 +353,12 @@
       <workItem from="1550340224407" duration="70000" />
       <workItem from="1550340305659" duration="21685000" />
       <workItem from="1550593375046" duration="4454000" />
-      <workItem from="1550599027629" duration="137000" />
+      <workItem from="1550599027629" duration="214000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="132161000" />
+    <option name="totallyTimeSpent" value="132238000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -393,14 +385,14 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.496337" weight="0.32883817" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="8" sideWeight="0.490232" visible="true" weight="0.32987553" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.490232" visible="true" weight="0.32987553" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.509768" side_tool="true" visible="true" weight="0.32987553" />
       <window_info anchor="bottom" id="TypeScript" order="10" />
       <window_info anchor="bottom" id="Messages" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Terminal" order="3" sideWeight="0.498779" visible="true" weight="0.24969475" />
+      <window_info active="true" anchor="right" id="Terminal" order="3" sideWeight="0.498779" visible="true" weight="0.24969475" />
     </layout>
     <layout-to-restore>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26129428" />
@@ -717,28 +709,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.jsx">
+    <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextStatistic.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state relative-caret-position="394">
+          <caret line="45" column="45" selection-start-line="45" selection-start-column="45" selection-end-line="45" selection-end-column="45" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextReadPage/ContentPanel.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
+        <state relative-caret-position="960">
           <caret line="40" column="1" lean-forward="true" selection-start-line="40" selection-start-column="1" selection-end-line="40" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextStatistic.jsx">
+    <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="45" column="45" selection-start-line="45" selection-start-column="45" selection-end-line="45" selection-end-column="45" />
-        </state>
+        <state relative-caret-position="-2558" />
       </provider>
     </entry>
   </component>
