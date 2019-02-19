@@ -116,6 +116,9 @@ class TextReadPage extends React.Component {
         </Tooltip>
         <div id="contentPanel" className={styles.contentPanel}>
           {readingText.terms.map((term, index) => {
+            if (term.learningLevel === TermLearningLevel.Skipped) {
+              return term.content;
+            }
             if (index === readingText.bookmark) {
               return (
                 // eslint-disable-next-line react/no-array-index-key
@@ -125,7 +128,6 @@ class TextReadPage extends React.Component {
                     // eslint-disable-next-line react/no-array-index-key
                     key={index}
                     term={term}
-                    index={index}
                   />
                 </span>
               );

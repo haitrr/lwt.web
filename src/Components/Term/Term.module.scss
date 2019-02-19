@@ -3,12 +3,16 @@
   font-size: 25px;
   border: none;
   padding: 0;
-  margin-bottom:2px;
+  margin-bottom: 2px;
   margin-right: 1px;
-  &:first-letter {
-   letter-spacing: 0;
- }
+
+  // need to prevent stupid ant design
+  // to insert a space between two chinese characters.
+  &::first-letter {
+    letter-spacing: normal;
+  }
 }
+
 .term-0 {
   background: white;
 }
@@ -39,4 +43,9 @@
 
 .term-7 {
   background: whitesmoke;
+}
+
+.tooltip {
+  pointer-events: none;
+  white-space: pre-line;
 }

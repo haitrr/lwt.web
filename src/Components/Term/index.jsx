@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 import { Button, Tooltip } from "antd";
 import PropTypes from "prop-types";
 import { getTermAction, setEditingTermAction } from "../../Actions/TermAction";
-import "./term.scss";
-import { TermLearningLevel } from "../../Enums";
+import styles from "./Term.module.scss";
 
 class Term extends React.Component {
   shouldComponentUpdate(nextProps) {
@@ -27,16 +26,13 @@ class Term extends React.Component {
 
   render() {
     const { term } = this.props;
-    if (term.learningLevel === TermLearningLevel.Skipped) {
-      return <span className="term">{term.content}</span>;
-    }
     return (
       <Tooltip
-        overlayStyle={{ pointerEvents: "none", whiteSpace: "pre-line" }}
-        title={term.meaning ? term.meaning : null}
+        overlayClassName={styles.tooltip}
+        title={term.meaning && term.meaning.length > 0 ? term.meaning : null}
       >
         <Button
-          className={`term term-${term.learningLevel}`}
+          className={`${styles.term} ${styles[`term-${term.learningLevel}`]}`}
           onClick={() => this.handleTermClick(term)}
           htmlType="button"
         >

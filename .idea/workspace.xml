@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ac520e9-853b-4498-878f-54956aff067e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/Term/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Term/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Term/term.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Term/Term.module.scss" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -28,17 +32,35 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="201">
-              <caret line="122" column="21" selection-start-line="122" selection-start-column="21" selection-end-line="122" selection-end-column="21" />
+            <state relative-caret-position="278">
+              <caret line="135" column="17" selection-start-line="135" selection-start-column="17" selection-end-line="135" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.module.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Components/Term/index.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="278">
+              <caret line="34" column="38" selection-start-line="34" selection-start-column="38" selection-end-line="34" selection-end-column="38" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Components/Term/index.jsx">
+        <entry file="file://$PROJECT_DIR$/src/Components/Term/Term.module.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
-              <caret line="36" column="7" selection-start-line="36" selection-start-column="7" selection-end-line="36" selection-end-column="7" />
+            <state relative-caret-position="240">
+              <caret line="10" column="3" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -48,15 +70,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-638">
               <caret line="20" column="16" lean-forward="true" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/package.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="544">
-              <caret line="26" column="24" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -80,7 +93,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/Components/Pages/LoginPage.jsx" />
         <option value="$PROJECT_DIR$/src/Components/Pages/LoginPage/LoginPage.module.scss" />
         <option value="$PROJECT_DIR$/src/Components/Pages/LoginPage/LoginPage.jsx" />
         <option value="$PROJECT_DIR$/src/Components/Header/Header.jsx" />
@@ -103,12 +115,10 @@
         <option value="$PROJECT_DIR$/src/Actions/TermAction.js" />
         <option value="$PROJECT_DIR$/src/Apis/TermApi.js" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/src/Components/Term/term.scss" />
         <option value="$PROJECT_DIR$/src/Components/Modals/TextCreateModal/TextCreateModal.jsx" />
         <option value="$PROJECT_DIR$/src/Components/Inputs/LearningLevelSelect/LearningLevelSelect.module.scss" />
         <option value="$PROJECT_DIR$/src/Components/Inputs/LearningLevelSelect/LearningLevelSelect.jsx" />
         <option value="$PROJECT_DIR$/src/App.jsx" />
-        <option value="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.module.scss" />
         <option value="$PROJECT_DIR$/conf/conf.d/default.conf" />
         <option value="$PROJECT_DIR$/src/Components/SingleBarChart/index.jsx" />
         <option value="$PROJECT_DIR$/src/Enums.js" />
@@ -130,7 +140,10 @@
         <option value="$PROJECT_DIR$/src/Utilities/HttpRequest.js" />
         <option value="$PROJECT_DIR$/src/Components/Forms/TermEditForm/index.jsx" />
         <option value="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.jsx" />
+        <option value="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.module.scss" />
+        <option value="$PROJECT_DIR$/src/Components/Term/term.scss" />
         <option value="$PROJECT_DIR$/src/Components/Term/index.jsx" />
+        <option value="$PROJECT_DIR$/src/Components/Term/Term.module.scss" />
       </list>
     </option>
   </component>
@@ -384,12 +397,12 @@
       <workItem from="1550166256667" duration="9000" />
       <workItem from="1550166286784" duration="5600000" />
       <workItem from="1550340224407" duration="70000" />
-      <workItem from="1550340305659" duration="18048000" />
+      <workItem from="1550340305659" duration="21213000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="123933000" />
+    <option name="totallyTimeSpent" value="127098000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -520,13 +533,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
           <caret line="18" column="25" lean-forward="true" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/Term/term.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="20" column="14" selection-start-line="20" selection-start-column="14" selection-end-line="20" selection-end-column="14" />
         </state>
       </provider>
     </entry>
@@ -706,13 +712,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.module.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="13" column="1" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Utilities/HttpRequest.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
@@ -755,17 +754,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.module.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="122" column="21" selection-start-line="122" selection-start-column="21" selection-end-line="122" selection-end-column="21" />
+        <state relative-caret-position="278">
+          <caret line="135" column="17" selection-start-line="135" selection-start-column="17" selection-end-line="135" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/Term/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="36" column="7" selection-start-line="36" selection-start-column="7" selection-end-line="36" selection-end-column="7" />
+        <state relative-caret-position="278">
+          <caret line="34" column="38" selection-start-line="34" selection-start-column="38" selection-end-line="34" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Components/Term/Term.module.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="10" column="3" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
         </state>
       </provider>
     </entry>
