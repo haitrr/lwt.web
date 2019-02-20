@@ -1,5 +1,6 @@
 import { handleActions } from "redux-actions";
 import {
+  TEXT_BOOKMARK_SET,
   TEXT_DELETED,
   TEXT_EDIT_DETAIL_FETCHED,
   TEXT_FETCHED,
@@ -69,7 +70,11 @@ const textReducer = handleActions(
         };
       }
       return state;
-    }
+    },
+    [TEXT_BOOKMARK_SET]: (state, action) => ({
+      ...state,
+      readingText: { ...state.readingText, bookmark: action.payload }
+    })
   },
   defaultState
 );

@@ -16,7 +16,7 @@ class ContentPanel extends React.PureComponent {
           if (index === readingText.bookmark) {
             return (
               // eslint-disable-next-line react/no-array-index-key
-              <span key={index} ref={bookmark}>
+              <span key={index} ref={bookmark} className={styles.bookmark}>
                 <Term
                   onTermClick={t => onTermClick(t, index)}
                   index={index}

@@ -89,5 +89,8 @@ export const getTextEditDetailAction = createAction(
 
 export const setBookmarkAction = createAction(
   TEXT_BOOKMARK_SET,
-  async (id, index) => setTextBookmarkAsync(id, index)
+  async (id, index) => {
+    await setTextBookmarkAsync(id, index);
+    return index;
+  }
 );
