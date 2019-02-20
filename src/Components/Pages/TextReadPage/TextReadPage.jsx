@@ -30,25 +30,22 @@ class TextReadPage extends React.Component {
     this.speech.init();
   }
 
-  shouldComponentUpdate() {
-    const { readingText } = this.props;
-    return !readingText;
+  shouldComponentUpdate(nextProps) {
+    const { terms } = this.props;
+    return terms !== nextProps.terms;
   }
 
   componentDidUpdate(prevProps) {
-    const { readingText, languages } = this.props;
-    if (
-      readingText &&
-      (prevProps.languages !== languages || !prevProps.readingText)
-    ) {
-      const language = languages.find(l => l.id === readingText.language);
-      if (language) {
-        this.speech.setLanguage(language.speakCode);
+    const { languages, language } = this.props;
+    if (prevProps.languages !== languages || !prevProps.language) {
+      const languageS = languages.find(l => l.id === language);
+      if (languageS) {
+        this.speech.setLanguage(languageS.speakCode);
         try {
-          if (language.speakCode === "zh-CN") {
+          if (languageS.speakCode === "zh-CN") {
             this.speech.setVoice("Google 普通话（中国大陆）");
           }
-          if (language.speakCode === "en-US") {
+          if (languageS.speakCode === "en-US") {
             this.speech.setVoice("Google US English");
           }
         } catch {
@@ -56,7 +53,7 @@ class TextReadPage extends React.Component {
         }
       }
     }
-    if (!prevProps.readingText && this.bookmark.current) {
+    if (!prevProps.terms && this.bookmark.current) {
       animateScroll.scrollTo(
         this.bookmark.current.buttonNode.offsetTop -
           this.bookmark.current.buttonNode.parentNode.offsetTop -
@@ -72,24 +69,24 @@ class TextReadPage extends React.Component {
 
   onTermClick = (term, index) => {
     this.speech.speak({ text: term.content, queue: false });
-    const { setBookmark, readingText } = this.props;
-    setBookmark(readingText.id, index);
+    const { setBookmark, id } = this.props;
+    setBookmark(id, index);
   };
 
   render() {
-    const { readingText } = this.props;
-    if (!readingText) {
+    const { terms, title } = this.props;
+    if (!terms) {
       return null;
     }
 
     return (
       <div className={styles.readPane}>
         <div>
-          <h2 className={styles.titleSection}>{readingText.title}</h2>
+          <h2 className={styles.titleSection}>{title}</h2>
         </div>
         <TextStatistic />
         <ContentPanel
-          readingText={readingText}
+          terms={terms}
           onTermClick={this.onTermClick}
           bookmark={this.bookmark}
         />
@@ -100,11 +97,17 @@ class TextReadPage extends React.Component {
 }
 
 export default connect(
-  state => ({
-    readingText: state.text.readingText,
-    editingTerm: state.term.editingTerm,
-    languages: state.language.languages
-  }),
+  state => {
+    if (state.text.readingText)
+      return {
+        terms: state.text.readingText.terms,
+        language: state.text.readingText.language,
+        title: state.text.readingText.title,
+        id: state.text.readingText.id,
+        languages: state.language.languages
+      };
+    return { languages: state.language.languages };
+  },
   {
     readText: readTextAction,
     getTerm: getTermAction,
@@ -113,13 +116,19 @@ export default connect(
   }
 )(TextReadPage);
 TextReadPage.defaultProps = {
-  readingText: null
+  language: null,
+  title: null,
+  id: null,
+  terms: null
 };
 
 TextReadPage.propTypes = {
   match: PropTypes.shape().isRequired,
   readText: PropTypes.func.isRequired,
-  readingText: PropTypes.shape(),
   languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  setBookmark: PropTypes.func.isRequired
+  setBookmark: PropTypes.func.isRequired,
+  language: PropTypes.number,
+  title: PropTypes.string,
+  id: PropTypes.string,
+  terms: PropTypes.arrayOf(PropTypes.shape({}))
 };

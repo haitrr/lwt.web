@@ -59,7 +59,6 @@ class TermEditForm extends React.Component {
       value,
       language
     } = this.props;
-    console.log("Edit page render")
     if (!value) {
       return null;
     }
@@ -128,7 +127,7 @@ export default connect(
 )(Form.create()(TermEditForm));
 
 TermEditForm.defaultProps = {
-  value: {}
+  value: null
 };
 
 TermEditForm.propTypes = {

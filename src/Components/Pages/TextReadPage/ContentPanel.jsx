@@ -10,10 +10,10 @@ class ContentPanel extends React.Component {
   }
 
   render() {
-    const { readingText, onTermClick, bookmark } = this.props;
+    const { terms, onTermClick, bookmark } = this.props;
     return (
       <div id="contentPanel" className={styles.contentPanel}>
-        {readingText.terms.map((term, index) => {
+        {terms.map((term, index) => {
           if (term.learningLevel === TermLearningLevel.Skipped) {
             return term.content;
           }
@@ -38,5 +38,5 @@ export default ContentPanel;
 ContentPanel.propTypes = {
   bookmark: PropTypes.shape({}).isRequired,
   onTermClick: PropTypes.func.isRequired,
-  readingText: PropTypes.shape({}).isRequired
+  terms: PropTypes.arrayOf(PropTypes.shape()).isRequired
 };

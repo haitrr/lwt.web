@@ -8,12 +8,11 @@ import { TermLearningLevel } from "../../Enums";
 
 class Term extends React.Component {
   shouldComponentUpdate(nextProps) {
-    const { term, index, bookmark } = this.props;
+    const { term, bookmark } = this.props;
     return (
       nextProps.term.learningLevel !== term.learningLevel ||
       nextProps.term.meaning !== term.meaning ||
-      nextProps.bookmark === index ||
-      bookmark === index
+      nextProps.bookmark !== bookmark
     );
   }
 
@@ -28,15 +27,15 @@ class Term extends React.Component {
   };
 
   renderTermButton = () => {
-    const { term, bookmark, bookmarkRef, index } = this.props;
+    const { term, bookmark, bookmarkRef } = this.props;
     let r = null;
-    if (bookmark === index) {
+    if (bookmark) {
       r = bookmarkRef;
     }
     return (
       <Button
         className={`${styles.term} ${styles[`term-${term.learningLevel}`]} ${
-          bookmark === index ? styles.bookmark : null
+          bookmark ? styles.bookmark : null
         }`}
         ref={r}
         onClick={() => this.handleTermClick(term)}
@@ -68,7 +67,7 @@ class Term extends React.Component {
 }
 
 Term.defaultProps = {
-  bookmark: 0
+  bookmark: false
 };
 
 Term.propTypes = {
@@ -79,15 +78,14 @@ Term.propTypes = {
     meaning: PropTypes.string
   }).isRequired,
   onTermClick: PropTypes.func.isRequired,
-  bookmark: PropTypes.number,
-  index: PropTypes.number.isRequired,
+  bookmark: PropTypes.bool,
   bookmarkRef: PropTypes.shape({}).isRequired
 };
 
 export default connect(
   (state, ownProps) => ({
     term: state.text.readingText.terms[ownProps.index],
-    bookmark: state.text.readingText.bookmark
+    bookmark: state.text.readingText.bookmark === ownProps.index
   }),
   { getTerm: getTermAction, setEditingTerm: setEditingTermAction }
 )(Term);
