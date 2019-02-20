@@ -4,6 +4,7 @@ import { Button, Tooltip } from "antd";
 import PropTypes from "prop-types";
 import { getTermAction, setEditingTermAction } from "../../Actions/TermAction";
 import styles from "./Term.module.scss";
+import { TermLearningLevel } from "../../Enums";
 
 class Term extends React.Component {
   shouldComponentUpdate(nextProps) {
@@ -24,24 +25,31 @@ class Term extends React.Component {
     }
   };
 
+  renderTermButton = term => (
+    <Button
+      className={`${styles.term} ${styles[`term-${term.learningLevel}`]}`}
+      onClick={() => this.handleTermClick(term)}
+      htmlType="button"
+    >
+      {
+        // need react fragment here to prevent stupid ant design
+        // to insert a space between two chinese characters.
+      }
+      <React.Fragment>{term.content}</React.Fragment>
+    </Button>
+  );
+
   render() {
     const { term } = this.props;
+    if (term.learningLevel === TermLearningLevel.WellKnow) {
+      return this.renderTermButton(term);
+    }
     return (
       <Tooltip
         overlayClassName={styles.tooltip}
         title={term.meaning && term.meaning.length > 0 ? term.meaning : null}
       >
-        <Button
-          className={`${styles.term} ${styles[`term-${term.learningLevel}`]}`}
-          onClick={() => this.handleTermClick(term)}
-          htmlType="button"
-        >
-          {
-            // need react fragment here to prevent stupid ant design
-            // to insert a space between two chinese characters.
-          }
-          <React.Fragment>{term.content}</React.Fragment>
-        </Button>
+        {this.renderTermButton(term)}
       </Tooltip>
     );
   }
