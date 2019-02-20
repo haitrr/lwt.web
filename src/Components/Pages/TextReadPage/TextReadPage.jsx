@@ -30,9 +30,9 @@ class TextReadPage extends React.Component {
     this.speech.init();
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate() {
     const { readingText } = this.props;
-    return readingText !== nextProps.readingText;
+    return !readingText;
   }
 
   componentDidUpdate(prevProps) {
@@ -77,7 +77,7 @@ class TextReadPage extends React.Component {
   };
 
   render() {
-    const { readingText, editingTerm } = this.props;
+    const { readingText } = this.props;
     if (!readingText) {
       return null;
     }
@@ -87,17 +87,13 @@ class TextReadPage extends React.Component {
         <div>
           <h2 className={styles.titleSection}>{readingText.title}</h2>
         </div>
-        <TextStatistic terms={readingText.terms} />
+        <TextStatistic />
         <ContentPanel
           readingText={readingText}
           onTermClick={this.onTermClick}
           bookmark={this.bookmark}
         />
-        {editingTerm ? (
-          <div>
-            <TermEditForm />
-          </div>
-        ) : null}
+        <TermEditForm />
       </div>
     );
   }
@@ -117,12 +113,10 @@ export default connect(
   }
 )(TextReadPage);
 TextReadPage.defaultProps = {
-  editingTerm: null,
   readingText: null
 };
 
 TextReadPage.propTypes = {
-  editingTerm: PropTypes.shape(),
   match: PropTypes.shape().isRequired,
   readText: PropTypes.func.isRequired,
   readingText: PropTypes.shape(),

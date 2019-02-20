@@ -7,6 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import "antd/dist/antd.css";
 import ReactChartkick from "react-chartkick";
 import Chart from "chart.js";
+import { Helmet } from "react-helmet";
 import styles from "./App.module.scss";
 import { Footer } from "./Components/Footer";
 import Header from "./Components/Header/Header";
@@ -16,7 +17,6 @@ import { RegisterPage } from "./Components/Pages/RegisterPage/RegisterPage";
 import TextPage from "./Components/Pages/TextPage";
 import TextReadPage from "./Components/Pages/TextReadPage";
 import { getLanguageAction } from "./Actions/LanguageAction";
-import {Helmet} from "react-helmet";
 
 ReactChartkick.addAdapter(Chart);
 

@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Tooltip } from "antd";
+import { connect } from "react-redux";
 import { TermLearningColor, TermLearningLevel } from "../../../Enums";
 import SingleBarChart from "../../SingleBarChart";
 
-export default class TextStatistic extends React.PureComponent {
+class TextStatistic extends React.PureComponent {
   render() {
     const { terms } = this.props;
     // todo: optimize
@@ -45,3 +46,7 @@ export default class TextStatistic extends React.PureComponent {
 TextStatistic.propTypes = {
   terms: PropTypes.arrayOf(PropTypes.shape({})).isRequired
 };
+
+export default connect(state => ({ terms: state.text.readingText.terms }))(
+  TextStatistic
+);

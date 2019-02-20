@@ -16,7 +16,7 @@ import {
 class TermEditForm extends React.Component {
   componentDidMount() {
     const { value, getEditingTermMeaning, languages, language } = this.props;
-    if (value.meaning === null) {
+    if (value && value.meaning === null) {
       getEditingTermMeaning(
         value.content,
         languages.find(l => l.id === language).code
@@ -59,6 +59,7 @@ class TermEditForm extends React.Component {
       value,
       language
     } = this.props;
+    console.log("Edit page render")
     if (!value) {
       return null;
     }

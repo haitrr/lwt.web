@@ -29,11 +29,9 @@ class Term extends React.Component {
 
   renderTermButton = () => {
     const { term, bookmark, bookmarkRef, index } = this.props;
-    // console.log(bookmarkRef)
     let r = null;
     if (bookmark === index) {
       r = bookmarkRef;
-      console.log("Here");
     }
     return (
       <Button
@@ -55,7 +53,6 @@ class Term extends React.Component {
 
   render() {
     const { term } = this.props;
-    // console.log(term.content);
     if (term.learningLevel === TermLearningLevel.WellKnow) {
       return this.renderTermButton(term);
     }
