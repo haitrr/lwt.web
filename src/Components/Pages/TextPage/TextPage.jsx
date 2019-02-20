@@ -11,6 +11,7 @@ import TextCreateModal from "../../Modals/TextCreateModal";
 import TextEditModal from "../../Modals/TextEditModal";
 import { TermLearningLevel } from "../../../Enums";
 import styles from "./TextPage.module.scss";
+import termStyles from "../../Term/Term.module.scss";
 
 function renderTermNumber(current, record, level) {
   if (!current) {
@@ -25,7 +26,11 @@ function renderTermNumber(current, record, level) {
     return null;
   });
   return (
-    <span className={`term-${TermLearningLevel[level]}`}>
+    <span
+      className={`${
+        termStyles[`term-${TermLearningLevel[level]}`]
+      }`}
+    >
       {`${current}`}
       <br />
       {`${Math.round((current / sum) * 100)}%`}
