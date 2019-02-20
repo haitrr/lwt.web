@@ -30,12 +30,16 @@ class TextReadPage extends React.Component {
     this.speech.init();
   }
 
+  shouldComponentUpdate(nextProps) {
+    const { readingText } = this.props;
+    return readingText !== nextProps.readingText;
+  }
+
   componentDidUpdate(prevProps) {
     const { readingText, languages } = this.props;
     if (
       readingText &&
-      (prevProps.languages !== languages ||
-        prevProps.readingText !== readingText)
+      (prevProps.languages !== languages || !prevProps.readingText)
     ) {
       const language = languages.find(l => l.id === readingText.language);
       if (language) {
@@ -54,18 +58,20 @@ class TextReadPage extends React.Component {
     }
     if (!prevProps.readingText && this.bookmark.current) {
       animateScroll.scrollTo(
-        this.bookmark.current.offsetTop -
-          this.bookmark.current.parentNode.offsetTop,
+        this.bookmark.current.buttonNode.offsetTop -
+          this.bookmark.current.buttonNode.parentNode.offsetTop -
+          200,
         {
           containerId: "contentPanel",
-          smooth: true
+          smooth: true,
+          ignoreCancelEvents: true
         }
       );
     }
   }
 
   onTermClick = (term, index) => {
-    this.speech.speak({ text: term.content });
+    this.speech.speak({ text: term.content, queue: false });
     const { setBookmark, readingText } = this.props;
     setBookmark(readingText.id, index);
   };

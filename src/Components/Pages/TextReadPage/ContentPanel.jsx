@@ -4,7 +4,11 @@ import styles from "./TextReadPage.module.scss";
 import { TermLearningLevel } from "../../../Enums";
 import Term from "../../Term";
 
-class ContentPanel extends React.PureComponent {
+class ContentPanel extends React.Component {
+  shouldComponentUpdate() {
+    return false;
+  }
+
   render() {
     const { readingText, onTermClick, bookmark } = this.props;
     return (
@@ -13,24 +17,13 @@ class ContentPanel extends React.PureComponent {
           if (term.learningLevel === TermLearningLevel.Skipped) {
             return term.content;
           }
-          if (index === readingText.bookmark) {
-            return (
-              // eslint-disable-next-line react/no-array-index-key
-              <span key={index} ref={bookmark} className={styles.bookmark}>
-                <Term
-                  onTermClick={t => onTermClick(t, index)}
-                  index={index}
-                  term={term}
-                />
-              </span>
-            );
-          }
+
           return (
             <Term
               onTermClick={t => onTermClick(t, index)}
+              bookmarkRef={bookmark}
               // eslint-disable-next-line react/no-array-index-key
               key={index}
-              term={term}
               index={index}
             />
           );

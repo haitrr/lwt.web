@@ -26,7 +26,7 @@ class TermEditForm extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { value, getEditingTermMeaning, languages, language } = this.props;
-    if (value !== prevProps.value && value.meaning === null) {
+    if (value && value !== prevProps.value && value.meaning === null) {
       getEditingTermMeaning(
         value.content,
         languages.find(l => l.id === language).code
@@ -59,6 +59,9 @@ class TermEditForm extends React.Component {
       value,
       language
     } = this.props;
+    if (!value) {
+      return null;
+    }
     return (
       <Form
         onSubmit={this.handleSubmit}
@@ -123,6 +126,10 @@ export default connect(
   }
 )(Form.create()(TermEditForm));
 
+TermEditForm.defaultProps = {
+  value: {}
+};
+
 TermEditForm.propTypes = {
   form: PropTypes.shape({}).isRequired,
   createTerm: PropTypes.func.isRequired,
@@ -131,5 +138,5 @@ TermEditForm.propTypes = {
   editTerm: PropTypes.func.isRequired,
   language: PropTypes.number.isRequired,
   languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  value: PropTypes.shape({}).isRequired
+  value: PropTypes.shape({})
 };

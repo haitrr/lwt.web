@@ -8,10 +8,12 @@ import { TermLearningLevel } from "../../Enums";
 
 class Term extends React.Component {
   shouldComponentUpdate(nextProps) {
-    const { term } = this.props;
+    const { term, index, bookmark } = this.props;
     return (
       nextProps.term.learningLevel !== term.learningLevel ||
-      nextProps.term.meaning !== term.meaning
+      nextProps.term.meaning !== term.meaning ||
+      nextProps.bookmark === index ||
+      bookmark === index
     );
   }
 
@@ -25,22 +27,35 @@ class Term extends React.Component {
     }
   };
 
-  renderTermButton = term => (
-    <Button
-      className={`${styles.term} ${styles[`term-${term.learningLevel}`]}`}
-      onClick={() => this.handleTermClick(term)}
-      htmlType="button"
-    >
-      {
-        // need react fragment here to prevent stupid ant design
-        // to insert a space between two chinese characters.
-      }
-      <React.Fragment>{term.content}</React.Fragment>
-    </Button>
-  );
+  renderTermButton = () => {
+    const { term, bookmark, bookmarkRef, index } = this.props;
+    // console.log(bookmarkRef)
+    let r = null;
+    if (bookmark === index) {
+      r = bookmarkRef;
+      console.log("Here");
+    }
+    return (
+      <Button
+        className={`${styles.term} ${styles[`term-${term.learningLevel}`]} ${
+          bookmark === index ? styles.bookmark : null
+        }`}
+        ref={r}
+        onClick={() => this.handleTermClick(term)}
+        htmlType="button"
+      >
+        {
+          // need react fragment here to prevent stupid ant design
+          // to insert a space between two chinese characters.
+        }
+        <React.Fragment>{term.content}</React.Fragment>
+      </Button>
+    );
+  };
 
   render() {
     const { term } = this.props;
+    // console.log(term.content);
     if (term.learningLevel === TermLearningLevel.WellKnow) {
       return this.renderTermButton(term);
     }
@@ -55,6 +70,10 @@ class Term extends React.Component {
   }
 }
 
+Term.defaultProps = {
+  bookmark: 0
+};
+
 Term.propTypes = {
   setEditingTerm: PropTypes.func.isRequired,
   getTerm: PropTypes.func.isRequired,
@@ -62,10 +81,16 @@ Term.propTypes = {
     learningLevel: PropTypes.number.isRequired,
     meaning: PropTypes.string
   }).isRequired,
-  onTermClick: PropTypes.func.isRequired
+  onTermClick: PropTypes.func.isRequired,
+  bookmark: PropTypes.number,
+  index: PropTypes.number.isRequired,
+  bookmarkRef: PropTypes.shape({}).isRequired
 };
 
 export default connect(
-  null,
+  (state, ownProps) => ({
+    term: state.text.readingText.terms[ownProps.index],
+    bookmark: state.text.readingText.bookmark
+  }),
   { getTerm: getTermAction, setEditingTerm: setEditingTermAction }
 )(Term);
