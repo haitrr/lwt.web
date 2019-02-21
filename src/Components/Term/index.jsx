@@ -16,7 +16,8 @@ class Term extends React.Component {
     );
   }
 
-  handleTermClick = term => {
+  handleTermClick = (e, term) => {
+    e.preventDefault();
     const { getTerm, setEditingTerm, onTermClick } = this.props;
     onTermClick(term);
     if (term.id) {
@@ -33,20 +34,19 @@ class Term extends React.Component {
       r = bookmarkRef;
     }
     return (
-      <Button
+      <span
         className={`${styles.term} ${styles[`term-${term.learningLevel}`]} ${
           bookmark ? styles.bookmark : null
         }`}
         ref={r}
-        onClick={() => this.handleTermClick(term)}
-        htmlType="button"
+        onClick={e => this.handleTermClick(e, term)}
       >
         {
           // need react fragment here to prevent stupid ant design
           // to insert a space between two chinese characters.
         }
         <React.Fragment>{term.content}</React.Fragment>
-      </Button>
+      </span>
     );
   };
 

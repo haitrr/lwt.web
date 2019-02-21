@@ -55,8 +55,8 @@ class TextReadPage extends React.Component {
     }
     if (!prevProps.terms && this.bookmark.current) {
       animateScroll.scrollTo(
-        this.bookmark.current.buttonNode.offsetTop -
-          this.bookmark.current.buttonNode.parentNode.offsetTop -
+        this.bookmark.current.offsetTop -
+          this.bookmark.current.parentNode.offsetTop -
           200,
         {
           containerId: "contentPanel",
