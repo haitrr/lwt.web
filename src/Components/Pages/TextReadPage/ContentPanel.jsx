@@ -6,12 +6,20 @@ import Term from "../../Term";
 class ContentPanel extends React.Component {
   constructor(props) {
     super(props);
+    if (window.innerWidth > 700) {
+      this.displayTerms = 1000;
+      this.loadTerms = 300;
+    } else {
+      this.displayTerms = 500;
+      this.loadTerms = 100;
+    }
     this.state = {
       begin: Math.max(
-        Math.min(props.bookmark, props.terms.length - 500) - 20,
+        Math.min(props.bookmark, props.terms.length - this.displayTerms),
         0
       )
     };
+    console.log(this.state, props);
 
     this.last = React.createRef();
     this.container = React.createRef();
@@ -34,23 +42,23 @@ class ContentPanel extends React.Component {
     const { begin } = this.state;
     const { terms } = this.props;
     const bottom =
-      e.target.scrollHeight - e.target.scrollTop < e.target.clientHeight + 200;
+      e.target.scrollHeight - e.target.scrollTop < e.target.clientHeight + 50;
     const top = e.target.scrollTop === 0;
     if (top) {
       if (begin > 0) {
         this.setState(prevState => ({
           ...prevState,
-          begin: Math.max(prevState.begin - 500, 0),
+          begin: Math.max(prevState.begin - this.loadTerms, 0),
           last: this.last.current
         }));
       }
       e.stopPropagation();
     }
     if (bottom) {
-      if (begin + 1000 < terms.length)
+      if (begin + this.displayTerms < terms.length)
         this.setState(prevState => ({
           ...prevState,
-          begin: prevState.begin + 500
+          begin: prevState.begin + this.loadTerms
         }));
       e.stopPropagation();
     }
@@ -66,7 +74,7 @@ class ContentPanel extends React.Component {
         className={styles.contentPanel}
         ref={this.container}
       >
-        {terms.slice(begin, begin + 1000).map((term, index) => {
+        {terms.slice(begin, begin + this.displayTerms).map((term, index) => {
           const realIndex = index + begin;
           return (
             <Term
