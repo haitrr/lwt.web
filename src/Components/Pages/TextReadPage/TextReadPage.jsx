@@ -74,7 +74,7 @@ class TextReadPage extends React.Component {
   };
 
   render() {
-    const { terms, title } = this.props;
+    const { terms, title, bookmark } = this.props;
     if (!terms) {
       return null;
     }
@@ -88,7 +88,8 @@ class TextReadPage extends React.Component {
         <ContentPanel
           terms={terms}
           onTermClick={this.onTermClick}
-          bookmark={this.bookmark}
+          bookmark={bookmark}
+          bookmarkRef={this.bookmark}
         />
         <TermEditForm />
       </div>
@@ -104,7 +105,8 @@ export default connect(
         language: state.text.readingText.language,
         title: state.text.readingText.title,
         id: state.text.readingText.id,
-        languages: state.language.languages
+        languages: state.language.languages,
+        bookmark: state.text.readingText.bookmark
       };
     return { languages: state.language.languages };
   },
@@ -119,7 +121,8 @@ TextReadPage.defaultProps = {
   language: null,
   title: null,
   id: null,
-  terms: null
+  terms: null,
+  bookmark: null
 };
 
 TextReadPage.propTypes = {
@@ -130,5 +133,6 @@ TextReadPage.propTypes = {
   language: PropTypes.number,
   title: PropTypes.string,
   id: PropTypes.string,
-  terms: PropTypes.arrayOf(PropTypes.shape({}))
+  terms: PropTypes.arrayOf(PropTypes.shape({})),
+  bookmark: PropTypes.number
 };
