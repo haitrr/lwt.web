@@ -3,9 +3,11 @@
   font-size: 25px;
   border: none;
   padding: 0;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
   margin-right: 1px;
-
+  &:focus {
+    outline: none;
+  }
   // need to prevent stupid ant design
   // to insert a space between two chinese characters.
   &::first-letter {
@@ -51,6 +53,6 @@
 }
 
 .bookmark {
-  box-shadow: 3px 3px blue, 6px 6px red;
+  box-shadow: 2px 2px blue, 4px 4px red;
   color: purple;
 }

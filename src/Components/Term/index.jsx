@@ -31,8 +31,8 @@ class Term extends React.Component {
   renderTermButton = () => {
     const { term, bookmark, bookmarkRef, last } = this.props;
     return (
-      // eslint-disable-next-line jsx-a11y/no-static-element-interactions,jsx-a11y/click-events-have-key-events
-      <span
+      <button
+        type="button"
         className={`${styles.term} ${styles[`term-${term.learningLevel}`]} ${
           bookmark ? styles.bookmark : null
         }`}
@@ -46,8 +46,8 @@ class Term extends React.Component {
           // need react fragment here to prevent stupid ant design
           // to insert a space between two chinese characters.
         }
-        <React.Fragment>{term.content}</React.Fragment>
-      </span>
+        {term.content}
+      </button>
     );
   };
 

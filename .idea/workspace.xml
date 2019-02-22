@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ac520e9-853b-4498-878f-54956aff067e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/ContentPanel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/ContentPanel.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Term/Term.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Term/Term.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Term/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Term/index.jsx" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -36,24 +37,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/package.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="21" column="30" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/package-lock.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="193">
-              <caret line="253" column="24" selection-start-line="253" selection-start-column="24" selection-end-line="253" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextReadPage/ContentPanel.jsx">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="288">
@@ -63,10 +46,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Components/Term/Term.module.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="168">
+              <caret line="7" selection-start-line="7" selection-end-line="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Components/Term/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="792">
-              <caret line="33" column="73" selection-start-line="33" selection-start-column="73" selection-end-line="33" selection-end-column="73" />
+            <state relative-caret-position="48">
+              <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -135,14 +127,14 @@
         <option value="$PROJECT_DIR$/src/App.jsx" />
         <option value="$PROJECT_DIR$/src/Components/Header/Header.jsx" />
         <option value="$PROJECT_DIR$/src/Components/Pages/HomePage/HomePage.jsx" />
-        <option value="$PROJECT_DIR$/src/Components/Term/Term.module.scss" />
         <option value="$PROJECT_DIR$/src/Components/Forms/TermEditForm/index.jsx" />
         <option value="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextStatistic.jsx" />
-        <option value="$PROJECT_DIR$/src/Components/Term/index.jsx" />
         <option value="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.jsx" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.module.scss" />
         <option value="$PROJECT_DIR$/src/Components/Pages/TextReadPage/ContentPanel.jsx" />
+        <option value="$PROJECT_DIR$/src/Components/Term/Term.module.scss" />
+        <option value="$PROJECT_DIR$/src/Components/Term/index.jsx" />
       </list>
     </option>
   </component>
@@ -408,7 +400,7 @@
       <workItem from="1550340305659" duration="21685000" />
       <workItem from="1550593375046" duration="4454000" />
       <workItem from="1550599027629" duration="19601000" />
-      <workItem from="1550839920776" duration="15506000" />
+      <workItem from="1550839920776" duration="18067000" />
     </task>
     <task id="LOCAL-00001" summary="won't render tooltip for well known terms">
       <created>1550666520651</created>
@@ -421,7 +413,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="168027000" />
+    <option name="totallyTimeSpent" value="170588000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -436,7 +428,7 @@
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22161172" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22161172" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -455,7 +447,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info active="true" anchor="right" id="Terminal" order="3" sideWeight="0.498779" visible="true" weight="0.24969475" />
+      <window_info anchor="right" id="Terminal" order="3" sideWeight="0.498779" visible="true" weight="0.24969475" />
     </layout>
     <layout-to-restore>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22161172" />
@@ -716,13 +708,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/Term/Term.module.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="685">
-          <caret line="53" column="2" selection-start-line="53" selection-start-column="2" selection-end-line="53" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/Forms/TermEditForm/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="456">
@@ -775,10 +760,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/Term/index.jsx">
+    <entry file="file://$PROJECT_DIR$/package-lock.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="792">
-          <caret line="33" column="73" selection-start-line="33" selection-start-column="73" selection-end-line="33" selection-end-column="73" />
+        <state relative-caret-position="193">
+          <caret line="253" column="24" selection-start-line="253" selection-start-column="24" selection-end-line="253" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -789,10 +774,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package-lock.json">
+    <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextReadPage/ContentPanel.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="253" column="24" selection-start-line="253" selection-start-column="24" selection-end-line="253" selection-end-column="24" />
+        <state relative-caret-position="288">
+          <caret line="12" column="30" lean-forward="true" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
         </state>
       </provider>
     </entry>
@@ -810,10 +795,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/Pages/TextReadPage/ContentPanel.jsx">
+    <entry file="file://$PROJECT_DIR$/src/Components/Term/Term.module.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="12" column="30" lean-forward="true" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
+        <state relative-caret-position="168">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Components/Term/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
         </state>
       </provider>
     </entry>
