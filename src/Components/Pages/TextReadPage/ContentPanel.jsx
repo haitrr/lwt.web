@@ -7,7 +7,7 @@ class ContentPanel extends React.Component {
   constructor(props) {
     super(props);
     if (window.innerWidth > 700) {
-      this.displayTerms = 1000;
+      this.displayTerms = 1500;
       this.loadTerms = 300;
     } else {
       this.displayTerms = 300;
