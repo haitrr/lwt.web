@@ -37,7 +37,11 @@ class TextReadPage extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { languages, language } = this.props;
-    if (prevProps.languages !== languages || !prevProps.language) {
+    if (
+      prevProps.languages !== languages ||
+      !prevProps.language ||
+      prevProps.language !== language
+    ) {
       const languageS = languages.find(l => l.id === language);
       if (languageS) {
         this.speech.setLanguage(languageS.speakCode);

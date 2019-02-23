@@ -19,7 +19,6 @@ class ContentPanel extends React.Component {
         0
       )
     };
-    console.log(this.state, props);
 
     this.last = React.createRef();
     this.container = React.createRef();
