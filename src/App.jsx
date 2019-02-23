@@ -25,7 +25,7 @@ ReactChartkick.addAdapter(Chart);
  */
 class App extends React.Component {
   componentDidMount() {
-    notification.config({ top: 5, placement: "topRight", duration: 1 });
+    notification.config({ top: 5, placement: "bottomRight", duration: 1 });
     const { getLanguages } = this.props;
     getLanguages();
   }
