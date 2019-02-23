@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Layout } from "antd";
+import { Layout, notification } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 import { Route } from "react-router";
@@ -25,6 +25,7 @@ ReactChartkick.addAdapter(Chart);
  */
 class App extends React.Component {
   componentDidMount() {
+    notification.config({ top: 5, placement: "topRight", duration: 1 });
     const { getLanguages } = this.props;
     getLanguages();
   }
