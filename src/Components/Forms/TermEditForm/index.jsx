@@ -26,7 +26,10 @@ class TermEditForm extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { value, getEditingTermMeaning, languages, language } = this.props;
-    if (value && value !== prevProps.value && value.meaning === null) {
+    if (
+      (!prevProps.value || !value.id || value.id !== prevProps.value.id) &&
+      value.meaning === null
+    ) {
       getEditingTermMeaning(
         value.content,
         languages.find(l => l.id === language).code
@@ -138,5 +141,5 @@ TermEditForm.propTypes = {
   editTerm: PropTypes.func.isRequired,
   language: PropTypes.number.isRequired,
   languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  value: PropTypes.shape({})
+  value: PropTypes.shape({ id: PropTypes.string })
 };

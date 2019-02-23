@@ -17,6 +17,7 @@ export const TEXT_READ = "TEXT_READ";
 export const TEXT_EDITED = "TEXT_EDITED";
 export const TEXT_EDIT_DETAIL_FETCHED = "TEXT_EDIT_DETAIL_FETCHED";
 export const TEXT_BOOKMARK_SET = "TEXT_BOOKMARK_SET";
+export const TEXT_TERM_SELECT = "TEXT_TERM_SELECT";
 
 /**
  * get texts action
@@ -91,6 +92,9 @@ export const setBookmarkAction = createAction(
   TEXT_BOOKMARK_SET,
   async (id, index) => {
     await setTextBookmarkAsync(id, index);
-    return index;
   }
+);
+export const selectTermAction = createAction(
+  TEXT_TERM_SELECT,
+  async index => index
 );

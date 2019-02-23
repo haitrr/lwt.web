@@ -1,11 +1,15 @@
 import PropTypes from "prop-types";
-import React, { Component } from "react";
+import React from "react";
 import { Radio } from "antd";
 import styles from "./LearningLevelSelect.module.scss";
 
 // form item need to be class component.
 // eslint-disable-next-line react/prefer-stateless-function
-export default class LearningLevelSelect extends Component {
+export default class LearningLevelSelect extends React.Component {
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    return this.props.value !== nextProps.value;
+  }
+
   render() {
     const { value, onChange } = this.props;
     return (

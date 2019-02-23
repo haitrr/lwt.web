@@ -1,10 +1,10 @@
 import { handleActions } from "redux-actions";
 import {
-  TEXT_BOOKMARK_SET,
   TEXT_DELETED,
   TEXT_EDIT_DETAIL_FETCHED,
   TEXT_FETCHED,
-  TEXT_READ
+  TEXT_READ,
+  TEXT_TERM_SELECT
 } from "../Actions/TextAction";
 import { TERM_CREATED, TERM_EDITED } from "../Actions/TermAction";
 
@@ -71,7 +71,7 @@ const textReducer = handleActions(
       }
       return state;
     },
-    [TEXT_BOOKMARK_SET]: (state, action) => ({
+    [TEXT_TERM_SELECT]: (state, action) => ({
       ...state,
       readingText: { ...state.readingText, bookmark: action.payload }
     })

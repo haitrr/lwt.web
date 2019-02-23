@@ -3,7 +3,11 @@ import React from "react";
 import { connect } from "react-redux";
 import Speech from "speak-tts";
 import { animateScroll } from "react-scroll";
-import { readTextAction, setBookmarkAction } from "../../../Actions/TextAction";
+import {
+  readTextAction,
+  selectTermAction,
+  setBookmarkAction
+} from "../../../Actions/TextAction";
 import styles from "./TextReadPage.module.scss";
 import TermEditForm from "../../Forms/TermEditForm";
 import {
@@ -73,7 +77,8 @@ class TextReadPage extends React.Component {
 
   onTermClick = (term, index) => {
     this.speech.speak({ text: term.content, queue: false });
-    const { setBookmark, id } = this.props;
+    const { setBookmark, id, selectTerm } = this.props;
+    selectTerm(index);
     setBookmark(id, index);
   };
 
@@ -118,7 +123,8 @@ export default connect(
     readText: readTextAction,
     getTerm: getTermAction,
     setEditingTerm: setEditingTermAction,
-    setBookmark: setBookmarkAction
+    setBookmark: setBookmarkAction,
+    selectTerm: selectTermAction
   }
 )(TextReadPage);
 TextReadPage.defaultProps = {
@@ -134,6 +140,7 @@ TextReadPage.propTypes = {
   readText: PropTypes.func.isRequired,
   languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   setBookmark: PropTypes.func.isRequired,
+  selectTerm: PropTypes.func.isRequired,
   language: PropTypes.number,
   title: PropTypes.string,
   id: PropTypes.string,

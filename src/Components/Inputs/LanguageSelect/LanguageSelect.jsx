@@ -6,9 +6,15 @@ import { connect } from "react-redux";
  * language select
  */
 class LanguageSelect extends React.Component {
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    return (
+      this.props.value !== nextProps.value ||
+      this.props.languages !== nextProps.languages
+    );
+  }
+
   render() {
     const { languages, className, onChange, value, disabled } = this.props;
-
     return (
       <Select
         onChange={onChange}
