@@ -27,6 +27,7 @@ class TermEditForm extends React.Component {
   componentDidUpdate(prevProps) {
     const { value, getEditingTermMeaning, languages, language } = this.props;
     if (
+      value &&
       (!prevProps.value || !value.id || value.id !== prevProps.value.id) &&
       value.meaning === null
     ) {
