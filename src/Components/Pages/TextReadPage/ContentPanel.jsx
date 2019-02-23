@@ -15,7 +15,10 @@ class ContentPanel extends React.Component {
     }
     this.state = {
       begin: Math.max(
-        Math.min(props.bookmark, props.terms.length - this.displayTerms),
+        Math.min(
+          props.bookmark - this.loadTerms,
+          props.terms.length - this.displayTerms
+        ),
         0
       )
     };
