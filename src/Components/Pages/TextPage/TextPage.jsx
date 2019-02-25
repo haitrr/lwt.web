@@ -26,15 +26,15 @@ function renderTermNumber(current, record, level) {
     return null;
   });
   return (
-    <span
-      className={`${
+    <div
+      className={`${styles.termCount} ${
         termStyles[`term-${TermLearningLevel[level]}`]
       }`}
     >
-      {`${current}`}
-      <br />
-      {`${Math.round((current / sum) * 100)}%`}
-    </span>
+      <p>{`${current}`}</p>
+      <p>~</p>
+      <p>{`${Math.round((current / sum) * 100)}%`}</p>
+    </div>
   );
 }
 
