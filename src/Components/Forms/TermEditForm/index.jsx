@@ -24,19 +24,22 @@ class TermEditForm extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    const { value, getEditingTermMeaning, languages, language } = this.props;
-    if (
-      value &&
-      (!prevProps.value || !value.id || value.id !== prevProps.value.id) &&
-      value.meaning === null
-    ) {
-      getEditingTermMeaning(
-        value.content,
-        languages.find(l => l.id === language).code
-      );
-    }
-  }
+  // glosbe api stopped working
+  // todo: uncomment below when the glosbe api work again
+
+  // componentDidUpdate(prevProps) {
+  //   const { value, getEditingTermMeaning, languages, language } = this.props;
+  //   if (
+  //     value &&
+  //     (!prevProps.value || !value.id || value.id !== prevProps.value.id) &&
+  //     value.meaning === null
+  //   ) {
+  //     getEditingTermMeaning(
+  //       value.content,
+  //       languages.find(l => l.id === language).code
+  //     );
+  //   }
+  // }
 
   handleSubmit = e => {
     const {

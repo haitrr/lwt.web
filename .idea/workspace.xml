@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4ac520e9-853b-4498-878f-54956aff067e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/App.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Term/Term.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Term/Term.module.scss" afterDir="false" />
-    </list>
+    <list default="true" id="4ac520e9-853b-4498-878f-54956aff067e" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -418,7 +415,7 @@
       <workItem from="1550340305659" duration="21685000" />
       <workItem from="1550593375046" duration="4454000" />
       <workItem from="1550599027629" duration="19601000" />
-      <workItem from="1550839920776" duration="23993000" />
+      <workItem from="1550839920776" duration="24611000" />
     </task>
     <task id="LOCAL-00001" summary="won't render tooltip for well known terms">
       <created>1550666520651</created>
@@ -431,7 +428,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="176514000" />
+    <option name="totallyTimeSpent" value="177132000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -444,7 +441,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22161172" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
