@@ -26,14 +26,12 @@ function renderTermNumber(current, record, level) {
     return null;
   });
   return (
-    <div
-      className={`${styles.termCount} ${
-        termStyles[`term-${TermLearningLevel[level]}`]
-      }`}
-    >
-      <p>{`${current}`}</p>
-      <p>~</p>
-      <p>{`${Math.round((current / sum) * 100)}%`}</p>
+    <div className={`${termStyles[`term-${TermLearningLevel[level]}`]}`}>
+      {`${current}`}
+      <br />
+      ~
+      <br />
+      {`${Math.round((current / sum) * 100)}%`}
     </div>
   );
 }
@@ -47,8 +45,7 @@ class TextPage extends React.Component {
       title: "Title",
       dataIndex: "title",
       key: "title",
-      fixed: "left",
-      width: 200,
+      width: "30vw",
       render: (value, record) => (
         <Popover
           content={<PieChart width="50vw" height="50vh" data={record.counts} />}
@@ -58,21 +55,9 @@ class TextPage extends React.Component {
       )
     },
     {
-      title: "Language",
-      dataIndex: "language",
-      key: "language",
-      render: value => {
-        const { languages } = this.props;
-        const language = languages.find(lang => lang.id === value);
-        if (language) {
-          return language.name;
-        }
-        return "Unknown language";
-      }
-    },
-    {
-      title: "Actions",
+      title: "Act",
       key: "actions",
+      width: "auto",
       render: (_, text) => (
         <span>
           <Link className={styles.actionButton} to={`/text/read/${text.id}`}>
@@ -95,54 +80,68 @@ class TextPage extends React.Component {
       )
     },
     {
-      title: "Unknow",
+      title: "UK",
       key: "unknow",
       dataIndex: "counts.UnKnow",
       render: (value, record) => renderTermNumber(value, record, "UnKnow")
     },
     {
-      title: "Learning1",
+      title: "L1",
       key: "Learning1",
       dataIndex: "counts.Learning1",
       render: (value, record) => renderTermNumber(value, record, "Learning1")
     },
     {
-      title: "Learning2",
+      title: "L2",
       key: "Learning2",
       dataIndex: "counts.Learning2",
       render: (value, record) => renderTermNumber(value, record, "Learning2")
     },
     {
-      title: "Learning3",
+      title: "L3",
       key: "Learning3",
       dataIndex: "counts.Learning3",
       render: (value, record) => renderTermNumber(value, record, "Learning3")
     },
     {
-      title: "Learning4",
+      title: "L4",
       key: "Learning4",
       dataIndex: "counts.Learning4",
       render: (value, record) => renderTermNumber(value, record, "Learning4")
     },
     {
-      title: "Learning5",
+      title: "L5",
       key: "Learning5",
       dataIndex: "counts.Learning5",
       render: (value, record) => renderTermNumber(value, record, "Learning5")
     },
     {
-      title: "WellKnow",
+      title: "WK",
       key: "WellKnow",
       dataIndex: "counts.WellKnow",
       render: (value, record) => renderTermNumber(value, record, "WellKnow")
     },
     {
-      title: "Ignored",
+      title: "Language",
+      dataIndex: "language",
+      key: "language",
+      render: value => {
+        const { languages } = this.props;
+        const language = languages.find(lang => lang.id === value);
+        if (language) {
+          return language.name;
+        }
+        return "Unknown language";
+      }
+    },
+
+    {
+      title: "I",
       key: "Ignored",
       dataIndex: "counts.Ignored"
     },
     {
-      title: "Total",
+      title: "T",
       key: "total",
       dataIndex: "counts",
       render: (value, record) => {
@@ -247,7 +246,7 @@ class TextPage extends React.Component {
           rowKey="id"
           className={styles.table}
           rowClassName={styles.row}
-          scroll={{ x: true }}
+          scroll={{ x: 1000 }}
         />
         <Pagination
           total={total}
