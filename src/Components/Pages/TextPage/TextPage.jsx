@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { PieChart } from "react-chartkick";
 import { getLanguageAction } from "../../../Actions/LanguageAction";
 import { deleteTextAction, getTextsAction } from "../../../Actions/TextAction";
-import { TextFilterForm } from "../../Forms/TextFilterForm";
+import TextFilterForm from "../../Forms/TextFilterForm";
 import TextCreateModal from "../../Modals/TextCreateModal";
 import TextEditModal from "../../Modals/TextEditModal";
 import { TermLearningLevel } from "../../../Enums";
@@ -237,8 +237,11 @@ class TextPage extends React.Component {
           onCreate={this.filterTexts}
         />
         <Button onClick={this.showCreateModal}>Add text</Button>
-        <Button>Add long text</Button>
-        <TextFilterForm languages={languages} value={filters} />
+        <TextFilterForm
+          onFilterChange={this.filterTexts}
+          languages={languages}
+          value={filters}
+        />
         <Table
           dataSource={texts}
           pagination={false}

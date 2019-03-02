@@ -17,7 +17,7 @@ const defaultState = {
   page: 1,
   itemPerPage: 10,
   total: 0,
-  filters: { languageId: "" },
+  filters: {},
   readingText: null
 };
 
