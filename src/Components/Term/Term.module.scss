@@ -54,6 +54,9 @@
 }
 
 .bookmark {
-  box-shadow: 2px 2px blue, 4px 4px red;
-  color: purple;
+  border-radius: 10px;
+  transform: scale(1.05);
+  position: relative;
+  box-shadow: 0 0 3px 2px purple;
+  color: red;
 }
