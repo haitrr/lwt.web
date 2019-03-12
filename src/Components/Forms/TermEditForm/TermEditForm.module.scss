@@ -1,4 +1,7 @@
 .form {
+  :global(div.ant-row.ant-form-item) {
+    margin-right: 0;
+  }
   text-align: center;
   > div {
     margin: 0;
