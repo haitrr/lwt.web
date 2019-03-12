@@ -1,10 +1,13 @@
 .readPane {
   height: 90vh;
+  @media screen and (max-width: 600px) {
+    height: 89vh;
+  }
   display: flex;
   flex: auto;
   flex-direction: column;
-  margin-left:auto;
-  margin-right:auto;
+  margin-left: auto;
+  margin-right: auto;
   max-width: 1920px;
 }
 
@@ -17,7 +20,7 @@
 .contentPanel {
   font-size: 25px;
   overflow-y: auto;
-  padding-left: 3px; 
-  padding-right: 3px; 
+  padding-left: 3px;
+  padding-right: 3px;
   white-space: pre-line;
 }

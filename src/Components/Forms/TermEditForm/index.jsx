@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
-import { Form, Input, Button, notification } from "antd";
+import { Form, Input, Button, Col, notification, Row } from "antd";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import LearningLevelSelect from "../../Inputs/LearningLevelSelect";
 import LanguageSelect from "../../Inputs/LanguageSelect";
@@ -86,34 +86,43 @@ class TermEditForm extends React.Component {
             <Input disabled />
           )}
         </Form.Item>
-        <Form.Item className={styles.language} label="Language">
+        <Form.Item className={styles.language}>
           {getFieldDecorator("language", { initialValue: language })(
             <LanguageSelect disabled />
           )}
         </Form.Item>
-        <Form.Item label="Meaning" className={styles.meaning}>
-          {getFieldDecorator("meaning", { initialValue: value.meaning })(
-            <Input.TextArea
-              autosize={{ maxRows: 3, minRows: 1 }}
-              placeholder="Meaning"
-              cols={60}
-            />
-          )}
-        </Form.Item>
-        <Form.Item label="Learning Level">
-          {getFieldDecorator("learningLevel", {
-            initialValue: value.learningLevel
-          })(<LearningLevelSelect />)}
-        </Form.Item>
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className={styles.saveButton}
-          >
-            Save
-          </Button>
-        </Form.Item>
+
+        <Row>
+          <Col xl={10} lg={12} xs={24}>
+            <Form.Item className={styles.meaning}>
+              {getFieldDecorator("meaning", { initialValue: value.meaning })(
+                <Input.TextArea
+                  autosize={{ maxRows: 3, minRows: 1 }}
+                  placeholder="Meaning"
+                  cols={60}
+                />
+              )}
+            </Form.Item>
+          </Col>
+          <Col xl={10} lg={12} xs={24}>
+            <Form.Item className={styles.learningLevel}>
+              {getFieldDecorator("learningLevel", {
+                initialValue: value.learningLevel
+              })(<LearningLevelSelect />)}
+            </Form.Item>
+          </Col>
+          <Col xl={4} lg={24} xs={24}>
+            <Form.Item className={styles.saveButton}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                className={styles.saveButton}
+              >
+                Save
+              </Button>
+            </Form.Item>
+          </Col>
+        </Row>
       </Form>
     );
   }

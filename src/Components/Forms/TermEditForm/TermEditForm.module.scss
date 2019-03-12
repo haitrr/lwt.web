@@ -1,6 +1,7 @@
 .form {
+  text-align: center;
   > div {
-    margin:0;
+    margin: 0;
     > div {
       padding-bottom: 1px;
     }
@@ -13,15 +14,28 @@
 
 .title {
   text-align: center;
+  font-size: 25px;
 }
 
 .language {
   display: none !important;
 }
 
-.meaning  {
+.meaning {
+  width: 100%;
+  textarea {
+    resize: none;
+  }
+}
+
+.learningLevel {
 }
 
 .saveButton {
-  width: 150px;
+  width: 100%;
+  button,
+  div,
+  span {
+    width: 100%;
+  }
 }

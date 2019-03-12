@@ -6,8 +6,9 @@ import styles from "./LearningLevelSelect.module.scss";
 // form item need to be class component.
 // eslint-disable-next-line react/prefer-stateless-function
 export default class LearningLevelSelect extends React.Component {
-  shouldComponentUpdate(nextProps, nextState, nextContext) {
-    return this.props.value !== nextProps.value;
+  shouldComponentUpdate(nextProps) {
+    const { value } = this.props;
+    return value !== nextProps.value;
   }
 
   render() {
