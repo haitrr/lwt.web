@@ -19,12 +19,11 @@ class Term extends React.Component {
 
   handleTermClick = (e, term) => {
     e.preventDefault();
-    const { getTerm, setEditingTerm, onTermClick } = this.props;
+    const { getTerm, setEditingTerm, index, onTermClick } = this.props;
     onTermClick(term);
+    setEditingTerm(index);
     if (term.id) {
-      getTerm(term.id);
-    } else {
-      setEditingTerm(term);
+      getTerm(term.id, index);
     }
   };
 
@@ -97,7 +96,8 @@ Term.propTypes = {
   onTermClick: PropTypes.func.isRequired,
   bookmark: PropTypes.bool,
   bookmarkRef: PropTypes.shape({}).isRequired,
-  last: PropTypes.shape({})
+  last: PropTypes.shape({}),
+  index: PropTypes.number.isRequired
 };
 
 export default connect(

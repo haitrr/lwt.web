@@ -12,6 +12,7 @@ import {
   getEditingTermMeaningAction,
   setEditingTermAction
 } from "../../../Actions/TermAction";
+import { selectEditingTermValue } from "../../../Selectors/TermSelectors";
 
 class TermEditForm extends React.Component {
   componentDidMount() {
@@ -23,23 +24,6 @@ class TermEditForm extends React.Component {
       );
     }
   }
-
-  // glosbe api stopped working
-  // todo: uncomment below when the glosbe api work again
-
-  // componentDidUpdate(prevProps) {
-  //   const { value, getEditingTermMeaning, languages, language } = this.props;
-  //   if (
-  //     value &&
-  //     (!prevProps.value || !value.id || value.id !== prevProps.value.id) &&
-  //     value.meaning === null
-  //   ) {
-  //     getEditingTermMeaning(
-  //       value.content,
-  //       languages.find(l => l.id === language).code
-  //     );
-  //   }
-  // }
 
   handleSubmit = e => {
     const {
@@ -66,6 +50,7 @@ class TermEditForm extends React.Component {
       value,
       language
     } = this.props;
+    console.log(value);
     if (!value) {
       return null;
     }
@@ -130,7 +115,7 @@ class TermEditForm extends React.Component {
 
 export default connect(
   state => ({
-    value: state.term.editingTerm,
+    value: selectEditingTermValue(state),
     language: state.text.readingText.language,
     languages: state.language.languages
   }),

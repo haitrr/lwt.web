@@ -6,7 +6,7 @@ import {
   TEXT_READ,
   TEXT_TERM_SELECT
 } from "../Actions/TextAction";
-import { TERM_CREATED, TERM_EDITED } from "../Actions/TermAction";
+import { TERM_CREATED, TERM_EDITED, TERM_GET } from "../Actions/TermAction";
 
 /**
  * text reducer
@@ -29,6 +29,20 @@ const textReducer = handleActions(
         return { ...state, texts: [] };
       }
       return { ...payload };
+    },
+    [TERM_GET]: (state, action) => {
+      const terms = [...state.readingText.terms];
+      terms[action.payload.index] = {
+        ...action.payload.term,
+        content: terms[action.payload.index].content
+      };
+      return {
+        ...state,
+        readingText: {
+          ...state.readingText,
+          terms
+        }
+      };
     },
     [TEXT_READ]: (state, action) => ({ ...state, readingText: action.payload }),
     [TERM_CREATED]: (state, action) => {

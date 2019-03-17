@@ -13,9 +13,9 @@ export const TERM_CREATED = "TERM_CREATED";
 export const TERM_EDITED = "TERM_EDITED";
 export const TERM_GET_MEANING = "TERM_GET_MEANING";
 
-export const getTermAction = createAction(TERM_GET, async id => {
+export const getTermAction = createAction(TERM_GET, async (id, index) => {
   try {
-    return await getTermAsync(id);
+    return { term: await getTermAsync(id), index };
   } catch (e) {
     notification.error({ message: "Can't get term", description: e.message });
     return null;
