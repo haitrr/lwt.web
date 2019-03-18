@@ -1,3 +1,13 @@
+%disableScrollBar {
+  -ms-overflow-style: none; // IE 10+
+  overflow: -moz-scrollbars-none; // Firefox
+  ::-webkit-scrollbar {
+    display: none; // Safari and Chrome
+    width: 0;
+    height: 0;
+  }
+}
+
 .readPane {
   height: 90vh;
   @media screen and (max-width: 600px) {
@@ -10,6 +20,7 @@
   margin-right: auto;
   max-width: 1920px;
   position: relative;
+  @extend %disableScrollBar;
 }
 
 .titleSection {
@@ -31,9 +42,9 @@
   width: 1%;
   max-width: 10px;
   position: fixed;
-  top: 8vh;
+  top: 0;
   right: 0;
-  height: 90vh;
+  height: 100vh;
   background-color: mediumpurple;
   .done {
     background-color: lightgreen;

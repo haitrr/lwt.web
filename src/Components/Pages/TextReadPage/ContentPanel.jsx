@@ -12,7 +12,7 @@ class ContentPanel extends React.Component {
       this.loadTerms = 300;
     } else {
       this.displayTerms = 500;
-      this.loadTerms = 100;
+      this.loadTerms = 50;
     }
     this.state = {
       begin: Math.max(
