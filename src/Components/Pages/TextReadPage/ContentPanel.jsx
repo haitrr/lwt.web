@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { Fragment } from "react";
 import styles from "./TextReadPage.module.scss";
 import Term from "../../Term";
+import ProgressBar from "./ProgressBar";
 
 class ContentPanel extends React.Component {
   constructor(props) {
@@ -70,26 +71,29 @@ class ContentPanel extends React.Component {
     const { terms, onTermClick, bookmarkRef } = this.props;
     const { begin } = this.state;
     return (
-      <div
-        onScroll={this.handleScroll}
-        id="contentPanel"
-        className={styles.contentPanel}
-        ref={this.container}
-      >
-        {terms.slice(begin, begin + this.displayTerms).map((term, index) => {
-          const realIndex = index + begin;
-          return (
-            <Term
-              onTermClick={t => onTermClick(t, realIndex)}
-              bookmarkRef={bookmarkRef}
-              last={begin === realIndex ? this.last : null}
-              // eslint-disable-next-line react/no-array-index-key
-              key={realIndex}
-              index={realIndex}
-            />
-          );
-        })}
-      </div>
+      <Fragment>
+        <div
+          onScroll={this.handleScroll}
+          id="contentPanel"
+          className={styles.contentPanel}
+          ref={this.container}
+        >
+          {terms.slice(begin, begin + this.displayTerms).map((term, index) => {
+            const realIndex = index + begin;
+            return (
+              <Term
+                onTermClick={t => onTermClick(t, realIndex)}
+                bookmarkRef={bookmarkRef}
+                last={begin === realIndex ? this.last : null}
+                // eslint-disable-next-line react/no-array-index-key
+                key={realIndex}
+                index={realIndex}
+              />
+            );
+          })}
+        </div>
+        <ProgressBar />
+      </Fragment>
     );
   }
 }
