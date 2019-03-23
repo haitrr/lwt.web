@@ -15,16 +15,6 @@ import {
 import { selectEditingTermValue } from "../../../Selectors/TermSelectors";
 
 class TermEditForm extends React.Component {
-  componentDidMount() {
-    const { value, getEditingTermMeaning, languages, language } = this.props;
-    if (value && value.meaning === null) {
-      getEditingTermMeaning(
-        value.content,
-        languages.find(l => l.id === language).code
-      );
-    }
-  }
-
   handleSubmit = e => {
     const {
       form: { getFieldsValue },
@@ -50,7 +40,7 @@ class TermEditForm extends React.Component {
       value,
       language
     } = this.props;
-    console.log(value);
+
     if (!value) {
       return null;
     }
@@ -135,9 +125,7 @@ TermEditForm.propTypes = {
   form: PropTypes.shape({}).isRequired,
   createTerm: PropTypes.func.isRequired,
   setEditingTerm: PropTypes.func.isRequired,
-  getEditingTermMeaning: PropTypes.func.isRequired,
   editTerm: PropTypes.func.isRequired,
   language: PropTypes.number.isRequired,
-  languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   value: PropTypes.shape({ id: PropTypes.string })
 };
