@@ -38,7 +38,8 @@ class TermEditForm extends React.Component {
     const {
       form: { getFieldDecorator },
       value,
-      language
+      language,
+      className
     } = this.props;
 
     if (!value) {
@@ -48,7 +49,7 @@ class TermEditForm extends React.Component {
       <Form
         onSubmit={this.handleSubmit}
         layout="inline"
-        className={styles.form}
+        className={`${className} ${styles.form}`}
       >
         <CopyToClipboard
           text={value.content}
@@ -118,7 +119,8 @@ export default connect(
 )(Form.create()(TermEditForm));
 
 TermEditForm.defaultProps = {
-  value: null
+  value: null,
+  className: ""
 };
 
 TermEditForm.propTypes = {
@@ -127,5 +129,6 @@ TermEditForm.propTypes = {
   setEditingTerm: PropTypes.func.isRequired,
   editTerm: PropTypes.func.isRequired,
   language: PropTypes.number.isRequired,
-  value: PropTypes.shape({ id: PropTypes.string })
+  value: PropTypes.shape({ id: PropTypes.string }),
+  className: PropTypes.string
 };

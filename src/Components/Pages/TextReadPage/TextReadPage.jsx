@@ -100,7 +100,7 @@ class TextReadPage extends React.Component {
           bookmark={bookmark}
           bookmarkRef={this.bookmark}
         />
-        <TermEditForm />
+        <TermEditForm className={styles.termEditForm} />
       </div>
     );
   }

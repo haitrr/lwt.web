@@ -2,8 +2,11 @@
   margin-left: 100px;
   margin-right: 100px;
   min-height: 90vh;
+  max-height: 90vh;
+  height: 90vh;
   @media screen and (max-width: 600px) {
-    min-height: 89vh;
+   min-height: 89vh;
+   max-height: 89vh;
   }
   font-weight: normal;
   font-family: Roboto, STHeiti, sans-serif;

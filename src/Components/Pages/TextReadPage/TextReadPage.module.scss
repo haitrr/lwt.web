@@ -50,3 +50,11 @@
     background-color: lightgreen;
   }
 }
+
+.termEditForm  {
+  position: sticky;
+  bottom: 2vh;
+  z-index:1;
+  background: white;
+  width: 100%;
+}
