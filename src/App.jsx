@@ -9,7 +9,6 @@ import ReactChartkick from "react-chartkick";
 import Chart from "chart.js";
 import { Helmet } from "react-helmet";
 import styles from "./App.module.scss";
-import { Footer } from "./Components/Footer";
 import Header from "./Components/Header/Header";
 import { HomePage } from "./Components/Pages/HomePage";
 import LoginPage from "./Components/Pages/LoginPage/LoginPage";
@@ -47,9 +46,6 @@ class App extends React.Component {
             <Route path="/text" exact component={TextPage} />
             <Route path="/text/read/:textId" exact component={TextReadPage} />
           </Layout.Content>
-          <Layout.Footer className={styles.footer}>
-            <Footer />
-          </Layout.Footer>
         </Layout>
       </BrowserRouter>
     );
