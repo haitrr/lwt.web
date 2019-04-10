@@ -9,12 +9,8 @@
 }
 
 .readPane {
-  height: 90vh;
-  @media screen and (max-width: 600px) {
-    height: 89vh;
-  }
   display: flex;
-  flex: auto;
+  height: 100%;
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
@@ -32,7 +28,8 @@
 .contentPanel {
   padding-top: 5px;
   font-size: 25px;
-  overflow-y: auto;
+  flex:1;
+  overflow-y: scroll;
   padding-left: 3px;
   padding-right: 3px;
   white-space: pre-line;
@@ -53,7 +50,6 @@
 
 .termEditForm  {
   position: sticky;
-  bottom: 2vh;
   z-index:1;
   background: white;
   width: 100%;

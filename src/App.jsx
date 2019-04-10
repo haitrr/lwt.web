@@ -16,6 +16,7 @@ import { RegisterPage } from "./Components/Pages/RegisterPage/RegisterPage";
 import TextPage from "./Components/Pages/TextPage";
 import TextReadPage from "./Components/Pages/TextReadPage";
 import { getLanguageAction } from "./Actions/LanguageAction";
+import { Footer } from "./Components/Footer";
 
 ReactChartkick.addAdapter(Chart);
 
@@ -32,7 +33,7 @@ class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
-        <Layout>
+        <Layout className={styles.layout}>
           <Helmet>
             <title>Lwt</title>
           </Helmet>
@@ -46,6 +47,9 @@ class App extends React.Component {
             <Route path="/text" exact component={TextPage} />
             <Route path="/text/read/:textId" exact component={TextReadPage} />
           </Layout.Content>
+          <Layout.Footer className={styles.footer}>
+            <Footer />
+          </Layout.Footer>
         </Layout>
       </BrowserRouter>
     );

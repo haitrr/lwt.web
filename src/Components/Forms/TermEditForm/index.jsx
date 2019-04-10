@@ -73,7 +73,7 @@ class TermEditForm extends React.Component {
             <Form.Item className={styles.meaning}>
               {getFieldDecorator("meaning", { initialValue: value.meaning })(
                 <Input.TextArea
-                  autosize={{ maxRows: 3, minRows: 1 }}
+                  autosize={{ maxRows: 3, minRows: 2 }}
                   placeholder="Meaning"
                   cols={60}
                 />
