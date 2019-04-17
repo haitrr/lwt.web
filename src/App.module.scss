@@ -22,6 +22,8 @@
 .layout {
   display: flex;
   height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling:touch;
   flex-direction: column;
 }
 
