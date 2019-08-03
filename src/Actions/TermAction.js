@@ -3,8 +3,8 @@ import { notification } from "antd";
 import {
   createTermAsync,
   editTermAsync,
-  getMeaningAsync,
-  getTermAsync
+  getTermAsync,
+  getTextMeaningAsync
 } from "../Apis/TermApi";
 
 export const TERM_GET = "TERM_GET";
@@ -25,17 +25,12 @@ export const getTermAction = createAction(TERM_GET, async (id, index) => {
 export const setEditingTermAction = createAction(TERM_SET, term => term);
 export const getEditingTermMeaningAction = createAction(
   TERM_GET_MEANING,
-  async (content, from) => {
-    const rs = await getMeaningAsync(content.toLowerCase(), from, "vi");
+  async (content, from, to) => {
+    const rs = await getTextMeaningAsync(content.toLowerCase(), from, to);
     if (!rs) {
       return "";
     }
-    return rs.result === "ok"
-      ? rs.tuc
-          .filter(o => o.phrase)
-          .map(o => o.phrase.text)
-          .join(", ")
-      : "";
+    return rs.meaning;
   }
 );
 export const createTermAction = createAction(TERM_CREATED, async term => {

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
-import { Form, Input, Button, Col, notification, Row } from "antd";
+import { Button, Col, Form, Input, notification, Row } from "antd";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import LearningLevelSelect from "../../Inputs/LearningLevelSelect";
 import LanguageSelect from "../../Inputs/LanguageSelect";
@@ -12,9 +12,33 @@ import {
   getEditingTermMeaningAction,
   setEditingTermAction
 } from "../../../Actions/TermAction";
-import { selectEditingTermValue } from "../../../Selectors/TermSelectors";
+import {
+  selectEditingTermMeaning,
+  selectEditingTermValue
+} from "../../../Selectors/TermSelectors";
+import { selectDictionaryLanguage } from "../../../Selectors/UserSelectors";
 
 class TermEditForm extends React.Component {
+  componentDidUpdate(prevProps) {
+    const {
+      value,
+      getEditingTermMeaning,
+      editingTermMeaning,
+      dictionaryLanguage,
+      languages,
+      language
+    } = this.props;
+    if (
+      value.content &&
+      !value.meaning &&
+      editingTermMeaning === prevProps.editingTermMeaning &&
+      (!prevProps.value || prevProps.value.content !== value.content)
+    ) {
+      const { code } = languages.find(l => l.id === language);
+      getEditingTermMeaning(value.content, code, dictionaryLanguage);
+    }
+  }
+
   handleSubmit = e => {
     const {
       form: { getFieldsValue },
@@ -39,10 +63,11 @@ class TermEditForm extends React.Component {
       form: { getFieldDecorator },
       value,
       language,
-      className
+      className,
+      editingTermMeaning,
+      editingTerm
     } = this.props;
-
-    if (!value) {
+    if (!editingTerm) {
       return null;
     }
     return (
@@ -71,7 +96,9 @@ class TermEditForm extends React.Component {
         <Row>
           <Col xl={10} lg={12} xs={24}>
             <Form.Item className={styles.meaning}>
-              {getFieldDecorator("meaning", { initialValue: value.meaning })(
+              {getFieldDecorator("meaning", {
+                initialValue: value.meaning ? value.meaning : editingTermMeaning
+              })(
                 <Input.TextArea
                   autosize={{ maxRows: 3, minRows: 2 }}
                   placeholder="Meaning"
@@ -104,11 +131,40 @@ class TermEditForm extends React.Component {
   }
 }
 
+TermEditForm.defaultProps = {
+  className: "",
+  value: null,
+  dictionaryLanguage: null
+};
+
+TermEditForm.propTypes = {
+  className: PropTypes.string,
+  createTerm: PropTypes.func.isRequired,
+  dictionaryLanguage: PropTypes.string,
+  editTerm: PropTypes.func.isRequired,
+  editingTerm: PropTypes.number.isRequired,
+  editingTermMeaning: PropTypes.string.isRequired,
+  form: PropTypes.shape().isRequired,
+  getEditingTermMeaning: PropTypes.func.isRequired,
+  language: PropTypes.number.isRequired,
+  languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  setEditingTerm: PropTypes.func.isRequired,
+  value: PropTypes.shape({
+    id: PropTypes.string,
+    content: PropTypes.string
+  })
+};
 export default connect(
   state => ({
-    value: selectEditingTermValue(state),
+    value: { ...selectEditingTermValue(state) },
+    dictionaryLanguage: selectDictionaryLanguage(
+      state,
+      state.text.readingText.language
+    ),
+    editingTerm: state.term.editingTerm,
     language: state.text.readingText.language,
-    languages: state.language.languages
+    languages: state.language.languages,
+    editingTermMeaning: selectEditingTermMeaning(state)
   }),
   {
     setEditingTerm: setEditingTermAction,
@@ -117,18 +173,3 @@ export default connect(
     getEditingTermMeaning: getEditingTermMeaningAction
   }
 )(Form.create()(TermEditForm));
-
-TermEditForm.defaultProps = {
-  value: null,
-  className: ""
-};
-
-TermEditForm.propTypes = {
-  form: PropTypes.shape({}).isRequired,
-  createTerm: PropTypes.func.isRequired,
-  setEditingTerm: PropTypes.func.isRequired,
-  editTerm: PropTypes.func.isRequired,
-  language: PropTypes.number.isRequired,
-  value: PropTypes.shape({ id: PropTypes.string }),
-  className: PropTypes.string
-};

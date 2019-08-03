@@ -8,6 +8,6 @@ export async function getUserLanguageAsync() {
   try {
     return await getAsync(`${API_ROOT}/language`, {});
   } catch (e) {
-    return [];
+    return null;
   }
 }

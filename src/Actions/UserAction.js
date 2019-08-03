@@ -1,9 +1,17 @@
 import { createAction } from "redux-actions";
-import { loginAsync, logout, registerAsync } from "../Apis/UserApi";
+import {
+  loginAsync,
+  logout,
+  registerAsync,
+  getSettingAsync,
+  updateSettingAsync
+} from "../Apis/UserApi";
 
 export const USER_LOGGED_IN = "USER_LOGGED_IN";
 export const USER_REGISTERED = "USER_REGISTERED";
 export const USER_LOGGED_OUT = "USER_LOGGED_OUT";
+export const USER_SETTING_GET = "USER_SETTING_GET";
+export const USER_SETTING_UPDATE = "USER_SETTING_UPDATE";
 
 /**
  * user login action.
@@ -15,19 +23,40 @@ export const loginAction = createAction(USER_LOGGED_IN, async credentials => {
       isLoggedIn: true,
       ...user
     };
-  } else {
-    return {};
   }
+  return {};
 });
 
 export const logoutAction = createAction(USER_LOGGED_OUT, () => {
   logout();
 });
 
+export const getSettingAction = createAction(USER_SETTING_GET, async () => {
+  try {
+    const setting = await getSettingAsync();
+    if (setting) {
+      return setting;
+    }
+    return { languageSettings: {} };
+  } catch (e) {
+    // ignore
+  }
+});
+
+export const updateSettingAction = createAction(
+  USER_SETTING_UPDATE,
+  async value => {
+    try {
+      await updateSettingAsync(value);
+    } catch (e) {
+      // ignore
+    }
+  }
+);
 export const registerAction = createAction(USER_REGISTERED, async data => {
   try {
     await registerAsync(data);
-  } finally {
+  } catch {
     // ignore
   }
 });

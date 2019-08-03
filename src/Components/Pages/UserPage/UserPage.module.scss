@@ -1,0 +1,14 @@
+.root {
+  display: flex;
+  flex-direction: row;
+}
+
+.sideMenu {
+  display: flex;
+  max-width: 30%;
+}
+
+.content {
+  flex:1;
+  display: flex;
+}

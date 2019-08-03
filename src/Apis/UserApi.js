@@ -1,6 +1,14 @@
 import decode from "jwt-decode";
 import { API_ROOT, TOKEN_LOCAL_STORAGE_KEY } from "../Constants";
-import { postAsync } from "../Utilities/HttpRequest";
+import { getAsync, postAsync, putAsync } from "../Utilities/HttpRequest";
+
+export function getSettingAsync() {
+  return getAsync(`${API_ROOT}/user/setting`);
+}
+
+export function updateSettingAsync(settings) {
+  return putAsync(`${API_ROOT}/user`, "setting", settings);
+}
 
 /**
  * login a user async
@@ -9,7 +17,7 @@ import { postAsync } from "../Utilities/HttpRequest";
 export async function loginAsync(data) {
   try {
     const result = await postAsync(`${API_ROOT}/user/login`, data);
-    const token = result.token;
+    const { token } = result;
     localStorage.setItem(TOKEN_LOCAL_STORAGE_KEY, token);
 
     return decode(token);

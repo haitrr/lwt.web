@@ -17,6 +17,8 @@ import TextPage from "./Components/Pages/TextPage";
 import TextReadPage from "./Components/Pages/TextReadPage";
 import { getLanguageAction } from "./Actions/LanguageAction";
 import { Footer } from "./Components/Footer";
+import { getSettingAction } from "./Actions/UserAction";
+import UserPage from "./Components/Pages/UserPage";
 
 ReactChartkick.addAdapter(Chart);
 
@@ -25,9 +27,20 @@ ReactChartkick.addAdapter(Chart);
  */
 class App extends React.Component {
   componentDidMount() {
+    const { user, getSetting } = this.props;
+    if (user.isLoggedIn) {
+      getSetting();
+    }
     notification.config({ top: 5, placement: "bottomRight", duration: 1 });
     const { getLanguages } = this.props;
     getLanguages();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { user, getSetting } = this.props;
+    if (!prevProps.user.isLoggedIn && user.isLoggedIn) {
+      getSetting();
+    }
   }
 
   render() {
@@ -37,31 +50,36 @@ class App extends React.Component {
           <Helmet>
             <title>Lwt</title>
           </Helmet>
-          <Layout.Header className={styles.header}>
-            <Header />
-          </Layout.Header>
-          <Layout.Content className={styles.content}>
-            <Route path="/" exact component={HomePage} />
-            <Route path="/login" exact component={LoginPage} />
-            <Route path="/register" exact component={RegisterPage} />
-            <Route path="/text" exact component={TextPage} />
-            <Route path="/text/read/:textId" exact component={TextReadPage} />
-          </Layout.Content>
-          <Layout.Footer className={styles.footer}>
-            <Footer />
-          </Layout.Footer>
+          <Header />
+          <Route path="/" exact component={HomePage} />
+          <Route path="/login" exact component={LoginPage} />
+          <Route path="/register" exact component={RegisterPage} />
+          <Route path="/text" exact component={TextPage} />
+          <Route path="/text/read/:textId" exact component={TextReadPage} />
+          <Route path="/profile" exact component={UserPage} />
+          <Footer />
         </Layout>
       </BrowserRouter>
     );
   }
 }
-export default connect(
-  null,
-  {
-    getLanguages: getLanguageAction
-  }
-)(App);
+
+App.defaultProps = {
+  user: {}
+};
 
 App.propTypes = {
-  getLanguages: PropTypes.func.isRequired
+  getLanguages: PropTypes.func.isRequired,
+  getSetting: PropTypes.func.isRequired,
+  user: PropTypes.shape()
 };
+
+export default connect(
+  state => ({
+    user: state.user
+  }),
+  {
+    getLanguages: getLanguageAction,
+    getSetting: getSettingAction
+  }
+)(App);

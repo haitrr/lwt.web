@@ -1,5 +1,9 @@
 import { handleActions } from "redux-actions";
-import { USER_LOGGED_IN, USER_LOGGED_OUT } from "../Actions/UserAction";
+import {
+  USER_LOGGED_IN,
+  USER_LOGGED_OUT,
+  USER_SETTING_GET
+} from "../Actions/UserAction";
 import { getCurrentUser } from "../Utilities/JwtTokenHelper";
 
 const user = getCurrentUser();
@@ -14,15 +18,15 @@ const defaultState =
  */
 export const userReducer = handleActions(
   {
-    [USER_LOGGED_IN]: (state, action) => {
-      return {
-        ...state,
-        ...action.payload
-      };
-    },
-    [USER_LOGGED_OUT]: () => {
-      return { isLoggedIn: false };
-    }
+    [USER_LOGGED_IN]: (state, action) => ({
+      ...state,
+      ...action.payload
+    }),
+    [USER_LOGGED_OUT]: () => ({ isLoggedIn: false }),
+    [USER_SETTING_GET]: (state, action) => ({
+      ...state,
+      setting: action.payload
+    })
   },
   defaultState
 );
