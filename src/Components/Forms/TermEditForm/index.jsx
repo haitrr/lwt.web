@@ -3,7 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Button, Col, Form, Input, notification, Row } from "antd";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import Pluralize from "pluralize";
+import compromise from "compromise";
 import LearningLevelSelect from "../../Inputs/LearningLevelSelect";
 import LanguageSelect from "../../Inputs/LanguageSelect";
 import styles from "./TermEditForm.module.scss";
@@ -36,12 +36,20 @@ class TermEditForm extends React.Component {
       (!prevProps.value || prevProps.value.content !== value.content)
     ) {
       const { code } = languages.find(l => l.id === language);
-      getEditingTermMeaning(
-        // this library seem to only work with English
-        Pluralize.singular(value.content),
-        code,
-        dictionaryLanguage
-      );
+      if (code === "en") {
+        let simplified = value.content;
+        const doc = compromise(simplified);
+        doc.nouns().toSingular();
+        doc.unTag("#Noun");
+        doc.tag("#Verb");
+        simplified = doc
+          .verbs()
+          .toInfinitive()
+          .out();
+        getEditingTermMeaning(simplified, code, dictionaryLanguage);
+        return;
+      }
+      getEditingTermMeaning(value.content, code, dictionaryLanguage);
     }
   }
 
