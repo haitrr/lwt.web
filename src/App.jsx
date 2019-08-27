@@ -16,7 +16,6 @@ import { RegisterPage } from "./Components/Pages/RegisterPage/RegisterPage";
 import TextPage from "./Components/Pages/TextPage";
 import TextReadPage from "./Components/Pages/TextReadPage";
 import { getLanguageAction } from "./Actions/LanguageAction";
-import { Footer } from "./Components/Footer";
 import { getSettingAction } from "./Actions/UserAction";
 import UserPage from "./Components/Pages/UserPage";
 
@@ -57,7 +56,6 @@ class App extends React.Component {
           <Route path="/text" exact component={TextPage} />
           <Route path="/text/read/:textId" exact component={TextReadPage} />
           <Route path="/profile" exact component={UserPage} />
-          <Footer />
         </Layout>
       </BrowserRouter>
     );
