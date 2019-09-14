@@ -21,10 +21,11 @@
 
 .layout {
   display: flex;
-  height: 100%;
+  flex: 1;
+  height: calc(100%);
   overflow: auto;
   -webkit-overflow-scrolling:touch;
-  flex-direction: column;
+ // flex-direction: column;
 }
 
 :global(html) {
