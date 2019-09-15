@@ -1,4 +1,5 @@
 import { handleActions } from "redux-actions";
+import { create } from "domain";
 import {
   TEXT_DELETED,
   TEXT_EDIT_DETAIL_FETCHED,
@@ -47,6 +48,9 @@ const textReducer = handleActions(
     [TEXT_READ]: (state, action) => ({ ...state, readingText: action.payload }),
     [TERM_CREATED]: (state, action) => {
       const createdTerm = action.payload;
+      if (!createdTerm) {
+        return state;
+      }
       const { readingText } = state;
       const newTerms = readingText.terms.map(term => {
         if (term.content.toUpperCase() === createdTerm.content.toUpperCase()) {
@@ -58,6 +62,9 @@ const textReducer = handleActions(
     },
     [TERM_EDITED]: (state, action) => {
       const editedTerm = action.payload;
+      if (!editedTerm) {
+        return state;
+      }
       const { readingText } = state;
       const newTerms = readingText.terms.map(term => {
         if (term.id === editedTerm.id) {
