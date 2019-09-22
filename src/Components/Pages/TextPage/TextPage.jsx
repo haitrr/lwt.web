@@ -256,6 +256,7 @@ class TextPage extends React.Component {
           current={page}
           hideOnSinglePage={false}
           onChange={this.handlePageChange}
+          showQuickJumper
         />
       </React.Fragment>
     );
