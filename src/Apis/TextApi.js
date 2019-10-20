@@ -57,7 +57,7 @@ export async function editTextAsync(id, text) {
 }
 
 export async function getTextEditDetailAsync(textId) {
-  return getAsync(`${TEXT_API}/edit-detail/${textId}`);
+  return getAsync(`${TEXT_API}/${textId}/edit-details`);
 }
 
 export async function setTextBookmarkAsync(id, index) {
