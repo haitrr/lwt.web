@@ -10,7 +10,7 @@
     "formik": "1.5.8",
     "inline-style-prefixer": "5.0.3",
     "jwt-decode": "2.2.0",
-    "node-sass": "4.11.0",
+    "node-sass": "4.13.1",
     "prop-types": "15.7.2",
     "react": "16.8.6",
     "react-chartkick": "0.3.0",
