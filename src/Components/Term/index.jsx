@@ -1,27 +1,109 @@
-// you can write to stdout for debugging purposes, e.g.
-// console.log('this is a debug message');
+import React from "react";
+import { connect } from "react-redux";
+import { Tooltip } from "antd";
+import PropTypes from "prop-types";
+import { getTermAction, setEditingTermAction } from "../../Actions/TermAction";
+import styles from "./Term.module.scss";
+import { TermLearningLevel } from "../../Enums";
 
-function solution(S) {
-  // write your code in JavaScript (Node.js 8.9.4)
-  occurrences = Array(26).fill(0);
-
-  for (var i = 0; i < S.length; i++) {
-    const index = S.charAt(i).charCodeAt(0) - 97;
-    occurrences[index] += 1;
+class Term extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    const { term, bookmark, last } = this.props;
+    return (
+      nextProps.term.learningLevel !== term.learningLevel ||
+      nextProps.term.meaning !== term.meaning ||
+      nextProps.bookmark !== bookmark ||
+      last !== nextProps.last
+    );
   }
-  occurrences.sort((a, b) => b - a);
 
-  deleteCount = 0;
-  for (var i = 0; i < 25; i++) {
-    if (occurrences[i] == 0) break;
-    if (occurrences[i] == occurrences[i + 1]) {
-      duplicate = i + 1;
-      while (duplicate < 26 && occurrences[i] == occurrences[duplicate]) {
-        occurrences[duplicate] -= 1;
-        deleteCount += 1;
-        duplicate += 1;
-      }
+  handleTermClick = (e, term) => {
+    e.preventDefault();
+    const { getTerm, setEditingTerm, index, onTermClick } = this.props;
+    onTermClick(term);
+    setEditingTerm(index);
+    if (term.id) {
+      getTerm(term.id, index);
     }
+  };
+
+  renderTermButton = () => {
+    const { term, bookmark, bookmarkRef, last } = this.props;
+    return (
+      <button
+        type="button"
+        className={`${styles.term} ${styles[`term-${term.learningLevel}`]} ${
+          bookmark ? styles.bookmark : null
+        }`}
+        ref={r => {
+          if (bookmark) bookmarkRef.current = r;
+          if (last) last.current = r;
+        }}
+        onClick={e => this.handleTermClick(e, term)}
+      >
+        {
+          // need react fragment here to prevent stupid ant design
+          // to insert a space between two chinese characters.
+        }
+        {term.content}
+      </button>
+    );
+  };
+
+  render() {
+    const { term, last } = this.props;
+
+    if (term.learningLevel === TermLearningLevel.Skipped) {
+      return (
+        <span
+          className={styles.term}
+          ref={r => {
+            if (last) {
+              last.current = r;
+            }
+          }}
+        >
+          {term.content}
+        </span>
+      );
+    }
+    if (term.learningLevel === TermLearningLevel.WellKnow) {
+      return this.renderTermButton(term);
+    }
+    return (
+      <Tooltip
+        overlayClassName={styles.tooltip}
+        title={term.meaning && term.meaning.length > 0 ? term.meaning : null}
+      >
+        {this.renderTermButton(term)}
+      </Tooltip>
+    );
   }
-  return deleteCount;
 }
+
+Term.defaultProps = {
+  bookmark: false,
+  last: null
+};
+
+Term.propTypes = {
+  setEditingTerm: PropTypes.func.isRequired,
+  getTerm: PropTypes.func.isRequired,
+  term: PropTypes.shape({
+    learningLevel: PropTypes.number.isRequired,
+    meaning: PropTypes.string
+  }).isRequired,
+  onTermClick: PropTypes.func.isRequired,
+  bookmark: PropTypes.bool,
+  bookmarkRef: PropTypes.shape({}).isRequired,
+  last: PropTypes.shape({}),
+  index: PropTypes.number.isRequired
+};
+
+export default connect(
+  (state, ownProps) => ({
+    term: state.text.readingText.terms[ownProps.index],
+    bookmark: state.text.readingText.bookmark === ownProps.index
+  }),
+  { getTerm: getTermAction, setEditingTerm: setEditingTermAction }
+)(Term);
