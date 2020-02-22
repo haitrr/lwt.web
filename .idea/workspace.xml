@@ -3,11 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4ac520e9-853b-4498-878f-54956aff067e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Forms/TermEditForm/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Forms/TermEditForm/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Reducers/TextReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Reducers/TextReducer.js" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,6 +47,10 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectId" id="1OtmVTeu4j0vVugLSO6z44V44cK" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -66,6 +67,7 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="MTConfigurable" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
@@ -82,15 +84,15 @@
       <recent name="$PROJECT_DIR$/conf/conf.d" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
+  <component name="ServiceViewManager">
+    <option name="viewStates">
       <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
       </list>
     </option>
   </component>
@@ -140,6 +142,7 @@
       <workItem from="1564805175169" duration="7000" />
       <workItem from="1564805296361" duration="5411000" />
       <workItem from="1565704873833" duration="4147000" />
+      <workItem from="1582392945166" duration="114000" />
     </task>
     <task id="LOCAL-00001" summary="won't render tooltip for well known terms">
       <created>1550666520651</created>
@@ -203,5 +206,11 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="won't render tooltip for well known terms" />
     <option name="LAST_COMMIT_MESSAGE" value="won't render tooltip for well known terms" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="782" y="504" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1582392971095">
+      <screen x="0" y="0" width="2048" height="1280" />
+    </state>
+    <state x="782" y="504" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.2048.1280@0.0.2048.1280" timestamp="1582392971095" />
   </component>
 </project>

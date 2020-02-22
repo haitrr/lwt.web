@@ -1,5 +1,4 @@
 import { handleActions } from "redux-actions";
-import { create } from "domain";
 import {
   TEXT_DELETED,
   TEXT_EDIT_DETAIL_FETCHED,
