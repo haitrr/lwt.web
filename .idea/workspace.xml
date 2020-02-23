@@ -3,34 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="4ac520e9-853b-4498-878f-54956aff067e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Reducers/TextReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Reducers/TextReducer.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>chart</find>
-      <find>pie</find>
-      <find>span</find>
-      <find>styled</find>
-      <find>offset</find>
-      <find>end</find>
-      <find>.then</find>
-      <find>languageId</find>
-      <find>react-router</find>
-      <find>react-route</find>
-      <find>DICTIONARY_API_ROOT</find>
-      <find>getTextMeaningAsync</find>
-      <find>language</find>
-      <find>getTermAsync</find>
-      <find>getEditingTermMeaning</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>colSpan</replace>
-    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -68,7 +45,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
@@ -142,7 +119,8 @@
       <workItem from="1564805175169" duration="7000" />
       <workItem from="1564805296361" duration="5411000" />
       <workItem from="1565704873833" duration="4147000" />
-      <workItem from="1582392945166" duration="114000" />
+      <workItem from="1582392945166" duration="239000" />
+      <workItem from="1582393199939" duration="249000" />
     </task>
     <task id="LOCAL-00001" summary="won't render tooltip for well known terms">
       <created>1550666520651</created>
@@ -212,5 +190,17 @@
       <screen x="0" y="0" width="2048" height="1280" />
     </state>
     <state x="782" y="504" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.2048.1280@0.0.2048.1280" timestamp="1582392971095" />
+    <state x="533" y="279" key="SettingsEditor" timestamp="1582393183627">
+      <screen x="0" y="0" width="2048" height="1280" />
+    </state>
+    <state x="533" y="279" key="SettingsEditor/0.0.2048.1280@0.0.2048.1280" timestamp="1582393183627" />
+    <state x="694" y="251" width="659" height="777" key="find.popup" timestamp="1582393220266">
+      <screen x="0" y="0" width="2048" height="1280" />
+    </state>
+    <state x="694" y="251" width="659" height="777" key="find.popup/0.0.2048.1280@0.0.2048.1280" timestamp="1582393220266" />
+    <state x="689" y="291" width="670" height="676" key="search.everywhere.popup" timestamp="1582393214398">
+      <screen x="0" y="0" width="2048" height="1280" />
+    </state>
+    <state x="689" y="291" width="670" height="676" key="search.everywhere.popup/0.0.2048.1280@0.0.2048.1280" timestamp="1582393214398" />
   </component>
 </project>
