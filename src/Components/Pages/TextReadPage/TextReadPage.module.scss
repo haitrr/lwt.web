@@ -26,13 +26,11 @@
 }
 
 .contentPanel {
-  padding-top: 5px;
   font-size: 25px;
   flex:1;
   overflow-y: scroll;
-  padding-left: 3px;
-  padding-right: 3px;
   white-space: pre-line;
+  padding: 5px 3px 20rem;
 }
 
 .progress {
@@ -49,8 +47,10 @@
 }
 
 .termEditForm  {
-  position: sticky;
-  z-index:1;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
   background: white;
   width: 100%;
 }

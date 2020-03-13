@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4ac520e9-853b-4498-878f-54956aff067e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Pages/TextReadPage/TextReadPage.module.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,6 +122,7 @@
       <workItem from="1565704873833" duration="4147000" />
       <workItem from="1582392945166" duration="239000" />
       <workItem from="1582393199939" duration="249000" />
+      <workItem from="1584117966244" duration="456000" />
     </task>
     <task id="LOCAL-00001" summary="won't render tooltip for well known terms">
       <created>1550666520651</created>
@@ -198,9 +200,9 @@
       <screen x="0" y="0" width="2048" height="1280" />
     </state>
     <state x="694" y="251" width="659" height="777" key="find.popup/0.0.2048.1280@0.0.2048.1280" timestamp="1582393220266" />
-    <state x="689" y="291" width="670" height="676" key="search.everywhere.popup" timestamp="1582393214398">
+    <state x="689" y="291" width="670" height="676" key="search.everywhere.popup" timestamp="1584117981348">
       <screen x="0" y="0" width="2048" height="1280" />
     </state>
-    <state x="689" y="291" width="670" height="676" key="search.everywhere.popup/0.0.2048.1280@0.0.2048.1280" timestamp="1582393214398" />
+    <state x="689" y="291" width="670" height="676" key="search.everywhere.popup/0.0.2048.1280@0.0.2048.1280" timestamp="1584117981348" />
   </component>
 </project>
