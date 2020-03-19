@@ -147,8 +147,10 @@ class TermEditForm extends React.Component {
 
 TermEditForm.defaultProps = {
   className: "",
+  editingTerm: "",
   value: null,
-  dictionaryLanguage: null
+  dictionaryLanguage: null,
+  editingTermMeaning: ""
 };
 
 TermEditForm.propTypes = {
@@ -156,8 +158,8 @@ TermEditForm.propTypes = {
   createTerm: PropTypes.func.isRequired,
   dictionaryLanguage: PropTypes.string,
   editTerm: PropTypes.func.isRequired,
-  editingTerm: PropTypes.number.isRequired,
-  editingTermMeaning: PropTypes.string.isRequired,
+  editingTerm: PropTypes.number,
+  editingTermMeaning: PropTypes.string,
   form: PropTypes.shape().isRequired,
   getEditingTermMeaning: PropTypes.func.isRequired,
   language: PropTypes.number.isRequired,
