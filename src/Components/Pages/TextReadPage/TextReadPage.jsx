@@ -30,6 +30,7 @@ class TextReadPage extends React.Component {
     } = this.props;
     readText(textId);
     this.synth = window.speechSynthesis;
+    this.utt = new SpeechSynthesisUtterance();
     this.speech = new Speech();
     this.bookmark = React.createRef();
     this.speech.init();
@@ -48,20 +49,30 @@ class TextReadPage extends React.Component {
       prevProps.language !== language
     ) {
       const languageS = languages.find(l => l.id === language);
-      const voices = this.synth.getVoices().map(v => v.name);
+      const voices = this.synth.getVoices();
       if (languageS) {
         this.speech.setLanguage(languageS.speakCode);
+        this.utt.lang = languageS.speakCode;
         if (languageS.speakCode === "zh-CN") {
-          if (voices.includes("Google 普通话（中国大陆）")) {
-            this.speech.setVoice("Google 普通话（中国大陆）");
+          const googleVoice = voices.find(
+            v => v.name === "Google 普通话（中国大陆）"
+          );
+          if (googleVoice) {
+            this.utt.voice = googleVoice;
+          } else {
+            this.utt.voice = voices.find(v => v.lang === languageS.speakCode);
           }
         } else if (languageS.speakCode === "en-US") {
-          if (voices.map(v => v.n).includes("Google US English")) {
-            this.speech.setVoice("Google US English");
+          const googleVoice = voices.find(v => v.name === "Google US English");
+          if (googleVoice) {
+            this.utt.voice = googleVoice;
+          } else {
+            this.utt.voice = voices.find(v => v.lang === languageS.speakCode);
           }
         }
       }
     }
+
     if (!prevProps.terms && this.bookmark.current) {
       animateScroll.scrollTo(
         this.bookmark.current.offsetTop -
@@ -77,7 +88,8 @@ class TextReadPage extends React.Component {
   }
 
   onTermClick = (term, index) => {
-    this.speech.speak({ text: term.content, queue: false });
+    this.utt.text = term.content;
+    window.speechSynthesis.speak(this.utt);
     const { setBookmark, id, selectTerm } = this.props;
     selectTerm(index);
     setBookmark(id, index);
