@@ -29,6 +29,7 @@ class TextReadPage extends React.Component {
       }
     } = this.props;
     readText(textId);
+    this.synth = window.speechSynthesis;
     this.speech = new Speech();
     this.bookmark = React.createRef();
     this.speech.init();
@@ -47,17 +48,17 @@ class TextReadPage extends React.Component {
       prevProps.language !== language
     ) {
       const languageS = languages.find(l => l.id === language);
+      const voices = this.synth.getVoices().map(v => v.name);
       if (languageS) {
         this.speech.setLanguage(languageS.speakCode);
-        try {
-          if (languageS.speakCode === "zh-CN") {
+        if (languageS.speakCode === "zh-CN") {
+          if (voices.includes("Google 普通话（中国大陆）")) {
             this.speech.setVoice("Google 普通话（中国大陆）");
           }
-          if (languageS.speakCode === "en-US") {
+        } else if (languageS.speakCode === "en-US") {
+          if (voices.map(v => v.n).includes("Google US English")) {
             this.speech.setVoice("Google US English");
           }
-        } catch {
-          // skip
         }
       }
     }
