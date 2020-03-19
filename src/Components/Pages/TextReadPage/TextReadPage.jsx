@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
-import Speech from "speak-tts";
 import { animateScroll } from "react-scroll";
 import {
   readTextAction,
@@ -29,11 +28,8 @@ class TextReadPage extends React.Component {
       }
     } = this.props;
     readText(textId);
-    this.synth = window.speechSynthesis;
     this.utt = new SpeechSynthesisUtterance();
-    this.speech = new Speech();
     this.bookmark = React.createRef();
-    this.speech.init();
   }
 
   shouldComponentUpdate(nextProps) {
@@ -49,9 +45,8 @@ class TextReadPage extends React.Component {
       prevProps.language !== language
     ) {
       const languageS = languages.find(l => l.id === language);
-      const voices = this.synth.getVoices();
+      const voices = window.speechSynthesis.getVoices();
       if (languageS) {
-        this.speech.setLanguage(languageS.speakCode);
         this.utt.lang = languageS.speakCode;
         if (languageS.speakCode === "zh-CN") {
           const googleVoice = voices.find(

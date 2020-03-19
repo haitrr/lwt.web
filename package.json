@@ -24,8 +24,7 @@
     "redux": "4.0.1",
     "redux-actions": "2.6.4",
     "redux-devtools-extension": "2.13.7",
-    "redux-promise": "0.6.0",
-    "speak-tts": "2.0.6"
+    "redux-promise": "0.6.0"
   },
   "scripts": {
     "start": "react-scripts start",
