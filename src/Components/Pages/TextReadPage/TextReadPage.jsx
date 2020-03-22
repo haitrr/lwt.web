@@ -30,6 +30,7 @@ class TextReadPage extends React.Component {
     readText(textId);
     this.utt = new SpeechSynthesisUtterance();
     this.bookmark = React.createRef();
+    window.speechSynthesis.onvoiceschanged = this.setSpeechVoice;
   }
 
   shouldComponentUpdate(nextProps) {
@@ -81,6 +82,34 @@ class TextReadPage extends React.Component {
       );
     }
   }
+
+  setSpeechVoice = () => {
+    const { languages, language } = this.props;
+    if (language && languages) {
+      const languageS = languages.find(l => l.id === language);
+      const voices = window.speechSynthesis.getVoices();
+      if (languageS) {
+        this.utt.lang = languageS.speakCode;
+        if (languageS.speakCode === "zh-CN") {
+          const googleVoice = voices.find(
+            v => v.name === "Google 普通话（中国大陆）"
+          );
+          if (googleVoice) {
+            this.utt.voice = googleVoice;
+          } else {
+            this.utt.voice = voices.find(v => v.lang === languageS.speakCode);
+          }
+        } else if (languageS.speakCode === "en-US") {
+          const googleVoice = voices.find(v => v.name === "Google US English");
+          if (googleVoice) {
+            this.utt.voice = googleVoice;
+          } else {
+            this.utt.voice = voices.find(v => v.lang === languageS.speakCode);
+          }
+        }
+      }
+    }
+  };
 
   onTermClick = (term, index) => {
     this.utt.text = term.content;
