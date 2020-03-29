@@ -1,19 +1,9 @@
-.header {
-  padding: 0;
-}
-
-.footer {
-  padding: 0;
-}
-
 .layout {
   display: flex;
   flex-direction: column;
   flex: 1;
-  height: calc(100%);
   overflow: auto;
   -webkit-overflow-scrolling:touch;
- // flex-direction: column;
 }
 
 :global(html) {
