@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Layout, notification } from "antd";
+import { notification } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 import { Route } from "react-router";
@@ -45,7 +45,7 @@ class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
-        <Layout className={styles.layout}>
+        <div className={styles.layout}>
           <Helmet>
             <title>Lwt</title>
           </Helmet>
@@ -56,7 +56,7 @@ class App extends React.Component {
           <Route path="/text" exact component={TextPage} />
           <Route path="/text/read/:textId" exact component={TextReadPage} />
           <Route path="/profile" exact component={UserPage} />
-        </Layout>
+        </div>
       </BrowserRouter>
     );
   }

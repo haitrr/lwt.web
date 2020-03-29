@@ -1,16 +1,3 @@
-.content {
-  margin-left: 100px;
-  margin-right: 100px;
-  flex: 1;
-  overflow: scroll;
-  font-weight: normal;
-  font-family: Roboto, STHeiti, sans-serif;
-  @media only screen and (max-width: 600px) {
-    margin-left: 5px;
-    margin-right: 5px;
-  }
-}
-
 .header {
   padding: 0;
 }
@@ -21,6 +8,7 @@
 
 .layout {
   display: flex;
+  flex-direction: column;
   flex: 1;
   height: calc(100%);
   overflow: auto;
