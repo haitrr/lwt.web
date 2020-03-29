@@ -127,9 +127,7 @@ class TextReadPage extends React.Component {
 
     return (
       <div className={styles.readPane}>
-        <div>
-          <h2 className={styles.titleSection}>{title}</h2>
-        </div>
+        <h2 className={styles.titleSection}>{title}</h2>
         <TextStatistic />
         <ContentPanel
           terms={terms}

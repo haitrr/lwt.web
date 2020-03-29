@@ -16,13 +16,15 @@
   margin-right: auto;
   max-width: 1920px;
   position: relative;
+  overflow: hidden;
   @extend %disableScrollBar;
 }
 
 .titleSection {
   max-height: 2.8em;
-  height: 100%;
   overflow-y: auto;
+  position: sticky;
+  top: 0;
 }
 
 .contentPanel {
@@ -50,6 +52,7 @@
 
 .termEditForm  {
   position: sticky;
+  bottom: 0;
   z-index:1;
   background: white;
   width: 100%;
