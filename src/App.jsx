@@ -5,8 +5,6 @@ import { connect } from "react-redux";
 import { Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import "antd/dist/antd.css";
-import ReactChartkick from "react-chartkick";
-import Chart from "chart.js";
 import { Helmet } from "react-helmet";
 import styles from "./App.module.scss";
 import Header from "./Components/Header/Header";
@@ -18,8 +16,6 @@ import TextReadPage from "./Components/Pages/TextReadPage";
 import { getLanguageAction } from "./Actions/LanguageAction";
 import { getSettingAction } from "./Actions/UserAction";
 import UserPage from "./Components/Pages/UserPage";
-
-ReactChartkick.addAdapter(Chart);
 
 /**
  * app.

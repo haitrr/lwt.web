@@ -1,9 +1,8 @@
 import PropTypes from "prop-types";
-import { Button, Icon, Pagination, Popconfirm, Popover, Table } from "antd";
+import { Button, Icon, Pagination, Popconfirm, Table } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { PieChart } from "react-chartkick";
 import { getLanguageAction } from "../../../Actions/LanguageAction";
 import { deleteTextAction, getTextsAction } from "../../../Actions/TextAction";
 import TextFilterForm from "../../Forms/TextFilterForm";
@@ -45,14 +44,7 @@ class TextPage extends React.Component {
       title: "Title",
       dataIndex: "title",
       key: "title",
-      width: "30vw",
-      render: (value, record) => (
-        <Popover
-          content={<PieChart width="50vw" height="50vh" data={record.counts} />}
-        >
-          {value}
-        </Popover>
-      )
+      width: "30vw"
     },
     {
       title: "Act",
@@ -144,21 +136,13 @@ class TextPage extends React.Component {
       title: "T",
       key: "total",
       dataIndex: "counts",
-      render: (value, record) => {
+      render: value => {
         let sum = 0;
         Object.keys(value).map(key => {
           sum += value[key];
           return null;
         });
-        return (
-          <Popover
-            content={
-              <PieChart width="50vw" height="50vh" data={record.counts} />
-            }
-          >
-            {sum}
-          </Popover>
-        );
+        return <span>{sum}</span>;
       }
     }
   ];
