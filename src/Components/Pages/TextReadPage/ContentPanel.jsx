@@ -3,6 +3,7 @@ import React, { Fragment } from "react";
 import styles from "./TextReadPage.module.scss";
 import Term from "../../Term";
 import ProgressBar from "./ProgressBar";
+import GoToBookmarkButton from "./GoToBookmarkButton";
 
 class ContentPanel extends React.Component {
   constructor(props) {
@@ -37,11 +38,23 @@ class ContentPanel extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { begin, last } = this.state;
-    if (prevState.begin > begin) {
-      this.container.current.scrollTop =
-        last.offsetTop - this.container.current.offsetTop;
+    if (prevState.begin > begin && last) {
+      last.scrollIntoView(true);
     }
   }
+
+  goToBookmark = () => {
+    const { bookmark, terms, bookmarkRef } = this.props;
+    this.setState(
+      {
+        begin: Math.max(
+          Math.min(bookmark - this.loadTerms, terms.length - this.displayTerms),
+          0
+        )
+      },
+      () => bookmarkRef.current.scrollIntoView({ block: "center" })
+    );
+  };
 
   handleScroll = e => {
     const { begin } = this.state;
@@ -94,6 +107,7 @@ class ContentPanel extends React.Component {
             );
           })}
         </div>
+        <GoToBookmarkButton onClick={this.goToBookmark} />
         <ProgressBar />
       </Fragment>
     );
