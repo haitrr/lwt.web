@@ -1,5 +1,4 @@
 import { notification } from "antd";
-import fetchJsonp from "fetch-jsonp";
 import { TOKEN_LOCAL_STORAGE_KEY } from "../Constants";
 
 function defaultResponseErrorHandler(response) {
@@ -155,26 +154,6 @@ export async function deleteAsync(
     redirect: "follow", // manual, *follow, error
     referrer: "no-referrer" // no-referrer, *client
   })
-    .then(handleResponse)
-    .catch(defaultResponseErrorHandler);
-}
-
-export async function getJsonpAsync(
-  url,
-  params,
-  handleResponse = defaultResponseHandler
-) {
-  let fullUrl = url;
-  if (params != null) {
-    fullUrl += "?";
-    Object.keys(params).forEach(key => {
-      if (params[key] != null) {
-        fullUrl += `${key}=${params[key]}&`;
-      }
-    });
-  }
-
-  return fetchJsonp(fullUrl)
     .then(handleResponse)
     .catch(defaultResponseErrorHandler);
 }
