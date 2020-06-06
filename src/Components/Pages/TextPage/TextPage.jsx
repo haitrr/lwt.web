@@ -11,6 +11,7 @@ import TextEditModal from "../../Modals/TextEditModal";
 import { TermLearningLevel } from "../../../Enums";
 import styles from "./TextPage.module.scss";
 import termStyles from "../../Term/Term.module.scss";
+import { parseQueryString } from "../../../Utilities/queryString";
 
 function renderTermNumber(current, record, level) {
   if (!current) {
@@ -154,12 +155,29 @@ class TextPage extends React.Component {
     this.handlePageChange = this.handlePageChange.bind(this);
     this.filterTexts = this.filterTexts.bind(this);
     this.state = { createModalVisible: false, editModalVisible: false };
+    const { filters, location, getTexts, itemPerPage } = props;
+    const query = parseQueryString(location.search);
+    if (query.page) {
+      getTexts(filters, parseInt(query.page, 10), itemPerPage);
+    }
   }
 
   componentDidMount() {
-    const { filters, getTexts, page, itemPerPage, getLanguages } = this.props;
-    getTexts(filters, page, itemPerPage);
+    const { getLanguages } = this.props;
     getLanguages();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { filters, location, page, getTexts, itemPerPage } = this.props;
+    if (prevProps.location.search !== location.search) {
+      const query = parseQueryString(location.search);
+      if (query.page) {
+        const newPage = parseInt(query.page, 10);
+        if (newPage !== page) {
+          getTexts(filters, newPage, itemPerPage);
+        }
+      }
+    }
   }
 
   onEdit = () => {
@@ -185,8 +203,8 @@ class TextPage extends React.Component {
   };
 
   handlePageChange(page) {
-    const { filters, itemPerPage, getTexts } = this.props;
-    getTexts(filters, page, itemPerPage);
+    const { history } = this.props;
+    history.push(`/text?page=${page.toString()}`);
   }
 
   filterTexts(filters) {
@@ -272,7 +290,9 @@ TextPage.propTypes = {
   languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   page: PropTypes.number.isRequired,
   texts: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  total: PropTypes.number.isRequired
+  total: PropTypes.number.isRequired,
+  location: PropTypes.shape({ search: PropTypes.string }).isRequired,
+  history: PropTypes.shape({}).isRequired
 };
 
 TextPage.defaultProps = {
