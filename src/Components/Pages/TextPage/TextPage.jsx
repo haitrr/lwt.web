@@ -1,23 +1,23 @@
 import PropTypes from "prop-types";
-import {Button, Icon, Pagination, Popconfirm, Table} from "antd";
+import { Button, Icon, Pagination, Popconfirm, Table } from "antd";
 import React from "react";
-import {connect} from "react-redux";
-import {Link} from "react-router-dom";
-import {getLanguageAction} from "../../../Actions/LanguageAction";
-import {deleteTextAction, getTextsAction} from "../../../Actions/TextAction";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { getLanguageAction } from "../../../Actions/LanguageAction";
+import { deleteTextAction, getTextsAction } from "../../../Actions/TextAction";
 import TextFilterForm from "../../Forms/TextFilterForm";
 import TextCreateModal from "../../Modals/TextCreateModal";
 import TextEditModal from "../../Modals/TextEditModal";
-import {TermLearningLevel} from "../../../Enums";
+import { TermLearningLevel } from "../../../Enums";
 import styles from "./TextPage.module.scss";
 import termStyles from "../../Term/Term.module.scss";
-import {parseQueryString} from "../../../Utilities/queryString";
+import { parseQueryString } from "../../../Utilities/queryString";
 
 function renderTermNumber(current, record, level) {
   if (!current) {
     return 0;
   }
-  const {counts} = record;
+  const { counts } = record;
   let sum = 0;
   Object.keys(counts).map(key => {
     if (key !== "Ignored") {
@@ -28,9 +28,9 @@ function renderTermNumber(current, record, level) {
   return (
     <div className={`${termStyles[`term-${TermLearningLevel[level]}`]}`}>
       {`${current}`}
-      <br/>
+      <br />
       ~
-      <br/>
+      <br />
       {`${Math.round((current / sum) * 100)}%`}
     </div>
   );
@@ -54,7 +54,7 @@ class TextPage extends React.Component {
       render: (_, text) => (
         <span>
           <Link className={styles.actionButton} to={`/text/read/${text.id}`}>
-            <Icon type="read"/>
+            <Icon type="read" />
           </Link>
           <Popconfirm
             title="Confirm to delete this text."
@@ -62,7 +62,7 @@ class TextPage extends React.Component {
             okText="Delete"
             okType="danger"
           >
-            <Icon type="delete" className={styles.deleteButton}/>
+            <Icon type="delete" className={styles.deleteButton} />
           </Popconfirm>
           <Icon
             type="edit"
@@ -119,7 +119,7 @@ class TextPage extends React.Component {
       dataIndex: "language",
       key: "language",
       render: value => {
-        const {languages} = this.props;
+        const { languages } = this.props;
         const language = languages.find(lang => lang.id === value);
         if (language) {
           return language.name;
@@ -154,29 +154,33 @@ class TextPage extends React.Component {
     this.hideCreateModal = this.hideCreateModal.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
     this.filterTexts = this.filterTexts.bind(this);
-    this.state = {createModalVisible: false, editModalVisible: false};
-    const {filters, location, getTexts, itemPerPage} = props;
+    this.state = {
+      createModalVisible: false,
+      editModalVisible: false,
+      isLoading: true
+    };
+    const { filters, location, itemPerPage } = props;
     const query = parseQueryString(location.search);
     if (query.page) {
-      getTexts(filters, parseInt(query.page, 10), itemPerPage);
+      this.loadingAndGetTexts(filters, parseInt(query.page, 10), itemPerPage);
     } else {
-      getTexts(filters, 1, itemPerPage);
+      this.loadingAndGetTexts(filters, 1, itemPerPage);
     }
   }
 
   componentDidMount() {
-    const {getLanguages} = this.props;
+    const { getLanguages } = this.props;
     getLanguages();
   }
 
   componentDidUpdate(prevProps) {
-    const {filters, location, page, getTexts, itemPerPage} = this.props;
+    const { filters, location, page, itemPerPage } = this.props;
     if (prevProps.location.search !== location.search) {
       const query = parseQueryString(location.search);
       if (query.page) {
         const newPage = parseInt(query.page, 10);
         if (newPage !== page) {
-          getTexts(filters, newPage, itemPerPage);
+          this.loadingAndGetTexts(filters, newPage, itemPerPage);
         }
       }
     }
@@ -184,15 +188,26 @@ class TextPage extends React.Component {
 
   onEdit = () => {
     this.filterTexts();
-    this.setState(state => ({...state, editingText: null}));
+    this.setState(state => ({ ...state, editingText: null }));
+  };
+
+  loadingAndGetTexts = (filters, page, itemPerPage) => {
+    const { isLoading } = this.state;
+    const { getTexts } = this.props;
+    if (!isLoading) {
+      this.setState({ isLoading: true });
+    }
+    getTexts(filters, page, itemPerPage).then(() => {
+      this.setState({ isLoading: false });
+    });
   };
 
   hideEditModal = () => {
-    this.setState(prevState => ({prevState, editModalVisible: false}));
+    this.setState(prevState => ({ prevState, editModalVisible: false }));
   };
 
   handleDelete = textId => {
-    const {deleteText} = this.props;
+    const { deleteText } = this.props;
     deleteText(textId);
   };
 
@@ -205,26 +220,31 @@ class TextPage extends React.Component {
   };
 
   handlePageChange(page) {
-    const {history} = this.props;
+    const { history } = this.props;
     history.push(`/text?page=${page.toString()}`);
   }
 
   filterTexts(filters) {
-    const {page, getTexts, itemPerPage} = this.props;
-    getTexts(filters, page, itemPerPage);
+    const { page, itemPerPage } = this.props;
+    this.loadingAndGetTexts(filters, page, itemPerPage);
   }
 
   hideCreateModal() {
-    this.setState(prevState => ({prevState, createModalVisible: false}));
+    this.setState(prevState => ({ prevState, createModalVisible: false }));
   }
 
   showCreateModal() {
-    this.setState(prevState => ({...prevState, createModalVisible: true}));
+    this.setState(prevState => ({ ...prevState, createModalVisible: true }));
   }
 
   render() {
-    const {texts, filters, page, total, languages} = this.props;
-    const {createModalVisible, editModalVisible, editingText} = this.state;
+    const { texts, filters, page, total, languages } = this.props;
+    const {
+      isLoading,
+      createModalVisible,
+      editModalVisible,
+      editingText
+    } = this.state;
 
     return (
       <React.Fragment>
@@ -249,11 +269,12 @@ class TextPage extends React.Component {
         <Table
           dataSource={texts}
           pagination={false}
+          loading={isLoading}
           columns={this.columns}
           rowKey="id"
           className={styles.table}
           rowClassName={styles.row}
-          scroll={{x: 1000}}
+          scroll={{ x: 1000 }}
         />
         <Pagination
           total={total}
@@ -293,7 +314,7 @@ TextPage.propTypes = {
   page: PropTypes.number.isRequired,
   texts: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   total: PropTypes.number.isRequired,
-  location: PropTypes.shape({search: PropTypes.string}).isRequired,
+  location: PropTypes.shape({ search: PropTypes.string }).isRequired,
   history: PropTypes.shape({}).isRequired
 };
 
