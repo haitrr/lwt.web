@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { getTermAction, setEditingTermAction } from "../../Actions/TermAction";
 import styles from "./Term.module.scss";
 import { TermLearningLevel } from "../../Enums";
+import TermButton from "./TermButton";
 
 class Term extends React.Component {
   shouldComponentUpdate(nextProps) {
@@ -27,31 +28,8 @@ class Term extends React.Component {
     }
   };
 
-  renderTermButton = () => {
-    const { term, bookmark, bookmarkRef, last } = this.props;
-    return (
-      <button
-        type="button"
-        className={`${styles.term} ${styles[`term-${term.learningLevel}`]} ${
-          bookmark ? styles.bookmark : null
-        }`}
-        ref={r => {
-          if (bookmark) bookmarkRef.current = r;
-          if (last) last.current = r;
-        }}
-        onClick={e => this.handleTermClick(e, term)}
-      >
-        {
-          // need react fragment here to prevent stupid ant design
-          // to insert a space between two chinese characters.
-        }
-        {term.content}
-      </button>
-    );
-  };
-
   render() {
-    const { term, last } = this.props;
+    const { term, bookmark, last, bookmarkRef } = this.props;
 
     if (term.learningLevel === TermLearningLevel.Skipped) {
       return (
@@ -68,14 +46,28 @@ class Term extends React.Component {
       );
     }
     if (term.learningLevel === TermLearningLevel.WellKnow) {
-      return this.renderTermButton(term);
+      return (
+        <TermButton
+          bookmark={bookmark}
+          bookmarkRef={bookmarkRef}
+          last={last}
+          term={term}
+          onClick={e => this.handleTermClick(e, term)}
+        />
+      );
     }
     return (
       <Tooltip
         overlayClassName={styles.tooltip}
         title={term.meaning && term.meaning.length > 0 ? term.meaning : null}
       >
-        {this.renderTermButton(term)}
+        <TermButton
+          bookmark={bookmark}
+          bookmarkRef={bookmarkRef}
+          last={last}
+          term={term}
+          onClick={e => this.handleTermClick(e, term)}
+        />
       </Tooltip>
     );
   }
