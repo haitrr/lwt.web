@@ -14,9 +14,7 @@ function defaultResponseErrorHandler(response) {
     notification.error({ message: response.json().message });
   } else {
     notification.error({
-      message: `Error connecting with server ${response.status}:${
-        response.statusText
-      }`
+      message: `Error connecting with server ${response.status}:${response.statusText}`
     });
   }
 }
@@ -110,7 +108,7 @@ export async function getAsync(
   }
 
   return fetch(fullUrl, {
-    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    cache: "default", // *default, no-cache, reload, force-cache, only-if-cached
     // credentials: "include", // include, same-origin, *omit
     headers: {
       "Content-Type": "application/json; charset=utf-8",
