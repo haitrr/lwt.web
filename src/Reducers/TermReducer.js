@@ -1,7 +1,7 @@
 import { handleActions } from "redux-actions";
 import {
   TERM_CREATED,
-  TERM_GET_MEANING,
+  TERM_EDITING_GET_MEANING,
   TERM_SET
 } from "../Actions/TermAction";
 
@@ -20,7 +20,7 @@ export default handleActions(
       ...state,
       editingTerm: null
     }),
-    [TERM_GET_MEANING]: (state, action) => ({
+    [TERM_EDITING_GET_MEANING]: (state, action) => ({
       ...state,
       editingTermMeaning: action.payload
     })

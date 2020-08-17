@@ -6,7 +6,12 @@ import {
   TEXT_READ,
   TEXT_TERM_SELECT
 } from "../Actions/TextAction";
-import { TERM_CREATED, TERM_EDITED, TERM_GET } from "../Actions/TermAction";
+import {
+  TERM_CREATED,
+  TERM_EDITED,
+  TERM_GET,
+  TERM_GET_MEANING
+} from "../Actions/TermAction";
 
 /**
  * text reducer
@@ -94,7 +99,18 @@ const textReducer = handleActions(
     [TEXT_TERM_SELECT]: (state, action) => ({
       ...state,
       readingText: { ...state.readingText, bookmark: action.payload }
-    })
+    }),
+
+    [TERM_GET_MEANING]: (state, action) => {
+      if (!action.payload) {
+        return state;
+      }
+      const { index, termMeaning } = action.payload;
+
+      const { terms } = state.readingText;
+      terms[index] = { ...terms[index], meaning: termMeaning.meaning };
+      return { ...state, readingText: { ...state.readingText, terms } };
+    }
   },
   defaultState
 );

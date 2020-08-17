@@ -19,3 +19,7 @@ export async function createTermAsync(term) {
 export async function editTermAsync(term) {
   return putAsync(`${API_ROOT}/term`, term.id, term);
 }
+
+export async function getTermMeaningAsync(id) {
+  return getAsync(`${API_ROOT}/term/${id}/meaning`);
+}

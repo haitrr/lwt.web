@@ -2,7 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import { Tooltip } from "antd";
 import PropTypes from "prop-types";
-import { getTermAction, setEditingTermAction } from "../../Actions/TermAction";
+import {
+  getTermAction,
+  getTermMeaningAction,
+  setEditingTermAction
+} from "../../Actions/TermAction";
 import styles from "./Term.module.scss";
 import { TermLearningLevel } from "../../Enums";
 import TermButton from "./TermButton";
@@ -17,6 +21,19 @@ class Term extends React.Component {
       last !== nextProps.last
     );
   }
+
+  loadTermsMeaning = () => {
+    const { term, getTermMeaning, index } = this.props;
+    if (
+      term.id &&
+      term.meaning === undefined &&
+      term.learningLevel !== TermLearningLevel.Ignored &&
+      term.learningLevel !== TermLearningLevel.Skipped &&
+      term.learningLevel !== TermLearningLevel.WellKnow
+    ) {
+      getTermMeaning(term, index);
+    }
+  };
 
   handleTermClick = (e, term) => {
     e.preventDefault();
@@ -61,13 +78,15 @@ class Term extends React.Component {
         overlayClassName={styles.tooltip}
         title={term.meaning && term.meaning.length > 0 ? term.meaning : null}
       >
-        <TermButton
-          bookmark={bookmark}
-          bookmarkRef={bookmarkRef}
-          last={last}
-          term={term}
-          onClick={e => this.handleTermClick(e, term)}
-        />
+        <span onMouseEnter={() => this.loadTermsMeaning()}>
+          <TermButton
+            bookmark={bookmark}
+            bookmarkRef={bookmarkRef}
+            last={last}
+            term={term}
+            onClick={e => this.handleTermClick(e, term)}
+          />
+        </span>
       </Tooltip>
     );
   }
@@ -89,7 +108,8 @@ Term.propTypes = {
   bookmark: PropTypes.bool,
   bookmarkRef: PropTypes.shape({}).isRequired,
   last: PropTypes.shape({}),
-  index: PropTypes.number.isRequired
+  index: PropTypes.number.isRequired,
+  getTermMeaning: PropTypes.func.isRequired
 };
 
 export default connect(
@@ -97,5 +117,9 @@ export default connect(
     term: state.text.readingText.terms[ownProps.index],
     bookmark: state.text.readingText.bookmark === ownProps.index
   }),
-  { getTerm: getTermAction, setEditingTerm: setEditingTermAction }
+  {
+    getTerm: getTermAction,
+    setEditingTerm: setEditingTermAction,
+    getTermMeaning: getTermMeaningAction
+  }
 )(Term);
