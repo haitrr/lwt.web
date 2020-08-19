@@ -9,10 +9,7 @@ import {
 } from "../../../Actions/TextAction";
 import styles from "./TextReadPage.module.scss";
 import TermEditForm from "../../Forms/TermEditForm";
-import {
-  getTermAction,
-  setEditingTermAction
-} from "../../../Actions/TermAction";
+import { getTermAction } from "../../../Actions/TermAction";
 import ContentPanel from "./ContentPanel";
 import TextStatistic from "./TextStatistic";
 
@@ -157,7 +154,6 @@ export default connect(
   {
     readText: readTextAction,
     getTerm: getTermAction,
-    setEditingTerm: setEditingTermAction,
     setBookmark: setBookmarkAction,
     selectTerm: selectTermAction
   }
