@@ -130,6 +130,7 @@ class TermEditForm extends React.Component {
                 <Input.TextArea
                   autosize={{ maxRows: 3, minRows: 2 }}
                   placeholder="Meaning"
+                  style={{ background: value.meaning ? "white" : "#f7f6cb" }}
                   cols={60}
                 />
               )}
