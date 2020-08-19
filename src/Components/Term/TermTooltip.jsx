@@ -12,7 +12,8 @@ const TermTooltip = ({
   onClick,
   onHover
 }) => {
-  const title = term.meaning && term.meaning.length > 0 ? term.meaning : null;
+  const title =
+    term.meaning && term.meaning.length > 0 ? term.meaning : "-";
   return (
     <Tooltip overlayClassName={styles.tooltip} title={title}>
       <span onMouseEnter={onHover}>
