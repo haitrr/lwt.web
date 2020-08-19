@@ -10,6 +10,7 @@ import styles from "./Term.module.scss";
 import { TermLearningLevel } from "../../Enums";
 import TermButton from "./TermButton";
 import TermTooltip from "./TermTooltip";
+import SkippedTerm from "./SkippedTerm";
 
 class Term extends React.Component {
   shouldComponentUpdate(nextProps) {
@@ -57,18 +58,7 @@ class Term extends React.Component {
     const { term, bookmark, last, bookmarkRef } = this.props;
 
     if (term.learningLevel === TermLearningLevel.Skipped) {
-      return (
-        <span
-          className={styles.term}
-          ref={r => {
-            if (last) {
-              last.current = r;
-            }
-          }}
-        >
-          {term.content}
-        </span>
-      );
+      return <SkippedTerm term={term} last={last} />;
     }
     if (term.learningLevel === TermLearningLevel.WellKnow) {
       return (
