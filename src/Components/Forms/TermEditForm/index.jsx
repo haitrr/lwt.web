@@ -22,6 +22,11 @@ import { selectDictionaryLanguage } from "../../../Selectors/UserSelectors";
 import { TermLearningLevel } from "../../../Enums";
 
 class TermEditForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { lookingUpDictionary: false };
+  }
+
   componentDidUpdate(prevProps) {
     const {
       value,
@@ -60,10 +65,23 @@ class TermEditForm extends React.Component {
           .verbs()
           .toInfinitive()
           .out();
-        getEditingTermMeaning(simplified, code, dictionaryLanguage);
+        // eslint-disable-next-line react/no-did-update-set-state
+        this.setState({ lookingUpDictionary: true }, () =>
+          getEditingTermMeaning(simplified, code, dictionaryLanguage).then(() =>
+            this.setState({ lookingUpDictionary: false })
+          )
+        );
         return;
       }
-      getEditingTermMeaning(value.content, code, dictionaryLanguage);
+
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ lookingUpDictionary: true }, () =>
+        getEditingTermMeaning(
+          value.content,
+          code,
+          dictionaryLanguage
+        ).then(() => this.setState({ lookingUpDictionary: false }))
+      );
     }
   }
 
@@ -98,6 +116,8 @@ class TermEditForm extends React.Component {
     if (!editingTerm) {
       return null;
     }
+
+    const { lookingUpDictionary } = this.state;
     return (
       <Form
         onSubmit={this.handleSubmit}
@@ -128,6 +148,11 @@ class TermEditForm extends React.Component {
                 initialValue: value.meaning ? value.meaning : editingTermMeaning
               })(
                 <Input.TextArea
+                  disabled={
+                    lookingUpDictionary ||
+                    (value.learningLevel !== TermLearningLevel.UnKnow &&
+                      value.meaning === undefined)
+                  }
                   autosize={{ maxRows: 3, minRows: 2 }}
                   placeholder="Meaning"
                   style={{ background: value.meaning ? "white" : "#f7f6cb" }}
@@ -149,8 +174,9 @@ class TermEditForm extends React.Component {
                 type="primary"
                 htmlType="submit"
                 disabled={
-                  value.learningLevel !== TermLearningLevel.UnKnow &&
-                  value.meaning === undefined
+                  lookingUpDictionary ||
+                  (value.learningLevel !== TermLearningLevel.UnKnow &&
+                    value.meaning === undefined)
                 }
                 className={styles.saveButton}
               >
