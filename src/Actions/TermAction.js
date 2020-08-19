@@ -13,6 +13,7 @@ export const TERM_SET = "TERM_SET";
 export const TERM_CREATED = "TERM_CREATED";
 export const TERM_EDITED = "TERM_EDITED";
 export const TERM_EDITING_GET_MEANING = "TERM_EDITING_GET_MEANING";
+export const TERM_EDITING_MEANING_RESET = "TERM_EDITING_MEANING_RESET";
 export const TERM_GET_MEANING = "TERM_GET_MEANING";
 
 export const getTermAction = createAction(TERM_GET, async (id, index) => {
@@ -35,6 +36,11 @@ export const getEditingTermMeaningAction = createAction(
     return rs.meaning;
   }
 );
+
+export const resetEditingTermMeaningAction = createAction(
+  TERM_EDITING_MEANING_RESET
+);
+
 export const createTermAction = createAction(TERM_CREATED, async term => {
   try {
     const newTerm = { ...term };

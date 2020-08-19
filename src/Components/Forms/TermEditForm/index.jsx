@@ -11,6 +11,7 @@ import {
   createTermAction,
   editTermAction,
   getEditingTermMeaningAction,
+  resetEditingTermMeaningAction,
   setEditingTermAction
 } from "../../../Actions/TermAction";
 import {
@@ -27,10 +28,15 @@ class TermEditForm extends React.Component {
       editingTermMeaning,
       dictionaryLanguage,
       languages,
-      language
+      language,
+      resetEditingTermMeaning
     } = this.props;
 
-    const { content, meaning } = prevProps.value;
+    const { content: prevContent, meaning: prevMeaning } = prevProps.value;
+
+    if (prevContent !== value.content) {
+      resetEditingTermMeaning();
+    }
 
     if (
       // meaning is loaded but empty
@@ -38,9 +44,9 @@ class TermEditForm extends React.Component {
         // unknown term
         (value.meaning === "" || !value.id) &&
         editingTermMeaning === prevProps.editingTermMeaning &&
-        (!prevProps.value || content !== value.content)) ||
+        (!prevProps.value || prevContent !== value.content)) ||
       // meaning is not loaded then loaded but empty
-      (meaning === undefined && value.meaning === "")
+      (prevMeaning === undefined && value.meaning === "")
     ) {
       const { code } = languages.find(l => l.id === language);
       if (code === "en") {
@@ -169,6 +175,7 @@ TermEditForm.propTypes = {
   editingTermMeaning: PropTypes.string,
   form: PropTypes.shape().isRequired,
   getEditingTermMeaning: PropTypes.func.isRequired,
+  resetEditingTermMeaning: PropTypes.func.isRequired,
   language: PropTypes.number.isRequired,
   languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   setEditingTerm: PropTypes.func.isRequired,
@@ -193,6 +200,7 @@ export default connect(
     setEditingTerm: setEditingTermAction,
     createTerm: createTermAction,
     editTerm: editTermAction,
-    getEditingTermMeaning: getEditingTermMeaningAction
+    getEditingTermMeaning: getEditingTermMeaningAction,
+    resetEditingTermMeaning: resetEditingTermMeaningAction
   }
 )(Form.create()(TermEditForm));
