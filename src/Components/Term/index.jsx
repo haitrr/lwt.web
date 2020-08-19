@@ -6,7 +6,6 @@ import {
   getTermMeaningAction,
   setEditingTermAction
 } from "../../Actions/TermAction";
-import styles from "./Term.module.scss";
 import { TermLearningLevel } from "../../Enums";
 import TermButton from "./TermButton";
 import TermTooltip from "./TermTooltip";
