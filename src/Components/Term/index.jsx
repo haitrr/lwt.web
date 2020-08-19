@@ -35,9 +35,9 @@ class Term extends React.Component {
     }
   };
 
-  handleTermClick = (e, term) => {
+  handleTermClick = e => {
     e.preventDefault();
-    const { getTerm, setEditingTerm, index, onTermClick } = this.props;
+    const { getTerm, setEditingTerm, index, term, onTermClick } = this.props;
     onTermClick(term);
     // load term meaning if not loaded.
     this.loadTermsMeaning();
@@ -71,7 +71,7 @@ class Term extends React.Component {
           bookmarkRef={bookmarkRef}
           last={last}
           term={term}
-          onClick={e => this.handleTermClick(e, term)}
+          onClick={this.handleTermClick}
         />
       );
     }
@@ -86,7 +86,7 @@ class Term extends React.Component {
             bookmarkRef={bookmarkRef}
             last={last}
             term={term}
-            onClick={e => this.handleTermClick(e, term)}
+            onClick={this.handleTermClick}
           />
         </span>
       </Tooltip>
