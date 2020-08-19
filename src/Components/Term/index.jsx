@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Tooltip } from "antd";
 import PropTypes from "prop-types";
 import {
   getTermAction,
@@ -10,6 +9,7 @@ import {
 import styles from "./Term.module.scss";
 import { TermLearningLevel } from "../../Enums";
 import TermButton from "./TermButton";
+import TermTooltip from "./TermTooltip";
 
 class Term extends React.Component {
   shouldComponentUpdate(nextProps) {
@@ -47,6 +47,12 @@ class Term extends React.Component {
     }
   };
 
+  getTitle = () => {
+    const { term } = this.props;
+
+    return term.meaning && term.meaning.length > 0 ? term.meaning : null;
+  };
+
   render() {
     const { term, bookmark, last, bookmarkRef } = this.props;
 
@@ -76,20 +82,14 @@ class Term extends React.Component {
       );
     }
     return (
-      <Tooltip
-        overlayClassName={styles.tooltip}
-        title={term.meaning && term.meaning.length > 0 ? term.meaning : null}
-      >
-        <span onMouseEnter={() => this.loadTermsMeaning()}>
-          <TermButton
-            bookmark={bookmark}
-            bookmarkRef={bookmarkRef}
-            last={last}
-            term={term}
-            onClick={this.handleTermClick}
-          />
-        </span>
-      </Tooltip>
+      <TermTooltip
+        onClick={this.handleTermClick}
+        bookmarkRef={bookmarkRef}
+        onHover={this.loadTermsMeaning}
+        term={term}
+        last={last}
+        bookmark={bookmark}
+      />
     );
   }
 }
