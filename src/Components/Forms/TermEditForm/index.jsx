@@ -19,6 +19,7 @@ import {
   selectEditingTermValue
 } from "../../../Selectors/TermSelectors";
 import { selectDictionaryLanguage } from "../../../Selectors/UserSelectors";
+import { TermLearningLevel } from "../../../Enums";
 
 class TermEditForm extends React.Component {
   componentDidUpdate(prevProps) {
@@ -146,6 +147,10 @@ class TermEditForm extends React.Component {
               <Button
                 type="primary"
                 htmlType="submit"
+                disabled={
+                  value.learningLevel !== TermLearningLevel.UnKnow &&
+                  value.meaning === undefined
+                }
                 className={styles.saveButton}
               >
                 Save
