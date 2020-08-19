@@ -39,6 +39,8 @@ class Term extends React.Component {
     e.preventDefault();
     const { getTerm, setEditingTerm, index, onTermClick } = this.props;
     onTermClick(term);
+    // load term meaning if not loaded.
+    this.loadTermsMeaning();
     setEditingTerm(index);
     if (term.id) {
       getTerm(term.id, index);

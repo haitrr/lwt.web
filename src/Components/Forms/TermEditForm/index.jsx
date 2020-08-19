@@ -29,11 +29,17 @@ class TermEditForm extends React.Component {
       languages,
       language
     } = this.props;
+
+    const { content, meaning } = prevProps.value;
+
     if (
-      value.content &&
-      !value.meaning &&
-      editingTermMeaning === prevProps.editingTermMeaning &&
-      (!prevProps.value || prevProps.value.content !== value.content)
+      // meaning is loaded but empty
+      (value.content &&
+        value.meaning === "" &&
+        editingTermMeaning === prevProps.editingTermMeaning &&
+        (!prevProps.value || content !== value.content)) ||
+      // meaning is not loaded then loaded but empty
+      (meaning === undefined && value.meaning === "")
     ) {
       const { code } = languages.find(l => l.id === language);
       if (code === "en") {
