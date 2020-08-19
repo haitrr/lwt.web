@@ -35,7 +35,8 @@ class TermEditForm extends React.Component {
     if (
       // meaning is loaded but empty
       (value.content &&
-        value.meaning === "" &&
+        // unknown term
+        (value.meaning === "" || !value.id) &&
         editingTermMeaning === prevProps.editingTermMeaning &&
         (!prevProps.value || content !== value.content)) ||
       // meaning is not loaded then loaded but empty

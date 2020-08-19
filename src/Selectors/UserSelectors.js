@@ -3,5 +3,5 @@ export const selectDictionaryLanguage = (state, language) => {
   if (!code) {
     return null;
   }
-  return state.user.setting.languageSettings[code].dictionaryLanguage;
+  return state.user.setting?.languageSettings[code].dictionaryLanguage;
 };
