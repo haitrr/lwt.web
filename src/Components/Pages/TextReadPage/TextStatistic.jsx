@@ -5,10 +5,34 @@ import { connect } from "react-redux";
 import { TermLearningColor, TermLearningLevel } from "../../../Enums";
 import SingleBarChart from "../../SingleBarChart";
 
+const countTermByLearningLevel = terms => {
+  const termCountByLearningLevel = { total: 0 };
+  Object.keys(TermLearningLevel).forEach(learningLevel => {
+    termCountByLearningLevel[TermLearningLevel[learningLevel]] = 0;
+  });
+  for (let i = 0; i < terms.length; i += 1) {
+    termCountByLearningLevel[terms[i].learningLevel] += 1;
+  }
+  return termCountByLearningLevel;
+};
+
+function getPracticeCount(termCountByLearningLevel) {
+  return (
+    termCountByLearningLevel.total -
+    termCountByLearningLevel[TermLearningLevel.Skipped] -
+    termCountByLearningLevel[TermLearningLevel.Ignored] -
+    termCountByLearningLevel[TermLearningLevel.WellKnow]
+  );
+}
+
+function getTotalCount(terms, termCountByLearningLevel) {
+  return terms.length - termCountByLearningLevel[TermLearningLevel.Skipped];
+}
+
 class TextStatistic extends React.PureComponent {
   render() {
     const { terms } = this.props;
-    // todo: optimize
+    const termCountByLearningLevel = countTermByLearningLevel(terms);
     const statistic = [];
     Object.keys(TermLearningLevel).forEach(learningLevel => {
       if (
@@ -19,17 +43,12 @@ class TextStatistic extends React.PureComponent {
         return;
       statistic.push({
         name: learningLevel,
-        value: terms.filter(
-          t => t.learningLevel === TermLearningLevel[learningLevel]
-        ).length,
+        value: termCountByLearningLevel[TermLearningLevel[learningLevel]],
         color: TermLearningColor[learningLevel]
       });
     });
-
-    const practice = statistic.map(i => i.value).reduce((a, b) => a + b);
-    const total = terms.filter(
-      t => t.learningLevel !== TermLearningLevel.Skipped
-    ).length;
+    const practice = getPracticeCount(termCountByLearningLevel);
+    const total = getTotalCount(terms, termCountByLearningLevel);
     return (
       <Tooltip
         title={`${practice}/${total} ~ ${Math.round(
