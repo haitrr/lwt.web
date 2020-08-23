@@ -5,6 +5,7 @@ import {
   TEXT_EDIT_DETAIL_FETCHED,
   TEXT_FETCHED,
   TEXT_READ,
+  TEXT_TERM_LOADED,
   TEXT_TERM_SELECT
 } from "../Actions/TextAction";
 import {
@@ -125,6 +126,13 @@ const textReducer = handleActions(
       const newTexts = [...state.texts];
       newTexts[index] = newText;
       return { ...state, texts: newTexts };
+    },
+    [TEXT_TERM_LOADED]: (state, action) => {
+      const { terms } = action.payload;
+      return {
+        ...state,
+        readingText: { ...state.readingText, terms }
+      };
     }
   },
   defaultState

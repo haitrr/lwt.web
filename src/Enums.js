@@ -1,21 +1,21 @@
 export const TermLearningLevel = {
-  Skipped: -1,
+  Skipped: "skipped",
 
-  Ignored: 0,
+  Ignored: "ignored",
 
-  UnKnow: 1,
+  UnKnow: "unknown",
 
-  Learning1: 2,
+  Learning1: "learning-1",
 
-  Learning2: 3,
+  Learning2: "learning-2",
 
-  Learning3: 4,
+  Learning3: "learning-3",
 
-  Learning4: 5,
+  Learning4: "learning-4",
 
-  Learning5: 6,
+  Learning5: "learning-5",
 
-  WellKnow: 7
+  WellKnow: "well-known"
 };
 
 export const TermLearningColor = {

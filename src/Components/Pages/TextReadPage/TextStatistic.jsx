@@ -32,6 +32,9 @@ function getTotalCount(terms, termCountByLearningLevel) {
 class TextStatistic extends React.PureComponent {
   render() {
     const { terms } = this.props;
+    if (!terms) {
+      return <div />;
+    }
     const termCountByLearningLevel = countTermByLearningLevel(terms);
     const statistic = [];
     Object.keys(TermLearningLevel).forEach(learningLevel => {

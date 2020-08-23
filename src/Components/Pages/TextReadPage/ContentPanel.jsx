@@ -1,9 +1,11 @@
 import PropTypes from "prop-types";
 import React, { Fragment } from "react";
+import { connect } from "react-redux";
 import styles from "./TextReadPage.module.scss";
 import Term from "../../Term";
 import ProgressBar from "./ProgressBar";
 import GoToBookmarkButton from "./GoToBookmarkButton";
+import { getTextTermsAction } from "../../../Actions/TextAction";
 
 class ContentPanel extends React.Component {
   constructor(props) {
@@ -17,23 +19,23 @@ class ContentPanel extends React.Component {
       this.displayTerms = 750;
       this.loadTerms = 150;
     }
-    this.state = {
-      begin: Math.max(
-        Math.min(
-          props.bookmark - this.loadTerms,
-          props.terms.length - this.displayTerms
-        ),
-        0
-      )
-    };
 
+    this.state = {
+      begin: Math.max(props.bookmark - this.loadTerms, 0)
+    };
     this.last = React.createRef();
     this.container = React.createRef();
   }
 
-  shouldComponentUpdate(prevProps, prevState) {
+  componentDidMount() {
+    const { getTextTerms, textId } = this.props;
     const { begin } = this.state;
-    return prevState.begin !== begin;
+    getTextTerms(textId, begin, begin + this.displayTerms);
+  }
+
+  shouldComponentUpdate(prevProps, prevState) {
+    const { terms } = this.props;
+    return prevProps.terms !== terms;
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -84,6 +86,9 @@ class ContentPanel extends React.Component {
 
   render() {
     const { terms, onTermClick, bookmarkRef } = this.props;
+    if (!terms) {
+      return <h1>Loading</h1>;
+    }
     const { begin } = this.state;
     return (
       <Fragment>
@@ -93,19 +98,16 @@ class ContentPanel extends React.Component {
           className={styles.contentPanel}
           ref={this.container}
         >
-          {terms.slice(begin, begin + this.displayTerms).map((term, index) => {
-            const realIndex = index + begin;
-            return (
-              <Term
-                onTermClick={t => onTermClick(t, realIndex)}
-                bookmarkRef={bookmarkRef}
-                last={begin === realIndex ? this.last : null}
-                // eslint-disable-next-line react/no-array-index-key
-                key={realIndex}
-                index={realIndex}
-              />
-            );
-          })}
+          {terms.map(term => (
+            <Term
+              onTermClick={t => onTermClick(t, term.index)}
+              bookmarkRef={bookmarkRef}
+              last={begin === term.index ? this.last : null}
+              // eslint-disable-next-line react/no-array-index-key
+              key={term.index}
+              index={term.index}
+            />
+          ))}
         </div>
         <GoToBookmarkButton onClick={this.goToBookmark} />
         <ProgressBar />
@@ -115,13 +117,22 @@ class ContentPanel extends React.Component {
 }
 
 ContentPanel.defaultProps = {
-  bookmark: null
+  bookmark: null,
+  terms: null
 };
 
 ContentPanel.propTypes = {
   bookmarkRef: PropTypes.shape({}).isRequired,
   onTermClick: PropTypes.func.isRequired,
-  terms: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  terms: PropTypes.arrayOf(PropTypes.shape()),
   bookmark: PropTypes.number
 };
-export default ContentPanel;
+export default connect(
+  state => {
+    console.log(state);
+    return { terms: state.text.readingText.terms };
+  },
+  {
+    getTextTerms: getTextTermsAction
+  }
+)(ContentPanel);

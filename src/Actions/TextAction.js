@@ -8,6 +8,7 @@ import {
   getTextEditDetailAsync,
   getTextReadAsync,
   getTextsAsync,
+  getTextTermsAsync,
   setTextBookmarkAsync
 } from "../Apis/TextApi";
 
@@ -20,6 +21,7 @@ export const TEXT_EDIT_DETAIL_FETCHED = "TEXT_EDIT_DETAIL_FETCHED";
 export const TEXT_BOOKMARK_SET = "TEXT_BOOKMARK_SET";
 export const TEXT_TERM_SELECT = "TEXT_TERM_SELECT";
 export const TERM_COUNT_LOADED = "TERM_COUNT_LOADED";
+export const TEXT_TERM_LOADED = "TEXT_TERM_LOADED";
 
 /**
  * get texts action
@@ -104,4 +106,10 @@ export const setBookmarkAction = createAction(
 export const selectTermAction = createAction(
   TEXT_TERM_SELECT,
   async index => index
+);
+
+export const getTextTermsAction = createAction(
+  TEXT_TERM_LOADED,
+  async (textId, indexFrom, indexTo) =>
+    getTextTermsAsync(textId, indexFrom, indexTo)
 );

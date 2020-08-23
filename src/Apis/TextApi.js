@@ -67,3 +67,6 @@ export async function getTextEditDetailAsync(textId) {
 export async function setTextBookmarkAsync(id, index) {
   return patchAsync(`${TEXT_API}`, id, "bookmark", { termIndex: index });
 }
+export async function getTextTermsAsync(textId, indexFrom, indexTo) {
+  return getAsync(`${TEXT_API}/${textId}/terms`, { indexFrom, indexTo });
+}
