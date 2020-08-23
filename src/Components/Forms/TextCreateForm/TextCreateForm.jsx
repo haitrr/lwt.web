@@ -16,7 +16,7 @@ function TextCreateForm(props) {
   return (
     <Form>
       <Form.Item>
-        {getFieldDecorator("language", { initialValue: currentLanguage })(
+        {getFieldDecorator("languageCode", { initialValue: currentLanguage })(
           <LanguageSelect />
         )}
       </Form.Item>
