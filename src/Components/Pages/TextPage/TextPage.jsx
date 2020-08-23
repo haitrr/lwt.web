@@ -4,7 +4,11 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { getLanguageAction } from "../../../Actions/LanguageAction";
-import { deleteTextAction, getTextsAction } from "../../../Actions/TextAction";
+import {
+  deleteTextAction,
+  getTextsAction,
+  loadTermCountAction
+} from "../../../Actions/TextAction";
 import TextFilterForm from "../../Forms/TextFilterForm";
 import TextCreateModal from "../../Modals/TextCreateModal";
 import TextEditModal from "../../Modals/TextEditModal";
@@ -12,12 +16,17 @@ import { TermLearningLevel } from "../../../Enums";
 import styles from "./TextPage.module.scss";
 import termStyles from "../../Term/Term.module.scss";
 import { parseQueryString } from "../../../Utilities/queryString";
+import TotalTerm from "./TotalTerm";
 
 function renderTermNumber(current, record, level) {
+  const { counts } = record;
+  if (!counts) {
+    return <span>-</span>;
+  }
   if (!current) {
     return 0;
   }
-  const { counts } = record;
+
   let sum = 0;
   Object.keys(counts).map(key => {
     if (key !== "Ignored") {
@@ -75,43 +84,43 @@ class TextPage extends React.Component {
     {
       title: "UK",
       key: "unknow",
-      dataIndex: "counts.UnKnow",
+      dataIndex: "counts.unknown",
       render: (value, record) => renderTermNumber(value, record, "UnKnow")
     },
     {
       title: "L1",
       key: "Learning1",
-      dataIndex: "counts.Learning1",
+      dataIndex: "counts.learning-1",
       render: (value, record) => renderTermNumber(value, record, "Learning1")
     },
     {
       title: "L2",
       key: "Learning2",
-      dataIndex: "counts.Learning2",
+      dataIndex: "counts.learning-2",
       render: (value, record) => renderTermNumber(value, record, "Learning2")
     },
     {
       title: "L3",
       key: "Learning3",
-      dataIndex: "counts.Learning3",
+      dataIndex: "counts.learning-3",
       render: (value, record) => renderTermNumber(value, record, "Learning3")
     },
     {
       title: "L4",
       key: "Learning4",
-      dataIndex: "counts.Learning4",
+      dataIndex: "counts.learning-4",
       render: (value, record) => renderTermNumber(value, record, "Learning4")
     },
     {
       title: "L5",
       key: "Learning5",
-      dataIndex: "counts.Learning5",
+      dataIndex: "counts.learning-5",
       render: (value, record) => renderTermNumber(value, record, "Learning5")
     },
     {
       title: "WK",
       key: "WellKnow",
-      dataIndex: "counts.WellKnow",
+      dataIndex: "counts.well-known",
       render: (value, record) => renderTermNumber(value, record, "WellKnow")
     },
     {
@@ -127,24 +136,16 @@ class TextPage extends React.Component {
         return "Unknown language";
       }
     },
-
     {
       title: "I",
       key: "Ignored",
-      dataIndex: "counts.Ignored"
+      dataIndex: "counts.ignored"
     },
     {
       title: "T",
       key: "total",
       dataIndex: "counts",
-      render: value => {
-        let sum = 0;
-        Object.keys(value).map(key => {
-          sum += value[key];
-          return null;
-        });
-        return <span>{sum}</span>;
-      }
+      render: (value, record) => <TotalTerm value={value} record={record} />
     }
   ];
 
@@ -300,7 +301,8 @@ export default connect(
   {
     getTexts: getTextsAction,
     getLanguages: getLanguageAction,
-    deleteText: deleteTextAction
+    deleteText: deleteTextAction,
+    getTermCount: loadTermCountAction
   }
 )(TextPage);
 

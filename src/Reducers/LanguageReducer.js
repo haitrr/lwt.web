@@ -4,31 +4,27 @@
 import { handleActions } from "redux-actions";
 import { LANGUAGE_GET, LANGUAGE_SELECT } from "../Actions/LanguageAction";
 
-const defaultState= {
+const defaultState = {
   languages: [],
-  currentLanguage: ""
+  currentLanguage: "en"
 };
 
 export const languageReducer = handleActions(
   {
-    [LANGUAGE_GET]: (state, action) => {
-      return {
-        ...state,
-        languages: action.payload,
-        currentLanguage:
-          state.currentLanguage === ""
-            ? action.payload.length > 0
-              ? action.payload[0].id
-              : null
-            : state.currentLanguage
-      };
-    },
-    [LANGUAGE_SELECT]: (state, action) => {
-      return {
-        ...state,
-        currentLanguage: action.payload
-      };
-    }
+    [LANGUAGE_GET]: (state, action) => ({
+      ...state,
+      languages: action.payload,
+      currentLanguage:
+        state.currentLanguage === ""
+          ? action.payload.length > 0
+            ? action.payload[0].id
+            : null
+          : state.currentLanguage
+    }),
+    [LANGUAGE_SELECT]: (state, action) => ({
+      ...state,
+      currentLanguage: action.payload
+    })
   },
   defaultState
 );

@@ -1,5 +1,6 @@
 import { handleActions } from "redux-actions";
 import {
+  TERM_COUNT_LOADED,
   TEXT_DELETED,
   TEXT_EDIT_DETAIL_FETCHED,
   TEXT_FETCHED,
@@ -110,6 +111,20 @@ const textReducer = handleActions(
       const { terms } = state.readingText;
       terms[index] = { ...terms[index], meaning: termMeaning.meaning };
       return { ...state, readingText: { ...state.readingText, terms } };
+    },
+    [TERM_COUNT_LOADED]: (state, action) => {
+      if (!action.payload) {
+        return state;
+      }
+      const { id, counts } = action.payload;
+      const index = state.texts.findIndex(t => t.id === id);
+      if (index < 0) {
+        return state;
+      }
+      const newText = { ...state.texts[index], counts };
+      const newTexts = [...state.texts];
+      newTexts[index] = newText;
+      return { ...state, texts: newTexts };
     }
   },
   defaultState

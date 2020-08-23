@@ -4,6 +4,7 @@ import {
   createTextAsync,
   deleteTextAsync,
   editTextAsync,
+  getTermCountAsync,
   getTextEditDetailAsync,
   getTextReadAsync,
   getTextsAsync,
@@ -18,6 +19,7 @@ export const TEXT_EDITED = "TEXT_EDITED";
 export const TEXT_EDIT_DETAIL_FETCHED = "TEXT_EDIT_DETAIL_FETCHED";
 export const TEXT_BOOKMARK_SET = "TEXT_BOOKMARK_SET";
 export const TEXT_TERM_SELECT = "TEXT_TERM_SELECT";
+export const TERM_COUNT_LOADED = "TERM_COUNT_LOADED";
 
 /**
  * get texts action
@@ -43,6 +45,11 @@ export const getTextsAction = createAction(
 
 export const readTextAction = createAction(TEXT_READ, async textId =>
   getTextReadAsync(textId)
+);
+
+export const loadTermCountAction = createAction(
+  TERM_COUNT_LOADED,
+  async textId => getTermCountAsync(textId)
 );
 
 /**

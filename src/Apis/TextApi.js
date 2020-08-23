@@ -48,6 +48,10 @@ export async function getTextReadAsync(textId) {
   }
 }
 
+export async function getTermCountAsync(textId) {
+  return await getAsync(`${TEXT_API}/${textId}/term-counts`, null);
+}
+
 export async function deleteTextAsync(textId) {
   return deleteAsync(`${TEXT_API}/${textId}`);
 }
