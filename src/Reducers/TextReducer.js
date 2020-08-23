@@ -40,6 +40,7 @@ const textReducer = handleActions(
     [TERM_GET]: (state, action) => {
       const terms = [...state.readingText.terms];
       terms[action.payload.index] = {
+        ...terms[action.payload.index],
         ...action.payload.term,
         content: terms[action.payload.index].content
       };

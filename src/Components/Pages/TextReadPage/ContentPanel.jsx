@@ -35,12 +35,15 @@ class ContentPanel extends React.Component {
 
   shouldComponentUpdate(prevProps, prevState) {
     const { terms } = this.props;
-    return prevProps.terms !== terms;
+    return prevProps.terms !== terms || prevState.begin !== this.state.begin;
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { begin, last } = this.state;
-    if (prevState.begin > begin && last) {
+    const { begin, textId, last, terms, getTextTerms } = this.state;
+    if (begin !== prevState.begin) {
+      getTextTerms(textId, begin, begin + this.displayTerms);
+    }
+    if (prevProps.terms && terms[0].index > prevProps.terms[0].index && last) {
       last.scrollIntoView(true);
     }
   }
@@ -98,16 +101,19 @@ class ContentPanel extends React.Component {
           className={styles.contentPanel}
           ref={this.container}
         >
-          {terms.map(term => (
-            <Term
-              onTermClick={t => onTermClick(t, term.index)}
-              bookmarkRef={bookmarkRef}
-              last={begin === term.index ? this.last : null}
-              // eslint-disable-next-line react/no-array-index-key
-              key={term.index}
-              index={term.index}
-            />
-          ))}
+          {terms.map(term => {
+            const realIndex = term.index - begin;
+            return (
+              <Term
+                onTermClick={t => onTermClick(t, realIndex)}
+                bookmarkRef={bookmarkRef}
+                last={begin === realIndex ? this.last : null}
+                // eslint-disable-next-line react/no-array-index-key
+                key={realIndex}
+                index={realIndex}
+              />
+            );
+          })}
         </div>
         <GoToBookmarkButton onClick={this.goToBookmark} />
         <ProgressBar />
@@ -127,12 +133,6 @@ ContentPanel.propTypes = {
   terms: PropTypes.arrayOf(PropTypes.shape()),
   bookmark: PropTypes.number
 };
-export default connect(
-  state => {
-    console.log(state);
-    return { terms: state.text.readingText.terms };
-  },
-  {
-    getTextTerms: getTextTermsAction
-  }
-)(ContentPanel);
+export default connect(state => ({ terms: state.text.readingText.terms }), {
+  getTextTerms: getTextTermsAction
+})(ContentPanel);

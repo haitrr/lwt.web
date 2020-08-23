@@ -111,5 +111,5 @@ export const selectTermAction = createAction(
 export const getTextTermsAction = createAction(
   TEXT_TERM_LOADED,
   async (textId, indexFrom, indexTo) =>
-    getTextTermsAsync(textId, indexFrom, indexTo)
+    await getTextTermsAsync(textId, indexFrom, indexTo)
 );
