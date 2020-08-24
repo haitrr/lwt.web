@@ -29,7 +29,10 @@ function renderTermNumber(current, record, level) {
 
   let sum = 0;
   Object.keys(counts).map(key => {
-    if (key !== "Ignored") {
+    if (
+      key !== TermLearningLevel.Skipped &&
+      key !== TermLearningLevel.Ignored
+    ) {
       sum += counts[key];
     }
     return null;

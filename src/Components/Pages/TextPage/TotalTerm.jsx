@@ -2,9 +2,22 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loadTermCountAction } from "../../../Actions/TextAction";
+import { TermLearningLevel } from "../../../Enums";
 
 class TotalTerm extends React.Component {
   componentDidMount() {
+    const { value, record, loadTermCounts } = this.props;
+    if (value === undefined) {
+      loadTermCounts(record.id);
+    }
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const { value } = this.props;
+    return value !== nextProps.value;
+  }
+
+  componentDidUpdate() {
     const { value, record, loadTermCounts } = this.props;
     if (value === undefined) {
       loadTermCounts(record.id);
@@ -18,16 +31,20 @@ class TotalTerm extends React.Component {
     }
     let sum = 0;
     Object.keys(value).map(key => {
-      sum += value[key];
+      if (key !== TermLearningLevel.Skipped) sum += value[key];
       return null;
     });
     return <span>{sum}</span>;
   }
 }
+TotalTerm.defaultProps = {
+  value: undefined
+};
 
 TotalTerm.propTypes = {
-  value: PropTypes.any,
-  record: PropTypes.any
+  value: PropTypes.number,
+  record: PropTypes.shape({}).isRequired,
+  loadTermCounts: PropTypes.func.isRequired
 };
 
 export default connect(null, { loadTermCounts: loadTermCountAction })(
