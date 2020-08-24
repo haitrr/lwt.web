@@ -16,9 +16,9 @@ function TextEditForm(props) {
   return (
     <Form>
       <Form.Item>
-        {getFieldDecorator("language", { initialValue: editDetail.language })(
-          <LanguageSelect />
-        )}
+        {getFieldDecorator("languageCode", {
+          initialValue: editDetail.languageCode
+        })(<LanguageSelect />)}
       </Form.Item>
       <Form.Item>
         {getFieldDecorator("title", { initialValue: editDetail.title })(
