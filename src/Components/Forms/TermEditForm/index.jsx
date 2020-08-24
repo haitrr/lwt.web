@@ -208,7 +208,7 @@ TermEditForm.propTypes = {
   form: PropTypes.shape().isRequired,
   getEditingTermMeaning: PropTypes.func.isRequired,
   resetEditingTermMeaning: PropTypes.func.isRequired,
-  languageCode: PropTypes.number.isRequired,
+  languageCode: PropTypes.string.isRequired,
   languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   setEditingTerm: PropTypes.func.isRequired,
   value: PropTypes.shape({

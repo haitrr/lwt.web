@@ -64,24 +64,31 @@ class ContentPanel extends React.Component {
 
   handleScroll = e => {
     e.stopPropagation();
+    e.preventDefault();
     const {
       termCount,
       begin,
       end,
       setTermIndexEnd,
-      setTermIndexBegin
+      setTermIndexBegin,
+      terms
     } = this.props;
-    const bottom =
-      e.target.scrollHeight - e.target.scrollTop < e.target.clientHeight + 50;
-    const top = e.target.scrollTop === 0;
+    // loading
+    if (!terms[begin] || !terms[end]) {
+      return;
+    }
+    const top = e.target.scrollTop < 100;
     if (top) {
       if (begin > 0) {
         setTermIndexBegin(Math.max(begin - this.loadTerms, 0));
         this.last = this.begin.current;
+        return;
       }
     }
+    const bottom =
+      e.target.scrollHeight - e.target.scrollTop < e.target.clientHeight + 100;
     if (bottom) {
-      if (end < termCount) {
+      if (end < termCount - 1) {
         setTermIndexEnd(Math.min(end + this.loadTerms, termCount - 1));
       }
     }
@@ -89,7 +96,7 @@ class ContentPanel extends React.Component {
 
   render() {
     const { terms } = this.props;
-    const { begin, end, bookmarkRef, onTermClick } = this.props;
+    const { begin, end, bookmarkRef } = this.props;
     if (begin === end) {
       return <h1>Loading</h1>;
     }
@@ -98,7 +105,7 @@ class ContentPanel extends React.Component {
       if (terms[i]) {
         termElements.push(
           <Term
-            onTermClick={t => onTermClick(t, i)}
+            // onTermClick={t => onTermClick(t, i)}
             bookmarkRef={bookmarkRef}
             last={begin === i ? this.begin : null}
             // eslint-disable-next-line react/no-array-index-key
@@ -132,7 +139,6 @@ ContentPanel.defaultProps = {
 
 ContentPanel.propTypes = {
   bookmarkRef: PropTypes.shape({}).isRequired,
-  onTermClick: PropTypes.func.isRequired,
   terms: PropTypes.arrayOf(PropTypes.shape()),
   textId: PropTypes.number.isRequired,
   begin: PropTypes.number.isRequired,

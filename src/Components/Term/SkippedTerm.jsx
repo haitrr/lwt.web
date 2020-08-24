@@ -22,7 +22,7 @@ SkippedTerm.defaultProps = {
 
 SkippedTerm.propTypes = {
   term: PropTypes.shape({
-    learningLevel: PropTypes.number.isRequired,
+    learningLevel: PropTypes.string.isRequired,
     meaning: PropTypes.string
   }).isRequired,
   last: PropTypes.shape({})

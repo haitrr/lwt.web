@@ -107,14 +107,6 @@ class TextReadPage extends React.Component {
     }
   };
 
-  onTermClick = (term, index) => {
-    this.utt.text = term.content;
-    window.speechSynthesis.speak(this.utt);
-    const { setBookmark, id, selectTerm } = this.props;
-    selectTerm(index);
-    setBookmark(id, index);
-  };
-
   render() {
     const { terms, title, bookmark, id } = this.props;
     if (!title) {
@@ -126,7 +118,6 @@ class TextReadPage extends React.Component {
         <TextStatistic />
         <ContentPanel
           textId={id}
-          onTermClick={this.onTermClick}
           bookmark={bookmark}
           bookmarkRef={this.bookmark}
         />

@@ -64,11 +64,15 @@ class TextStatistic extends React.PureComponent {
   }
 }
 
+TextStatistic.defaultProps = {
+  termsCountByLearningLevel: undefined
+};
+
 TextStatistic.propTypes = {
   terms: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   textId: PropTypes.number.isRequired,
   termCount: PropTypes.number.isRequired,
-  termsCountByLearningLevel: PropTypes.shape({}).isRequired,
+  termsCountByLearningLevel: PropTypes.shape({}),
   loadtermsCountByLearningLevel: PropTypes.func.isRequired
 };
 

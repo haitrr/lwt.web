@@ -76,13 +76,11 @@ const textReducer = handleActions(
       }
       const { readingText } = state;
       const newTerms = [...readingText.terms];
-      console.log(createdTerm);
       const { termIndexBegin, termIndexEnd } = state.readingText;
       for (let i = termIndexBegin; i <= termIndexEnd; i += 1) {
         if (!newTerms[i]) {
           continue;
         }
-        console.log(newTerms[i]);
         if (
           newTerms[i].content.toUpperCase() ===
           createdTerm.content.toUpperCase()
