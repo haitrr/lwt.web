@@ -21,7 +21,11 @@ export const TEXT_EDIT_DETAIL_FETCHED = "TEXT_EDIT_DETAIL_FETCHED";
 export const TEXT_BOOKMARK_SET = "TEXT_BOOKMARK_SET";
 export const TEXT_TERM_SELECT = "TEXT_TERM_SELECT";
 export const TERM_COUNT_LOADED = "TERM_COUNT_LOADED";
+export const READING_TEXT_TERMS_COUNT_LOADED =
+  "READING_TEXT_TERMS_COUNT_LOADED";
 export const TEXT_TERM_LOADED = "TEXT_TERM_LOADED";
+export const TERM_INDEX_BEGIN_SET = "TERM_INDEX_BEGIN_SET";
+export const TERM_INDEX_END_SET = "TERM_INDEX_END_SET";
 
 /**
  * get texts action
@@ -45,12 +49,17 @@ export const getTextsAction = createAction(
  * set reading text.
  */
 
-export const readTextAction = createAction(TEXT_READ, async textId =>
+export const readTextAction = createAction(TEXT_READ, textId =>
   getTextReadAsync(textId)
 );
 
 export const loadTermCountAction = createAction(
   TERM_COUNT_LOADED,
+  async textId => getTermCountAsync(textId)
+);
+
+export const loadReadingTexttermsCountByLearningLevelAction = createAction(
+  READING_TEXT_TERMS_COUNT_LOADED,
   async textId => getTermCountAsync(textId)
 );
 
@@ -110,6 +119,17 @@ export const selectTermAction = createAction(
 
 export const getTextTermsAction = createAction(
   TEXT_TERM_LOADED,
-  async (textId, indexFrom, indexTo) =>
-    await getTextTermsAsync(textId, indexFrom, indexTo)
+  async (textId, indexFrom, indexTo) => {
+    const result = await getTextTermsAsync(textId, indexFrom, indexTo);
+    return { ...result, begin: indexFrom, end: indexTo };
+  }
+);
+
+export const setTermIndexBeginAction = createAction(
+  TERM_INDEX_BEGIN_SET,
+  begin => begin
+);
+export const setTermIndexEndAction = createAction(
+  TERM_INDEX_END_SET,
+  end => end
 );

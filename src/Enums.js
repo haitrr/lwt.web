@@ -18,22 +18,26 @@ export const TermLearningLevel = {
   WellKnow: "well-known"
 };
 
+export const LanguageCode = {
+  English: "en"
+};
+
 export const TermLearningColor = {
-  Skipped: "white",
+  [TermLearningLevel.Skipped]: "white",
 
-  Ignored: "white",
+  [TermLearningLevel.Ignored]: "white",
 
-  UnKnow: "#addfff",
+  [TermLearningLevel.UnKnow]: "#addfff",
 
-  Learning1: "#f5b8a9",
+  [TermLearningLevel.Learning1]: "#f5b8a9",
 
-  Learning2: "#f5cca9",
+  [TermLearningLevel.Learning2]: "#f5cca9",
 
-  Learning3: "#f5e1a9",
+  [TermLearningLevel.Learning3]: "#f5e1a9",
 
-  Learning4: "#f5f3a9",
+  [TermLearningLevel.Learning4]: "#f5f3a9",
 
-  Learning5: "#ddffdd",
+  [TermLearningLevel.Learning5]: "#ddffdd",
 
-  WellKnow: "whitesmoke"
+  [TermLearningLevel.WellKnow]: "whitesmoke"
 };
