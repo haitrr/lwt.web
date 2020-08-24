@@ -34,7 +34,7 @@ class TermEditForm extends React.Component {
       editingTermMeaning,
       dictionaryLanguage,
       languages,
-      language,
+      languageCode,
       resetEditingTermMeaning
     } = this.props;
 
@@ -54,7 +54,7 @@ class TermEditForm extends React.Component {
       // meaning is not loaded then loaded but empty
       (prevMeaning === undefined && value.meaning === "")
     ) {
-      const { code } = languages.find(l => l.id === language);
+      const { code } = languages.find(l => l.code === languageCode);
       if (code === "en") {
         let simplified = value.content;
         const doc = compromise(simplified);
@@ -108,7 +108,7 @@ class TermEditForm extends React.Component {
     const {
       form: { getFieldDecorator },
       value,
-      language,
+      languageCode,
       className,
       editingTermMeaning,
       editingTerm
@@ -136,7 +136,7 @@ class TermEditForm extends React.Component {
           )}
         </Form.Item>
         <Form.Item className={styles.language}>
-          {getFieldDecorator("language", { initialValue: language })(
+          {getFieldDecorator("languageCode", { initialValue: languageCode })(
             <LanguageSelect disabled />
           )}
         </Form.Item>
@@ -208,7 +208,7 @@ TermEditForm.propTypes = {
   form: PropTypes.shape().isRequired,
   getEditingTermMeaning: PropTypes.func.isRequired,
   resetEditingTermMeaning: PropTypes.func.isRequired,
-  language: PropTypes.number.isRequired,
+  languageCode: PropTypes.string.isRequired,
   languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   setEditingTerm: PropTypes.func.isRequired,
   value: PropTypes.shape({
@@ -224,7 +224,7 @@ export default connect(
       state.text.readingText.language
     ),
     editingTerm: state.term.editingTerm,
-    language: state.text.readingText.language,
+    languageCode: state.text.readingText.languageCode,
     languages: state.language.languages,
     editingTermMeaning: selectEditingTermMeaning(state)
   }),

@@ -37,9 +37,10 @@ export const getSettingAction = createAction(USER_SETTING_GET, async () => {
     if (setting) {
       return setting;
     }
-    return { languageSettings: {} };
+    return { languageSettings: [] };
   } catch (e) {
     // ignore
+    return null;
   }
 });
 

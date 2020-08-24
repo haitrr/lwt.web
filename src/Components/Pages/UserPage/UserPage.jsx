@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Field, Form, withFormik } from "formik";
 import styles from "./UserPage.module.scss";
 import { updateSettingAction } from "../../../Actions/UserAction";
+import { LanguageCode } from "../../../Enums";
 
 class UserPage extends React.Component {
   state = { currentLanguage: "en" };
@@ -12,37 +13,59 @@ class UserPage extends React.Component {
     this.setState({ currentLanguage: event.target.value });
   };
 
+  onAddLanguageSetting = () => {
+    const { languages, setFieldValue } = this.props;
+    const { languageSettings } = this.props.values;
+    const newLanguageSettings = [...languageSettings];
+    for (let i = 0; i < languages.length; i += 1) {
+      const l = languages[i];
+      if (!newLanguageSettings.find(ls => ls.languageCode === l.code)) {
+        newLanguageSettings.push({
+          languageCode: l.code,
+          dictionaryLanguageCode: LanguageCode.English
+        });
+        break;
+      }
+    }
+    setFieldValue("languageSettings", newLanguageSettings);
+  };
+
   render() {
     const { values, languages, handleChange } = this.props;
-    const { currentLanguage } = this.state;
+    if (!languages || !values.languageSettings) {
+      return <h1>Loading</h1>;
+    }
     return (
       <div className={styles.root}>
         <Form>
           <h1>Language settings</h1>
-          <select onChange={this.onChangeLanguage}>
-            {languages &&
-              languages.map(language => (
-                <option value={language.code}>{language.name}</option>
-              ))}
-          </select>
           <br />
-          <span>Translate Language</span>
-          <Field
-            component="select"
-            name={`languageSettings.${currentLanguage}.dictionaryLanguage`}
-            onChange={handleChange}
-            value={
-              values.languageSettings &&
-              values.languageSettings[currentLanguage]
-                ? values.languageSettings[currentLanguage].dictionaryLanguage
-                : "en"
-            }
+          {values.languageSettings
+            ? values.languageSettings.map((ls, i) => (
+              <div>
+                  <h1>{ls.languageCode}</h1>
+                  <Field
+                  component="select"
+                  name={`languageSettings[${i}].dictionaryLanguageCode`}
+                  onChange={handleChange}
+                  value={ls.dictionaryLanguageCode}
+                >
+                  {languages &&
+                      languages.map(language => (
+                        <option value={language.code}>{language.name}</option>
+                      ))}
+                </Field>
+                </div>
+              ))
+            : null}
+          <br />
+          <button
+            disabled={languages.length <= values.languageSettings.length}
+            type="button"
+            onClick={this.onAddLanguageSetting}
           >
-            {languages &&
-              languages.map(language => (
-                <option value={language.code}>{language.name}</option>
-              ))}
-          </Field>
+            Add
+          </button>
           <br />
           <button type="submit">Submit</button>
         </Form>

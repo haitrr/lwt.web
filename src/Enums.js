@@ -1,39 +1,43 @@
 export const TermLearningLevel = {
-  Skipped: -1,
+  Skipped: "skipped",
 
-  Ignored: 0,
+  Ignored: "ignored",
 
-  UnKnow: 1,
+  UnKnow: "unknown",
 
-  Learning1: 2,
+  Learning1: "learning-1",
 
-  Learning2: 3,
+  Learning2: "learning-2",
 
-  Learning3: 4,
+  Learning3: "learning-3",
 
-  Learning4: 5,
+  Learning4: "learning-4",
 
-  Learning5: 6,
+  Learning5: "learning-5",
 
-  WellKnow: 7
+  WellKnow: "well-known"
+};
+
+export const LanguageCode = {
+  English: "en"
 };
 
 export const TermLearningColor = {
-  Skipped: "white",
+  [TermLearningLevel.Skipped]: "white",
 
-  Ignored: "white",
+  [TermLearningLevel.Ignored]: "white",
 
-  UnKnow: "#addfff",
+  [TermLearningLevel.UnKnow]: "#addfff",
 
-  Learning1: "#f5b8a9",
+  [TermLearningLevel.Learning1]: "#f5b8a9",
 
-  Learning2: "#f5cca9",
+  [TermLearningLevel.Learning2]: "#f5cca9",
 
-  Learning3: "#f5e1a9",
+  [TermLearningLevel.Learning3]: "#f5e1a9",
 
-  Learning4: "#f5f3a9",
+  [TermLearningLevel.Learning4]: "#f5f3a9",
 
-  Learning5: "#ddffdd",
+  [TermLearningLevel.Learning5]: "#ddffdd",
 
-  WellKnow: "whitesmoke"
+  [TermLearningLevel.WellKnow]: "whitesmoke"
 };

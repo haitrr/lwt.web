@@ -37,8 +37,7 @@ class Term extends React.Component {
 
   handleTermClick = e => {
     e.preventDefault();
-    const { getTerm, setEditingTerm, index, term, onTermClick } = this.props;
-    onTermClick(term);
+    const { getTerm, setEditingTerm, index, term } = this.props;
     // load term meaning if not loaded.
     this.loadTermsMeaning();
     setEditingTerm(index);
@@ -47,19 +46,16 @@ class Term extends React.Component {
     }
   };
 
-  getTitle = () => {
-    const { term } = this.props;
-
-    return term.meaning && term.meaning.length > 0 ? term.meaning : null;
-  };
-
   render() {
     const { term, bookmark, last, bookmarkRef } = this.props;
-
     if (term.learningLevel === TermLearningLevel.Skipped) {
       return <SkippedTerm term={term} last={last} />;
     }
-    if (term.learningLevel === TermLearningLevel.WellKnow) {
+    if (
+      term.learningLevel === TermLearningLevel.WellKnow ||
+      term.learningLevel === TermLearningLevel.UnKnow ||
+      term.learningLevel === TermLearningLevel.Ignored
+    ) {
       return (
         <TermButton
           bookmark={bookmark}
@@ -92,10 +88,9 @@ Term.propTypes = {
   setEditingTerm: PropTypes.func.isRequired,
   getTerm: PropTypes.func.isRequired,
   term: PropTypes.shape({
-    learningLevel: PropTypes.number.isRequired,
+    learningLevel: PropTypes.string.isRequired,
     meaning: PropTypes.string
   }).isRequired,
-  onTermClick: PropTypes.func.isRequired,
   bookmark: PropTypes.bool,
   bookmarkRef: PropTypes.shape({}).isRequired,
   last: PropTypes.shape({}),

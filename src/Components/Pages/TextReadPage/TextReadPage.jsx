@@ -9,7 +9,6 @@ import {
 } from "../../../Actions/TextAction";
 import styles from "./TextReadPage.module.scss";
 import TermEditForm from "../../Forms/TermEditForm";
-import { getTermAction } from "../../../Actions/TermAction";
 import ContentPanel from "./ContentPanel";
 import TextStatistic from "./TextStatistic";
 
@@ -31,8 +30,8 @@ class TextReadPage extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const { terms } = this.props;
-    return terms !== nextProps.terms;
+    const { terms, id } = this.props;
+    return terms !== nextProps.terms || id !== nextProps.id;
   }
 
   componentDidUpdate(prevProps) {
@@ -108,31 +107,21 @@ class TextReadPage extends React.Component {
     }
   };
 
-  onTermClick = (term, index) => {
-    this.utt.text = term.content;
-    window.speechSynthesis.speak(this.utt);
-    const { setBookmark, id, selectTerm } = this.props;
-    selectTerm(index);
-    setBookmark(id, index);
-  };
-
   render() {
-    const { terms, title, bookmark } = this.props;
-    if (!terms) {
-      return null;
+    const { terms, title, bookmark, id } = this.props;
+    if (!title) {
+      return <h2>Loading</h2>;
     }
-
     return (
       <div className={styles.readPane}>
         <h2 className={styles.titleSection}>{title}</h2>
         <TextStatistic />
         <ContentPanel
-          terms={terms}
-          onTermClick={this.onTermClick}
+          textId={id}
           bookmark={bookmark}
           bookmarkRef={this.bookmark}
         />
-        <TermEditForm className={styles.termEditForm} />
+        {terms && <TermEditForm className={styles.termEditForm} />}
       </div>
     );
   }
@@ -140,7 +129,7 @@ class TextReadPage extends React.Component {
 
 export default connect(
   state => {
-    if (state.text.readingText)
+    if (state.text.readingText) {
       return {
         terms: state.text.readingText.terms,
         language: state.text.readingText.language,
@@ -149,11 +138,11 @@ export default connect(
         languages: state.language.languages,
         bookmark: state.text.readingText.bookmark
       };
+    }
     return { languages: state.language.languages };
   },
   {
     readText: readTextAction,
-    getTerm: getTermAction,
     setBookmark: setBookmarkAction,
     selectTerm: selectTermAction
   }
@@ -174,7 +163,7 @@ TextReadPage.propTypes = {
   selectTerm: PropTypes.func.isRequired,
   language: PropTypes.number,
   title: PropTypes.string,
-  id: PropTypes.string,
+  id: PropTypes.number,
   terms: PropTypes.arrayOf(PropTypes.shape({})),
   bookmark: PropTypes.number
 };

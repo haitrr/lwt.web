@@ -35,7 +35,7 @@ TermTooltip.defaultProps = {
 
 TermTooltip.propTypes = {
   term: PropTypes.shape({
-    learningLevel: PropTypes.number.isRequired,
+    learningLevel: PropTypes.string.isRequired,
     meaning: PropTypes.string
   }).isRequired,
   bookmark: PropTypes.bool,

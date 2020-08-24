@@ -23,7 +23,7 @@ class LanguageSelect extends React.Component {
         className={className}
       >
         {languages.map(language => (
-          <Select.Option value={language.id} key={language.id}>
+          <Select.Option key={language.code} value={language.code}>
             {language.name}
           </Select.Option>
         ))}

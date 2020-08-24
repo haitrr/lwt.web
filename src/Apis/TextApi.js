@@ -48,6 +48,10 @@ export async function getTextReadAsync(textId) {
   }
 }
 
+export async function getTermCountAsync(textId) {
+  return await getAsync(`${TEXT_API}/${textId}/term-counts`, null);
+}
+
 export async function deleteTextAsync(textId) {
   return deleteAsync(`${TEXT_API}/${textId}`);
 }
@@ -62,4 +66,7 @@ export async function getTextEditDetailAsync(textId) {
 
 export async function setTextBookmarkAsync(id, index) {
   return patchAsync(`${TEXT_API}`, id, "bookmark", { termIndex: index });
+}
+export async function getTextTermsAsync(textId, indexFrom, indexTo) {
+  return await getAsync(`${TEXT_API}/${textId}/terms`, { indexFrom, indexTo });
 }

@@ -1,10 +1,15 @@
 import { handleActions } from "redux-actions";
 import {
+  TERM_COUNT_LOADED,
+  TERM_INDEX_BEGIN_SET,
+  TERM_INDEX_END_SET,
   TEXT_DELETED,
   TEXT_EDIT_DETAIL_FETCHED,
   TEXT_FETCHED,
   TEXT_READ,
-  TEXT_TERM_SELECT
+  TEXT_TERM_LOADED,
+  TEXT_TERM_SELECT,
+  READING_TEXT_TERMS_COUNT_LOADED
 } from "../Actions/TextAction";
 import {
   TERM_CREATED,
@@ -38,6 +43,7 @@ const textReducer = handleActions(
     [TERM_GET]: (state, action) => {
       const terms = [...state.readingText.terms];
       terms[action.payload.index] = {
+        ...terms[action.payload.index],
         ...action.payload.term,
         content: terms[action.payload.index].content
       };
@@ -49,19 +55,39 @@ const textReducer = handleActions(
         }
       };
     },
-    [TEXT_READ]: (state, action) => ({ ...state, readingText: action.payload }),
+    [TEXT_READ]: (state, action) => {
+      if (action.error) {
+        return state;
+      }
+      return {
+        ...state,
+        readingText: {
+          ...action.payload,
+          termIndexEnd: action.payload.bookmark ?? 0,
+          termIndexBegin: action.payload.bookmark ?? 0,
+          terms: new Array(action.payload.termCount).fill(null)
+        }
+      };
+    },
     [TERM_CREATED]: (state, action) => {
       const createdTerm = action.payload;
       if (!createdTerm) {
         return state;
       }
       const { readingText } = state;
-      const newTerms = readingText.terms.map(term => {
-        if (term.content.toUpperCase() === createdTerm.content.toUpperCase()) {
-          return { ...createdTerm, content: term.content };
+      const newTerms = [...readingText.terms];
+      const { termIndexBegin, termIndexEnd } = state.readingText;
+      for (let i = termIndexBegin; i <= termIndexEnd; i += 1) {
+        if (!newTerms[i]) {
+          continue;
         }
-        return term;
-      });
+        if (
+          newTerms[i].content.toUpperCase() ===
+          createdTerm.content.toUpperCase()
+        ) {
+          newTerms[i] = { ...createdTerm, content: newTerms[i].content };
+        }
+      }
       return { ...state, readingText: { ...readingText, terms: newTerms } };
     },
     [TERM_EDITED]: (state, action) => {
@@ -70,12 +96,18 @@ const textReducer = handleActions(
         return state;
       }
       const { readingText } = state;
-      const newTerms = readingText.terms.map(term => {
-        if (term.id === editedTerm.id) {
-          return { ...editedTerm, content: term.content };
+      const newTerms = [...readingText.terms];
+      const { termIndexBegin, termIndexEnd } = readingText;
+      for (let i = termIndexBegin; i <= termIndexEnd; i += 1) {
+        if (!newTerms[i]) {
+          continue;
         }
-        return term;
-      });
+        if (
+          newTerms[i].content.toUpperCase() === editedTerm.content.toUpperCase()
+        ) {
+          newTerms[i] = { ...editedTerm, content: newTerms[i].content };
+        }
+      }
       return { ...state, readingText: { ...readingText, terms: newTerms } };
     },
     [TEXT_DELETED]: (state, action) => {
@@ -110,7 +142,54 @@ const textReducer = handleActions(
       const { terms } = state.readingText;
       terms[index] = { ...terms[index], meaning: termMeaning.meaning };
       return { ...state, readingText: { ...state.readingText, terms } };
-    }
+    },
+    [TERM_COUNT_LOADED]: (state, action) => {
+      if (!action.payload) {
+        return state;
+      }
+      const { id, counts } = action.payload;
+      const index = state.texts.findIndex(t => t.id === id);
+      if (index < 0) {
+        return state;
+      }
+      const newText = { ...state.texts[index], counts };
+      const newTexts = [...state.texts];
+      newTexts[index] = newText;
+      return { ...state, texts: newTexts };
+    },
+    [READING_TEXT_TERMS_COUNT_LOADED]: (state, action) => {
+      if (!action.payload) {
+        return state;
+      }
+      const { counts } = action.payload;
+      return {
+        ...state,
+        readingText: { ...state.readingText, termsCountByLearningLevel: counts }
+      };
+    },
+    [TEXT_TERM_LOADED]: (state, action) => {
+      const { terms, begin, end } = action.payload;
+
+      const newTerms = [...state.readingText.terms];
+      for (let i = begin; i < end + 1; i += 1) {
+        newTerms[i] = { ...terms[i - begin], ...newTerms[i] };
+      }
+      return {
+        ...state,
+        readingText: {
+          ...state.readingText,
+          terms: newTerms
+        }
+      };
+    },
+    [TERM_INDEX_BEGIN_SET]: (state, action) => ({
+      ...state,
+      readingText: { ...state.readingText, termIndexBegin: action.payload }
+    }),
+    [TERM_INDEX_END_SET]: (state, action) => ({
+      ...state,
+      readingText: { ...state.readingText, termIndexEnd: action.payload }
+    })
   },
   defaultState
 );

@@ -1,9 +1,15 @@
 import PropTypes from "prop-types";
 import React, { Fragment } from "react";
+import { connect } from "react-redux";
 import styles from "./TextReadPage.module.scss";
 import Term from "../../Term";
 import ProgressBar from "./ProgressBar";
 import GoToBookmarkButton from "./GoToBookmarkButton";
+import {
+  getTextTermsAction,
+  setTermIndexBeginAction,
+  setTermIndexEndAction
+} from "../../../Actions/TextAction";
 
 class ContentPanel extends React.Component {
   constructor(props) {
@@ -17,74 +23,99 @@ class ContentPanel extends React.Component {
       this.displayTerms = 750;
       this.loadTerms = 150;
     }
-    this.state = {
-      begin: Math.max(
-        Math.min(
-          props.bookmark - this.loadTerms,
-          props.terms.length - this.displayTerms
-        ),
-        0
-      )
-    };
 
-    this.last = React.createRef();
+    this.begin = React.createRef();
     this.container = React.createRef();
   }
 
-  shouldComponentUpdate(prevProps, prevState) {
-    const { begin } = this.state;
-    return prevState.begin !== begin;
+  componentDidMount() {
+    const {
+      end,
+      setTermIndexEnd,
+      begin,
+      termCount,
+      setTermIndexBegin
+    } = this.props;
+    setTermIndexEnd(Math.min(end + this.displayTerms, termCount - 1));
+    setTermIndexBegin(Math.max(begin - this.displayTerms, 0));
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const { begin, last } = this.state;
-    if (prevState.begin > begin && last) {
-      last.scrollIntoView(true);
+  componentDidUpdate(prevProps) {
+    const { begin, end, getTextTerms, textId, terms } = this.props;
+    if (begin < prevProps.begin) {
+      getTextTerms(textId, begin, prevProps.begin);
+    }
+
+    if (prevProps.terms[begin] !== terms[begin] && this.last) {
+      this.last.scrollIntoView();
+    }
+
+    if (end > prevProps.end) {
+      getTextTerms(textId, prevProps.end, end);
     }
   }
 
   goToBookmark = () => {
-    const { bookmark, terms, bookmarkRef } = this.props;
-    this.setState(
-      {
-        begin: Math.max(
-          Math.min(bookmark - this.loadTerms, terms.length - this.displayTerms),
-          0
-        )
-      },
-      () => bookmarkRef.current.scrollIntoView({ block: "center" })
-    );
+    const { bookmarkRef } = this.props;
+    if (bookmarkRef.current) {
+      bookmarkRef.current.scrollIntoView({ block: "center" });
+    }
   };
 
   handleScroll = e => {
-    const { begin } = this.state;
-    const { terms } = this.props;
-    const bottom =
-      e.target.scrollHeight - e.target.scrollTop < e.target.clientHeight + 50;
-    const top = e.target.scrollTop === 0;
+    e.stopPropagation();
+    e.preventDefault();
+    const {
+      termCount,
+      begin,
+      end,
+      setTermIndexEnd,
+      setTermIndexBegin,
+      terms
+    } = this.props;
+    // loading
+    if (!terms[begin] || !terms[end]) {
+      return;
+    }
+    const top = e.target.scrollTop < 100;
     if (top) {
       if (begin > 0) {
-        this.setState(prevState => ({
-          ...prevState,
-          begin: Math.max(prevState.begin - this.loadTerms, 0),
-          last: this.last.current
-        }));
+        setTermIndexBegin(Math.max(begin - this.loadTerms, 0));
+        this.last = this.begin.current;
+        return;
       }
-      e.stopPropagation();
     }
+    const bottom =
+      e.target.scrollHeight - e.target.scrollTop < e.target.clientHeight + 100;
     if (bottom) {
-      if (begin + this.displayTerms < terms.length)
-        this.setState(prevState => ({
-          ...prevState,
-          begin: prevState.begin + this.loadTerms
-        }));
-      e.stopPropagation();
+      if (end < termCount - 1) {
+        setTermIndexEnd(Math.min(end + this.loadTerms, termCount - 1));
+      }
     }
   };
 
   render() {
-    const { terms, onTermClick, bookmarkRef } = this.props;
-    const { begin } = this.state;
+    const { terms } = this.props;
+    const { begin, end, bookmarkRef } = this.props;
+    if (begin === end) {
+      return <h1>Loading</h1>;
+    }
+    const termElements = [];
+    for (let i = begin; i <= end; i += 1) {
+      if (terms[i]) {
+        termElements.push(
+          <Term
+            // onTermClick={t => onTermClick(t, i)}
+            bookmarkRef={bookmarkRef}
+            last={begin === i ? this.begin : null}
+            // eslint-disable-next-line react/no-array-index-key
+            key={i}
+            index={i}
+          />
+        );
+      }
+    }
+
     return (
       <Fragment>
         <div
@@ -93,19 +124,7 @@ class ContentPanel extends React.Component {
           className={styles.contentPanel}
           ref={this.container}
         >
-          {terms.slice(begin, begin + this.displayTerms).map((term, index) => {
-            const realIndex = index + begin;
-            return (
-              <Term
-                onTermClick={t => onTermClick(t, realIndex)}
-                bookmarkRef={bookmarkRef}
-                last={begin === realIndex ? this.last : null}
-                // eslint-disable-next-line react/no-array-index-key
-                key={realIndex}
-                index={realIndex}
-              />
-            );
-          })}
+          {termElements}
         </div>
         <GoToBookmarkButton onClick={this.goToBookmark} />
         <ProgressBar />
@@ -115,13 +134,30 @@ class ContentPanel extends React.Component {
 }
 
 ContentPanel.defaultProps = {
-  bookmark: null
+  terms: null
 };
 
 ContentPanel.propTypes = {
   bookmarkRef: PropTypes.shape({}).isRequired,
-  onTermClick: PropTypes.func.isRequired,
-  terms: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  bookmark: PropTypes.number
+  terms: PropTypes.arrayOf(PropTypes.shape()),
+  textId: PropTypes.number.isRequired,
+  begin: PropTypes.number.isRequired,
+  end: PropTypes.number.isRequired,
+  setTermIndexBegin: PropTypes.func.isRequired,
+  setTermIndexEnd: PropTypes.func.isRequired,
+  termCount: PropTypes.number.isRequired,
+  getTextTerms: PropTypes.func.isRequired
 };
-export default ContentPanel;
+export default connect(
+  state => ({
+    terms: state.text.readingText.terms,
+    begin: state.text.readingText.termIndexBegin,
+    end: state.text.readingText.termIndexEnd,
+    termCount: state.text.readingText.termCount
+  }),
+  {
+    getTextTerms: getTextTermsAction,
+    setTermIndexBegin: setTermIndexBeginAction,
+    setTermIndexEnd: setTermIndexEndAction
+  }
+)(ContentPanel);
