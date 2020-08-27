@@ -23,8 +23,16 @@ class TextStatistic extends React.PureComponent {
   componentDidMount() {}
 
   componentDidUpdate(prevProps) {
-    const { terms, loadtermsCountByLearningLevel, textId } = this.props;
-    if (terms !== prevProps.terms) {
+    const {
+      terms,
+      bookmark,
+      loadtermsCountByLearningLevel,
+      textId
+    } = this.props;
+    if (
+      bookmark === prevProps.bookmark &&
+      terms[bookmark] !== prevProps.terms[bookmark]
+    ) {
       loadtermsCountByLearningLevel(textId);
     }
   }
@@ -72,6 +80,7 @@ TextStatistic.propTypes = {
   terms: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   textId: PropTypes.number.isRequired,
   termCount: PropTypes.number.isRequired,
+  bookmark: PropTypes.number.isRequired,
   termsCountByLearningLevel: PropTypes.shape({}),
   loadtermsCountByLearningLevel: PropTypes.func.isRequired
 };
@@ -81,6 +90,7 @@ export default connect(
     textId: state.text.readingText.id,
     terms: state.text.readingText.terms,
     termsCountByLearningLevel: state.text.readingText.termsCountByLearningLevel,
+    bookmark: state.text.readingText.bookmark,
     termCount: state.text.readingText.termCount
   }),
   {
