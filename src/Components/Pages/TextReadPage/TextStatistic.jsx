@@ -31,7 +31,9 @@ class TextStatistic extends React.PureComponent {
     } = this.props;
     if (
       bookmark === prevProps.bookmark &&
-      terms[bookmark] !== prevProps.terms[bookmark]
+      terms[bookmark] &&
+      prevProps.terms[bookmark] &&
+      terms[bookmark].learningLevel !== prevProps.terms[bookmark].learningLevel
     ) {
       loadtermsCountByLearningLevel(textId);
     }
