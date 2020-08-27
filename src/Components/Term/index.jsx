@@ -37,9 +37,10 @@ class Term extends React.Component {
 
   handleTermClick = e => {
     e.preventDefault();
-    const { getTerm, setEditingTerm, index, term } = this.props;
+    const { getTerm, setEditingTerm, index, term, onTermClick } = this.props;
     // load term meaning if not loaded.
     this.loadTermsMeaning();
+    onTermClick(term);
     setEditingTerm(index);
     if (term.id) {
       getTerm(term.id, index);
@@ -95,7 +96,8 @@ Term.propTypes = {
   bookmarkRef: PropTypes.shape({}).isRequired,
   last: PropTypes.shape({}),
   index: PropTypes.number.isRequired,
-  getTermMeaning: PropTypes.func.isRequired
+  getTermMeaning: PropTypes.func.isRequired,
+  onTermClick: PropTypes.func.isRequired
 };
 
 export default connect(

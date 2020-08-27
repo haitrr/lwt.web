@@ -205,7 +205,7 @@ TermEditForm.propTypes = {
   editTerm: PropTypes.func.isRequired,
   editingTerm: PropTypes.number,
   editingTermMeaning: PropTypes.string,
-  form: PropTypes.shape().isRequired,
+  form: PropTypes.shape({}).isRequired,
   getEditingTermMeaning: PropTypes.func.isRequired,
   resetEditingTermMeaning: PropTypes.func.isRequired,
   languageCode: PropTypes.string.isRequired,
@@ -219,10 +219,7 @@ TermEditForm.propTypes = {
 export default connect(
   state => ({
     value: { ...selectEditingTermValue(state) },
-    dictionaryLanguage: selectDictionaryLanguage(
-      state,
-      state.text.readingText.language
-    ),
+    dictionaryLanguage: selectDictionaryLanguage(state),
     editingTerm: state.term.editingTerm,
     languageCode: state.text.readingText.languageCode,
     languages: state.language.languages,

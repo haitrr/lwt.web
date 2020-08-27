@@ -1,7 +1,9 @@
-export const selectDictionaryLanguage = (state, language) => {
-  const code = state.language.languages.find(l => l.id === language)?.code;
-  if (!code) {
+export const selectDictionaryLanguage = state => {
+  const language = state.user?.setting?.languageSettings.find(
+    l => l.languageCode === state.text.readingText.languageCode
+  );
+  if (!language) {
     return null;
   }
-  return state.user.setting?.languageSettings[code]?.dictionaryLanguage;
+  return language.dictionaryLanguageCode;
 };
