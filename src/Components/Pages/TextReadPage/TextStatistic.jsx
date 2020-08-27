@@ -20,11 +20,24 @@ function getTotalCount(termCount, termCountByLearningLevel) {
 }
 
 class TextStatistic extends React.PureComponent {
-  componentDidMount() {}
+  componentDidMount() {
+    const { loadtermsCountByLearningLevel, textId } = this.props;
+    loadtermsCountByLearningLevel(textId);
+  }
 
   componentDidUpdate(prevProps) {
-    const { terms, loadtermsCountByLearningLevel, textId } = this.props;
-    if (terms !== prevProps.terms) {
+    const {
+      terms,
+      bookmark,
+      loadtermsCountByLearningLevel,
+      textId
+    } = this.props;
+    if (
+      bookmark === prevProps.bookmark &&
+      terms[bookmark] &&
+      prevProps.terms[bookmark] &&
+      terms[bookmark].learningLevel !== prevProps.terms[bookmark].learningLevel
+    ) {
       loadtermsCountByLearningLevel(textId);
     }
   }
@@ -69,20 +82,22 @@ TextStatistic.defaultProps = {
 };
 
 TextStatistic.propTypes = {
-  terms: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  terms: PropTypes.arrayOf(
+    PropTypes.shape({ learningLevel: PropTypes.string.isRequired })
+  ).isRequired,
   textId: PropTypes.number.isRequired,
   termCount: PropTypes.number.isRequired,
+  bookmark: PropTypes.number.isRequired,
   termsCountByLearningLevel: PropTypes.shape({}),
   loadtermsCountByLearningLevel: PropTypes.func.isRequired
 };
 
 export default connect(
   state => ({
-    begin: state.text.readingText.termIndexBegin,
-    end: state.text.readingText.termIndexEnd,
     textId: state.text.readingText.id,
     terms: state.text.readingText.terms,
     termsCountByLearningLevel: state.text.readingText.termsCountByLearningLevel,
+    bookmark: state.text.readingText.bookmark,
     termCount: state.text.readingText.termCount
   }),
   {
