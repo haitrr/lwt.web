@@ -6,6 +6,8 @@
   -moz-box-shadow: 0 0 5px 3px #ccc;
   -webkit-box-shadow: 0 0 5px 3px #ccc;
   box-shadow: 0 0 5px 3px #ccc;
+  display: flex;
+  flex-direction: row;
 }
 
 .section {
