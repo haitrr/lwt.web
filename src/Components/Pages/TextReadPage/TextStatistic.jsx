@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Tooltip } from "antd";
 import { connect } from "react-redux";
 import { TermLearningColor, TermLearningLevel } from "../../../Enums";
 import SingleBarChart from "../../SingleBarChart";
@@ -13,10 +12,6 @@ function getPracticeCount(termCount, termCountByLearningLevel) {
     termCountByLearningLevel[TermLearningLevel.Ignored] -
     termCountByLearningLevel[TermLearningLevel.WellKnow]
   );
-}
-
-function getTotalCount(termCount, termCountByLearningLevel) {
-  return termCount - termCountByLearningLevel[TermLearningLevel.Skipped];
 }
 
 class TextStatistic extends React.PureComponent {
@@ -49,6 +44,7 @@ class TextStatistic extends React.PureComponent {
     }
     const termCountByLearningLevel = termsCountByLearningLevel;
     const statistic = [];
+    const learningStatistic = [];
     Object.keys(TermLearningLevel).forEach(learningLevel => {
       if (
         learningLevel === "Skipped" ||
@@ -63,15 +59,21 @@ class TextStatistic extends React.PureComponent {
       });
     });
     const practice = getPracticeCount(termCount, termCountByLearningLevel);
-    const total = getTotalCount(termCount, termCountByLearningLevel);
+    learningStatistic.push({
+      name: "Learning",
+      color: "#ebab34",
+      value: practice
+    });
+    learningStatistic.push({
+      name: "Learned",
+      color: "#a8eb34",
+      value: termCountByLearningLevel[TermLearningLevel.WellKnow]
+    });
     return (
-      <Tooltip
-        title={`${practice}/${total} ~ ${Math.round(
-          (practice * 100) / total
-        )} %`}
-      >
+      <React.Fragment>
+        <SingleBarChart data={learningStatistic} />
         <SingleBarChart data={statistic} />
-      </Tooltip>
+      </React.Fragment>
     );
   }
 }
