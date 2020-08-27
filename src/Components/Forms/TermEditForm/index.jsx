@@ -21,6 +21,25 @@ import {
 import { selectDictionaryLanguage } from "../../../Selectors/UserSelectors";
 import { TermLearningLevel } from "../../../Enums";
 
+const getNextLearningLevel = learningLevel => {
+  switch (learningLevel) {
+    case TermLearningLevel.UnKnow:
+      return TermLearningLevel.Learning1;
+    case TermLearningLevel.Learning1:
+      return TermLearningLevel.Learning2;
+    case TermLearningLevel.Learning2:
+      return TermLearningLevel.Learning3;
+    case TermLearningLevel.Learning3:
+      return TermLearningLevel.Learning4;
+    case TermLearningLevel.Learning4:
+      return TermLearningLevel.Learning5;
+    case TermLearningLevel.Learning5:
+      return TermLearningLevel.WellKnow;
+    default:
+      return learningLevel;
+  }
+};
+
 class TermEditForm extends React.Component {
   constructor(props) {
     super(props);
@@ -104,6 +123,19 @@ class TermEditForm extends React.Component {
     setEditingTerm(null);
   };
 
+  handleBetter = e => {
+    const {
+      form: { setFieldsValue },
+      value
+    } = this.props;
+    e.preventDefault();
+    setFieldsValue({
+      ...value,
+      learningLevel: getNextLearningLevel(value.learningLevel)
+    });
+    this.handleSubmit(e);
+  };
+
   render() {
     const {
       form: { getFieldDecorator },
@@ -169,20 +201,40 @@ class TermEditForm extends React.Component {
             </Form.Item>
           </Col>
           <Col xl={4} lg={24} xs={24}>
-            <Form.Item className={styles.saveButton}>
-              <Button
-                type="primary"
-                htmlType="submit"
-                disabled={
-                  lookingUpDictionary ||
-                  (value.learningLevel !== TermLearningLevel.UnKnow &&
-                    value.meaning === undefined)
-                }
-                className={styles.saveButton}
-              >
-                Save
-              </Button>
-            </Form.Item>
+            <Row gutter={1}>
+              <Col xs={12} lg={24}>
+                <Form.Item className={styles.saveButton}>
+                  <Button
+                    type="primary"
+                    onClick={this.handleBetter}
+                    disabled={
+                      lookingUpDictionary ||
+                      (value.learningLevel !== TermLearningLevel.UnKnow &&
+                        value.meaning === undefined)
+                    }
+                    className={styles.saveButton}
+                  >
+                    Better
+                  </Button>
+                </Form.Item>
+              </Col>
+              <Col xs={12} lg={24} l>
+                <Form.Item className={styles.saveButton}>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    disabled={
+                      lookingUpDictionary ||
+                      (value.learningLevel !== TermLearningLevel.UnKnow &&
+                        value.meaning === undefined)
+                    }
+                    className={styles.saveButton}
+                  >
+                    Save
+                  </Button>
+                </Form.Item>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </Form>
