@@ -20,7 +20,10 @@ function getTotalCount(termCount, termCountByLearningLevel) {
 }
 
 class TextStatistic extends React.PureComponent {
-  componentDidMount() {}
+  componentDidMount() {
+    const { loadtermsCountByLearningLevel, textId } = this.props;
+    loadtermsCountByLearningLevel(textId);
+  }
 
   componentDidUpdate(prevProps) {
     const {
