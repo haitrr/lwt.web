@@ -70,7 +70,6 @@ class TextStatistic extends React.PureComponent {
           (practice * 100) / total
         )} %`}
       >
-        <span>{}</span>
         <SingleBarChart data={statistic} />
       </Tooltip>
     );
