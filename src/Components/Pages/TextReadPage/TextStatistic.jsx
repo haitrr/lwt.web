@@ -78,8 +78,6 @@ TextStatistic.propTypes = {
 
 export default connect(
   state => ({
-    begin: state.text.readingText.termIndexBegin,
-    end: state.text.readingText.termIndexEnd,
     textId: state.text.readingText.id,
     terms: state.text.readingText.terms,
     termsCountByLearningLevel: state.text.readingText.termsCountByLearningLevel,
