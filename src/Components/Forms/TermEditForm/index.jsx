@@ -212,7 +212,7 @@ TermEditForm.propTypes = {
   languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   setEditingTerm: PropTypes.func.isRequired,
   value: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     content: PropTypes.string
   })
 };

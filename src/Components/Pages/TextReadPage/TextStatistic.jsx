@@ -79,7 +79,9 @@ TextStatistic.defaultProps = {
 };
 
 TextStatistic.propTypes = {
-  terms: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  terms: PropTypes.arrayOf(
+    PropTypes.shape({ learningLevel: PropTypes.string.isRequired })
+  ).isRequired,
   textId: PropTypes.number.isRequired,
   termCount: PropTypes.number.isRequired,
   bookmark: PropTypes.number.isRequired,
