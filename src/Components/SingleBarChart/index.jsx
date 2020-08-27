@@ -41,7 +41,7 @@ const SingleBarChart = ({ data }) => {
                 height: "0.85rem"
               }}
             >
-              {`(${Math.round((item.value * 1000) / sum) / 10}%)`}
+              {`(${Math.round((item.value * 10000) / sum) / 100}%)`}
             </div>
           </span>
         ) : null
