@@ -13,14 +13,36 @@ const SingleBarChart = ({ data }) => {
             className={styles.section}
             style={{
               background: item.color,
-              paddingLeft: "5px",
-              paddingRight: "5px",
+              paddingLeft: "0.2rem",
+              paddingRight: "0.2rem",
+              height: "100%",
               flex: item.value,
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
               textAlign: "center"
             }}
           >
-            {item.value}
-            {`(${Math.round((item.value * 1000) / sum) / 10}%)`}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                height: "0.85rem"
+              }}
+            >
+              {item.value}
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                height: "0.85rem"
+              }}
+            >
+              {`(${Math.round((item.value * 1000) / sum) / 10}%)`}
+            </div>
           </span>
         ) : null
       )}

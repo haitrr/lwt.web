@@ -70,10 +70,10 @@ class TextStatistic extends React.PureComponent {
       value: practice
     });
     return (
-      <React.Fragment>
+      <div>
         <SingleBarChart data={learningStatistic} />
         <SingleBarChart data={statistic} />
-      </React.Fragment>
+      </div>
     );
   }
 }
