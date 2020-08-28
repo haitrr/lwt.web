@@ -14,6 +14,7 @@ import {
 } from "../Actions/TextAction";
 import {
   TERM_CREATED,
+  TERM_DICTIONARY,
   TERM_EDITED,
   TERM_GET,
   TERM_GET_MEANING
@@ -79,14 +80,13 @@ const textReducer = handleActions(
       const newTerms = [...readingText.terms];
       const { termIndexBegin, termIndexEnd } = state.readingText;
       for (let i = termIndexBegin; i <= termIndexEnd; i += 1) {
-        if (!newTerms[i]) {
-          continue;
-        }
-        if (
-          newTerms[i].content.toUpperCase() ===
-          createdTerm.content.toUpperCase()
-        ) {
-          newTerms[i] = { ...createdTerm, content: newTerms[i].content };
+        if (newTerms[i]) {
+          if (
+            newTerms[i].content.toUpperCase() ===
+            createdTerm.content.toUpperCase()
+          ) {
+            newTerms[i] = { ...createdTerm, content: newTerms[i].content };
+          }
         }
       }
       return { ...state, readingText: { ...readingText, terms: newTerms } };
@@ -100,13 +100,13 @@ const textReducer = handleActions(
       const newTerms = [...readingText.terms];
       const { termIndexBegin, termIndexEnd } = readingText;
       for (let i = termIndexBegin; i <= termIndexEnd; i += 1) {
-        if (!newTerms[i]) {
-          continue;
-        }
-        if (
-          newTerms[i].content.toUpperCase() === editedTerm.content.toUpperCase()
-        ) {
-          newTerms[i] = { ...editedTerm, content: newTerms[i].content };
+        if (newTerms[i]) {
+          if (
+            newTerms[i].content.toUpperCase() ===
+            editedTerm.content.toUpperCase()
+          ) {
+            newTerms[i] = { ...editedTerm, content: newTerms[i].content };
+          }
         }
       }
       return { ...state, readingText: { ...readingText, terms: newTerms } };
@@ -139,6 +139,9 @@ const textReducer = handleActions(
         return state;
       }
       const { index, termMeaning } = action.payload;
+      console.log(action.payload);
+      console.log("hwt");
+      console.log(termMeaning);
 
       const { terms } = state.readingText;
       terms[index] = { ...terms[index], meaning: termMeaning.meaning };
@@ -197,14 +200,23 @@ const textReducer = handleActions(
       const newTerms = [...readingText.terms];
       const { termIndexBegin, termIndexEnd } = readingText;
       for (let i = termIndexBegin; i <= termIndexEnd; i += 1) {
-        if (!newTerms[i]) {
-          continue;
-        }
-        if (newTerms[i].id === termId) {
-          newTerms[i] = { ...newTerms[i], count };
+        if (newTerms[i]) {
+          if (newTerms[i].id === termId) {
+            newTerms[i] = { ...newTerms[i], count };
+          }
         }
       }
       return { ...state, readingText: { ...readingText, terms: newTerms } };
+    },
+    [TERM_DICTIONARY]: (state, action) => {
+      if (!action.payload) {
+        return state;
+      }
+      const { index, meaning } = action.payload;
+
+      const { terms } = state.readingText;
+      terms[index] = { ...terms[index], meaning };
+      return { ...state, readingText: { ...state.readingText, terms } };
     }
   },
   defaultState

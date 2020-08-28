@@ -50,6 +50,10 @@
 
 .tooltip {
   white-space: pre-line;
+  :global(.ant-popover-title) {
+    max-height: 12rem;
+    overflow: scroll;
+  }
 }
 
 .bookmark {

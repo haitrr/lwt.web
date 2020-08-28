@@ -15,6 +15,7 @@ export const TERM_EDITED = "TERM_EDITED";
 export const TERM_EDITING_GET_MEANING = "TERM_EDITING_GET_MEANING";
 export const TERM_EDITING_MEANING_RESET = "TERM_EDITING_MEANING_RESET";
 export const TERM_GET_MEANING = "TERM_GET_MEANING";
+export const TERM_DICTIONARY = "TERM_DICTIONARY";
 
 export const getTermAction = createAction(TERM_GET, async (id, index) => {
   try {
@@ -34,6 +35,17 @@ export const getEditingTermMeaningAction = createAction(
       return "";
     }
     return rs.meaning;
+  }
+);
+
+export const dictionaryTermMeaningAction = createAction(
+  TERM_DICTIONARY,
+  async (content, from, to, index) => {
+    const rs = await getTextMeaningAsync(content.toLowerCase(), from, to);
+    if (!rs) {
+      return { meaning: "", index };
+    }
+    return { meaning: rs.meaning, index };
   }
 );
 

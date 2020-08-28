@@ -4,7 +4,10 @@ import React from "react";
 import { connect } from "react-redux";
 import styles from "./Term.module.scss";
 import TermButton from "./TermButton";
-import { editTermAction } from "../../Actions/TermAction";
+import {
+  dictionaryTermMeaningAction,
+  editTermAction
+} from "../../Actions/TermAction";
 import { getNextLearningLevel, getPreviousLearningLevel } from "../../Enums";
 
 export const importantColors = [
@@ -61,6 +64,28 @@ export const importantColors = [
 ];
 
 class TermTooltip extends React.Component {
+  state = { loading: false };
+
+  componentDidUpdate(prevProps) {
+    const { term, index, dictionaryTerm } = this.props;
+    if (
+      term &&
+      prevProps.term &&
+      prevProps.term.meaning === undefined &&
+      term.meaning === ""
+    ) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ loading: true }, () =>
+        dictionaryTerm(
+          term.content,
+          term.languageCode,
+          term.dictionaryLanguage,
+          index
+        ).then(() => this.setState({ loading: false }))
+      );
+    }
+  }
+
   renderTitle = term => (
     <span>
       {term.count ? (
@@ -90,16 +115,29 @@ class TermTooltip extends React.Component {
     editTerm(newTerm);
   };
 
-  renderContent = () => (
-    <div style={{ display: "flex", justifyContent: "space-between" }}>
-      <Button type="primary" onClick={this.better}>
-        Better
-      </Button>
-      <Button type="primary" style={{ marginLeft: "5px" }}>
-        Worse
-      </Button>
-    </div>
-  );
+  renderContent = () => {
+    const { term } = this.props;
+    const { loading } = this.state;
+    return (
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <Button
+          type="primary"
+          onClick={this.better}
+          disabled={term.meaning === undefined || loading}
+        >
+          Better
+        </Button>
+        <Button
+          type="primary"
+          style={{ marginLeft: "5px" }}
+          onClick={this.worse}
+          disabled={term.meaning === undefined || loading}
+        >
+          Worse
+        </Button>
+      </div>
+    );
+  };
 
   render() {
     const { bookmark, bookmarkRef, last, term, onClick, onHover } = this.props;
@@ -140,6 +178,11 @@ TermTooltip.propTypes = {
   last: PropTypes.shape({}),
   onClick: PropTypes.func.isRequired,
   onHover: PropTypes.func.isRequired,
-  editTerm: PropTypes.func.isRequired
+  editTerm: PropTypes.func.isRequired,
+  dictionaryTerm: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired
 };
-export default connect(null, { editTerm: editTermAction })(TermTooltip);
+export default connect(null, {
+  editTerm: editTermAction,
+  dictionaryTerm: dictionaryTermMeaningAction
+})(TermTooltip);

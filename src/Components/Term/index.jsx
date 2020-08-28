@@ -25,8 +25,13 @@ class Term extends React.Component {
   }
 
   handleHover = () => {
-    this.loadTermsMeaning();
-    this.loadTermCountInText();
+    const { term } = this.props;
+    if (term.meaning === undefined) {
+      this.loadTermsMeaning();
+    }
+    if (!term.count) {
+      this.loadTermCountInText();
+    }
   };
 
   loadTermCountInText = () => {
@@ -63,13 +68,12 @@ class Term extends React.Component {
   };
 
   render() {
-    const { term, bookmark, last, bookmarkRef } = this.props;
+    const { term, bookmark, last, bookmarkRef, index } = this.props;
     if (term.learningLevel === TermLearningLevel.Skipped) {
       return <SkippedTerm term={term} last={last} />;
     }
     if (
       term.learningLevel === TermLearningLevel.WellKnow ||
-      term.learningLevel === TermLearningLevel.UnKnow ||
       term.learningLevel === TermLearningLevel.Ignored ||
       window.innerWidth < 768
     ) {
@@ -89,6 +93,7 @@ class Term extends React.Component {
         onClick={this.handleTermClick}
         bookmarkRef={bookmarkRef}
         onHover={this.handleHover}
+        index={index}
         term={term}
         last={last}
         bookmark={bookmark}
