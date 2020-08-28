@@ -163,7 +163,7 @@ class TermEditForm extends React.Component {
         >
           <div
             className={styles.title}
-            style={{ color: importantColors[(value.count ?? 0) % 50] }}
+            style={{ color: importantColors[Math.min(value.count, 49)] }}
           >
             {`${value.content}(${value.count ?? "-"})`}
           </div>
