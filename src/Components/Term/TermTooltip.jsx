@@ -146,7 +146,8 @@ class TermTooltip extends React.Component {
         overlayClassName={styles.tooltip}
         title={this.renderTitle(term)}
         content={this.renderContent(term)}
-        mouseLeaveDelay={0.5}
+        mouseLeaveDelay={0.3}
+        mouseEnterDelay={0.3}
         destroyTooltipOnHide
       >
         <span onMouseEnter={onHover}>
