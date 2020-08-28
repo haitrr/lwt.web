@@ -9,7 +9,8 @@ import {
   TEXT_READ,
   TEXT_TERM_LOADED,
   TEXT_TERM_SELECT,
-  READING_TEXT_TERMS_COUNT_LOADED
+  READING_TEXT_TERMS_COUNT_LOADED,
+  TERM_COUNT_IN_TEXT
 } from "../Actions/TextAction";
 import {
   TERM_CREATED,
@@ -189,7 +190,22 @@ const textReducer = handleActions(
     [TERM_INDEX_END_SET]: (state, action) => ({
       ...state,
       readingText: { ...state.readingText, termIndexEnd: action.payload }
-    })
+    }),
+    [TERM_COUNT_IN_TEXT]: (state, action) => {
+      const { count, termId } = action.payload;
+      const { readingText } = state;
+      const newTerms = [...readingText.terms];
+      const { termIndexBegin, termIndexEnd } = readingText;
+      for (let i = termIndexBegin; i <= termIndexEnd; i += 1) {
+        if (!newTerms[i]) {
+          continue;
+        }
+        if (newTerms[i].id === termId) {
+          newTerms[i] = { ...newTerms[i], count };
+        }
+      }
+      return { ...state, readingText: { ...readingText, terms: newTerms } };
+    }
   },
   defaultState
 );

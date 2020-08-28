@@ -21,7 +21,7 @@ class TermButton extends React.Component {
   };
 
   render() {
-    const { term, bookmark} = this.props;
+    const { term, bookmark } = this.props;
 
     return (
       <button

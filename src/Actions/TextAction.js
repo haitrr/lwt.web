@@ -9,7 +9,8 @@ import {
   getTextReadAsync,
   getTextsAsync,
   getTextTermsAsync,
-  setTextBookmarkAsync
+  setTextBookmarkAsync,
+  getTermCountInTextAsync
 } from "../Apis/TextApi";
 
 export const TEXT_FETCHED = "TEXT_FETCHED";
@@ -26,6 +27,7 @@ export const READING_TEXT_TERMS_COUNT_LOADED =
 export const TEXT_TERM_LOADED = "TEXT_TERM_LOADED";
 export const TERM_INDEX_BEGIN_SET = "TERM_INDEX_BEGIN_SET";
 export const TERM_INDEX_END_SET = "TERM_INDEX_END_SET";
+export const TERM_COUNT_IN_TEXT = "TERM_COUNT_IN_TEXT";
 
 /**
  * get texts action
@@ -132,4 +134,8 @@ export const setTermIndexBeginAction = createAction(
 export const setTermIndexEndAction = createAction(
   TERM_INDEX_END_SET,
   end => end
+);
+export const getTermCountInTextAction = createAction(
+  TERM_COUNT_IN_TEXT,
+  (termId, textId) => getTermCountInTextAsync(termId, textId)
 );

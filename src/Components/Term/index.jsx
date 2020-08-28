@@ -6,6 +6,7 @@ import {
   getTermMeaningAction,
   setEditingTermAction
 } from "../../Actions/TermAction";
+import { getTermCountInTextAction } from "../../Actions/TextAction";
 import { TermLearningLevel } from "../../Enums";
 import TermButton from "./TermButton";
 import TermTooltip from "./TermTooltip";
@@ -17,10 +18,23 @@ class Term extends React.Component {
     return (
       nextProps.term.learningLevel !== term.learningLevel ||
       nextProps.term.meaning !== term.meaning ||
+      nextProps.term.count !== term.count ||
       nextProps.bookmark !== bookmark ||
       last !== nextProps.last
     );
   }
+
+  handleHover = () => {
+    this.loadTermsMeaning();
+    this.loadTermCountInText();
+  };
+
+  loadTermCountInText = () => {
+    const { getTermCountInText, term, textId } = this.props;
+    if (term.id && !term.count) {
+      getTermCountInText(term.id, textId);
+    }
+  };
 
   loadTermsMeaning = () => {
     const { term, getTermMeaning, index } = this.props;
@@ -39,6 +53,7 @@ class Term extends React.Component {
     e.preventDefault();
     const { getTerm, setEditingTerm, index, term, onTermClick } = this.props;
     // load term meaning if not loaded.
+    this.loadTermCountInText();
     this.loadTermsMeaning();
     onTermClick(term);
     setEditingTerm(index);
@@ -71,7 +86,7 @@ class Term extends React.Component {
       <TermTooltip
         onClick={this.handleTermClick}
         bookmarkRef={bookmarkRef}
-        onHover={this.loadTermsMeaning}
+        onHover={this.handleHover}
         term={term}
         last={last}
         bookmark={bookmark}
@@ -90,24 +105,29 @@ Term.propTypes = {
   getTerm: PropTypes.func.isRequired,
   term: PropTypes.shape({
     learningLevel: PropTypes.string.isRequired,
-    meaning: PropTypes.string
+    meaning: PropTypes.string,
+    count: PropTypes.number
   }).isRequired,
   bookmark: PropTypes.bool,
   bookmarkRef: PropTypes.shape({}).isRequired,
   last: PropTypes.shape({}),
   index: PropTypes.number.isRequired,
   getTermMeaning: PropTypes.func.isRequired,
-  onTermClick: PropTypes.func.isRequired
+  onTermClick: PropTypes.func.isRequired,
+  getTermCountInText: PropTypes.func.isRequired,
+  textId: PropTypes.number.isRequired
 };
 
 export default connect(
   (state, ownProps) => ({
     term: state.text.readingText.terms[ownProps.index],
-    bookmark: state.text.readingText.bookmark === ownProps.index
+    bookmark: state.text.readingText.bookmark === ownProps.index,
+    textId: state.text.readingText.id
   }),
   {
     getTerm: getTermAction,
     setEditingTerm: setEditingTermAction,
-    getTermMeaning: getTermMeaningAction
+    getTermMeaning: getTermMeaningAction,
+    getTermCountInText: getTermCountInTextAction
   }
 )(Term);

@@ -70,3 +70,7 @@ export async function setTextBookmarkAsync(id, index) {
 export async function getTextTermsAsync(textId, indexFrom, indexTo) {
   return await getAsync(`${TEXT_API}/${textId}/terms`, { indexFrom, indexTo });
 }
+
+export async function getTermCountInTextAsync(termId, textId) {
+  return getAsync(`${TEXT_API}/${textId}/terms/${termId}/count`);
+}

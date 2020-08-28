@@ -20,6 +20,7 @@ import {
 } from "../../../Selectors/TermSelectors";
 import { selectDictionaryLanguage } from "../../../Selectors/UserSelectors";
 import { TermLearningLevel } from "../../../Enums";
+import { importantColors } from "../../Term/TermTooltip";
 
 const getNextLearningLevel = learningLevel => {
   switch (learningLevel) {
@@ -160,11 +161,18 @@ class TermEditForm extends React.Component {
           text={value.content}
           onCopy={() => notification.info({ message: "Copied to clipboard." })}
         >
-          <div className={styles.title}>{value.content}</div>
+          <div
+            className={styles.title}
+            style={{ color: importantColors[(value.count ?? 0) % 50] }}
+          >
+            {`${value.content}(${value.count ?? "-"})`}
+          </div>
         </CopyToClipboard>
         <Form.Item className={styles.content} label="Content">
           {getFieldDecorator("content", { initialValue: value.content })(
-            <Input disabled />
+            <React.Fragment>
+              <Input disabled />
+            </React.Fragment>
           )}
         </Form.Item>
         <Form.Item className={styles.language}>
