@@ -10,6 +10,7 @@ import {
 } from "../../Actions/TermAction";
 import { getNextLearningLevel, getPreviousLearningLevel } from "../../Enums";
 import { selectDictionaryLanguage } from "../../Selectors/UserSelectors";
+import { setBookmarkAction, selectTermAction } from "../../Actions/TextAction";
 
 export const importantColors = [
   "#E50027",
@@ -105,21 +106,29 @@ class TermTooltip extends React.Component {
   );
 
   better = () => {
-    const { term, editTerm } = this.props;
+    const { term, editTerm, setBookmark, index, text } = this.props;
     const newTerm = {
       ...term,
       learningLevel: getNextLearningLevel(term.learningLevel)
     };
     editTerm(newTerm);
+    this.handleSetBookmark();
+  };
+
+  handleSetBookmark = () => {
+    const { textId, index, setBookmark, setSelectingTerm } = this.props;
+    setBookmark(textId, index);
+    setSelectingTerm(index);
   };
 
   worse = () => {
-    const { term, editTerm } = this.props;
+    const { term, editTerm, setBookmark, index } = this.props;
     const newTerm = {
       ...term,
       learningLevel: getPreviousLearningLevel(term.learningLevel)
     };
     editTerm(newTerm);
+    this.handleSetBookmark();
   };
 
   renderContent = () => {
@@ -190,15 +199,20 @@ TermTooltip.propTypes = {
   dictionaryTerm: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
   readingLanguageCode: PropTypes.string.isRequired,
-  dictionaryLanguage: PropTypes.string.isRequired
+  dictionaryLanguage: PropTypes.string.isRequired,
+  setBookmark: PropTypes.func.isRequired,
+  textId: PropTypes.number.isRequired
 };
 export default connect(
   state => ({
     dictionaryLanguage: selectDictionaryLanguage(state),
-    readingLanguageCode: state.text.readingText.languageCode
+    readingLanguageCode: state.text.readingText.languageCode,
+    textId: state.text.readingText.id
   }),
   {
     editTerm: editTermAction,
-    dictionaryTerm: dictionaryTermMeaningAction
+    dictionaryTerm: dictionaryTermMeaningAction,
+    setBookmark: setBookmarkAction,
+    setSelectingTerm: selectTermAction
   }
 )(TermTooltip);

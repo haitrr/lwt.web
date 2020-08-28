@@ -52,6 +52,7 @@
   white-space: pre-line;
   :global(.ant-popover-title) {
     max-height: 12rem;
+    max-width: 20rem;
     overflow: scroll;
   }
 }
