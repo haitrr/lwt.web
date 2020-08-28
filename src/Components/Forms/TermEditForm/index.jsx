@@ -19,27 +19,8 @@ import {
   selectEditingTermValue
 } from "../../../Selectors/TermSelectors";
 import { selectDictionaryLanguage } from "../../../Selectors/UserSelectors";
-import { TermLearningLevel } from "../../../Enums";
+import { TermLearningLevel, getNextLearningLevel } from "../../../Enums";
 import { importantColors } from "../../Term/TermTooltip";
-
-const getNextLearningLevel = learningLevel => {
-  switch (learningLevel) {
-    case TermLearningLevel.UnKnow:
-      return TermLearningLevel.Learning1;
-    case TermLearningLevel.Learning1:
-      return TermLearningLevel.Learning2;
-    case TermLearningLevel.Learning2:
-      return TermLearningLevel.Learning3;
-    case TermLearningLevel.Learning3:
-      return TermLearningLevel.Learning4;
-    case TermLearningLevel.Learning4:
-      return TermLearningLevel.Learning5;
-    case TermLearningLevel.Learning5:
-      return TermLearningLevel.WellKnow;
-    default:
-      return learningLevel;
-  }
-};
 
 class TermEditForm extends React.Component {
   constructor(props) {

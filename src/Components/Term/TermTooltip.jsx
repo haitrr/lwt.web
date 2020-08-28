@@ -1,8 +1,11 @@
 import PropTypes from "prop-types";
-import { Tooltip } from "antd";
+import { Popover, Button } from "antd";
 import React from "react";
+import { connect } from "react-redux";
 import styles from "./Term.module.scss";
 import TermButton from "./TermButton";
+import { editTermAction } from "../../Actions/TermAction";
+import { getNextLearningLevel, getPreviousLearningLevel } from "../../Enums";
 
 export const importantColors = [
   "#E50027",
@@ -56,37 +59,71 @@ export const importantColors = [
   "#BF06EC",
   "#D707ED"
 ];
-const renderTitle = term => (
-  <span>
-    {term.count ? (
-      <div style={{ color: importantColors[Math.min(term.count, 49)] }}>
-        {`${term.count} in this text.`}
-      </div>
-    ) : null}
-    <span>{term.meaning}</span>
-  </span>
-);
 
-const TermTooltip = ({
-  bookmark,
-  bookmarkRef,
-  last,
-  term,
-  onClick,
-  onHover
-}) => (
-  <Tooltip overlayClassName={styles.tooltip} title={renderTitle(term)}>
-    <span onMouseEnter={onHover}>
-      <TermButton
-        bookmark={bookmark}
-        bookmarkRef={bookmarkRef}
-        last={last}
-        term={term}
-        onClick={onClick}
-      />
+class TermTooltip extends React.Component {
+  renderTitle = term => (
+    <span>
+      {term.count ? (
+        <div style={{ color: importantColors[Math.min(term.count, 49)] }}>
+          {`${term.count} in this text.`}
+        </div>
+      ) : null}
+      <span>{term.meaning}</span>
     </span>
-  </Tooltip>
-);
+  );
+
+  better = () => {
+    const { term, editTerm } = this.props;
+    const newTerm = {
+      ...term,
+      learningLevel: getNextLearningLevel(term.learningLevel)
+    };
+    editTerm(newTerm);
+  };
+
+  worse = () => {
+    const { term, editTerm } = this.props;
+    const newTerm = {
+      ...term,
+      learningLevel: getPreviousLearningLevel(term.learningLevel)
+    };
+    editTerm(newTerm);
+  };
+
+  renderContent = () => (
+    <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <Button type="primary" onClick={this.better}>
+        Better
+      </Button>
+      <Button type="primary" style={{ marginLeft: "5px" }}>
+        Worse
+      </Button>
+    </div>
+  );
+
+  render() {
+    const { bookmark, bookmarkRef, last, term, onClick, onHover } = this.props;
+    return (
+      <Popover
+        overlayClassName={styles.tooltip}
+        title={this.renderTitle(term)}
+        content={this.renderContent(term)}
+        mouseLeaveDelay={0.5}
+        destroyTooltipOnHide
+      >
+        <span onMouseEnter={onHover}>
+          <TermButton
+            bookmark={bookmark}
+            bookmarkRef={bookmarkRef}
+            last={last}
+            term={term}
+            onClick={onClick}
+          />
+        </span>
+      </Popover>
+    );
+  }
+}
 
 TermTooltip.defaultProps = {
   bookmark: false,
@@ -102,6 +139,7 @@ TermTooltip.propTypes = {
   bookmarkRef: PropTypes.shape({}).isRequired,
   last: PropTypes.shape({}),
   onClick: PropTypes.func.isRequired,
-  onHover: PropTypes.func.isRequired
+  onHover: PropTypes.func.isRequired,
+  editTerm: PropTypes.func.isRequired
 };
-export default TermTooltip;
+export default connect(null, { editTerm: editTermAction })(TermTooltip);

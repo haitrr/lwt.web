@@ -70,7 +70,8 @@ class Term extends React.Component {
     if (
       term.learningLevel === TermLearningLevel.WellKnow ||
       term.learningLevel === TermLearningLevel.UnKnow ||
-      term.learningLevel === TermLearningLevel.Ignored
+      term.learningLevel === TermLearningLevel.Ignored ||
+      window.innerWidth < 768
     ) {
       return (
         <TermButton
@@ -82,6 +83,7 @@ class Term extends React.Component {
         />
       );
     }
+
     return (
       <TermTooltip
         onClick={this.handleTermClick}

@@ -41,3 +41,41 @@ export const TermLearningColor = {
 
   [TermLearningLevel.WellKnow]: "whitesmoke"
 };
+
+export const getNextLearningLevel = learningLevel => {
+  switch (learningLevel) {
+    case TermLearningLevel.UnKnow:
+      return TermLearningLevel.Learning1;
+    case TermLearningLevel.Learning1:
+      return TermLearningLevel.Learning2;
+    case TermLearningLevel.Learning2:
+      return TermLearningLevel.Learning3;
+    case TermLearningLevel.Learning3:
+      return TermLearningLevel.Learning4;
+    case TermLearningLevel.Learning4:
+      return TermLearningLevel.Learning5;
+    case TermLearningLevel.Learning5:
+      return TermLearningLevel.WellKnow;
+    default:
+      return learningLevel;
+  }
+};
+
+export const getPreviousLearningLevel = learningLevel => {
+  switch (learningLevel) {
+    case TermLearningLevel.Learning1:
+      return TermLearningLevel.UnKnow;
+    case TermLearningLevel.Learning2:
+      return TermLearningLevel.Learning1;
+    case TermLearningLevel.Learning3:
+      return TermLearningLevel.Learning2;
+    case TermLearningLevel.Learning4:
+      return TermLearningLevel.Learning3;
+    case TermLearningLevel.Learning5:
+      return TermLearningLevel.Learning4;
+    case TermLearningLevel.WellKnow:
+      return TermLearningLevel.Learning5;
+    default:
+      return learningLevel;
+  }
+};
