@@ -9,6 +9,7 @@ import {
   editTermAction
 } from "../../Actions/TermAction";
 import { getNextLearningLevel, getPreviousLearningLevel } from "../../Enums";
+import { selectDictionaryLanguage } from "../../Selectors/UserSelectors";
 
 export const importantColors = [
   "#E50027",
@@ -67,7 +68,13 @@ class TermTooltip extends React.Component {
   state = { loading: false };
 
   componentDidUpdate(prevProps) {
-    const { term, index, dictionaryTerm } = this.props;
+    const {
+      term,
+      index,
+      dictionaryTerm,
+      dictionaryLanguage,
+      readingLanguageCode
+    } = this.props;
     if (
       term &&
       prevProps.term &&
@@ -78,8 +85,8 @@ class TermTooltip extends React.Component {
       this.setState({ loading: true }, () =>
         dictionaryTerm(
           term.content,
-          term.languageCode,
-          term.dictionaryLanguage,
+          readingLanguageCode,
+          dictionaryLanguage,
           index
         ).then(() => this.setState({ loading: false }))
       );
@@ -181,9 +188,17 @@ TermTooltip.propTypes = {
   onHover: PropTypes.func.isRequired,
   editTerm: PropTypes.func.isRequired,
   dictionaryTerm: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired
+  index: PropTypes.number.isRequired,
+  readingLanguageCode: PropTypes.string.isRequired,
+  dictionaryLanguage: PropTypes.string.isRequired
 };
-export default connect(null, {
-  editTerm: editTermAction,
-  dictionaryTerm: dictionaryTermMeaningAction
-})(TermTooltip);
+export default connect(
+  state => ({
+    dictionaryLanguage: selectDictionaryLanguage(state),
+    readingLanguageCode: state.text.readingText.languageCode
+  }),
+  {
+    editTerm: editTermAction,
+    dictionaryTerm: dictionaryTermMeaningAction
+  }
+)(TermTooltip);
