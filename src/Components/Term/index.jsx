@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
-  getTermAction,
   getTermMeaningAction,
   setEditingTermAction
 } from "../../Actions/TermAction";
@@ -56,15 +55,16 @@ class Term extends React.Component {
 
   handleTermClick = e => {
     e.preventDefault();
-    const { getTerm, setEditingTerm, index, term, onTermClick } = this.props;
+    const { setEditingTerm, index, term, onTermClick } = this.props;
     // load term meaning if not loaded.
-    this.loadTermCountInText();
-    this.loadTermsMeaning();
+    if (!term.count) {
+      this.loadTermCountInText();
+    }
+    if (term.meaning === undefined) {
+      this.loadTermsMeaning();
+    }
     onTermClick(term);
     setEditingTerm(index);
-    if (term.id) {
-      getTerm(term.id, index);
-    }
   };
 
   render() {
@@ -109,7 +109,6 @@ Term.defaultProps = {
 
 Term.propTypes = {
   setEditingTerm: PropTypes.func.isRequired,
-  getTerm: PropTypes.func.isRequired,
   term: PropTypes.shape({
     learningLevel: PropTypes.string.isRequired,
     meaning: PropTypes.string,
@@ -132,7 +131,6 @@ export default connect(
     textId: state.text.readingText.id
   }),
   {
-    getTerm: getTermAction,
     setEditingTerm: setEditingTermAction,
     getTermMeaning: getTermMeaningAction,
     getTermCountInText: getTermCountInTextAction

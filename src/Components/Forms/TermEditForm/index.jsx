@@ -10,14 +10,10 @@ import styles from "./TermEditForm.module.scss";
 import {
   createTermAction,
   editTermAction,
-  getEditingTermMeaningAction,
-  resetEditingTermMeaningAction,
+  dictionaryTermMeaningAction,
   setEditingTermAction
 } from "../../../Actions/TermAction";
-import {
-  selectEditingTermMeaning,
-  selectEditingTermValue
-} from "../../../Selectors/TermSelectors";
+import { selectEditingTermValue } from "../../../Selectors/TermSelectors";
 import { selectDictionaryLanguage } from "../../../Selectors/UserSelectors";
 import { TermLearningLevel, getNextLearningLevel } from "../../../Enums";
 import { importantColors } from "../../Term/TermTooltip";
@@ -31,26 +27,20 @@ class TermEditForm extends React.Component {
   componentDidUpdate(prevProps) {
     const {
       value,
-      getEditingTermMeaning,
-      editingTermMeaning,
       dictionaryLanguage,
       languages,
       languageCode,
-      resetEditingTermMeaning
+      dictionaryTerm,
+      index
     } = this.props;
 
     const { content: prevContent, meaning: prevMeaning } = prevProps.value;
-
-    if (prevContent !== value.content) {
-      resetEditingTermMeaning();
-    }
 
     if (
       // meaning is loaded but empty
       (value.content &&
         // unknown term
-        (value.meaning === "" || !value.id) &&
-        editingTermMeaning === prevProps.editingTermMeaning &&
+        value.meaning === "" &&
         (!prevProps.value || prevContent !== value.content)) ||
       // meaning is not loaded then loaded but empty
       (prevMeaning === undefined && value.meaning === "")
@@ -68,19 +58,23 @@ class TermEditForm extends React.Component {
           .out();
         // eslint-disable-next-line react/no-did-update-set-state
         this.setState({ lookingUpDictionary: true }, () =>
-          getEditingTermMeaning(simplified, code, dictionaryLanguage).then(() =>
-            this.setState({ lookingUpDictionary: false })
-          )
+          dictionaryTerm(
+            simplified,
+            languageCode,
+            dictionaryLanguage,
+            index
+          ).then(() => this.setState({ lookingUpDictionary: false }))
         );
         return;
       }
 
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ lookingUpDictionary: true }, () =>
-        getEditingTermMeaning(
+        dictionaryTerm(
           value.content,
-          code,
-          dictionaryLanguage
+          languageCode,
+          dictionaryLanguage,
+          index
         ).then(() => this.setState({ lookingUpDictionary: false }))
       );
     }
@@ -124,7 +118,6 @@ class TermEditForm extends React.Component {
       value,
       languageCode,
       className,
-      editingTermMeaning,
       editingTerm
     } = this.props;
     if (!editingTerm) {
@@ -166,7 +159,7 @@ class TermEditForm extends React.Component {
           <Col xl={10} lg={12} xs={24}>
             <Form.Item className={styles.meaning}>
               {getFieldDecorator("meaning", {
-                initialValue: value.meaning ? value.meaning : editingTermMeaning
+                initialValue: value.meaning
               })(
                 <Input.TextArea
                   disabled={
@@ -176,7 +169,6 @@ class TermEditForm extends React.Component {
                   }
                   autosize={{ maxRows: 3, minRows: 2 }}
                   placeholder="Meaning"
-                  style={{ background: value.meaning ? "white" : "#f7f6cb" }}
                   cols={60}
                 />
               )}
@@ -236,7 +228,7 @@ TermEditForm.defaultProps = {
   editingTerm: "",
   value: null,
   dictionaryLanguage: null,
-  editingTermMeaning: ""
+  index: null
 };
 
 TermEditForm.propTypes = {
@@ -245,17 +237,16 @@ TermEditForm.propTypes = {
   dictionaryLanguage: PropTypes.string,
   editTerm: PropTypes.func.isRequired,
   editingTerm: PropTypes.number,
-  editingTermMeaning: PropTypes.string,
   form: PropTypes.shape({}).isRequired,
-  getEditingTermMeaning: PropTypes.func.isRequired,
-  resetEditingTermMeaning: PropTypes.func.isRequired,
   languageCode: PropTypes.string.isRequired,
   languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   setEditingTerm: PropTypes.func.isRequired,
   value: PropTypes.shape({
     id: PropTypes.number,
     content: PropTypes.string
-  })
+  }),
+  dictionaryTerm: PropTypes.func.isRequired,
+  index: PropTypes.number
 };
 export default connect(
   state => ({
@@ -264,13 +255,12 @@ export default connect(
     editingTerm: state.term.editingTerm,
     languageCode: state.text.readingText.languageCode,
     languages: state.language.languages,
-    editingTermMeaning: selectEditingTermMeaning(state)
+    index: state.term.editingTerm
   }),
   {
     setEditingTerm: setEditingTermAction,
     createTerm: createTermAction,
     editTerm: editTermAction,
-    getEditingTermMeaning: getEditingTermMeaningAction,
-    resetEditingTermMeaning: resetEditingTermMeaningAction
+    dictionaryTerm: dictionaryTermMeaningAction
   }
 )(Form.create()(TermEditForm));

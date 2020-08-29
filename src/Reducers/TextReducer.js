@@ -139,9 +139,6 @@ const textReducer = handleActions(
         return state;
       }
       const { index, termMeaning } = action.payload;
-      console.log(action.payload);
-      console.log("hwt");
-      console.log(termMeaning);
 
       const { terms } = state.readingText;
       terms[index] = { ...terms[index], meaning: termMeaning.meaning };
