@@ -63,6 +63,8 @@ export const getNextLearningLevel = learningLevel => {
 
 export const getPreviousLearningLevel = learningLevel => {
   switch (learningLevel) {
+    case TermLearningLevel.UnKnow:
+      return TermLearningLevel.Ignored;
     case TermLearningLevel.Learning1:
       return TermLearningLevel.UnKnow;
     case TermLearningLevel.Learning2:
