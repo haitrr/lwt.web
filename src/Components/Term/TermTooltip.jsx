@@ -106,7 +106,7 @@ class TermTooltip extends React.Component {
   );
 
   better = () => {
-    const { term, editTerm, setBookmark, index, text } = this.props;
+    const { term, editTerm } = this.props;
     const newTerm = {
       ...term,
       learningLevel: getNextLearningLevel(term.learningLevel)
@@ -122,7 +122,7 @@ class TermTooltip extends React.Component {
   };
 
   worse = () => {
-    const { term, editTerm, setBookmark, index } = this.props;
+    const { term, editTerm } = this.props;
     const newTerm = {
       ...term,
       learningLevel: getPreviousLearningLevel(term.learningLevel)
@@ -155,8 +155,17 @@ class TermTooltip extends React.Component {
     );
   };
 
+  handleMouseEnter = () => {
+    const { onHover } = this.props;
+    this.hoverTimeout = setTimeout(onHover, 500);
+  };
+
+  handleMouseLeave = () => {
+    clearTimeout(this.hoverTimeout);
+  };
+
   render() {
-    const { bookmark, bookmarkRef, last, term, onClick, onHover } = this.props;
+    const { bookmark, bookmarkRef, last, term, onClick } = this.props;
     return (
       <Popover
         overlayClassName={styles.tooltip}
@@ -166,7 +175,10 @@ class TermTooltip extends React.Component {
         mouseEnterDelay={0.3}
         destroyTooltipOnHide
       >
-        <span onMouseEnter={onHover}>
+        <span
+          onMouseEnter={this.handleMouseEnter}
+          onMouseLeave={this.handleMouseLeave}
+        >
           <TermButton
             bookmark={bookmark}
             bookmarkRef={bookmarkRef}
@@ -201,7 +213,8 @@ TermTooltip.propTypes = {
   readingLanguageCode: PropTypes.string.isRequired,
   dictionaryLanguage: PropTypes.string.isRequired,
   setBookmark: PropTypes.func.isRequired,
-  textId: PropTypes.number.isRequired
+  textId: PropTypes.number.isRequired,
+  setSelectingTerm: PropTypes.func.isRequired
 };
 export default connect(
   state => ({
