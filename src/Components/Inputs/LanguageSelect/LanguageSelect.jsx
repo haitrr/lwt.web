@@ -1,16 +1,15 @@
 import { Select } from "antd";
 import React from "react";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 /**
  * language select
  */
 class LanguageSelect extends React.Component {
-  shouldComponentUpdate(nextProps, nextState, nextContext) {
-    return (
-      this.props.value !== nextProps.value ||
-      this.props.languages !== nextProps.languages
-    );
+  shouldComponentUpdate(nextProps) {
+    const { value, languages } = this.props;
+    return value !== nextProps.value || languages !== nextProps.languages;
   }
 
   render() {
@@ -21,6 +20,7 @@ class LanguageSelect extends React.Component {
         value={value}
         disabled={disabled || false}
         className={className}
+        placeholder="Language"
       >
         {languages.map(language => (
           <Select.Option key={language.code} value={language.code}>
@@ -32,8 +32,21 @@ class LanguageSelect extends React.Component {
   }
 }
 
-const connectedLanguageSelect = connect(state => ({
+LanguageSelect.propTypes = {
+  languages: PropTypes.arrayOf(PropTypes.shape({})),
+  className: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string,
+  disabled: PropTypes.bool
+};
+
+LanguageSelect.defaultProps = {
+  languages: [],
+  className: null,
+  value: "",
+  disabled: false
+};
+
+export default connect(state => ({
   languages: state.language.languages
 }))(LanguageSelect);
-
-export { connectedLanguageSelect as LanguageSelect };

@@ -6,7 +6,7 @@ import {
   selectLanguageAction
 } from "../../../Actions/LanguageAction";
 import "./HomePage.css";
-import { LanguageSelect } from "../../Inputs/LanguageSelect/LanguageSelect";
+import LanguageSelect from "../../Inputs/LanguageSelect/LanguageSelect";
 
 /**
  * Home page

@@ -229,8 +229,8 @@ class TextPage extends React.Component {
   }
 
   filterTexts(filters) {
-    const { page, itemPerPage } = this.props;
-    this.loadingAndGetTexts(filters, page, itemPerPage);
+    const { itemPerPage } = this.props;
+    this.loadingAndGetTexts(filters, 1, itemPerPage);
   }
 
   hideCreateModal() {
@@ -242,7 +242,7 @@ class TextPage extends React.Component {
   }
 
   render() {
-    const { texts, filters, page, total, languages } = this.props;
+    const { texts, filters, page, total } = this.props;
     const {
       isLoading,
       createModalVisible,
@@ -265,11 +265,7 @@ class TextPage extends React.Component {
           onCreate={this.filterTexts}
         />
         <Button onClick={this.showCreateModal}>Add text</Button>
-        <TextFilterForm
-          onFilterChange={this.filterTexts}
-          languages={languages}
-          value={filters}
-        />
+        <TextFilterForm onFilterChange={this.filterTexts} value={filters} />
         <Table
           dataSource={texts}
           pagination={false}

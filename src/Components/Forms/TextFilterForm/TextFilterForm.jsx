@@ -1,46 +1,45 @@
 import PropTypes from "prop-types";
-import { Form, Select } from "antd";
+import { Form, Input } from "antd";
 import React from "react";
+import LanguageSelect from "../../Inputs/LanguageSelect";
 
 /**
  * text filter form
  */
 function TextFilterForm(props) {
   const {
-    form: { getFieldDecorator },
-    languages
+    form: { getFieldDecorator }
   } = props;
 
   return (
     <Form>
       <Form.Item>
-        {getFieldDecorator("language")(
-          <Select>
-            {languages.map(language => (
-              <Select.Option value={language.id} key={language.id}>
-                {language.name}
-              </Select.Option>
-            ))}
-          </Select>
-        )}
+        {getFieldDecorator("languageCode")(<LanguageSelect />)}
+      </Form.Item>
+      <Form.Item>
+        {getFieldDecorator("title")(<Input placeholder="Title" />)}
       </Form.Item>
     </Form>
   );
 }
 
 const textFilterForm = Form.create({
-  onValuesChange: (props, _, allValues) => {
-    props.onFilterChange(allValues);
+  onValuesChange: (props, changedValues, allValues) => {
+    clearTimeout(window.textFilterTimeout);
+    if (changedValues.title) {
+      window.textFilterTimeout = setTimeout(() => {
+        props.onFilterChange(allValues);
+      }, 1000);
+    } else {
+      props.onFilterChange(allValues);
+    }
   }
 })(TextFilterForm);
 
 TextFilterForm.propTypes = {
-  form: PropTypes.shape({}).isRequired,
-  languages: PropTypes.arrayOf(PropTypes.shape({}))
+  form: PropTypes.shape({}).isRequired
 };
 
-TextFilterForm.defaultProps = {
-  languages: []
-};
+TextFilterForm.defaultProps = {};
 
 export default textFilterForm;

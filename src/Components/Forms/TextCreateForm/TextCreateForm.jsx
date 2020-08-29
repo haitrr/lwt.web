@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { Form, Input } from "antd";
 import React from "react";
 import { connect } from "react-redux";
-import { LanguageSelect } from "../../Inputs/LanguageSelect/LanguageSelect";
+import LanguageSelect from "../../Inputs/LanguageSelect/LanguageSelect";
 
 /**
  * text create form
