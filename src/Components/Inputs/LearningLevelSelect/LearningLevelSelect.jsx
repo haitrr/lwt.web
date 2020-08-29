@@ -74,9 +74,8 @@ export default class LearningLevelSelect extends React.Component {
         </Radio.Button>
         <Radio.Button
           style={{
-            backgroundColor: TermLearningColor[LearningLevelSelect.UnKnow]
+            backgroundColor: TermLearningColor[LearningLevelSelect.Ignored]
           }}
-          value={TermLearningLevel.UnKnow}
           value={TermLearningLevel.Ignored}
         >
           I
