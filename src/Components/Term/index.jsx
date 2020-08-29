@@ -55,13 +55,19 @@ class Term extends React.Component {
 
   handleTermClick = e => {
     e.preventDefault();
-    const { setEditingTerm, index, term, onTermClick } = this.props;
+    const {
+      setEditingTerm,
+      index,
+      term,
+      onTermClick,
+      getTermMeaning
+    } = this.props;
     // load term meaning if not loaded.
     if (!term.count) {
       this.loadTermCountInText();
     }
     if (term.meaning === undefined) {
-      this.loadTermsMeaning();
+      getTermMeaning(term, index);
     }
     onTermClick(term);
     setEditingTerm(index);
