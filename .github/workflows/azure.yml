@@ -32,4 +32,4 @@ jobs:
         app-name: 'lwt-web'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_e435167e11bc406ca9292a2c5493e0e0 }}
-        package: .
+        package: ./build
