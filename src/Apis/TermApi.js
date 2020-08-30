@@ -18,7 +18,10 @@ export async function getTextMeaningAsync(text, from, to) {
         return res.json();
       }
       if (res.status === 404) {
-        notification.info({ message: "Meaning not found in dictionary" });
+        notification.info({
+          message: "Meaning not found in dictionary",
+          placement: "topRight"
+        });
         return null;
       }
       throw res;
