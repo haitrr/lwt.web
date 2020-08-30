@@ -105,7 +105,8 @@ class TermTooltip extends React.Component {
     </span>
   );
 
-  better = () => {
+  better = e => {
+    e.preventDefault();
     const { term, editTerm } = this.props;
     const newTerm = {
       ...term,
@@ -121,7 +122,8 @@ class TermTooltip extends React.Component {
     setSelectingTerm(index);
   };
 
-  worse = () => {
+  worse = e => {
+    e.preventDefault();
     const { term, editTerm } = this.props;
     const newTerm = {
       ...term,
