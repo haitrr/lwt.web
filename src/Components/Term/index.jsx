@@ -66,7 +66,7 @@ class Term extends React.Component {
     if (!term.count) {
       this.loadTermCountInText();
     }
-    if (term.meaning === undefined) {
+    if (term.meaning === null) {
       getTermMeaning(term, index);
     }
     onTermClick(term);
