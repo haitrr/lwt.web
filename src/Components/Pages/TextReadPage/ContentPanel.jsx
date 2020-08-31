@@ -16,7 +16,7 @@ class ContentPanel extends React.Component {
     super(props);
     if (window.innerWidth > 700) {
       // desktop
-      this.displayTerms = 1500;
+      this.displayTerms = 1000;
       this.loadTerms = 300;
     } else {
       // mobile
@@ -37,7 +37,7 @@ class ContentPanel extends React.Component {
       setTermIndexBegin
     } = this.props;
     setTermIndexEnd(Math.min(end + this.displayTerms, termCount - 1));
-    setTermIndexBegin(Math.max(begin - this.displayTerms, 0));
+    setTermIndexBegin(Math.max(begin - Math.floor(this.displayTerms / 2), 0));
   }
 
   componentDidUpdate(prevProps) {
