@@ -66,33 +66,7 @@ export const importantColors = [
 ];
 
 class TermTooltip extends React.Component {
-  state = { loading: false };
-
-  componentDidUpdate(prevProps) {
-    const {
-      term,
-      index,
-      dictionaryTerm,
-      dictionaryLanguage,
-      readingLanguageCode
-    } = this.props;
-    if (
-      term &&
-      prevProps.term &&
-      prevProps.term.meaning === undefined &&
-      term.meaning === ""
-    ) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ loading: true }, () =>
-        dictionaryTerm(
-          term.content,
-          readingLanguageCode,
-          dictionaryLanguage,
-          index
-        ).then(() => this.setState({ loading: false }))
-      );
-    }
-  }
+  state = { loading: false, dictionaried: false };
 
   renderTitle = term => (
     <span>
@@ -158,12 +132,34 @@ class TermTooltip extends React.Component {
   };
 
   handleMouseEnter = () => {
+    const {
+      term,
+      index,
+      dictionaryTerm,
+      dictionaryLanguage,
+      readingLanguageCode
+    } = this.props;
+    const { dictionaried } = this.state;
+    if (term && !dictionaried && term.meaning === "") {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.dictionaryTimeout = setTimeout(() => {
+        this.setState({ loading: true, dictionaried: true }, () =>
+          dictionaryTerm(
+            term.content,
+            readingLanguageCode,
+            dictionaryLanguage,
+            index
+          ).then(() => this.setState({ loading: false }))
+        );
+      }, 300);
+    }
     const { onHover } = this.props;
     this.hoverTimeout = setTimeout(onHover, 500);
   };
 
   handleMouseLeave = () => {
     clearTimeout(this.hoverTimeout);
+    clearTimeout(this.dictionaryTimeout);
   };
 
   render() {
