@@ -25,7 +25,7 @@ class Term extends React.Component {
 
   handleHover = () => {
     const { term } = this.props;
-    if (term.meaning === undefined) {
+    if (term.meaning === null) {
       this.loadTermsMeaning();
     }
     if (!term.count) {
