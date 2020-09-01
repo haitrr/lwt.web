@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "antd": "3.12.4",
-    "compromise": "13.0.0",
+    "compromise": "13.3.2",
     "formik": "1.5.8",
     "jwt-decode": "2.2.0",
     "node-sass": "4.13.1",
