@@ -127,6 +127,25 @@ class TextPage extends React.Component {
       render: (value, record) => renderTermNumber(value, record, "WellKnow")
     },
     {
+      title: "Status",
+      key: "status",
+      render: (_, record) => {
+        if (record.termCount === 0) {
+          return <span style={{ backgroundColor: "#ffd78c" }}>Processing</span>;
+        }
+        if (record.termCount === record.processedTermCount) {
+          return <span style={{ backgroundColor: "#a9ff8c" }}>Done</span>;
+        }
+        return (
+          <span style={{ backgroundColor: "#f7f18b" }}>
+            {`${record.processedTermCount}/${record.termCount}(${Math.floor(
+              (record.processedTermCount * 100) / record.termCount
+            )}%)`}
+          </span>
+        );
+      }
+    },
+    {
       title: "Language",
       dataIndex: "language",
       key: "language",
