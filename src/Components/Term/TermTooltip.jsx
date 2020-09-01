@@ -132,7 +132,7 @@ class TermTooltip extends React.Component {
     );
   };
 
-  handleMouseEnter = () => {
+  handleDictionaryTerm = () => {
     const {
       term,
       index,
@@ -143,15 +143,24 @@ class TermTooltip extends React.Component {
     const { dictionaried } = this.state;
     if (term && !dictionaried && term.meaning === "") {
       // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ loading: true, dictionaried: true }, () =>
+        dictionaryTerm(
+          normalize(term.content, readingLanguageCode),
+          readingLanguageCode,
+          dictionaryLanguage,
+          index
+        ).then(() => this.setState({ loading: false }))
+      );
+    }
+  };
+
+  handleMouseEnter = () => {
+    const { term } = this.props;
+    const { dictionaried } = this.state;
+    if (term && !dictionaried && term.meaning === "") {
+      // eslint-disable-next-line react/no-did-update-set-state
       this.dictionaryTimeout = setTimeout(() => {
-        this.setState({ loading: true, dictionaried: true }, () =>
-          dictionaryTerm(
-            normalize(term.content, readingLanguageCode),
-            readingLanguageCode,
-            dictionaryLanguage,
-            index
-          ).then(() => this.setState({ loading: false }))
-        );
+        this.handleDictionaryTerm();
       }, 300);
     }
     const { onHover } = this.props;

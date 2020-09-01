@@ -24,7 +24,7 @@ class TermEditForm extends React.Component {
     this.state = { lookingUpDictionary: false };
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     const {
       value,
       dictionaryLanguage,
@@ -34,16 +34,14 @@ class TermEditForm extends React.Component {
       index
     } = this.props;
 
-    const { content: prevContent, meaning: prevMeaning } = prevProps.value;
+    const { lookingUpDictionary } = this.state;
 
     if (
       // meaning is loaded but empty
-      (value.content &&
-        // unknown term
-        value.meaning === "" &&
-        (!prevProps.value || prevContent !== value.content)) ||
-      // meaning is not loaded then loaded but empty
-      (prevMeaning === undefined && value.meaning === "")
+      value.content &&
+      // unknown term
+      value.meaning === "" &&
+      !lookingUpDictionary
     ) {
       const { code } = languages.find(l => l.code === languageCode);
       // eslint-disable-next-line react/no-did-update-set-state
