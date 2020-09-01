@@ -21,10 +21,10 @@ import { importantColors } from "../../Term/TermTooltip";
 class TermEditForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { lookingUpDictionary: false };
+    this.state = { lookingUpDictionary: false, lookedUpDictionary: false };
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const {
       value,
       dictionaryLanguage,
@@ -34,24 +34,30 @@ class TermEditForm extends React.Component {
       index
     } = this.props;
 
-    const { lookingUpDictionary } = this.state;
+    const { lookedUpDictionary } = this.state;
+    if (index !== prevProps.index) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ lookedUpDictionary: false });
+    }
 
     if (
       // meaning is loaded but empty
       value.content &&
       // unknown term
       value.meaning === "" &&
-      !lookingUpDictionary
+      !lookedUpDictionary
     ) {
       const { code } = languages.find(l => l.code === languageCode);
       // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ lookingUpDictionary: true }, () =>
-        dictionaryTerm(
-          normalize(value.content, code),
-          languageCode,
-          dictionaryLanguage,
-          index
-        ).then(() => this.setState({ lookingUpDictionary: false }))
+      this.setState(
+        { lookingUpDictionary: true, lookedUpDictionary: true },
+        () =>
+          dictionaryTerm(
+            normalize(value.content, code),
+            languageCode,
+            dictionaryLanguage,
+            index
+          ).finally(() => this.setState({ lookingUpDictionary: false }))
       );
     }
   }
