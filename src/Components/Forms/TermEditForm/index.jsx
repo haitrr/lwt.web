@@ -5,6 +5,7 @@ import { Button, Col, Form, Input, notification, Row } from "antd";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import compromise from "compromise";
 import LearningLevelSelect from "../../Inputs/LearningLevelSelect";
+import normalize from "../../../textNormalizer";
 import LanguageSelect from "../../Inputs/LanguageSelect";
 import styles from "./TermEditForm.module.scss";
 import {
@@ -46,32 +47,10 @@ class TermEditForm extends React.Component {
       (prevMeaning === undefined && value.meaning === "")
     ) {
       const { code } = languages.find(l => l.code === languageCode);
-      if (code === "en") {
-        let simplified = value.content;
-        const doc = compromise(simplified);
-        doc.nouns().toSingular();
-        doc.unTag("#Noun");
-        doc.tag("#Verb");
-        simplified = doc
-          .verbs()
-          .toInfinitive()
-          .out();
-        // eslint-disable-next-line react/no-did-update-set-state
-        this.setState({ lookingUpDictionary: true }, () =>
-          dictionaryTerm(
-            simplified,
-            languageCode,
-            dictionaryLanguage,
-            index
-          ).then(() => this.setState({ lookingUpDictionary: false }))
-        );
-        return;
-      }
-
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ lookingUpDictionary: true }, () =>
         dictionaryTerm(
-          value.content,
+          normalize(value.content, code),
           languageCode,
           dictionaryLanguage,
           index

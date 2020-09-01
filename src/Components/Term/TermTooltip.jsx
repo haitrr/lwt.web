@@ -11,6 +11,7 @@ import {
 import { getNextLearningLevel, getPreviousLearningLevel } from "../../Enums";
 import { selectDictionaryLanguage } from "../../Selectors/UserSelectors";
 import { setBookmarkAction, selectTermAction } from "../../Actions/TextAction";
+import normalize from "../../textNormalizer";
 
 export const importantColors = [
   "#E50027",
@@ -145,7 +146,7 @@ class TermTooltip extends React.Component {
       this.dictionaryTimeout = setTimeout(() => {
         this.setState({ loading: true, dictionaried: true }, () =>
           dictionaryTerm(
-            term.content,
+            normalize(term.content, readingLanguageCode),
             readingLanguageCode,
             dictionaryLanguage,
             index
