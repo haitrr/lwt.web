@@ -3,7 +3,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { Button, Col, Form, Input, notification, Row } from "antd";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import compromise from "compromise";
 import LearningLevelSelect from "../../Inputs/LearningLevelSelect";
 import normalize from "../../../textNormalizer";
 import LanguageSelect from "../../Inputs/LanguageSelect";
