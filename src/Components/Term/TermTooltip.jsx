@@ -75,7 +75,9 @@ class TermTooltip extends React.Component {
         <div style={{ color: importantColors[Math.min(term.count, 49)] }}>
           {`${term.count} in this text.`}
         </div>
-      ) : null}
+      ) : (
+        <div>Loading term count</div>
+      )}
       <span>{term.meaning}</span>
     </span>
   );
