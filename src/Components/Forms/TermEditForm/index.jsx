@@ -62,6 +62,11 @@ class TermEditForm extends React.Component {
           ).finally(() => this.setState({ lookingUpDictionary: false }))
       );
     }
+    if (value.meaning !== prevProps.value.meaning) {
+      if (this.formRef.current) {
+        this.formRef.current.setFieldsValue({ meaning: value.meaning });
+      }
+    }
   }
 
   handleSubmit = values => {
@@ -139,9 +144,9 @@ class TermEditForm extends React.Component {
                   disabled={
                     lookingUpDictionary ||
                     (value.learningLevel !== TermLearningLevel.UnKnow &&
-                      value.meaning === undefined)
+                      value.meaning === null)
                   }
-                  autosize={{ maxRows: 3, minRows: 2 }}
+                  autoSize={{ maxRows: 4, minRows: 2 }}
                   placeholder="Meaning"
                   cols={60}
                 />
