@@ -124,7 +124,7 @@ class TermTooltip extends React.Component {
         <Button
           type="primary"
           onClick={this.better}
-          disabled={term.meaning === undefined || loading}
+          disabled={term.meaning === null || loading}
         >
           Better
         </Button>
@@ -132,7 +132,7 @@ class TermTooltip extends React.Component {
           type="primary"
           style={{ marginLeft: "5px" }}
           onClick={this.worse}
-          disabled={term.meaning === undefined || loading}
+          disabled={term.meaning === null || loading}
         >
           Worse
         </Button>
