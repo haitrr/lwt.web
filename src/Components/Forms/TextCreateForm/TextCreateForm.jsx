@@ -12,7 +12,7 @@ function TextCreateForm(props) {
 
   return (
     <Form ref={formRef}>
-      <Form.Item name="languageCode" intialValue={currentLanguage}>
+      <Form.Item name="languageCode" initialValue={currentLanguage}>
         <LanguageSelect />
       </Form.Item>
       <Form.Item name="title">
@@ -20,7 +20,7 @@ function TextCreateForm(props) {
       </Form.Item>
       <Form.Item name="content">
         <Input.TextArea
-          autosize={{ minRows: 10, maxRows: 20 }}
+          autoSize={{ minRows: 10, maxRows: 20 }}
           placeholder="Please input text content here ..."
         />
       </Form.Item>
@@ -36,6 +36,6 @@ export default connect(
 )(TextCreateForm);
 
 TextCreateForm.propTypes = {
-  currentLanguage: PropTypes.number.isRequired,
-  form: PropTypes.shape({}).isRequired
+  currentLanguage: PropTypes.string.isRequired,
+  formRef: PropTypes.shape({}).isRequired
 };

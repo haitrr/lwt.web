@@ -19,25 +19,20 @@ import termStyles from "../../Term/Term.module.scss";
 import { parseQueryString } from "../../../Utilities/queryString";
 import TotalTerm from "./TotalTerm";
 
-function renderTermNumber(current, record, level) {
+function renderTermNumber(record, level) {
   const { counts } = record;
   if (!counts) {
     return <span>-</span>;
   }
+  const current = counts[TermLearningLevel[level]];
   if (!current) {
     return 0;
   }
 
-  let sum = 0;
-  Object.keys(counts).map(key => {
-    if (
-      key !== TermLearningLevel.Skipped &&
-      key !== TermLearningLevel.Ignored
-    ) {
-      sum += counts[key];
-    }
-    return null;
-  });
+  const sum =
+    record.termCount -
+    counts[TermLearningLevel.Ignored] -
+    counts[TermLearningLevel.Skipped];
   return (
     <div className={`${termStyles[`term-${TermLearningLevel[level]}`]}`}>
       {`${current}`}
@@ -88,43 +83,43 @@ class TextPage extends React.Component {
       title: "UK",
       key: "unknow",
       dataIndex: "counts.unknown",
-      render: (value, record) => renderTermNumber(value, record, "UnKnow")
+      render: (value, record) => renderTermNumber(record, "UnKnow")
     },
     {
       title: "L1",
       key: "Learning1",
       dataIndex: "counts.learning-1",
-      render: (value, record) => renderTermNumber(value, record, "Learning1")
+      render: (value, record) => renderTermNumber(record, "Learning1")
     },
     {
       title: "L2",
       key: "Learning2",
       dataIndex: "counts.learning-2",
-      render: (value, record) => renderTermNumber(value, record, "Learning2")
+      render: (value, record) => renderTermNumber(record, "Learning2")
     },
     {
       title: "L3",
       key: "Learning3",
       dataIndex: "counts.learning-3",
-      render: (value, record) => renderTermNumber(value, record, "Learning3")
+      render: (value, record) => renderTermNumber(record, "Learning3")
     },
     {
       title: "L4",
       key: "Learning4",
       dataIndex: "counts.learning-4",
-      render: (value, record) => renderTermNumber(value, record, "Learning4")
+      render: (value, record) => renderTermNumber(record, "Learning4")
     },
     {
       title: "L5",
       key: "Learning5",
       dataIndex: "counts.learning-5",
-      render: (value, record) => renderTermNumber(value, record, "Learning5")
+      render: (value, record) => renderTermNumber(record, "Learning5")
     },
     {
       title: "WK",
       key: "WellKnow",
       dataIndex: "counts.well-known",
-      render: (value, record) => renderTermNumber(value, record, "WellKnow")
+      render: (_, record) => renderTermNumber(record, "WellKnow")
     },
     {
       title: "Status",
@@ -161,7 +156,8 @@ class TextPage extends React.Component {
     {
       title: "I",
       key: "Ignored",
-      dataIndex: "counts.ignored"
+      dataIndex: "counts",
+      render: value => (value ? value[TermLearningLevel.Ignored] : "-")
     },
     {
       title: "T",

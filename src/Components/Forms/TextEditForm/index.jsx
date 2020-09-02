@@ -20,7 +20,7 @@ function TextEditForm(props) {
       </Form.Item>
       <Form.Item name="content" initialValue={editDetail.content}>
         <Input.TextArea
-          autosize={{ minRows: 10, maxRows: 20 }}
+          autoSize={{ minRows: 10, maxRows: 20 }}
           placeholder="Please input text content here ..."
         />
       </Form.Item>
@@ -37,7 +37,5 @@ export default connect(
 
 TextEditForm.propTypes = {
   editDetail: PropTypes.shape({}).isRequired,
-  form: PropTypes.shape({
-    getFieldDecorator: PropTypes.func.isRequired
-  }).isRequired
+  formRef: PropTypes.shape({}).isRequired
 };

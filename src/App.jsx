@@ -6,7 +6,6 @@ import { Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import "antd/dist/antd.css";
 import { Helmet } from "react-helmet";
-import { createBrowserHistory } from "history";
 import styles from "./App.module.scss";
 import Header from "./Components/Header/Header";
 import { HomePage } from "./Components/Pages/HomePage";
@@ -17,8 +16,6 @@ import TextReadPage from "./Components/Pages/TextReadPage";
 import { getLanguageAction } from "./Actions/LanguageAction";
 import { getSettingAction } from "./Actions/UserAction";
 import UserPage from "./Components/Pages/UserPage";
-
-export const history = createBrowserHistory();
 
 /**
  * app.
@@ -43,7 +40,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <BrowserRouter history={history}>
+      <BrowserRouter>
         <div className={styles.layout}>
           <Helmet>
             <title>Lwt</title>
