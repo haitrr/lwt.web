@@ -69,18 +69,21 @@ export const importantColors = [
 class TermTooltip extends React.Component {
   state = { loading: false, dictionaried: false };
 
-  renderTitle = term => (
-    <span>
-      {term.count ? (
-        <div style={{ color: importantColors[Math.min(term.count, 49)] }}>
-          {`${term.count} in this text.`}
-        </div>
-      ) : (
-        <div>Loading term count</div>
-      )}
-      <span>{term.meaning}</span>
-    </span>
-  );
+  renderTitle = () => {
+    const { term } = this.props;
+    return (
+      <span>
+        {term.count ? (
+          <div style={{ color: importantColors[Math.min(term.count, 49)] }}>
+            {`${term.count} in this text.`}
+          </div>
+        ) : (
+          <div>Loading term count</div>
+        )}
+        <span>{term.meaning}</span>
+      </span>
+    );
+  };
 
   better = e => {
     e.preventDefault();
@@ -192,8 +195,8 @@ class TermTooltip extends React.Component {
     return (
       <Popover
         overlayClassName={styles.tooltip}
-        title={this.renderTitle(term)}
-        content={this.renderContent(term)}
+        title={this.renderTitle()}
+        content={this.renderContent()}
         mouseLeaveDelay={0.3}
         mouseEnterDelay={0.3}
         destroyTooltipOnHide
