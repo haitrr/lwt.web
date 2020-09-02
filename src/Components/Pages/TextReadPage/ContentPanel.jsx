@@ -96,7 +96,7 @@ class ContentPanel extends React.Component {
 
   render() {
     const { terms } = this.props;
-    const { begin, end, bookmarkRef, onTermClick } = this.props;
+    const { begin, end, bookmarkRef, onSpeak } = this.props;
     if (begin === end) {
       return <h1>Loading</h1>;
     }
@@ -105,7 +105,7 @@ class ContentPanel extends React.Component {
       if (terms[i]) {
         termElements.push(
           <Term
-            onTermClick={onTermClick}
+            onSpeak={onSpeak}
             bookmarkRef={bookmarkRef}
             last={begin === i ? this.begin : null}
             // eslint-disable-next-line react/no-array-index-key
@@ -147,7 +147,7 @@ ContentPanel.propTypes = {
   setTermIndexEnd: PropTypes.func.isRequired,
   termCount: PropTypes.number.isRequired,
   getTextTerms: PropTypes.func.isRequired,
-  onTermClick: PropTypes.func.isRequired
+  onSpeak: PropTypes.func.isRequired
 };
 export default connect(
   state => ({

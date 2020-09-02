@@ -88,7 +88,7 @@ class TextReadPage extends React.Component {
     }
   };
 
-  onTermClick = term => {
+  onSpeak = term => {
     this.utt.text = term.content;
     window.speechSynthesis.speak(this.utt);
   };
@@ -103,7 +103,7 @@ class TextReadPage extends React.Component {
         <h2 className={styles.titleSection}>{title}</h2>
         <TextStatistic />
         <ContentPanel
-          onTermClick={this.onTermClick}
+          onSpeak={this.onSpeak}
           textId={id}
           bookmark={bookmark}
           bookmarkRef={this.bookmark}

@@ -110,6 +110,12 @@ class TermTooltip extends React.Component {
     this.handleSetBookmark();
   };
 
+  speak = e => {
+    e.preventDefault();
+    const { onSpeak, term } = this.props;
+    onSpeak(term);
+  };
+
   renderContent = () => {
     const { term } = this.props;
     const { loading } = this.state;
@@ -129,6 +135,13 @@ class TermTooltip extends React.Component {
           disabled={term.meaning === undefined || loading}
         >
           Worse
+        </Button>
+        <Button
+          type="primary"
+          style={{ marginLeft: "5px" }}
+          onClick={this.speak}
+        >
+          Speak
         </Button>
       </div>
     );
@@ -224,7 +237,8 @@ TermTooltip.propTypes = {
   dictionaryLanguage: PropTypes.string.isRequired,
   setBookmark: PropTypes.func.isRequired,
   textId: PropTypes.number.isRequired,
-  setSelectingTerm: PropTypes.func.isRequired
+  setSelectingTerm: PropTypes.func.isRequired,
+  onSpeak: PropTypes.func.isRequired
 };
 export default connect(
   state => ({

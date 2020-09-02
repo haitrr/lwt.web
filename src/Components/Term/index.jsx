@@ -55,13 +55,7 @@ class Term extends React.Component {
 
   handleTermClick = e => {
     e.preventDefault();
-    const {
-      setEditingTerm,
-      index,
-      term,
-      onTermClick,
-      getTermMeaning
-    } = this.props;
+    const { setEditingTerm, index, term, onSpeak, getTermMeaning } = this.props;
     // load term meaning if not loaded.
     if (!term.count) {
       this.loadTermCountInText();
@@ -69,12 +63,12 @@ class Term extends React.Component {
     if (term.meaning === null) {
       getTermMeaning(term, index);
     }
-    onTermClick(term);
+    onSpeak(term);
     setEditingTerm(index);
   };
 
   render() {
-    const { term, bookmark, last, bookmarkRef, index } = this.props;
+    const { term, bookmark, last, bookmarkRef, index, onSpeak } = this.props;
     if (term.learningLevel === TermLearningLevel.Skipped) {
       return <SkippedTerm term={term} last={last} />;
     }
@@ -99,6 +93,7 @@ class Term extends React.Component {
         onClick={this.handleTermClick}
         bookmarkRef={bookmarkRef}
         onHover={this.handleHover}
+        onSpeak={onSpeak}
         index={index}
         term={term}
         last={last}
@@ -125,7 +120,7 @@ Term.propTypes = {
   last: PropTypes.shape({}),
   index: PropTypes.number.isRequired,
   getTermMeaning: PropTypes.func.isRequired,
-  onTermClick: PropTypes.func.isRequired,
+  onSpeak: PropTypes.func.isRequired,
   getTermCountInText: PropTypes.func.isRequired,
   textId: PropTypes.number.isRequired
 };
