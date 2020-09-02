@@ -9,6 +9,7 @@ class TermButton extends React.Component {
     // this.utt.text = term.content;
     // window.speechSynthesis.speak(this.utt);
     const { setBookmark, id, selectTerm, term, onClick } = this.props;
+    console.log(term);
     selectTerm(term.index);
     setBookmark(id, term.index);
     onClick(e);

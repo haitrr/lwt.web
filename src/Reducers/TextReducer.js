@@ -85,7 +85,11 @@ const textReducer = handleActions(
             newTerms[i].content.toUpperCase() ===
             createdTerm.content.toUpperCase()
           ) {
-            newTerms[i] = { ...createdTerm, content: newTerms[i].content };
+            newTerms[i] = {
+              ...createdTerm,
+              content: newTerms[i].content,
+              index: i
+            };
           }
         }
       }
@@ -105,7 +109,11 @@ const textReducer = handleActions(
             newTerms[i].content.toUpperCase() ===
             editedTerm.content.toUpperCase()
           ) {
-            newTerms[i] = { ...editedTerm, content: newTerms[i].content };
+            newTerms[i] = {
+              ...editedTerm,
+              content: newTerms[i].content,
+              index: i
+            };
           }
         }
       }
