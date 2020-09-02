@@ -13,11 +13,10 @@ import { selectEditDetail } from "../../../Reducers/TextReducer";
  * text create modal
  */
 class TextEditModal extends React.Component {
-  formRef = null;
+  formRef = React.createRef();
 
   constructor(props) {
     super(props);
-    this.saveFormRef = this.saveFormRef.bind(this);
     this.handleOk = this.handleOk.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
   }
@@ -35,12 +34,9 @@ class TextEditModal extends React.Component {
   }
 
   handleOk() {
-    const { form } = this.formRef.props;
+    const form = this.formRef.current;
     const { editText, hide, editingText, onEdit } = this.props;
-    form.validateFields((err, values) => {
-      if (err) {
-        return;
-      }
+    form.validateFields().then(values => {
       editText(editingText, values).then(onEdit);
       form.resetFields();
       hide();
@@ -49,13 +45,9 @@ class TextEditModal extends React.Component {
 
   handleCancel() {
     const { hide } = this.props;
-    const { form } = this.formRef.props;
+    const form = this.formRef.current;
     form.resetFields();
     hide();
-  }
-
-  saveFormRef(formRef) {
-    this.formRef = formRef;
   }
 
   render() {
@@ -71,10 +63,7 @@ class TextEditModal extends React.Component {
         onOk={this.handleOk}
         onCancel={this.handleCancel}
       >
-        <TextEditForm
-          editDetail={editDetail}
-          wrappedComponentRef={this.saveFormRef}
-        />
+        <TextEditForm editDetail={editDetail} formRef={this.formRef} />
       </Modal>
     );
   }

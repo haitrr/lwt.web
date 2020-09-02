@@ -3,13 +3,13 @@ import { Modal } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 import TextCreateForm from "../../Forms/TextCreateForm";
-import {createTextAction, getTextsAction} from "../../../Actions/TextAction";
+import { createTextAction, getTextsAction } from "../../../Actions/TextAction";
 
 /**
  * text create modal
  */
 class TextCreateModal extends React.Component {
-  formRef = null;
+  formRef = React.createRef();
 
   constructor(props) {
     super(props);
@@ -19,21 +19,21 @@ class TextCreateModal extends React.Component {
   }
 
   handleOk() {
-    const { form } = this.formRef.props;
+    const form = this.formRef.current;
     const { createText, hide, onCreate } = this.props;
-    form.validateFields((err, values) => {
-      if (err) {
-        return;
-      }
-      createText(values).then(onCreate);
-      form.resetFields();
-      hide();
-    });
+    form
+      .validateFields()
+      .then(values => {
+        createText(values).then(onCreate);
+        form.resetFields();
+        hide();
+      })
+      .catch(() => {});
   }
 
   handleCancel() {
+    const form = this.formRef.current;
     const { hide } = this.props;
-    const { form } = this.formRef.props;
     form.resetFields();
     hide();
   }
@@ -53,19 +53,16 @@ class TextCreateModal extends React.Component {
         onOk={this.handleOk}
         onCancel={this.handleCancel}
       >
-        <TextCreateForm wrappedComponentRef={this.saveFormRef} />
+        <TextCreateForm formRef={this.formRef} />
       </Modal>
     );
   }
 }
 
-export default connect(
-  null,
-  {
-    createText: createTextAction,
-    getTexts: getTextsAction
-  }
-)(TextCreateModal);
+export default connect(null, {
+  createText: createTextAction,
+  getTexts: getTextsAction
+})(TextCreateModal);
 
 TextCreateModal.propTypes = {
   createText: PropTypes.func.isRequired,

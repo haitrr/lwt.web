@@ -1,51 +1,44 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, notification } from "antd";
 import React from "react";
 import "./RegisterForm.css";
+import { withRouter } from "react-router";
 
 /**
  * Register form
  */
 class RegisterForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  handleSubmit(e) {
-    e.preventDefault();
-    const { form, onSubmit } = this.props;
-    form.validateFields((err, values) => {
-      if (err == null || err.length === 0) {
-        onSubmit(values);
-      }
-    });
-  }
+  handleSubmit = values => {
+    const { onSubmit, history } = this.props;
+    if (values.password !== values.repeatPassword) {
+      notification.error({ message: "Passwords not match" });
+      return;
+    }
+    onSubmit(values)
+      .then(() => {
+        history.push("/login");
+      })
+      .catch(e => {
+        throw e;
+      });
+  };
 
   render() {
-    const {
-      form: { getFieldDecorator }
-    } = this.props;
-
     return (
-      <Form onSubmit={this.handleSubmit}>
-        <Form.Item>
-          {getFieldDecorator("userName")(<Input placeholder="UserName" />)}
+      <Form onFinish={this.handleSubmit}>
+        <Form.Item name="userName">
+          <Input placeholder="UserName" />
         </Form.Item>
-        <Form.Item>
-          {getFieldDecorator("password")(<Input placeholder="Password" />)}
+        <Form.Item name="password">
+          <Input type="password" placeholder="Password" />
         </Form.Item>
-        <Form.Item>
-          {getFieldDecorator("repeatPassword")(
-            <Input placeholder="Retype password" />
-          )}
+        <Form.Item name="repeatPassword">
+          <Input type="password" placeholder="Retype password" />
         </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Register
-          </Button>
-        </Form.Item>
+        <Button type="primary" htmlType="submit">
+          Register
+        </Button>
       </Form>
     );
   }
 }
-const registerForm = Form.create()(RegisterForm);
-export { registerForm as RegisterForm };
+export default withRouter(RegisterForm);

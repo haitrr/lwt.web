@@ -12,34 +12,22 @@ class LoginForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    const { form, onSubmit } = this.props;
-    form.validateFields((err, values) => {
-      if (err != null && err.length > 0) {
-        // todo: error
-      }
-
-      onSubmit(values);
-    });
+  handleSubmit(values) {
+    const { onSubmit } = this.props;
+    onSubmit(values);
   }
 
   render() {
-    const {
-      form: { getFieldDecorator },
-      className
-    } = this.props;
+    const { className } = this.props;
 
     return (
-      <Form className={className} onSubmit={this.handleSubmit}>
+      <Form className={className} onFinish={this.handleSubmit}>
         <h1>LOGIN</h1>
-        <Form.Item>
-          {getFieldDecorator("userName")(<Input placeholder="UserName" />)}
+        <Form.Item name="userName" rules={[{ required: true }]}>
+          <Input placeholder="UserName" />
         </Form.Item>
-        <Form.Item>
-          {getFieldDecorator("password")(
-            <Input.Password placeholder="Password" />
-          )}
+        <Form.Item name="password" rules={[{ required: true }]}>
+          <Input.Password placeholder="Password" />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
@@ -61,4 +49,4 @@ LoginForm.defaultProps = {
   className: ""
 };
 
-export default Form.create()(LoginForm);
+export default LoginForm;

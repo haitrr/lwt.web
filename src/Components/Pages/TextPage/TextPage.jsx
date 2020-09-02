@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
-import { Button, Icon, Pagination, Popconfirm, Table } from "antd";
+import { Button, Pagination, Popconfirm, Table } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { ReadOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { getLanguageAction } from "../../../Actions/LanguageAction";
 import {
   deleteTextAction,
@@ -66,7 +67,7 @@ class TextPage extends React.Component {
       render: (_, text) => (
         <span>
           <Link className={styles.actionButton} to={`/text/read/${text.id}`}>
-            <Icon type="read" />
+            <ReadOutlined />
           </Link>
           <Popconfirm
             title="Confirm to delete this text."
@@ -74,10 +75,9 @@ class TextPage extends React.Component {
             okText="Delete"
             okType="danger"
           >
-            <Icon type="delete" className={styles.deleteButton} />
+            <DeleteOutlined className={styles.deleteButton} />
           </Popconfirm>
-          <Icon
-            type="edit"
+          <EditOutlined
             className={styles.editButton}
             onClick={() => this.handleEdit(text.id)}
           />
@@ -147,11 +147,11 @@ class TextPage extends React.Component {
     },
     {
       title: "Language",
-      dataIndex: "language",
-      key: "language",
+      dataIndex: "languageCode",
+      key: "languageCode",
       render: value => {
         const { languages } = this.props;
-        const language = languages.find(lang => lang.id === value);
+        const language = languages.find(lang => lang.code === value);
         if (language) {
           return language.name;
         }

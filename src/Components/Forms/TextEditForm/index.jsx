@@ -8,43 +8,32 @@ import LanguageSelect from "../../Inputs/LanguageSelect/LanguageSelect";
  * text create form
  */
 function TextEditForm(props) {
-  const {
-    form: { getFieldDecorator },
-    editDetail
-  } = props;
+  const { editDetail, formRef } = props;
 
   return (
-    <Form>
-      <Form.Item>
-        {getFieldDecorator("languageCode", {
-          initialValue: editDetail.languageCode
-        })(<LanguageSelect />)}
+    <Form ref={formRef}>
+      <Form.Item name="languageCode" initialValue={editDetail.languageCode}>
+        <LanguageSelect />
       </Form.Item>
-      <Form.Item>
-        {getFieldDecorator("title", { initialValue: editDetail.title })(
-          <Input placeholder="Title" />
-        )}
+      <Form.Item name="title" initialValue={editDetail.title}>
+        <Input placeholder="Title" />
       </Form.Item>
-      <Form.Item>
-        {getFieldDecorator("content", { initialValue: editDetail.content })(
-          <Input.TextArea
-            autosize={{ minRows: 10, maxRows: 20 }}
-            placeholder="Please input text content here ..."
-          />
-        )}
+      <Form.Item name="content" initialValue={editDetail.content}>
+        <Input.TextArea
+          autosize={{ minRows: 10, maxRows: 20 }}
+          placeholder="Please input text content here ..."
+        />
       </Form.Item>
     </Form>
   );
 }
 
-export default Form.create()(
-  connect(
-    state => ({
-      currentLanguage: state.language.currentLanguage
-    }),
-    null
-  )(TextEditForm)
-);
+export default connect(
+  state => ({
+    currentLanguage: state.language.currentLanguage
+  }),
+  null
+)(TextEditForm);
 
 TextEditForm.propTypes = {
   editDetail: PropTypes.shape({}).isRequired,

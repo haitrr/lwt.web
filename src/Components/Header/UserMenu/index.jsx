@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Dropdown, Icon, Menu } from "antd";
+import { Dropdown, Menu } from "antd";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styles from "./UserMenu.module.scss";
@@ -24,9 +24,7 @@ const UserMenu = ({ userName, logout }) => {
   );
   return (
     <Dropdown overlay={menu}>
-      <Link to="/profile">
-        <Icon type="user" />
-      </Link>
+      <Link to="/profile">PROFILE</Link>
     </Dropdown>
   );
 };

@@ -31,9 +31,5 @@ export function logout() {
 }
 
 export async function registerAsync(data) {
-  try {
-    await postAsync(`${API_ROOT}/user/register`, data);
-  } catch (e) {
-    // ignore
-  }
+  await postAsync(`${API_ROOT}/user`, data);
 }

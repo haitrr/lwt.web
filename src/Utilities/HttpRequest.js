@@ -11,12 +11,15 @@ function defaultResponseErrorHandler(response) {
       message: "Failed to connect to server, please try again later."
     });
   } else if (response.status === 400) {
-    notification.error({ message: response.json().message });
+    response.json().then(error => {
+      notification.error({ message: error.Message });
+    });
   } else {
     notification.error({
       message: `Error connecting with server ${response.status}:${response.statusText}`
     });
   }
+  throw response;
 }
 async function defaultResponseHandler(response) {
   if (response.ok) {

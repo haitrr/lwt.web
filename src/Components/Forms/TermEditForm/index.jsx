@@ -19,6 +19,8 @@ import { TermLearningLevel, getNextLearningLevel } from "../../../Enums";
 import { importantColors } from "../../Term/TermTooltip";
 
 class TermEditForm extends React.Component {
+  formRef = React.createRef();
+
   constructor(props) {
     super(props);
     this.state = { lookingUpDictionary: false, lookedUpDictionary: false };
@@ -62,16 +64,9 @@ class TermEditForm extends React.Component {
     }
   }
 
-  handleSubmit = e => {
-    const {
-      form: { getFieldsValue },
-      value,
-      createTerm,
-      editTerm,
-      setEditingTerm
-    } = this.props;
-    e.preventDefault();
-    const editedData = getFieldsValue();
+  handleSubmit = values => {
+    const { value, createTerm, editTerm, setEditingTerm } = this.props;
+    const editedData = values;
     const editedTerm = { ...value, ...editedData };
     if (!value.id) {
       createTerm(editedTerm);
@@ -82,67 +77,64 @@ class TermEditForm extends React.Component {
   };
 
   handleBetter = e => {
-    const {
-      form: { setFieldsValue },
-      value
-    } = this.props;
+    const { value } = this.props;
     e.preventDefault();
-    setFieldsValue({
+    const newValue = {
       ...value,
       learningLevel: getNextLearningLevel(value.learningLevel)
-    });
-    this.handleSubmit(e);
+    };
+    this.formRef.current.setFieldsValue(newValue);
+    this.handleSubmit(newValue);
   };
 
   render() {
-    const {
-      form: { getFieldDecorator },
-      value,
-      languageCode,
-      className,
-      editingTerm
-    } = this.props;
+    const { value, className, editingTerm } = this.props;
     if (!editingTerm) {
       return null;
     }
 
     const { lookingUpDictionary } = this.state;
     return (
-      <Form
-        onSubmit={this.handleSubmit}
-        layout="inline"
-        className={`${className} ${styles.form}`}
-      >
-        <CopyToClipboard
-          text={value.content}
-          onCopy={() => notification.info({ message: "Copied to clipboard." })}
-        >
-          <div
-            className={styles.title}
-            style={{ color: importantColors[Math.min(value.count, 49)] }}
+      <Form onFinish={this.handleSubmit} layout="inline" ref={this.formRef}>
+        <div className={`${className} ${styles.form}`}>
+          <CopyToClipboard
+            text={value.content}
+            onCopy={() =>
+              notification.info({ message: "Copied to clipboard." })
+            }
           >
-            {`${value.content}(${value.count ?? "-"})`}
-          </div>
-        </CopyToClipboard>
-        <Form.Item className={styles.content} label="Content">
-          {getFieldDecorator("content", { initialValue: value.content })(
+            <div
+              className={styles.title}
+              style={{ color: importantColors[Math.min(value.count, 49)] }}
+            >
+              {`${value.content}(${value.count ?? "-"})`}
+            </div>
+          </CopyToClipboard>
+          <Form.Item
+            className={styles.content}
+            label="Content"
+            name="content"
+            initialValue={value.content}
+          >
             <React.Fragment>
               <Input disabled />
             </React.Fragment>
-          )}
-        </Form.Item>
-        <Form.Item className={styles.language}>
-          {getFieldDecorator("languageCode", { initialValue: languageCode })(
+          </Form.Item>
+          <Form.Item
+            className={styles.language}
+            name="languageCode"
+            initialValue={value.languageCode}
+          >
             <LanguageSelect disabled />
-          )}
-        </Form.Item>
+          </Form.Item>
 
-        <Row>
-          <Col xl={10} lg={12} xs={24}>
-            <Form.Item className={styles.meaning}>
-              {getFieldDecorator("meaning", {
-                initialValue: value.meaning
-              })(
+          <Row>
+            <Col xl={10} lg={12} xs={24}>
+              <Form.Item
+                name="meaning"
+                initialValue={value.meaning}
+                className={styles.meaning}
+              >
                 <Input.TextArea
                   disabled={
                     lookingUpDictionary ||
@@ -153,53 +145,55 @@ class TermEditForm extends React.Component {
                   placeholder="Meaning"
                   cols={60}
                 />
-              )}
-            </Form.Item>
-          </Col>
-          <Col xl={10} lg={12} xs={24}>
-            <Form.Item className={styles.learningLevel}>
-              {getFieldDecorator("learningLevel", {
-                initialValue: value.learningLevel
-              })(<LearningLevelSelect />)}
-            </Form.Item>
-          </Col>
-          <Col xl={4} lg={24} xs={24}>
-            <Row gutter={1}>
-              <Col xs={12} lg={24}>
-                <Form.Item className={styles.saveButton}>
-                  <Button
-                    type="primary"
-                    onClick={this.handleBetter}
-                    disabled={
-                      lookingUpDictionary ||
-                      (value.learningLevel !== TermLearningLevel.UnKnow &&
-                        value.meaning === undefined)
-                    }
-                    className={styles.saveButton}
-                  >
-                    Better
-                  </Button>
-                </Form.Item>
-              </Col>
-              <Col xs={12} lg={24} l>
-                <Form.Item className={styles.saveButton}>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    disabled={
-                      lookingUpDictionary ||
-                      (value.learningLevel !== TermLearningLevel.UnKnow &&
-                        value.meaning === undefined)
-                    }
-                    className={styles.saveButton}
-                  >
-                    Save
-                  </Button>
-                </Form.Item>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
+              </Form.Item>
+            </Col>
+            <Col xl={10} lg={12} xs={24}>
+              <Form.Item
+                name="learningLevel"
+                initialValue={value.learningLevel}
+                className={styles.learningLevel}
+              >
+                <LearningLevelSelect />
+              </Form.Item>
+            </Col>
+            <Col xl={4} lg={24} xs={24}>
+              <Row gutter={1}>
+                <Col xs={12} lg={24}>
+                  <Form.Item className={styles.saveButton}>
+                    <Button
+                      type="primary"
+                      onClick={this.handleBetter}
+                      disabled={
+                        lookingUpDictionary ||
+                        (value.learningLevel !== TermLearningLevel.UnKnow &&
+                          value.meaning === undefined)
+                      }
+                      className={styles.saveButton}
+                    >
+                      Better
+                    </Button>
+                  </Form.Item>
+                </Col>
+                <Col xs={12} lg={24} l>
+                  <Form.Item className={styles.saveButton}>
+                    <Button
+                      type="primary"
+                      htmlType="submit"
+                      disabled={
+                        lookingUpDictionary ||
+                        (value.learningLevel !== TermLearningLevel.UnKnow &&
+                          value.meaning === undefined)
+                      }
+                      className={styles.saveButton}
+                    >
+                      Save
+                    </Button>
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </div>
       </Form>
     );
   }
@@ -245,4 +239,4 @@ export default connect(
     editTerm: editTermAction,
     dictionaryTerm: dictionaryTermMeaningAction
   }
-)(Form.create()(TermEditForm));
+)(TermEditForm);

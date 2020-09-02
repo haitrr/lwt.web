@@ -55,9 +55,5 @@ export const updateSettingAction = createAction(
   }
 );
 export const registerAction = createAction(USER_REGISTERED, async data => {
-  try {
-    await registerAsync(data);
-  } catch {
-    // ignore
-  }
+  await registerAsync(data);
 });

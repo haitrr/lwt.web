@@ -8,41 +8,32 @@ import LanguageSelect from "../../Inputs/LanguageSelect/LanguageSelect";
  * text create form
  */
 function TextCreateForm(props) {
-  const {
-    form: { getFieldDecorator },
-    currentLanguage
-  } = props;
+  const { currentLanguage, formRef } = props;
 
   return (
-    <Form>
-      <Form.Item>
-        {getFieldDecorator("languageCode", { initialValue: currentLanguage })(
-          <LanguageSelect />
-        )}
+    <Form ref={formRef}>
+      <Form.Item name="languageCode" intialValue={currentLanguage}>
+        <LanguageSelect />
       </Form.Item>
-      <Form.Item>
-        {getFieldDecorator("title")(<Input placeholder="Title" />)}
+      <Form.Item name="title">
+        <Input placeholder="Title" />
       </Form.Item>
-      <Form.Item>
-        {getFieldDecorator("content")(
-          <Input.TextArea
-            autosize={{ minRows: 10, maxRows: 20 }}
-            placeholder="Please input text content here ..."
-          />
-        )}
+      <Form.Item name="content">
+        <Input.TextArea
+          autosize={{ minRows: 10, maxRows: 20 }}
+          placeholder="Please input text content here ..."
+        />
       </Form.Item>
     </Form>
   );
 }
 
-export default Form.create()(
-  connect(
-    state => ({
-      currentLanguage: state.language.currentLanguage
-    }),
-    null
-  )(TextCreateForm)
-);
+export default connect(
+  state => ({
+    currentLanguage: state.language.currentLanguage
+  }),
+  null
+)(TextCreateForm);
 
 TextCreateForm.propTypes = {
   currentLanguage: PropTypes.number.isRequired,
