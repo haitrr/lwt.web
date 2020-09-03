@@ -65,6 +65,9 @@ class ContentPanel extends React.Component {
   handleScroll = e => {
     e.stopPropagation();
     e.preventDefault();
+    if (e.target.id !== "contentPanel") {
+      return;
+    }
     const {
       termCount,
       begin,

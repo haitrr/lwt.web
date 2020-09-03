@@ -31,7 +31,6 @@ const normalize = (text, languageCode) => {
       honorifics: false
     });
     doc.toLowerCase();
-    console.log(doc.out());
     return doc.out();
   }
   return text;
