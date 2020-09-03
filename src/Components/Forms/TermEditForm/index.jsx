@@ -111,7 +111,6 @@ class TermEditForm extends React.Component {
       return null;
     }
 
-    const { lookingUpDictionary } = this.state;
     return (
       <Form onFinish={this.handleSubmit} layout="inline" ref={this.formRef}>
         <div className={`${className} ${styles.form}`}>
@@ -140,11 +139,7 @@ class TermEditForm extends React.Component {
                 className={styles.meaning}
               >
                 <Input.TextArea
-                  disabled={
-                    lookingUpDictionary ||
-                    (value.learningLevel !== TermLearningLevel.UnKnow &&
-                      value.meaning === null)
-                  }
+                  disabled={this.isActionDisabled()}
                   autoSize={{ maxRows: 4, minRows: 2 }}
                   placeholder="Meaning"
                   cols={60}
