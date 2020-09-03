@@ -10,6 +10,7 @@ import {
   setTermIndexBeginAction,
   setTermIndexEndAction
 } from "../../../Actions/TextAction";
+import { setEditingTermAction } from "../../../Actions/TermAction";
 
 class ContentPanel extends React.Component {
   constructor(props) {
@@ -71,11 +72,16 @@ class ContentPanel extends React.Component {
     const {
       termCount,
       begin,
+      editingTerm,
+      setEditingTerm,
       end,
       setTermIndexEnd,
       setTermIndexBegin,
       terms
     } = this.props;
+    if (editingTerm) {
+      setEditingTerm(null);
+    }
     // loading
     if (!terms[begin] || !terms[end]) {
       return;
@@ -137,7 +143,8 @@ class ContentPanel extends React.Component {
 }
 
 ContentPanel.defaultProps = {
-  terms: null
+  terms: null,
+  editingTerm: null
 };
 
 ContentPanel.propTypes = {
@@ -150,18 +157,22 @@ ContentPanel.propTypes = {
   setTermIndexEnd: PropTypes.func.isRequired,
   termCount: PropTypes.number.isRequired,
   getTextTerms: PropTypes.func.isRequired,
-  onSpeak: PropTypes.func.isRequired
+  onSpeak: PropTypes.func.isRequired,
+  editingTerm: PropTypes.number,
+  setEditingTerm: PropTypes.func.isRequired
 };
 export default connect(
   state => ({
     terms: state.text.readingText.terms,
     begin: state.text.readingText.termIndexBegin,
     end: state.text.readingText.termIndexEnd,
-    termCount: state.text.readingText.termCount
+    termCount: state.text.readingText.termCount,
+    editingTerm: state.term.editingTerm
   }),
   {
     getTextTerms: getTextTermsAction,
     setTermIndexBegin: setTermIndexBeginAction,
-    setTermIndexEnd: setTermIndexEndAction
+    setTermIndexEnd: setTermIndexEndAction,
+    setEditingTerm: setEditingTermAction
   }
 )(ContentPanel);
