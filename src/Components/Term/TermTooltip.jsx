@@ -130,10 +130,10 @@ class TermTooltip extends React.Component {
       // eslint-disable-next-line react/no-did-update-set-state
       this.dictionaryTimeout = setTimeout(() => {
         this.handleDictionaryTerm();
-      }, 200);
+      }, 100);
     }
     const { onHover } = this.props;
-    this.hoverTimeout = setTimeout(onHover, 200);
+    this.hoverTimeout = setTimeout(onHover, 100);
   };
 
   handleMouseLeave = () => {
@@ -149,7 +149,7 @@ class TermTooltip extends React.Component {
         title={this.renderTitle()}
         content={this.renderContent()}
         mouseLeaveDelay={0.5}
-        mouseEnterDelay={0.5}
+        mouseEnterDelay={0.3}
         destroyTooltipOnHide
       >
         <span
