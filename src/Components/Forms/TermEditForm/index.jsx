@@ -228,7 +228,9 @@ TermEditForm.propTypes = {
   setEditingTerm: PropTypes.func.isRequired,
   value: PropTypes.shape({
     id: PropTypes.number,
-    content: PropTypes.string
+    content: PropTypes.string,
+    index: PropTypes.number.isRequired,
+    meaning: PropTypes.string
   }),
   dictionaryTerm: PropTypes.func.isRequired,
   index: PropTypes.number
