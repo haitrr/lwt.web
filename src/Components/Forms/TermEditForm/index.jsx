@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
-import { Button, Col, Form, Input, notification, Row } from "antd";
-import { CopyToClipboard } from "react-copy-to-clipboard";
+import { Button, Col, Form, Input, Row } from "antd";
+import TermContent from "./TermContent";
 import LearningLevelSelect from "../../Inputs/LearningLevelSelect";
 import normalize from "../../../textNormalizer";
 import LanguageSelect from "../../Inputs/LanguageSelect";
@@ -16,7 +16,6 @@ import {
 import { selectEditingTermValue } from "../../../Selectors/TermSelectors";
 import { selectDictionaryLanguage } from "../../../Selectors/UserSelectors";
 import { TermLearningLevel, getNextLearningLevel } from "../../../Enums";
-import { importantColors } from "../../Term/TermTooltip";
 
 class TermEditForm extends React.Component {
   formRef = React.createRef();
@@ -96,9 +95,19 @@ class TermEditForm extends React.Component {
     this.handleSubmit(newValue);
   };
 
+  isActionDisabled = () => {
+    const { lookingUpDictionary } = this.state;
+    const { value } = this.props;
+    return (
+      lookingUpDictionary ||
+      (value.learningLevel !== TermLearningLevel.UnKnow &&
+        value.meaning === null)
+    );
+  };
+
   render() {
     const { value, className, editingTerm } = this.props;
-    if (!editingTerm) {
+    if (!editingTerm || !value) {
       return null;
     }
 
@@ -106,28 +115,14 @@ class TermEditForm extends React.Component {
     return (
       <Form onFinish={this.handleSubmit} layout="inline" ref={this.formRef}>
         <div className={`${className} ${styles.form}`}>
-          <CopyToClipboard
-            text={value.content}
-            onCopy={() =>
-              notification.info({ message: "Copied to clipboard." })
-            }
-          >
-            <div
-              className={styles.title}
-              style={{ color: importantColors[Math.min(value.count, 49)] }}
-            >
-              {`${value.content}(${value.count ?? "-"})`}
-            </div>
-          </CopyToClipboard>
+          <TermContent term={value} />
           <Form.Item
             className={styles.content}
             label="Content"
             name="content"
             initialValue={value.content}
           >
-            <React.Fragment>
-              <Input disabled />
-            </React.Fragment>
+            <Input disabled />
           </Form.Item>
           <Form.Item
             className={styles.language}
@@ -172,11 +167,7 @@ class TermEditForm extends React.Component {
                     <Button
                       type="primary"
                       onClick={this.handleBetter}
-                      disabled={
-                        lookingUpDictionary ||
-                        (value.learningLevel !== TermLearningLevel.UnKnow &&
-                          value.meaning === undefined)
-                      }
+                      disabled={this.isActionDisabled()}
                       className={styles.saveButton}
                     >
                       Better
@@ -188,11 +179,7 @@ class TermEditForm extends React.Component {
                     <Button
                       type="primary"
                       htmlType="submit"
-                      disabled={
-                        lookingUpDictionary ||
-                        (value.learningLevel !== TermLearningLevel.UnKnow &&
-                          value.meaning === undefined)
-                      }
+                      disabled={this.isActionDisabled()}
                       className={styles.saveButton}
                     >
                       Save
