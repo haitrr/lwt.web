@@ -62,7 +62,11 @@ class TermEditForm extends React.Component {
           ).finally(() => this.setState({ lookingUpDictionary: false }))
       );
     }
-    if (value.meaning !== prevProps.value.meaning) {
+    if (value.index !== prevProps.value.index) {
+      if (this.formRef.current) {
+        this.formRef.current.setFieldsValue({ ...value });
+      }
+    } else if (value.meaning !== prevProps.value.meaning) {
       if (this.formRef.current) {
         this.formRef.current.setFieldsValue({ meaning: value.meaning });
       }
