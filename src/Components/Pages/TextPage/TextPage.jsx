@@ -80,6 +80,18 @@ class TextPage extends React.Component {
       )
     },
     {
+      title:"P",
+      key: "progress",
+      dataIndex:"bookmark",
+      render: (value,record) => {
+        let percentage = 0;
+        if(value) {
+        percentage = Math.floor((value / record.termCount) * 10000)/ 100;
+        }
+        return `${percentage}%`;
+      }
+    },
+    {
       title: "UK",
       key: "unknow",
       dataIndex: "counts.unknown",
