@@ -61,7 +61,7 @@ class TextPage extends React.Component {
       width: "auto",
       render: (_, text) => (
         <span>
-          <Link className={styles.actionButton} to={`/text/read/${text.id}`}>
+          <Link disabled={text.processedTermCount === 0} className={styles.actionButton} to={`/text/read/${text.id}`}>
             <ReadOutlined />
           </Link>
           <Popconfirm
