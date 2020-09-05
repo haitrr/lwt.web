@@ -6,12 +6,12 @@ import styles from "./Term.module.scss";
 import TermButton from "./TermButton";
 import {
   dictionaryTermMeaningAction,
-  editTermAction
+  editTermAction,
 } from "../../Actions/TermAction";
 import {
   getNextLearningLevel,
   getPreviousLearningLevel,
-  importantColors
+  importantColors,
 } from "../../Enums";
 import { selectDictionaryLanguage } from "../../Selectors/UserSelectors";
 import { setBookmarkAction, selectTermAction } from "../../Actions/TextAction";
@@ -36,12 +36,12 @@ class TermTooltip extends React.Component {
     );
   };
 
-  better = e => {
+  better = (e) => {
     e.preventDefault();
     const { term, editTerm } = this.props;
     const newTerm = {
       ...term,
-      learningLevel: getNextLearningLevel(term.learningLevel)
+      learningLevel: getNextLearningLevel(term.learningLevel),
     };
     editTerm(newTerm);
     this.handleSetBookmark();
@@ -53,21 +53,22 @@ class TermTooltip extends React.Component {
     setSelectingTerm(index);
   };
 
-  worse = e => {
+  worse = (e) => {
     e.preventDefault();
     const { term, editTerm } = this.props;
     const newTerm = {
       ...term,
-      learningLevel: getPreviousLearningLevel(term.learningLevel)
+      learningLevel: getPreviousLearningLevel(term.learningLevel),
     };
     editTerm(newTerm);
     this.handleSetBookmark();
   };
 
-  speak = e => {
+  speak = (e) => {
     e.preventDefault();
     const { onSpeak, term } = this.props;
     onSpeak(term);
+    this.handleSetBookmark();
   };
 
   renderContent = () => {
@@ -107,7 +108,7 @@ class TermTooltip extends React.Component {
       index,
       dictionaryTerm,
       dictionaryLanguage,
-      readingLanguageCode
+      readingLanguageCode,
     } = this.props;
     const { dictionaried } = this.state;
     if (term && !dictionaried && term.meaning === "") {
@@ -171,13 +172,13 @@ class TermTooltip extends React.Component {
 
 TermTooltip.defaultProps = {
   bookmark: false,
-  last: null
+  last: null,
 };
 
 TermTooltip.propTypes = {
   term: PropTypes.shape({
     learningLevel: PropTypes.string.isRequired,
-    meaning: PropTypes.string
+    meaning: PropTypes.string,
   }).isRequired,
   bookmark: PropTypes.bool,
   bookmarkRef: PropTypes.shape({}).isRequired,
@@ -192,18 +193,18 @@ TermTooltip.propTypes = {
   setBookmark: PropTypes.func.isRequired,
   textId: PropTypes.number.isRequired,
   setSelectingTerm: PropTypes.func.isRequired,
-  onSpeak: PropTypes.func.isRequired
+  onSpeak: PropTypes.func.isRequired,
 };
 export default connect(
-  state => ({
+  (state) => ({
     dictionaryLanguage: selectDictionaryLanguage(state),
     readingLanguageCode: state.text.readingText.languageCode,
-    textId: state.text.readingText.id
+    textId: state.text.readingText.id,
   }),
   {
     editTerm: editTermAction,
     dictionaryTerm: dictionaryTermMeaningAction,
     setBookmark: setBookmarkAction,
-    setSelectingTerm: selectTermAction
+    setSelectingTerm: selectTermAction,
   }
 )(TermTooltip);
