@@ -10,14 +10,16 @@ import {
   TEXT_TERM_LOADED,
   TEXT_TERM_SELECT,
   READING_TEXT_TERMS_COUNT_LOADED,
-  TERM_COUNT_IN_TEXT
+  TERM_COUNT_IN_TEXT,
+  TEXT_TERM_COUNT_GET,
+  TEXT_PROCESSED_TERM_COUNT_GET,
 } from "../Actions/TextAction";
 import {
   TERM_CREATED,
   TERM_DICTIONARY,
   TERM_EDITED,
   TERM_GET,
-  TERM_GET_MEANING
+  TERM_GET_MEANING,
 } from "../Actions/TermAction";
 
 /**
@@ -30,7 +32,7 @@ const defaultState = {
   itemPerPage: 10,
   total: 0,
   filters: {},
-  readingText: null
+  readingText: null,
 };
 
 const textReducer = handleActions(
@@ -47,14 +49,14 @@ const textReducer = handleActions(
       terms[action.payload.index] = {
         ...terms[action.payload.index],
         ...action.payload.term,
-        content: terms[action.payload.index].content
+        content: terms[action.payload.index].content,
       };
       return {
         ...state,
         readingText: {
           ...state.readingText,
-          terms
-        }
+          terms,
+        },
       };
     },
     [TEXT_READ]: (state, action) => {
@@ -67,8 +69,8 @@ const textReducer = handleActions(
           ...action.payload,
           termIndexEnd: action.payload.bookmark ?? 0,
           termIndexBegin: action.payload.bookmark ?? 0,
-          terms: new Array(action.payload.termCount).fill(null)
-        }
+          terms: new Array(action.payload.termCount).fill(null),
+        },
       };
     },
     [TERM_CREATED]: (state, action) => {
@@ -88,7 +90,7 @@ const textReducer = handleActions(
             newTerms[i] = {
               ...createdTerm,
               content: newTerms[i].content,
-              index: i
+              index: i,
             };
           }
         }
@@ -112,7 +114,7 @@ const textReducer = handleActions(
             newTerms[i] = {
               ...editedTerm,
               content: newTerms[i].content,
-              index: i
+              index: i,
             };
           }
         }
@@ -123,7 +125,7 @@ const textReducer = handleActions(
       if (action.payload) {
         return {
           ...state,
-          texts: state.texts.filter(t => t.id !== action.payload)
+          texts: state.texts.filter((t) => t.id !== action.payload),
         };
       }
       return state;
@@ -132,14 +134,14 @@ const textReducer = handleActions(
       if (action.payload) {
         return {
           ...state,
-          editDetail: action.payload
+          editDetail: action.payload,
         };
       }
       return state;
     },
     [TEXT_TERM_SELECT]: (state, action) => ({
       ...state,
-      readingText: { ...state.readingText, bookmark: action.payload }
+      readingText: { ...state.readingText, bookmark: action.payload },
     }),
 
     [TERM_GET_MEANING]: (state, action) => {
@@ -157,7 +159,7 @@ const textReducer = handleActions(
         return state;
       }
       const { id, counts } = action.payload;
-      const index = state.texts.findIndex(t => t.id === id);
+      const index = state.texts.findIndex((t) => t.id === id);
       if (index < 0) {
         return state;
       }
@@ -173,7 +175,10 @@ const textReducer = handleActions(
       const { counts } = action.payload;
       return {
         ...state,
-        readingText: { ...state.readingText, termsCountByLearningLevel: counts }
+        readingText: {
+          ...state.readingText,
+          termsCountByLearningLevel: counts,
+        },
       };
     },
     [TEXT_TERM_LOADED]: (state, action) => {
@@ -187,17 +192,17 @@ const textReducer = handleActions(
         ...state,
         readingText: {
           ...state.readingText,
-          terms: newTerms
-        }
+          terms: newTerms,
+        },
       };
     },
     [TERM_INDEX_BEGIN_SET]: (state, action) => ({
       ...state,
-      readingText: { ...state.readingText, termIndexBegin: action.payload }
+      readingText: { ...state.readingText, termIndexBegin: action.payload },
     }),
     [TERM_INDEX_END_SET]: (state, action) => ({
       ...state,
-      readingText: { ...state.readingText, termIndexEnd: action.payload }
+      readingText: { ...state.readingText, termIndexEnd: action.payload },
     }),
     [TERM_COUNT_IN_TEXT]: (state, action) => {
       const { count, termId } = action.payload;
@@ -222,11 +227,25 @@ const textReducer = handleActions(
       const { terms } = state.readingText;
       terms[index] = { ...terms[index], meaning };
       return { ...state, readingText: { ...state.readingText, terms } };
-    }
+    },
+    [TEXT_TERM_COUNT_GET]: (state, action) => {
+      const { termCount, textId } = action.payload;
+      const newTexts = state.texts.map((t) =>
+        t.id === textId ? { ...t, termCount } : t
+      );
+      return { ...state, texts: newTexts };
+    },
+    [TEXT_PROCESSED_TERM_COUNT_GET]: (state, action) => {
+      const { processedTermCount, textId } = action.payload;
+      const newTexts = state.texts.map((t) =>
+        t.id === textId ? { ...t, processedTermCount } : t
+      );
+      return { ...state, texts: newTexts };
+    },
   },
   defaultState
 );
 
 export default textReducer;
 
-export const selectEditDetail = state => state.text.editDetail;
+export const selectEditDetail = (state) => state.text.editDetail;

@@ -12,14 +12,15 @@ class TotalTerm extends React.Component {
     }
   }
 
-  shouldComponentUpdate(nextProps) {
-    const { value } = this.props;
-    return value !== nextProps.value;
-  }
-
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const { value, record, loadTermCounts } = this.props;
-    if (value === undefined) {
+    console.log(record);
+    if (
+      value === undefined ||
+      record.termCount === 0 ||
+      (prevProps.record.processedTermCount !== record.processedTermCount &&
+        record.processedTermCount < record.termCount)
+    ) {
       loadTermCounts(record.id);
     }
   }
@@ -30,7 +31,7 @@ class TotalTerm extends React.Component {
       return <span>-</span>;
     }
     let sum = 0;
-    Object.keys(value).map(key => {
+    Object.keys(value).map((key) => {
       if (key !== TermLearningLevel.Skipped) sum += value[key];
       return null;
     });
@@ -38,13 +39,13 @@ class TotalTerm extends React.Component {
   }
 }
 TotalTerm.defaultProps = {
-  value: undefined
+  value: undefined,
 };
 
 TotalTerm.propTypes = {
   value: PropTypes.number,
   record: PropTypes.shape({}).isRequired,
-  loadTermCounts: PropTypes.func.isRequired
+  loadTermCounts: PropTypes.func.isRequired,
 };
 
 export default connect(null, { loadTermCounts: loadTermCountAction })(

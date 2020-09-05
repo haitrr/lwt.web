@@ -4,7 +4,7 @@ import {
   getAsync,
   postAsync,
   putAsync,
-  patchAsync
+  patchAsync,
 } from "../Utilities/HttpRequest";
 
 /**
@@ -15,7 +15,7 @@ export async function getTextsAsync(filters, page, itemPerPage) {
     return await getAsync(TEXT_API, {
       ...filters,
       page,
-      itemPerPage
+      itemPerPage,
     });
   } catch (e) {
     return null;
@@ -48,8 +48,8 @@ export async function getTextReadAsync(textId) {
   }
 }
 
-export async function getTermCountAsync(textId) {
-  return await getAsync(`${TEXT_API}/${textId}/term-counts`, null);
+export async function getTermCountByLearningLevelAsync(textId) {
+  return getAsync(`${TEXT_API}/${textId}/term-counts`, null);
 }
 
 export async function deleteTextAsync(textId) {
@@ -68,9 +68,17 @@ export async function setTextBookmarkAsync(id, index) {
   return patchAsync(`${TEXT_API}`, id, "bookmark", { termIndex: index });
 }
 export async function getTextTermsAsync(textId, indexFrom, indexTo) {
-  return await getAsync(`${TEXT_API}/${textId}/terms`, { indexFrom, indexTo });
+  return getAsync(`${TEXT_API}/${textId}/terms`, { indexFrom, indexTo });
 }
 
 export async function getTermCountInTextAsync(termId, textId) {
   return getAsync(`${TEXT_API}/${textId}/terms/${termId}/count`);
+}
+
+export async function getTermCountAsync(textId) {
+  return getAsync(`${TEXT_API}/${textId}/term-count`);
+}
+
+export async function getProcessedTermCountAsync(textId) {
+  return getAsync(`${TEXT_API}/${textId}/processed-term-count`);
 }

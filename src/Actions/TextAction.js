@@ -4,13 +4,15 @@ import {
   createTextAsync,
   deleteTextAsync,
   editTextAsync,
-  getTermCountAsync,
+  getTermCountByLearningLevelAsync,
   getTextEditDetailAsync,
   getTextReadAsync,
   getTextsAsync,
   getTextTermsAsync,
   setTextBookmarkAsync,
-  getTermCountInTextAsync
+  getTermCountInTextAsync,
+  getTermCountAsync,
+  getProcessedTermCountAsync,
 } from "../Apis/TextApi";
 
 export const TEXT_FETCHED = "TEXT_FETCHED";
@@ -28,6 +30,8 @@ export const TEXT_TERM_LOADED = "TEXT_TERM_LOADED";
 export const TERM_INDEX_BEGIN_SET = "TERM_INDEX_BEGIN_SET";
 export const TERM_INDEX_END_SET = "TERM_INDEX_END_SET";
 export const TERM_COUNT_IN_TEXT = "TERM_COUNT_IN_TEXT";
+export const TEXT_TERM_COUNT_GET = "TEXT_TERM_COUNT_GET";
+export const TEXT_PROCESSED_TERM_COUNT_GET = "TEXT_PROCESSED_TERM_COUNT_GET";
 
 /**
  * get texts action
@@ -42,7 +46,7 @@ export const getTextsAction = createAction(
       total: result.total,
       page,
       itemPerPage,
-      filters
+      filters,
     };
   }
 );
@@ -51,28 +55,28 @@ export const getTextsAction = createAction(
  * set reading text.
  */
 
-export const readTextAction = createAction(TEXT_READ, textId =>
+export const readTextAction = createAction(TEXT_READ, (textId) =>
   getTextReadAsync(textId)
 );
 
 export const loadTermCountAction = createAction(
   TERM_COUNT_LOADED,
-  async textId => getTermCountAsync(textId)
+  async (textId) => getTermCountByLearningLevelAsync(textId)
 );
 
 export const loadReadingTexttermsCountByLearningLevelAction = createAction(
   READING_TEXT_TERMS_COUNT_LOADED,
-  async textId => getTermCountAsync(textId)
+  async (textId) => getTermCountByLearningLevelAsync(textId)
 );
 
 /**
  * create text action
  */
-export const createTextAction = createAction(TEXT_CREATED, async text =>
+export const createTextAction = createAction(TEXT_CREATED, async (text) =>
   createTextAsync(text)
 );
 
-export const deleteTextAction = createAction(TEXT_DELETED, async textId => {
+export const deleteTextAction = createAction(TEXT_DELETED, async (textId) => {
   try {
     await deleteTextAsync(textId);
     notification.success({ message: "Text deleted." });
@@ -96,12 +100,12 @@ export const editTextAction = createAction(TEXT_EDITED, async (id, text) => {
 
 export const getTextEditDetailAction = createAction(
   TEXT_EDIT_DETAIL_FETCHED,
-  async textId => {
+  async (textId) => {
     try {
       return await getTextEditDetailAsync(textId);
     } catch {
       notification.error({
-        message: "Something wen't wrong, please try again."
+        message: "Something wen't wrong, please try again.",
       });
       return null;
     }
@@ -116,7 +120,7 @@ export const setBookmarkAction = createAction(
 );
 export const selectTermAction = createAction(
   TEXT_TERM_SELECT,
-  async index => index
+  async (index) => index
 );
 
 export const getTextTermsAction = createAction(
@@ -129,13 +133,28 @@ export const getTextTermsAction = createAction(
 
 export const setTermIndexBeginAction = createAction(
   TERM_INDEX_BEGIN_SET,
-  begin => begin
+  (begin) => begin
 );
 export const setTermIndexEndAction = createAction(
   TERM_INDEX_END_SET,
-  end => end
+  (end) => end
 );
 export const getTermCountInTextAction = createAction(
   TERM_COUNT_IN_TEXT,
   (termId, textId) => getTermCountInTextAsync(termId, textId)
+);
+
+export const getTermCountAction = createAction(
+  TEXT_TERM_COUNT_GET,
+  async (textId) => {
+    const { termCount } = await getTermCountAsync(textId);
+    return { termCount, textId };
+  }
+);
+export const getProcessedTermCountAction = createAction(
+  TEXT_PROCESSED_TERM_COUNT_GET,
+  async (textId) => {
+    const { processedTermCount } = await getProcessedTermCountAsync(textId);
+    return { processedTermCount, textId };
+  }
 );

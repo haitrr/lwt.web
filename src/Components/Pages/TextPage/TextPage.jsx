@@ -1,19 +1,24 @@
-import PropTypes from 'prop-types';
-import { Button, Pagination, Popconfirm, Table } from 'antd';
-import React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { ReadOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { getLanguageAction } from '../../../Actions/LanguageAction';
-import { deleteTextAction, getTextsAction, loadTermCountAction } from '../../../Actions/TextAction';
-import TextFilterForm from '../../Forms/TextFilterForm';
-import TextCreateModal from '../../Modals/TextCreateModal';
-import TextEditModal from '../../Modals/TextEditModal';
-import { TermLearningLevel } from '../../../Enums';
-import styles from './TextPage.module.scss';
-import termStyles from '../../Term/Term.module.scss';
-import { parseQueryString } from '../../../Utilities/queryString';
-import TotalTerm from './TotalTerm';
+import PropTypes from "prop-types";
+import { Button, Pagination, Popconfirm, Table } from "antd";
+import React from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { ReadOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { getLanguageAction } from "../../../Actions/LanguageAction";
+import {
+  deleteTextAction,
+  getTextsAction,
+  loadTermCountAction,
+} from "../../../Actions/TextAction";
+import TextFilterForm from "../../Forms/TextFilterForm";
+import TextCreateModal from "../../Modals/TextCreateModal";
+import TextEditModal from "../../Modals/TextEditModal";
+import { TermLearningLevel } from "../../../Enums";
+import styles from "./TextPage.module.scss";
+import termStyles from "../../Term/Term.module.scss";
+import { parseQueryString } from "../../../Utilities/queryString";
+import TotalTerm from "./TotalTerm";
+import TextStatus from "./TextStatus";
 
 function renderTermNumber(record, level) {
   const { counts } = record;
@@ -25,14 +30,17 @@ function renderTermNumber(record, level) {
     return 0;
   }
 
-  const sum = record.termCount - counts[TermLearningLevel.Ignored] - counts[TermLearningLevel.Skipped];
+  const sum =
+    record.termCount -
+    counts[TermLearningLevel.Ignored] -
+    counts[TermLearningLevel.Skipped];
   return (
     <div className={`${termStyles[`term-${TermLearningLevel[level]}`]}`}>
       {`${current}`}
       <br />
       ~
       <br />
-      {`${Math.round(current / sum * 100)}%`}
+      {`${Math.round((current / sum) * 100)}%`}
     </div>
   );
 }
@@ -43,18 +51,22 @@ function renderTermNumber(record, level) {
 class TextPage extends React.Component {
   columns = [
     {
-      title: 'Title',
-      dataIndex: 'title',
-      key: 'title',
-      width: '30vw',
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
+      width: "30vw",
     },
     {
-      title: 'Act',
-      key: 'actions',
-      width: 'auto',
+      title: "Act",
+      key: "actions",
+      width: "auto",
       render: (_, text) => (
         <span>
-          <Link disabled={text.processedTermCount === 0} className={styles.actionButton} to={`/text/read/${text.id}`}>
+          <Link
+            disabled={text.processedTermCount === 0}
+            className={styles.actionButton}
+            to={`/text/read/${text.id}`}
+          >
             <ReadOutlined />
           </Link>
           <Popconfirm
@@ -65,109 +77,98 @@ class TextPage extends React.Component {
           >
             <DeleteOutlined className={styles.deleteButton} />
           </Popconfirm>
-          <EditOutlined className={styles.editButton} onClick={() => this.handleEdit(text.id)} />
+          <EditOutlined
+            className={styles.editButton}
+            onClick={() => this.handleEdit(text.id)}
+          />
         </span>
       ),
     },
     {
-      title: 'P',
-      key: 'progress',
-      dataIndex: 'bookmark',
+      title: "P",
+      key: "progress",
+      dataIndex: "bookmark",
       render: (value, record) => {
         let percentage = 0;
         if (record.termCount === 0) {
-          return '-';
+          return "-";
         }
         if (value && value !== 0) {
-          percentage = Math.floor(value / record.termCount * 10000) / 100;
+          percentage = Math.floor((value / record.termCount) * 10000) / 100;
         }
         return `${percentage}%`;
       },
     },
     {
-      title: 'UK',
-      key: 'unknow',
-      dataIndex: 'counts.unknown',
-      render: (value, record) => renderTermNumber(record, 'UnKnow'),
+      title: "UK",
+      key: "unknow",
+      dataIndex: "counts.unknown",
+      render: (value, record) => renderTermNumber(record, "UnKnow"),
     },
     {
-      title: 'L1',
-      key: 'Learning1',
-      dataIndex: 'counts.learning-1',
-      render: (value, record) => renderTermNumber(record, 'Learning1'),
+      title: "L1",
+      key: "Learning1",
+      dataIndex: "counts.learning-1",
+      render: (value, record) => renderTermNumber(record, "Learning1"),
     },
     {
-      title: 'L2',
-      key: 'Learning2',
-      dataIndex: 'counts.learning-2',
-      render: (value, record) => renderTermNumber(record, 'Learning2'),
+      title: "L2",
+      key: "Learning2",
+      dataIndex: "counts.learning-2",
+      render: (value, record) => renderTermNumber(record, "Learning2"),
     },
     {
-      title: 'L3',
-      key: 'Learning3',
-      dataIndex: 'counts.learning-3',
-      render: (value, record) => renderTermNumber(record, 'Learning3'),
+      title: "L3",
+      key: "Learning3",
+      dataIndex: "counts.learning-3",
+      render: (value, record) => renderTermNumber(record, "Learning3"),
     },
     {
-      title: 'L4',
-      key: 'Learning4',
-      dataIndex: 'counts.learning-4',
-      render: (value, record) => renderTermNumber(record, 'Learning4'),
+      title: "L4",
+      key: "Learning4",
+      dataIndex: "counts.learning-4",
+      render: (value, record) => renderTermNumber(record, "Learning4"),
     },
     {
-      title: 'L5',
-      key: 'Learning5',
-      dataIndex: 'counts.learning-5',
-      render: (value, record) => renderTermNumber(record, 'Learning5'),
+      title: "L5",
+      key: "Learning5",
+      dataIndex: "counts.learning-5",
+      render: (value, record) => renderTermNumber(record, "Learning5"),
     },
     {
-      title: 'WK',
-      key: 'WellKnow',
-      dataIndex: 'counts.well-known',
-      render: (_, record) => renderTermNumber(record, 'WellKnow'),
+      title: "WK",
+      key: "WellKnow",
+      dataIndex: "counts.well-known",
+      render: (_, record) => renderTermNumber(record, "WellKnow"),
     },
     {
-      title: 'Status',
-      key: 'status',
-      render: (_, record) => {
-        if (record.termCount === 0) {
-          return <span style={{ backgroundColor: '#ffd78c' }}>Processing</span>;
-        }
-        if (record.termCount === record.processedTermCount) {
-          return <span style={{ backgroundColor: '#a9ff8c' }}>Done</span>;
-        }
-        return (
-          <span style={{ backgroundColor: '#f7f18b' }}>
-            {`${record.processedTermCount}/${record.termCount}(${Math.floor(
-              record.processedTermCount * 100 / record.termCount,
-            )}%)`}
-          </span>
-        );
-      },
+      title: "Status",
+      key: "status",
+      render: (_, record) => <TextStatus text={record} />,
     },
     {
-      title: 'Language',
-      dataIndex: 'languageCode',
-      key: 'languageCode',
+      title: "Language",
+      dataIndex: "languageCode",
+      key: "languageCode",
       render: (value) => {
         const { languages } = this.props;
         const language = languages.find((lang) => lang.code === value);
         if (language) {
           return language.name;
         }
-        return 'Unknown language';
+        return "Unknown language";
       },
     },
     {
-      title: 'I',
-      key: 'Ignored',
-      dataIndex: 'counts',
-      render: (value) => (value ? value[TermLearningLevel.Ignored] : '-'),
+      title: "I",
+      key: "Ignored",
+      dataIndex: "counts",
+      render: (value) => (value ? value[TermLearningLevel.Ignored] : "-"),
     },
     {
-      title: 'T',
-      key: 'total',
-      dataIndex: 'counts',
+      title: "T",
+      key: "total",
+      dataIndex: "counts",
       render: (value, record) => <TotalTerm value={value} record={record} />,
     },
   ];
@@ -263,7 +264,12 @@ class TextPage extends React.Component {
 
   render() {
     const { texts, filters, page, total } = this.props;
-    const { isLoading, createModalVisible, editModalVisible, editingText } = this.state;
+    const {
+      isLoading,
+      createModalVisible,
+      editModalVisible,
+      editingText,
+    } = this.state;
 
     return (
       <React.Fragment>
@@ -317,7 +323,7 @@ export default connect(
     getLanguages: getLanguageAction,
     deleteText: deleteTextAction,
     getTermCount: loadTermCountAction,
-  },
+  }
 )(TextPage);
 
 TextPage.propTypes = {
