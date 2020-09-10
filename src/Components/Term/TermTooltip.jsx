@@ -91,13 +91,6 @@ class TermTooltip extends React.Component {
         >
           Worse
         </Button>
-        <Button
-          type="primary"
-          style={{ marginLeft: "5px" }}
-          onClick={this.speak}
-        >
-          Speak
-        </Button>
       </div>
     );
   };
