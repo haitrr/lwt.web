@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
   getTermMeaningAction,
-  setEditingTermAction
+  setEditingTermAction,
 } from "../../Actions/TermAction";
 import { getTermCountInTextAction } from "../../Actions/TextAction";
 import { TermLearningLevel } from "../../Enums";
@@ -24,13 +24,14 @@ class Term extends React.Component {
   }
 
   handleHover = () => {
-    const { term } = this.props;
+    const { term, onSpeak } = this.props;
     if (term.meaning === null) {
       this.loadTermsMeaning();
     }
     if (!term.count) {
       this.loadTermCountInText();
     }
+    onSpeak(term);
   };
 
   loadTermCountInText = () => {
@@ -53,7 +54,7 @@ class Term extends React.Component {
     }
   };
 
-  handleTermClick = e => {
+  handleTermClick = (e) => {
     e.preventDefault();
     const { setEditingTerm, index, term, onSpeak, getTermMeaning } = this.props;
     // load term meaning if not loaded.
@@ -105,7 +106,7 @@ class Term extends React.Component {
 
 Term.defaultProps = {
   bookmark: false,
-  last: null
+  last: null,
 };
 
 Term.propTypes = {
@@ -113,7 +114,7 @@ Term.propTypes = {
   term: PropTypes.shape({
     learningLevel: PropTypes.string.isRequired,
     meaning: PropTypes.string,
-    count: PropTypes.number
+    count: PropTypes.number,
   }).isRequired,
   bookmark: PropTypes.bool,
   bookmarkRef: PropTypes.shape({}).isRequired,
@@ -122,18 +123,18 @@ Term.propTypes = {
   getTermMeaning: PropTypes.func.isRequired,
   onSpeak: PropTypes.func.isRequired,
   getTermCountInText: PropTypes.func.isRequired,
-  textId: PropTypes.number.isRequired
+  textId: PropTypes.number.isRequired,
 };
 
 export default connect(
   (state, ownProps) => ({
     term: state.text.readingText.terms[ownProps.index],
     bookmark: state.text.readingText.bookmark === ownProps.index,
-    textId: state.text.readingText.id
+    textId: state.text.readingText.id,
   }),
   {
     setEditingTerm: setEditingTermAction,
     getTermMeaning: getTermMeaningAction,
-    getTermCountInText: getTermCountInTextAction
+    getTermCountInText: getTermCountInTextAction,
   }
 )(Term);

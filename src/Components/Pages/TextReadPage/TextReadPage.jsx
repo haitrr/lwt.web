@@ -16,8 +16,8 @@ class TextReadPage extends React.Component {
     const {
       readText,
       match: {
-        params: { textId }
-      }
+        params: { textId },
+      },
     } = this.props;
     readText(textId);
     this.utt = new SpeechSynthesisUtterance();
@@ -54,7 +54,7 @@ class TextReadPage extends React.Component {
         {
           containerId: "contentPanel",
           smooth: true,
-          ignoreCancelEvents: true
+          ignoreCancelEvents: true,
         }
       );
     }
@@ -63,33 +63,36 @@ class TextReadPage extends React.Component {
   setSpeechVoice = () => {
     const { languages, language } = this.props;
     if (language && languages) {
-      const languageS = languages.find(l => l.code === language);
+      const languageS = languages.find((l) => l.code === language);
       const voices = window.speechSynthesis.getVoices();
       if (languageS) {
         this.utt.lang = languageS.speakCode;
         if (languageS.speakCode === "zh-CN") {
           const googleVoice = voices.find(
-            v => v.name === "Google 普通话（中国大陆）"
+            (v) => v.name === "Google 普通话（中国大陆）"
           );
           if (googleVoice) {
             this.utt.voice = googleVoice;
           } else {
-            this.utt.voice = voices.find(v => v.lang === languageS.speakCode);
+            this.utt.voice = voices.find((v) => v.lang === languageS.speakCode);
           }
         } else if (languageS.speakCode === "en-US") {
-          const googleVoice = voices.find(v => v.name === "Google US English");
+          const googleVoice = voices.find(
+            (v) => v.name === "Google US English"
+          );
           if (googleVoice) {
             this.utt.voice = googleVoice;
           } else {
-            this.utt.voice = voices.find(v => v.lang === languageS.speakCode);
+            this.utt.voice = voices.find((v) => v.lang === languageS.speakCode);
           }
         }
       }
     }
   };
 
-  onSpeak = term => {
+  onSpeak = (term) => {
     this.utt.text = term.content;
+    window.speechSynthesis.cancel();
     window.speechSynthesis.speak(this.utt);
   };
 
@@ -115,7 +118,7 @@ class TextReadPage extends React.Component {
 }
 
 export default connect(
-  state => {
+  (state) => {
     if (state.text.readingText) {
       return {
         terms: state.text.readingText.terms,
@@ -123,13 +126,13 @@ export default connect(
         title: state.text.readingText.title,
         id: state.text.readingText.id,
         languages: state.language.languages,
-        bookmark: state.text.readingText.bookmark
+        bookmark: state.text.readingText.bookmark,
       };
     }
     return { languages: state.language.languages };
   },
   {
-    readText: readTextAction
+    readText: readTextAction,
   }
 )(TextReadPage);
 TextReadPage.defaultProps = {
@@ -137,7 +140,7 @@ TextReadPage.defaultProps = {
   title: null,
   id: null,
   terms: null,
-  bookmark: null
+  bookmark: null,
 };
 
 TextReadPage.propTypes = {
@@ -148,5 +151,5 @@ TextReadPage.propTypes = {
   title: PropTypes.string,
   id: PropTypes.number,
   terms: PropTypes.arrayOf(PropTypes.shape({})),
-  bookmark: PropTypes.number
+  bookmark: PropTypes.number,
 };
