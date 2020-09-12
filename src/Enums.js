@@ -15,11 +15,11 @@ export const TermLearningLevel = {
 
   Learning5: "learning-5",
 
-  WellKnow: "well-known"
+  WellKnow: "well-known",
 };
 
 export const LanguageCode = {
-  English: "en"
+  English: "en",
 };
 
 export const TermLearningColor = {
@@ -39,10 +39,10 @@ export const TermLearningColor = {
 
   [TermLearningLevel.Learning5]: "#ddffdd",
 
-  [TermLearningLevel.WellKnow]: "whitesmoke"
+  [TermLearningLevel.WellKnow]: "whitesmoke",
 };
 
-export const getNextLearningLevel = learningLevel => {
+export const getNextLearningLevel = (learningLevel) => {
   switch (learningLevel) {
     case TermLearningLevel.UnKnow:
       return TermLearningLevel.Learning1;
@@ -61,7 +61,7 @@ export const getNextLearningLevel = learningLevel => {
   }
 };
 
-export const getPreviousLearningLevel = learningLevel => {
+export const getPreviousLearningLevel = (learningLevel) => {
   switch (learningLevel) {
     case TermLearningLevel.UnKnow:
       return TermLearningLevel.Ignored;
@@ -81,6 +81,11 @@ export const getPreviousLearningLevel = learningLevel => {
       return learningLevel;
   }
 };
+
+export const isLearningTerm = (learningLevel) =>
+  learningLevel !== TermLearningColor.Ignored &&
+  learningLevel !== TermLearningLevel.WellKnow &&
+  learningLevel !== TermLearningLevel.Skipped;
 
 export const importantColors = [
   "#E50027",
@@ -132,5 +137,5 @@ export const importantColors = [
   "#8F06EC",
   "#A706EC",
   "#BF06EC",
-  "#D707ED"
+  "#D707ED",
 ];

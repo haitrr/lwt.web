@@ -3,7 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import styles from "./Term.module.scss";
 import { setBookmarkAction, selectTermAction } from "../../Actions/TextAction";
-import { importantColors } from "../../Enums";
+import { importantColors, isLearningTerm } from "../../Enums";
 
 class TermButton extends React.Component {
   onTermClick = (e) => {
@@ -31,7 +31,7 @@ class TermButton extends React.Component {
           bookmark ? styles.bookmark : null
         }`}
         style={
-          term.count
+          term.count && isLearningTerm(term.learningLevel)
             ? {
                 borderBottom: `solid 2px ${
                   importantColors[Math.min(term.count, 49)]
