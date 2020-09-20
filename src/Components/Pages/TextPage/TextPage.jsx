@@ -90,11 +90,8 @@ class TextPage extends React.Component {
       dataIndex: "bookmark",
       render: (value, record) => {
         let percentage = 0;
-        if (record.termCount === 0) {
-          return "-";
-        }
         if (value && value !== 0) {
-          percentage = Math.floor((value / record.termCount) * 10000) / 100;
+          percentage = Math.floor((value / record.length) * 10000) / 100;
         }
         return `${percentage}%`;
       },
