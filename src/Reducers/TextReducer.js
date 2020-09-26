@@ -12,7 +12,7 @@ import {
   READING_TEXT_TERMS_COUNT_LOADED,
   TERM_COUNT_IN_TEXT,
   TEXT_TERM_COUNT_GET,
-  TEXT_PROCESSED_TERM_COUNT_GET,
+  TEXT_PROCESSED_INDEX_GET,
 } from "../Actions/TextAction";
 import {
   TERM_CREATED,
@@ -235,10 +235,10 @@ const textReducer = handleActions(
       );
       return { ...state, texts: newTexts };
     },
-    [TEXT_PROCESSED_TERM_COUNT_GET]: (state, action) => {
-      const { processedTermCount, textId } = action.payload;
+    [TEXT_PROCESSED_INDEX_GET]: (state, action) => {
+      const { processedIndex, textId } = action.payload;
       const newTexts = state.texts.map((t) =>
-        t.id === textId ? { ...t, processedTermCount } : t
+        t.id === textId ? { ...t, processedIndex } : t
       );
       return { ...state, texts: newTexts };
     },

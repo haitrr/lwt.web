@@ -2,41 +2,27 @@ import React from "react";
 import { connect } from "react-redux";
 import {
   getTermCountAction,
-  getProcessedTermCountAction,
+  getProcessedIndexAction,
 } from "../../../Actions/TextAction";
 
-const TextStatus = ({ text, getTermCount, getProcessedTermCount }) => {
-  const [getTermCountInterval, setGetTermCountInterval] = React.useState(null);
+const TextStatus = ({ text, getProcessedIndex }) => {
   const [
     getProcessedTermCountInterval,
     setGetProcessedTermCountInterval,
   ] = React.useState(null);
-  React.useEffect(() => {
-    if (text.termCount === 0) {
-      if (!getTermCountInterval) {
-        const interval = setInterval(() => {
-          getTermCount(text.id);
-        }, 2000);
-        setGetTermCountInterval(interval);
-      }
-    } else {
-      clearInterval(getTermCountInterval);
-    }
-  }, [getTermCount, getTermCountInterval, text.id, text.termCount]);
 
   React.useEffect(
     () => () => {
-      clearInterval(getTermCountInterval);
       clearInterval(getProcessedTermCountInterval);
     },
-    [getProcessedTermCountInterval, getTermCountInterval]
+    [getProcessedTermCountInterval]
   );
 
   React.useEffect(() => {
-    if (text.processedTermCount < text.termCount) {
+    if (text.processedIndex < text.length - 1) {
       if (!getProcessedTermCountInterval) {
         const interval = setInterval(() => {
-          getProcessedTermCount(text.id);
+          getProcessedIndex(text.id);
         }, 2000);
         setGetProcessedTermCountInterval(interval);
       }
@@ -44,24 +30,23 @@ const TextStatus = ({ text, getTermCount, getProcessedTermCount }) => {
       clearInterval(getProcessedTermCountInterval);
     }
   }, [
-    getProcessedTermCount,
+    getProcessedIndex,
     getProcessedTermCountInterval,
-    getTermCountInterval,
     text.id,
-    text.processedTermCount,
-    text.termCount,
+    text.processedIndex,
+    text.length,
   ]);
 
-  if (text.termCount === 0) {
+  if (text.processedIndex === -1) {
     return <span style={{ backgroundColor: "#ffd78c" }}>Processing</span>;
   }
-  if (text.termCount === text.processedTermCount) {
+  if (text.processedIndex === text.length - 1) {
     return <span style={{ backgroundColor: "#a9ff8c" }}>Done</span>;
   }
   return (
     <span style={{ backgroundColor: "#f7f18b" }}>
-      {`${text.processedTermCount}/${text.termCount}(${Math.floor(
-        (text.processedTermCount * 100) / text.termCount
+      {`${text.processedIndex}/${text.length}(${Math.floor(
+        (text.processedIndex * 100) / text.length
       )}%)`}
     </span>
   );
@@ -69,5 +54,5 @@ const TextStatus = ({ text, getTermCount, getProcessedTermCount }) => {
 
 export default connect(null, {
   getTermCount: getTermCountAction,
-  getProcessedTermCount: getProcessedTermCountAction,
+  getProcessedIndex: getProcessedIndexAction,
 })(TextStatus);

@@ -79,6 +79,6 @@ export async function getTermCountAsync(textId) {
   return getAsync(`${TEXT_API}/${textId}/term-count`);
 }
 
-export async function getProcessedTermCountAsync(textId) {
-  return getAsync(`${TEXT_API}/${textId}/processed-term-count`);
+export async function getProcessedIndexAsync(textId) {
+  return getAsync(`${TEXT_API}/${textId}/processed-index`);
 }

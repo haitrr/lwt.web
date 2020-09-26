@@ -12,7 +12,7 @@ import {
   setTextBookmarkAsync,
   getTermCountInTextAsync,
   getTermCountAsync,
-  getProcessedTermCountAsync,
+  getProcessedIndexAsync,
 } from "../Apis/TextApi";
 
 export const TEXT_FETCHED = "TEXT_FETCHED";
@@ -31,7 +31,7 @@ export const TERM_INDEX_BEGIN_SET = "TERM_INDEX_BEGIN_SET";
 export const TERM_INDEX_END_SET = "TERM_INDEX_END_SET";
 export const TERM_COUNT_IN_TEXT = "TERM_COUNT_IN_TEXT";
 export const TEXT_TERM_COUNT_GET = "TEXT_TERM_COUNT_GET";
-export const TEXT_PROCESSED_TERM_COUNT_GET = "TEXT_PROCESSED_TERM_COUNT_GET";
+export const TEXT_PROCESSED_INDEX_GET = "TEXT_PROCESSED_INDEX_GET";
 
 /**
  * get texts action
@@ -151,10 +151,10 @@ export const getTermCountAction = createAction(
     return { termCount, textId };
   }
 );
-export const getProcessedTermCountAction = createAction(
-  TEXT_PROCESSED_TERM_COUNT_GET,
+export const getProcessedIndexAction = createAction(
+  TEXT_PROCESSED_INDEX_GET,
   async (textId) => {
-    const { processedTermCount } = await getProcessedTermCountAsync(textId);
-    return { processedTermCount, textId };
+    const { processedIndex } = await getProcessedIndexAsync(textId);
+    return { processedIndex, textId };
   }
 );

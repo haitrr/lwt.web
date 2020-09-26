@@ -14,12 +14,10 @@ class TotalTerm extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { value, record, loadTermCounts } = this.props;
-    console.log(record);
     if (
       value === undefined ||
-      record.termCount === 0 ||
-      (prevProps.record.processedTermCount !== record.processedTermCount &&
-        record.processedTermCount < record.termCount)
+      (prevProps.record.processedIndex !== record.processedIndex &&
+        record.processedIndex < record.length - 1)
     ) {
       loadTermCounts(record.id);
     }
@@ -44,7 +42,10 @@ TotalTerm.defaultProps = {
 
 TotalTerm.propTypes = {
   value: PropTypes.number,
-  record: PropTypes.shape({}).isRequired,
+  record: PropTypes.shape({
+    processedIndex: PropTypes.number,
+    length: PropTypes.number,
+  }).isRequired,
   loadTermCounts: PropTypes.func.isRequired,
 };
 
