@@ -7,22 +7,16 @@ import { updateSettingAction } from "../../../Actions/UserAction";
 import { LanguageCode } from "../../../Enums";
 
 class UserPage extends React.Component {
-  state = { currentLanguage: "en" };
-
-  onChangeLanguage = event => {
-    this.setState({ currentLanguage: event.target.value });
-  };
-
   onAddLanguageSetting = () => {
     const { languages, setFieldValue } = this.props;
     const { languageSettings } = this.props.values;
     const newLanguageSettings = [...languageSettings];
     for (let i = 0; i < languages.length; i += 1) {
       const l = languages[i];
-      if (!newLanguageSettings.find(ls => ls.languageCode === l.code)) {
+      if (!newLanguageSettings.find((ls) => ls.languageCode === l.code)) {
         newLanguageSettings.push({
           languageCode: l.code,
-          dictionaryLanguageCode: LanguageCode.English
+          dictionaryLanguageCode: LanguageCode.English,
         });
         break;
       }
@@ -43,19 +37,19 @@ class UserPage extends React.Component {
           {values.languageSettings
             ? values.languageSettings.map((ls, i) => (
               <div>
-                  <h1>{ls.languageCode}</h1>
-                  <Field
+                <h1>{ls.languageCode}</h1>
+                <Field
                   component="select"
                   name={`languageSettings[${i}].dictionaryLanguageCode`}
                   onChange={handleChange}
                   value={ls.dictionaryLanguageCode}
                 >
                   {languages &&
-                      languages.map(language => (
-                        <option value={language.code}>{language.name}</option>
-                      ))}
+                  languages.map((language) => (
+                    <option value={language.code}>{language.name}</option>
+                  ))}
                 </Field>
-                </div>
+              </div>
               ))
             : null}
           <br />
@@ -77,16 +71,16 @@ class UserPage extends React.Component {
 UserPage.propTypes = {
   handleChange: PropTypes.func.isRequired,
   languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  values: PropTypes.shape({}).isRequired
+  values: PropTypes.shape({}).isRequired,
 };
 
 const connectedUserPage = connect(
-  state => ({
+  (state) => ({
     user: state.user,
-    languages: state.language.languages
+    languages: state.language.languages,
   }),
   {
-    updateUserSetting: updateSettingAction
+    updateUserSetting: updateSettingAction,
   }
 )(
   withFormik({
@@ -94,7 +88,7 @@ const connectedUserPage = connect(
       props.updateUserSetting(values);
     },
     enableReinitialize: true,
-    mapPropsToValues: props => props.user.setting
+    mapPropsToValues: (props) => props.user.setting,
   })(UserPage)
 );
 

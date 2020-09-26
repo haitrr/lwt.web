@@ -182,7 +182,7 @@ const textReducer = handleActions(
       };
     },
     [TEXT_TERM_LOADED]: (state, action) => {
-      const { terms, begin, end } = action.payload;
+      const { terms, end } = action.payload;
       console.log(action.payload, state.readingText)
       let newTerms;
       if (end < state.readingText.termIndexEnd) {

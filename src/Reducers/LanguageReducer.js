@@ -6,7 +6,7 @@ import { LANGUAGE_GET, LANGUAGE_SELECT } from "../Actions/LanguageAction";
 
 const defaultState = {
   languages: [],
-  currentLanguage: "en"
+  currentLanguage: "en",
 };
 
 export const languageReducer = handleActions(
@@ -19,12 +19,12 @@ export const languageReducer = handleActions(
           ? action.payload.length > 0
             ? action.payload[0].id
             : null
-          : state.currentLanguage
+          : state.currentLanguage,
     }),
     [LANGUAGE_SELECT]: (state, action) => ({
       ...state,
-      currentLanguage: action.payload
-    })
+      currentLanguage: action.payload,
+    }),
   },
   defaultState
 );

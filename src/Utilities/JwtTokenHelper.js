@@ -1,4 +1,4 @@
-import jwt_decode from "jwt-decode";
+import jwtDecode from "jwt-decode";
 import { TOKEN_LOCAL_STORAGE_KEY } from "../Constants";
 
 /**
@@ -7,8 +7,7 @@ import { TOKEN_LOCAL_STORAGE_KEY } from "../Constants";
 export function getCurrentUser() {
   const token = localStorage.getItem(TOKEN_LOCAL_STORAGE_KEY);
   if (token != null) {
-    return jwt_decode(token);
-  } else {
-    return null;
+    return jwtDecode(token);
   }
+  return null;
 }
