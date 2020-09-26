@@ -7,8 +7,6 @@ import { importantColors, isLearningTerm } from "../../Enums";
 
 class TermButton extends React.Component {
   onTermClick = (e) => {
-    // this.utt.text = term.content;
-    // window.speechSynthesis.speak(this.utt);
     const { setBookmark, id, selectTerm, term, onClick } = this.props;
     selectTerm(term.index);
     setBookmark(id, term.index);
