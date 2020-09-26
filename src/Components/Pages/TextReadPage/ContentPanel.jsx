@@ -8,7 +8,7 @@ import GoToBookmarkButton from "./GoToBookmarkButton";
 import {
   getTextTermsAction,
   setTermIndexBeginAction,
-  setTermIndexEndAction
+  setTermIndexEndAction,
 } from "../../../Actions/TextAction";
 import { setEditingTermAction } from "../../../Actions/TermAction";
 
@@ -34,10 +34,10 @@ class ContentPanel extends React.Component {
       end,
       setTermIndexEnd,
       begin,
-      termCount,
-      setTermIndexBegin
+      setTermIndexBegin,
+      text,
     } = this.props;
-    setTermIndexEnd(Math.min(end + this.displayTerms, termCount - 1));
+    setTermIndexEnd(Math.min(end + this.displayTerms, text.length - 1));
     setTermIndexBegin(Math.max(begin - Math.floor(this.displayTerms / 2), 0));
   }
 
@@ -63,7 +63,7 @@ class ContentPanel extends React.Component {
     }
   };
 
-  handleScroll = e => {
+  handleScroll = (e) => {
     e.stopPropagation();
     e.preventDefault();
     if (e.target.id !== "contentPanel") {
@@ -77,7 +77,7 @@ class ContentPanel extends React.Component {
       end,
       setTermIndexEnd,
       setTermIndexBegin,
-      terms
+      terms,
     } = this.props;
     if (editingTerm) {
       setEditingTerm(null);
@@ -109,22 +109,15 @@ class ContentPanel extends React.Component {
     if (begin === end) {
       return <h1>Loading</h1>;
     }
-    const termElements = [];
-    for (let i = begin; i <= end; i += 1) {
-      if (terms[i]) {
-        termElements.push(
-          <Term
-            onSpeak={onSpeak}
-            bookmarkRef={bookmarkRef}
-            last={begin === i ? this.begin : null}
-            // eslint-disable-next-line react/no-array-index-key
-            key={i}
-            index={i}
-          />
-        );
-      }
-    }
-
+    const termElements = terms.map((t, i) => (
+      <Term
+        onSpeak={onSpeak}
+        last={i === 0 ? this.begin : null}
+        key={t.indexFrom}
+        textTermId={t.textTermId}
+        bookmarkRef={bookmarkRef}
+      />
+    ));
     return (
       <Fragment>
         <div
@@ -144,7 +137,7 @@ class ContentPanel extends React.Component {
 
 ContentPanel.defaultProps = {
   terms: null,
-  editingTerm: null
+  editingTerm: null,
 };
 
 ContentPanel.propTypes = {
@@ -159,20 +152,21 @@ ContentPanel.propTypes = {
   getTextTerms: PropTypes.func.isRequired,
   onSpeak: PropTypes.func.isRequired,
   editingTerm: PropTypes.number,
-  setEditingTerm: PropTypes.func.isRequired
+  setEditingTerm: PropTypes.func.isRequired,
 };
 export default connect(
-  state => ({
+  (state) => ({
     terms: state.text.readingText.terms,
     begin: state.text.readingText.termIndexBegin,
     end: state.text.readingText.termIndexEnd,
     termCount: state.text.readingText.termCount,
-    editingTerm: state.term.editingTerm
+    editingTerm: state.term.editingTerm,
+    text: state.text.readingText,
   }),
   {
     getTextTerms: getTextTermsAction,
     setTermIndexBegin: setTermIndexBeginAction,
     setTermIndexEnd: setTermIndexEndAction,
-    setEditingTerm: setEditingTermAction
+    setEditingTerm: setEditingTermAction,
   }
 )(ContentPanel);

@@ -1,4 +1,7 @@
-export const selectEditingTermValue = state =>
-  state.text.readingText.terms[state.term.editingTerm];
+export const selectEditingTermValue = (state) =>
+  state.text.readingText.terms.find(
+    (t) => t?.indexFrom === state.term.editingTerm
+  );
 
-export const selectEditingTermMeaning = state => state.term.editingTermMeaning;
+export const selectEditingTermMeaning = (state) =>
+  state.term.editingTermMeaning;

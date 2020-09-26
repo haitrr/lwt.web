@@ -65,7 +65,7 @@ class Term extends React.Component {
       getTermMeaning(term, index);
     }
     onSpeak(term);
-    setEditingTerm(index);
+    setEditingTerm(term.indexFrom);
   };
 
   render() {
@@ -128,8 +128,8 @@ Term.propTypes = {
 
 export default connect(
   (state, ownProps) => ({
-    term: state.text.readingText.terms[ownProps.index],
-    bookmark: state.text.readingText.bookmark === ownProps.index,
+    term: state.text.readingText.terms.find(t => t.textTermId === ownProps.textTermId),
+    bookmark: state.text.readingText.bookmark === ownProps.term?.indexFrom,
     textId: state.text.readingText.id,
   }),
   {

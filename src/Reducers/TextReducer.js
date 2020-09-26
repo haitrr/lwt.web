@@ -69,7 +69,7 @@ const textReducer = handleActions(
           ...action.payload,
           termIndexEnd: action.payload.bookmark ?? 0,
           termIndexBegin: action.payload.bookmark ?? 0,
-          terms: new Array(action.payload.termCount).fill(null),
+          terms: [],
         },
       };
     },
@@ -183,11 +183,15 @@ const textReducer = handleActions(
     },
     [TEXT_TERM_LOADED]: (state, action) => {
       const { terms, begin, end } = action.payload;
-
-      const newTerms = [...state.readingText.terms];
-      for (let i = begin; i < end + 1; i += 1) {
-        newTerms[i] = { ...terms[i - begin], ...newTerms[i] };
+      console.log(action.payload, state.readingText)
+      let newTerms;
+      if (end < state.readingText.termIndexEnd) {
+        newTerms = [...terms, ...state.readingText.terms];
+      } else {
+        newTerms = [...state.readingText.terms, ...terms];
       }
+      console.log(newTerms)
+
       return {
         ...state,
         readingText: {

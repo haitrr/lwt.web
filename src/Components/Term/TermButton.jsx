@@ -8,8 +8,8 @@ import { importantColors, isLearningTerm } from "../../Enums";
 class TermButton extends React.Component {
   onTermClick = (e) => {
     const { setBookmark, id, selectTerm, term, onClick } = this.props;
-    selectTerm(term.index);
-    setBookmark(id, term.index);
+    selectTerm(term.indexFrom);
+    setBookmark(id, term.indexFrom);
     onClick(e);
   };
 
