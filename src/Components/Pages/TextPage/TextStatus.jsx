@@ -28,7 +28,7 @@ const TextStatus = ({ text, getProcessedIndex }) => {
         }, 2000);
         setGetProcessedTermCountInterval(interval);
       }
-    } else {
+    } else if (getProcessedTermCountInterval) {
       clearInterval(getProcessedTermCountInterval);
     }
   }, [
