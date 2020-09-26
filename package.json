@@ -8,7 +8,6 @@
     "@types/node": "^14.11.2",
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
-    "@typescript-eslint/parser": "^4.2.0",
     "antd": "4.6.2",
     "compromise": "13.3.2",
     "formik": "1.5.8",
@@ -39,15 +38,21 @@
   },
   "eslintConfig": {
     "plugins": [
-      "prettier"
+      "prettier",
+      "@typescript-eslint"
     ],
     "extends": [
       "react-app",
       "airbnb",
-      "prettier"
+      "prettier",
+      "plugin:@typescript-eslint/eslint-recommended"
     ],
     "rules": {
-      "prettier/prettier": "error"
+      "prettier/prettier": "error",
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error"
+      ]
     }
   },
   "browserslist": [
@@ -60,12 +65,14 @@
     "@types/react-redux": "^7.1.9",
     "@types/redux-promise": "^0.5.29",
     "eslint-config-airbnb": "17.1.0",
-    "eslint-config-react-app": "5.2.1",
     "eslint-config-prettier": "3.5.0",
+    "eslint-config-react-app": "5.2.1",
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-jsx-a11y": "6.1.2",
     "eslint-plugin-prettier": "3.0.1",
     "eslint-plugin-react": "7.12.4",
-    "prettier": "2.1.1"
+    "prettier": "2.1.1",
+    "@typescript-eslint/eslint-plugin": "^4.2.0",
+    "@typescript-eslint/parser": "^4.2.0"
   }
 }
