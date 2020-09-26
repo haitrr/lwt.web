@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import {
   getTermMeaningAction,
   setEditingTermAction,
@@ -11,8 +10,22 @@ import TermButton from "./TermButton";
 import TermTooltip from "./TermTooltip";
 import SkippedTerm from "./SkippedTerm";
 
-class Term extends React.Component {
-  shouldComponentUpdate(nextProps) {
+interface TermProps {
+  bookmark: number;
+  term: any;
+  last: any;
+  onSpeak: (term: any) => void;
+  getTermCountInText: (id: number, textId: number) => void;
+  textId: number;
+  getTermMeaning: Function;
+  setEditingTerm: Function;
+  bookmarkRef: any;
+  index: number;
+  textTermId: number;
+}
+
+class Term extends React.Component<TermProps> {
+  shouldComponentUpdate(nextProps: TermProps) {
     const { term, bookmark, last } = this.props;
     return (
       nextProps.term.learningLevel !== term.learningLevel ||
@@ -54,7 +67,7 @@ class Term extends React.Component {
     }
   };
 
-  handleTermClick = (e) => {
+  handleTermClick = (e: any) => {
     e.preventDefault();
     const { setEditingTerm, index, term, onSpeak, getTermMeaning } = this.props;
     // load term meaning if not loaded.
@@ -104,31 +117,11 @@ class Term extends React.Component {
   }
 }
 
-Term.defaultProps = {
-  bookmark: false,
-  last: null,
-};
-
-Term.propTypes = {
-  setEditingTerm: PropTypes.func.isRequired,
-  term: PropTypes.shape({
-    learningLevel: PropTypes.string.isRequired,
-    meaning: PropTypes.string,
-    count: PropTypes.number,
-  }).isRequired,
-  bookmark: PropTypes.bool,
-  bookmarkRef: PropTypes.shape({}).isRequired,
-  last: PropTypes.shape({}),
-  index: PropTypes.number.isRequired,
-  getTermMeaning: PropTypes.func.isRequired,
-  onSpeak: PropTypes.func.isRequired,
-  getTermCountInText: PropTypes.func.isRequired,
-  textId: PropTypes.number.isRequired,
-};
-
 export default connect(
-  (state, ownProps) => ({
-    term: state.text.readingText.terms.find(t => t.textTermId === ownProps.textTermId),
+  (state: any, ownProps: TermProps) => ({
+    term: state.text.readingText.terms.find(
+      (t: any) => t.textTermId === ownProps.textTermId
+    ),
     bookmark: state.text.readingText.bookmark === ownProps.term?.indexFrom,
     textId: state.text.readingText.id,
   }),
@@ -137,4 +130,4 @@ export default connect(
     getTermMeaning: getTermMeaningAction,
     getTermCountInText: getTermCountInTextAction,
   }
-)(Term);
+)(Term as any);
