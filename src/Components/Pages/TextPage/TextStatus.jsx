@@ -13,7 +13,9 @@ const TextStatus = ({ text, getProcessedIndex }) => {
 
   React.useEffect(
     () => () => {
-      clearInterval(getProcessedTermCountInterval);
+      if (getProcessedTermCountInterval) {
+        clearInterval(getProcessedTermCountInterval);
+      }
     },
     [getProcessedTermCountInterval]
   );
