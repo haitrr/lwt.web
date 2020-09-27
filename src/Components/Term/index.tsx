@@ -14,7 +14,6 @@ import { TextTermState } from "../../Reducers/TextReducer";
 
 interface TermOwnProps {
   bookmarkRef: any;
-  textTermId: number;
   last: any;
   term: TextTermState;
   onSpeak: (term: TextTermState) => void;
@@ -90,10 +89,11 @@ class Term extends React.Component<TermProps> {
       getTermMeaning(term, term.indexFrom);
     }
     onSpeak(term);
-    setEditingTerm(term.id);
+    setEditingTerm(term);
   };
 
   render() {
+    console.log("render")
     const {
       term,
       learningLevel,

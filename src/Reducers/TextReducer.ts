@@ -29,7 +29,6 @@ import { RootState } from "../RootReducer";
 
 export interface TextTermState {
   indexFrom: number;
-  textTermId: number;
   id: number;
   content: string;
   count: number;
@@ -39,8 +38,6 @@ export interface TextTermState {
 export interface TermInfoState {
   meaning: string;
   learningLevel: string;
-  content: string;
-  id: number;
 }
 
 export interface ReadingTextState {
@@ -151,7 +148,10 @@ const textReducer = handleActions(
       }
       return { ...state, readingText: { ...readingText, terms: newTerms } };
     },
-    [TERM_EDITED]: (state: TextState, action: Action<TermInfoState>) => {
+    [TERM_EDITED]: (
+      state: TextState,
+      action: Action<{ id: number; meaning: string; learningLevel: string }>
+    ) => {
       if (state.readingText === null) throw new Error();
       const editedTerm = action.payload;
       if (!editedTerm) {

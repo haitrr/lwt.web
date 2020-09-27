@@ -52,12 +52,12 @@ class ContentPanel extends React.Component<
     super(props);
     if (window.innerWidth > 700) {
       // desktop
-      this.displayTerms = 3000;
+      this.displayTerms = 2500;
       this.loadTerms = 500;
     } else {
       // mobile
-      this.displayTerms = 1500;
-      this.loadTerms = 300;
+      this.displayTerms = 700;
+      this.loadTerms = 200;
     }
 
     this.begin = React.createRef();
@@ -66,12 +66,18 @@ class ContentPanel extends React.Component<
 
   componentDidMount() {
     const { end, setTermIndexEnd, begin, setTermIndexBegin, text } = this.props;
-    this.setState({ loadingAtStart: true }, () => {
-      setTermIndexBegin(Math.max(begin - Math.floor(this.displayTerms / 2), 0));
-    });
-    this.setState({ loadingAtEnd: true }, () => {
-      setTermIndexEnd(Math.min(end + this.displayTerms, text.length - 1));
-    });
+    const newBegin = Math.max(begin - Math.floor(this.displayTerms / 2), 0);
+    if (newBegin !== begin) {
+      this.setState({ loadingAtStart: true }, () => {
+        setTermIndexBegin(newBegin);
+      });
+    }
+    const newEnd = Math.min(end + this.displayTerms, text.length - 1);
+    if (newEnd !== end) {
+      this.setState({ loadingAtEnd: true }, () => {
+        setTermIndexEnd(newEnd);
+      });
+    }
   }
 
   componentDidUpdate(prevProps: ContentPanelProps) {
@@ -122,7 +128,6 @@ class ContentPanel extends React.Component<
     const { loadingAtEnd, loadingAtStart } = this.state;
     // loading
     if (loadingAtStart || loadingAtEnd) {
-      console.log(this.state);
       return;
     }
     const top = e.target.scrollTop < 100;
@@ -152,16 +157,19 @@ class ContentPanel extends React.Component<
     if (begin === end) {
       return <h1>Loading</h1>;
     }
+    if(terms.filter(t => t.indexFrom === 5984).length >1) {
+      console.log(terms.filter((t) => t.indexFrom === 5984));
+    }
     const termElements = terms.map((t, i) => (
       <Term
         onSpeak={onSpeak}
         last={i === 0 ? this.begin : null}
         key={t.indexFrom}
-        textTermId={t.textTermId}
         bookmarkRef={bookmarkRef}
         term={t}
       />
     ));
+
     return (
       <Fragment>
         <div
