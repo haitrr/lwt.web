@@ -16,12 +16,12 @@ interface TermOwnProps {
   bookmarkRef: any;
   textTermId: number;
   last: any;
+  term: TextTermState;
   onSpeak: (term: TextTermState) => void;
 }
 
 interface TermProps extends TermOwnProps {
   bookmark: boolean;
-  term: TextTermState;
   getTermCountInText: (id: number, textId: number) => void;
   getTermMeaning: Function;
   setEditingTerm: Function;
@@ -144,13 +144,10 @@ class Term extends React.Component<TermProps> {
 export default connect(
   (state: RootState, ownProps: TermOwnProps) => {
     if (state.text.readingText === null) throw new Error();
-    const { terms, id, bookmark, termValues } = state.text.readingText;
-    const textTerm = terms.find((t) => t?.textTermId === ownProps.textTermId);
-    if (!textTerm) throw new Error();
-    const term = termValues[textTerm.id];
+    const { id, bookmark, termValues } = state.text.readingText;
+    const term = termValues[ownProps.term.id];
     return {
-      term: textTerm,
-      bookmark: bookmark === textTerm.indexFrom,
+      bookmark: bookmark === ownProps.term.indexFrom,
       textId: id,
       ...term,
     };

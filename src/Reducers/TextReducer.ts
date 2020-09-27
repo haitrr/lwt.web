@@ -50,7 +50,7 @@ export interface ReadingTextState {
   title: string;
   languageCode: string;
   id: number;
-  terms: (TextTermState | null)[];
+  terms: TextTermState[];
   bookmark: number;
   termIndexBegin: number;
   termIndexEnd: number;

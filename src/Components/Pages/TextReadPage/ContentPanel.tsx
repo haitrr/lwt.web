@@ -22,7 +22,7 @@ interface ContentPanelProps {
   getTextTerms: Function;
   textId: number;
   bookmarkRef: any;
-  terms: any[];
+  terms: TextTermState[];
   termCount: number;
   editingTerm: number;
   setEditingTerm: Function;
@@ -52,12 +52,12 @@ class ContentPanel extends React.Component<
     super(props);
     if (window.innerWidth > 700) {
       // desktop
-      this.displayTerms = 10000;
-      this.loadTerms = 3000;
+      this.displayTerms = 3000;
+      this.loadTerms = 500;
     } else {
       // mobile
-      this.displayTerms = 7500;
-      this.loadTerms = 1500;
+      this.displayTerms = 1500;
+      this.loadTerms = 300;
     }
 
     this.begin = React.createRef();
@@ -159,6 +159,7 @@ class ContentPanel extends React.Component<
         key={t.indexFrom}
         textTermId={t.textTermId}
         bookmarkRef={bookmarkRef}
+        term={t}
       />
     ));
     return (
