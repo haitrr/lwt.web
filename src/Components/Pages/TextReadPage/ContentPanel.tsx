@@ -29,7 +29,15 @@ interface ContentPanelProps {
   onSpeak: (term: TextTermState) => void;
 }
 
-class ContentPanel extends React.Component<ContentPanelProps> {
+interface ContentPanelState {
+  loadingAtStart: boolean;
+  loadingAtEnd: boolean;
+}
+
+class ContentPanel extends React.Component<
+  ContentPanelProps,
+  ContentPanelState
+> {
   displayTerms: number = 0;
 
   loadTerms: number = 0;
@@ -58,14 +66,20 @@ class ContentPanel extends React.Component<ContentPanelProps> {
 
   componentDidMount() {
     const { end, setTermIndexEnd, begin, setTermIndexBegin, text } = this.props;
-    setTermIndexEnd(Math.min(end + this.displayTerms, text.length - 1));
-    setTermIndexBegin(Math.max(begin - Math.floor(this.displayTerms / 2), 0));
+    this.setState({ loadingAtStart: true }, () => {
+      setTermIndexBegin(Math.max(begin - Math.floor(this.displayTerms / 2), 0));
+    });
+    this.setState({ loadingAtEnd: true }, () => {
+      setTermIndexEnd(Math.min(end + this.displayTerms, text.length - 1));
+    });
   }
 
   componentDidUpdate(prevProps: ContentPanelProps) {
     const { begin, end, getTextTerms, textId, terms } = this.props;
     if (begin < prevProps.begin) {
-      getTextTerms(textId, begin, prevProps.begin - 1);
+      getTextTerms(textId, begin, prevProps.begin - 1).then(() =>
+        this.setState({ loadingAtStart: false })
+      );
     }
 
     if (prevProps.terms[begin] !== terms[begin] && this.last) {
@@ -73,7 +87,9 @@ class ContentPanel extends React.Component<ContentPanelProps> {
     }
 
     if (end > prevProps.end) {
-      getTextTerms(textId, prevProps.end + 1, end);
+      getTextTerms(textId, prevProps.end + 1, end).then(() =>
+        this.setState({ loadingAtEnd: false })
+      );
     }
   }
 
@@ -91,35 +107,41 @@ class ContentPanel extends React.Component<ContentPanelProps> {
       return;
     }
     const {
-      termCount,
       begin,
       editingTerm,
       setEditingTerm,
       end,
+      text,
       setTermIndexEnd,
       setTermIndexBegin,
-      terms,
     } = this.props;
     if (editingTerm) {
       setEditingTerm(null);
     }
+
+    const { loadingAtEnd, loadingAtStart } = this.state;
     // loading
-    if (!terms[begin] || !terms[end]) {
+    if (loadingAtStart || loadingAtEnd) {
+      console.log(this.state);
       return;
     }
     const top = e.target.scrollTop < 100;
     if (top) {
       if (begin > 0) {
-        setTermIndexBegin(Math.max(begin - this.loadTerms, 0));
-        this.last = this.begin.current;
+        this.setState({ loadingAtStart }, () => {
+          setTermIndexBegin(Math.max(begin - this.loadTerms, 0));
+          this.last = this.begin.current;
+        });
         return;
       }
     }
     const bottom =
       e.target.scrollHeight - e.target.scrollTop < e.target.clientHeight + 100;
     if (bottom) {
-      if (end < termCount - 1) {
-        setTermIndexEnd(Math.min(end + this.loadTerms, termCount - 1));
+      if (end < text.length - 1) {
+        this.setState({ loadingAtEnd: true }, () => {
+          setTermIndexEnd(Math.min(end + this.loadTerms, text.length - 1));
+        });
       }
     }
   };
