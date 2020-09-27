@@ -124,7 +124,6 @@ export default connect(
     if (state.text.readingText === null) throw new Error();
     const { terms, id, bookmark } = state.text.readingText;
     const term = terms.find((t) => t?.textTermId === ownProps.textTermId);
-    // console.log(bookmark, term);
     if (!term) throw new Error();
     return {
       term,
