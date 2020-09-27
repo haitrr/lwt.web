@@ -9,7 +9,7 @@ import { TermLearningLevel } from "../../Enums";
 import TermButton from "./TermButton";
 import TermTooltip from "./TermTooltip";
 import SkippedTerm from "./SkippedTerm";
-import {RootState} from "../../RootReducer";
+import { RootState } from "../../RootReducer";
 
 interface TermProps {
   bookmark: number;
@@ -119,13 +119,17 @@ class Term extends React.Component<TermProps> {
 }
 
 export default connect(
-  (state: RootState, ownProps: TermProps) => ({
-    term: state.text.readingText.terms.find(
-      (t: any) => t.textTermId === ownProps.textTermId
-    ),
-    bookmark: state.text.readingText.bookmark === ownProps.term?.indexFrom,
-    textId: state.text.readingText.id,
-  }),
+  (state: RootState, ownProps: TermProps) => {
+    if (state.text.readingText === null) throw new Error();
+    const { terms, id, bookmark } = state.text.readingText;
+    const term = terms.find((t) => t.textTermId === ownProps.textTermId);
+    if (term === undefined) throw new Error();
+    return {
+      term,
+      bookmark: bookmark === term.indexFrom,
+      textId: id,
+    };
+  },
   {
     setEditingTerm: setEditingTermAction,
     getTermMeaning: getTermMeaningAction,
