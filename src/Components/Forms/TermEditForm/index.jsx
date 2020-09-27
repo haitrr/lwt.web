@@ -57,7 +57,7 @@ class TermEditForm extends React.Component {
             normalize(value.content, code),
             languageCode,
             dictionaryLanguage,
-            index
+            value.indexFrom
           ).finally(() => this.setState({ lookingUpDictionary: false }))
       );
     }

@@ -10,10 +10,11 @@ import TermButton from "./TermButton";
 import TermTooltip from "./TermTooltip";
 import SkippedTerm from "./SkippedTerm";
 import { RootState } from "../../RootReducer";
+import { TextTermState } from "../../Reducers/TextReducer";
 
 interface TermProps {
   bookmark: number;
-  term: any;
+  term: TextTermState;
   last: any;
   onSpeak: (term: any) => void;
   getTermCountInText: (id: number, textId: number) => void;
@@ -56,7 +57,7 @@ class Term extends React.Component<TermProps> {
   };
 
   loadTermsMeaning = () => {
-    const { term, getTermMeaning, index } = this.props;
+    const { term, getTermMeaning } = this.props;
     if (
       term.id &&
       term.meaning === undefined &&
@@ -64,19 +65,20 @@ class Term extends React.Component<TermProps> {
       term.learningLevel !== TermLearningLevel.Skipped &&
       term.learningLevel !== TermLearningLevel.WellKnow
     ) {
-      getTermMeaning(term, index);
+      console.log(term)
+      getTermMeaning(term, term.indexFrom);
     }
   };
 
   handleTermClick = (e: any) => {
     e.preventDefault();
-    const { setEditingTerm, index, term, onSpeak, getTermMeaning } = this.props;
+    const { setEditingTerm, term, onSpeak, getTermMeaning } = this.props;
     // load term meaning if not loaded.
     if (!term.count) {
       this.loadTermCountInText();
     }
     if (term.meaning === null) {
-      getTermMeaning(term, index);
+      getTermMeaning(term, term.indexFrom);
     }
     onSpeak(term);
     setEditingTerm(term.indexFrom);
@@ -122,8 +124,9 @@ export default connect(
   (state: RootState, ownProps: TermProps) => {
     if (state.text.readingText === null) throw new Error();
     const { terms, id, bookmark } = state.text.readingText;
-    const term = terms.find((t) => t.textTermId === ownProps.textTermId);
-    if (term === undefined) throw new Error();
+    const term = terms.find((t) => t?.textTermId === ownProps.textTermId);
+    // console.log(bookmark, term);
+    if (!term) throw new Error();
     return {
       term,
       bookmark: bookmark === term.indexFrom,

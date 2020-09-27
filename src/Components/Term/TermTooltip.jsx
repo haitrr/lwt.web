@@ -98,7 +98,6 @@ class TermTooltip extends React.Component {
   handleDictionaryTerm = () => {
     const {
       term,
-      index,
       dictionaryTerm,
       dictionaryLanguage,
       readingLanguageCode,
@@ -111,7 +110,7 @@ class TermTooltip extends React.Component {
           normalize(term.content, readingLanguageCode),
           readingLanguageCode,
           dictionaryLanguage,
-          index
+          term.indexFrom
         ).then(() => this.setState({ loading: false }))
       );
     }
