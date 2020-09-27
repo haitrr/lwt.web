@@ -21,30 +21,42 @@ import {
   TERM_GET,
   TERM_GET_MEANING,
 } from "../Actions/TermAction";
+import { RootState } from "../RootReducer";
 
 /**
  * text reducer
  */
 
-const defaultState = {
+export interface TextState {
+  texts: any[];
+  page: number;
+  itemPerPage: number;
+  total: number;
+  filters: any;
+  readingText: any;
+  editDetail: any;
+}
+
+const defaultState: TextState = {
   texts: [],
   page: 1,
   itemPerPage: 10,
   total: 0,
   filters: {},
   readingText: null,
+  editDetail: null,
 };
 
 const textReducer = handleActions(
   {
-    [TEXT_FETCHED]: (state, action) => {
+    [TEXT_FETCHED]: (state: TextState, action: any) => {
       const { payload } = action;
       if (payload === null) {
         return { ...state, texts: [] };
       }
       return { ...payload };
     },
-    [TERM_GET]: (state, action) => {
+    [TERM_GET]: (state: TextState, action: any) => {
       const terms = [...state.readingText.terms];
       terms[action.payload.index] = {
         ...terms[action.payload.index],
@@ -59,7 +71,7 @@ const textReducer = handleActions(
         },
       };
     },
-    [TEXT_READ]: (state, action) => {
+    [TEXT_READ]: (state: TextState, action: any) => {
       if (action.error) {
         return state;
       }
@@ -73,7 +85,7 @@ const textReducer = handleActions(
         },
       };
     },
-    [TERM_CREATED]: (state, action) => {
+    [TERM_CREATED]: (state: TextState, action: any) => {
       const createdTerm = action.payload;
       if (!createdTerm) {
         return state;
@@ -97,7 +109,7 @@ const textReducer = handleActions(
       }
       return { ...state, readingText: { ...readingText, terms: newTerms } };
     },
-    [TERM_EDITED]: (state, action) => {
+    [TERM_EDITED]: (state: TextState, action: any) => {
       const editedTerm = action.payload;
       if (!editedTerm) {
         return state;
@@ -121,7 +133,7 @@ const textReducer = handleActions(
       }
       return { ...state, readingText: { ...readingText, terms: newTerms } };
     },
-    [TEXT_DELETED]: (state, action) => {
+    [TEXT_DELETED]: (state: TextState, action: any) => {
       if (action.payload) {
         return {
           ...state,
@@ -130,7 +142,7 @@ const textReducer = handleActions(
       }
       return state;
     },
-    [TEXT_EDIT_DETAIL_FETCHED]: (state, action) => {
+    [TEXT_EDIT_DETAIL_FETCHED]: (state: TextState, action: any) => {
       if (action.payload) {
         return {
           ...state,
@@ -139,12 +151,12 @@ const textReducer = handleActions(
       }
       return state;
     },
-    [TEXT_TERM_SELECT]: (state, action) => ({
+    [TEXT_TERM_SELECT]: (state: TextState, action: any) => ({
       ...state,
       readingText: { ...state.readingText, bookmark: action.payload },
     }),
 
-    [TERM_GET_MEANING]: (state, action) => {
+    [TERM_GET_MEANING]: (state: TextState, action: any) => {
       if (!action.payload) {
         return state;
       }
@@ -154,7 +166,7 @@ const textReducer = handleActions(
       terms[index] = { ...terms[index], meaning: termMeaning.meaning };
       return { ...state, readingText: { ...state.readingText, terms } };
     },
-    [TERM_COUNT_LOADED]: (state, action) => {
+    [TERM_COUNT_LOADED]: (state: TextState, action: any) => {
       if (!action.payload) {
         return state;
       }
@@ -168,7 +180,7 @@ const textReducer = handleActions(
       newTexts[index] = newText;
       return { ...state, texts: newTexts };
     },
-    [READING_TEXT_TERMS_COUNT_LOADED]: (state, action) => {
+    [READING_TEXT_TERMS_COUNT_LOADED]: (state: TextState, action: any) => {
       if (!action.payload) {
         return state;
       }
@@ -181,16 +193,16 @@ const textReducer = handleActions(
         },
       };
     },
-    [TEXT_TERM_LOADED]: (state, action) => {
+    [TEXT_TERM_LOADED]: (state: TextState, action: any) => {
       const { terms, end } = action.payload;
-      console.log(action.payload, state.readingText)
+      console.log(action.payload, state.readingText);
       let newTerms;
       if (end < state.readingText.termIndexEnd) {
         newTerms = [...terms, ...state.readingText.terms];
       } else {
         newTerms = [...state.readingText.terms, ...terms];
       }
-      console.log(newTerms)
+      console.log(newTerms);
 
       return {
         ...state,
@@ -200,15 +212,15 @@ const textReducer = handleActions(
         },
       };
     },
-    [TERM_INDEX_BEGIN_SET]: (state, action) => ({
+    [TERM_INDEX_BEGIN_SET]: (state: TextState, action: any) => ({
       ...state,
       readingText: { ...state.readingText, termIndexBegin: action.payload },
     }),
-    [TERM_INDEX_END_SET]: (state, action) => ({
+    [TERM_INDEX_END_SET]: (state: TextState, action: any) => ({
       ...state,
       readingText: { ...state.readingText, termIndexEnd: action.payload },
     }),
-    [TERM_COUNT_IN_TEXT]: (state, action) => {
+    [TERM_COUNT_IN_TEXT]: (state: TextState, action: any) => {
       const { count, termId } = action.payload;
       const { readingText } = state;
       const newTerms = [...readingText.terms];
@@ -222,7 +234,7 @@ const textReducer = handleActions(
       }
       return { ...state, readingText: { ...readingText, terms: newTerms } };
     },
-    [TERM_DICTIONARY]: (state, action) => {
+    [TERM_DICTIONARY]: (state: TextState, action: any) => {
       if (!action.payload) {
         return state;
       }
@@ -232,14 +244,14 @@ const textReducer = handleActions(
       terms[index] = { ...terms[index], meaning };
       return { ...state, readingText: { ...state.readingText, terms } };
     },
-    [TEXT_TERM_COUNT_GET]: (state, action) => {
+    [TEXT_TERM_COUNT_GET]: (state: TextState, action: any) => {
       const { termCount, textId } = action.payload;
       const newTexts = state.texts.map((t) =>
         t.id === textId ? { ...t, termCount } : t
       );
       return { ...state, texts: newTexts };
     },
-    [TEXT_PROCESSED_INDEX_GET]: (state, action) => {
+    [TEXT_PROCESSED_INDEX_GET]: (state: TextState, action: any) => {
       const { processedIndex, textId } = action.payload;
       const newTexts = state.texts.map((t) =>
         t.id === textId ? { ...t, processedIndex } : t
@@ -252,4 +264,4 @@ const textReducer = handleActions(
 
 export default textReducer;
 
-export const selectEditDetail = (state) => state.text.editDetail;
+export const selectEditDetail = (state: RootState) => state.text.editDetail;

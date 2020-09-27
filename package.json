@@ -50,7 +50,12 @@
     "settings": {
       "import/resolver": {
         "node": {
-          "extensions": [".js", ".jsx", ".ts", ".tsx"]
+          "extensions": [
+            ".js",
+            ".jsx",
+            ".ts",
+            ".tsx"
+          ]
         }
       }
     },
@@ -60,13 +65,23 @@
         "error"
       ],
       "no-use-before-define": "off",
-      "@typescript-eslint/no-use-before-define": ["error"],
+      "@typescript-eslint/no-use-before-define": [
+        "error"
+      ],
       "prettier/prettier": "warn",
       "import/prefer-default-export": "warn",
       "react/destructuring-assignment": "warn",
       "no-nested-ternary": "warn",
       "react/prop-types": "warn",
-      "react/jsx-filename-extension": [1, { "extensions": [".jsx",".tsx"] }],
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".jsx",
+            ".tsx"
+          ]
+        }
+      ],
       "no-param-reassign": "warn",
       "import/extensions": [
         "error",
@@ -88,7 +103,10 @@
   ],
   "devDependencies": {
     "@types/react-redux": "^7.1.9",
+    "@types/redux-actions": "^2.6.1",
     "@types/redux-promise": "^0.5.29",
+    "@typescript-eslint/eslint-plugin": "4.0.1",
+    "@typescript-eslint/parser": "4.0.1",
     "eslint-config-airbnb": "17.1.0",
     "eslint-config-prettier": "3.5.0",
     "eslint-config-react-app": "5.2.1",
@@ -96,8 +114,6 @@
     "eslint-plugin-jsx-a11y": "6.1.2",
     "eslint-plugin-prettier": "3.0.1",
     "eslint-plugin-react": "7.12.4",
-    "prettier": "2.1.1",
-    "@typescript-eslint/eslint-plugin": "4.0.1",
-    "@typescript-eslint/parser": "4.0.1"
+    "prettier": "2.1.1"
   }
 }
