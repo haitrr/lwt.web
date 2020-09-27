@@ -12,18 +12,20 @@ import SkippedTerm from "./SkippedTerm";
 import { RootState } from "../../RootReducer";
 import { TextTermState } from "../../Reducers/TextReducer";
 
-interface TermProps {
-  bookmark: number;
-  term: TextTermState;
+interface TermOwnProps {
+  bookmarkRef: any;
+  textTermId: number;
   last: any;
-  onSpeak: (term: any) => void;
+  onSpeak: (term: TextTermState) => void;
+}
+
+interface TermProps extends TermOwnProps {
+  bookmark: boolean;
+  term: TextTermState;
   getTermCountInText: (id: number, textId: number) => void;
-  textId: number;
   getTermMeaning: Function;
   setEditingTerm: Function;
-  bookmarkRef: any;
-  index: number;
-  textTermId: number;
+  textId: number;
 }
 
 class Term extends React.Component<TermProps> {
@@ -84,7 +86,7 @@ class Term extends React.Component<TermProps> {
   };
 
   render() {
-    const { term, bookmark, last, bookmarkRef, index, onSpeak } = this.props;
+    const { term, bookmark, last, bookmarkRef, onSpeak } = this.props;
     if (term.learningLevel === TermLearningLevel.Skipped) {
       return <SkippedTerm term={term} last={last} />;
     }
@@ -110,7 +112,6 @@ class Term extends React.Component<TermProps> {
         bookmarkRef={bookmarkRef}
         onHover={this.handleHover}
         onSpeak={onSpeak}
-        index={index}
         term={term}
         last={last}
         bookmark={bookmark}
@@ -120,7 +121,7 @@ class Term extends React.Component<TermProps> {
 }
 
 export default connect(
-  (state: RootState, ownProps: TermProps) => {
+  (state: RootState, ownProps: TermOwnProps) => {
     if (state.text.readingText === null) throw new Error();
     const { terms, id, bookmark } = state.text.readingText;
     const term = terms.find((t) => t?.textTermId === ownProps.textTermId);
@@ -136,4 +137,4 @@ export default connect(
     getTermMeaning: getTermMeaningAction,
     getTermCountInText: getTermCountInTextAction,
   }
-)(Term as any);
+)(Term);

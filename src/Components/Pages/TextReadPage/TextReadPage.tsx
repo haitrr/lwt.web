@@ -102,7 +102,7 @@ class TextReadPage extends React.Component<TextReadPageProps> {
   };
 
   render() {
-    const { terms, title, bookmark, id } = this.props;
+    const { terms, title, id } = this.props;
     if (!title) {
       return <h2>Loading</h2>;
     }
@@ -113,7 +113,6 @@ class TextReadPage extends React.Component<TextReadPageProps> {
         <ContentPanel
           onSpeak={this.onSpeak}
           textId={id}
-          bookmark={bookmark}
           bookmarkRef={this.bookmark}
         />
         {terms && <TermEditForm className={styles.termEditForm} />}

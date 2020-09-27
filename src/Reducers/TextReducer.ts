@@ -38,6 +38,8 @@ export interface TextTermState {
 }
 
 export interface ReadingTextState {
+  length: number;
+  termCount: number;
   title: string;
   languageCode: string;
   id: number;

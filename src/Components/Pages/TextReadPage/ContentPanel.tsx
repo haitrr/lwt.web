@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import styles from "./TextReadPage.module.scss";
@@ -11,9 +10,37 @@ import {
   setTermIndexEndAction,
 } from "../../../Actions/TextAction";
 import { setEditingTermAction } from "../../../Actions/TermAction";
+import { RootState } from "../../../RootReducer";
+import { ReadingTextState, TextTermState } from "../../../Reducers/TextReducer";
 
-class ContentPanel extends React.Component {
-  constructor(props) {
+interface ContentPanelProps {
+  end: number;
+  begin: number;
+  setTermIndexEnd: Function;
+  setTermIndexBegin: Function;
+  text: ReadingTextState;
+  getTextTerms: Function;
+  textId: number;
+  bookmarkRef: any;
+  terms: any[];
+  termCount: number;
+  editingTerm: number;
+  setEditingTerm: Function;
+  onSpeak: (term: TextTermState) => void;
+}
+
+class ContentPanel extends React.Component<ContentPanelProps> {
+  displayTerms: number = 0;
+
+  loadTerms: number = 0;
+
+  begin: any = null;
+
+  last: any = null;
+
+  container: any = null;
+
+  constructor(props: ContentPanelProps) {
     super(props);
     if (window.innerWidth > 700) {
       // desktop
@@ -35,7 +62,7 @@ class ContentPanel extends React.Component {
     setTermIndexBegin(Math.max(begin - Math.floor(this.displayTerms / 2), 0));
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: ContentPanelProps) {
     const { begin, end, getTextTerms, textId, terms } = this.props;
     if (begin < prevProps.begin) {
       getTextTerms(textId, begin, prevProps.begin - 1);
@@ -57,7 +84,7 @@ class ContentPanel extends React.Component {
     }
   };
 
-  handleScroll = (e) => {
+  handleScroll = (e: any) => {
     e.stopPropagation();
     e.preventDefault();
     if (e.target.id !== "contentPanel") {
@@ -129,34 +156,18 @@ class ContentPanel extends React.Component {
   }
 }
 
-ContentPanel.defaultProps = {
-  terms: null,
-  editingTerm: null,
-};
-
-ContentPanel.propTypes = {
-  bookmarkRef: PropTypes.shape({}).isRequired,
-  terms: PropTypes.arrayOf(PropTypes.shape()),
-  textId: PropTypes.number.isRequired,
-  begin: PropTypes.number.isRequired,
-  end: PropTypes.number.isRequired,
-  setTermIndexBegin: PropTypes.func.isRequired,
-  setTermIndexEnd: PropTypes.func.isRequired,
-  termCount: PropTypes.number.isRequired,
-  getTextTerms: PropTypes.func.isRequired,
-  onSpeak: PropTypes.func.isRequired,
-  editingTerm: PropTypes.number,
-  setEditingTerm: PropTypes.func.isRequired,
-};
 export default connect(
-  (state) => ({
-    terms: state.text.readingText.terms,
-    begin: state.text.readingText.termIndexBegin,
-    end: state.text.readingText.termIndexEnd,
-    termCount: state.text.readingText.termCount,
-    editingTerm: state.term.editingTerm,
-    text: state.text.readingText,
-  }),
+  (state: RootState) => {
+    if (!state.text.readingText) throw new Error();
+    return {
+      terms: state.text.readingText.terms,
+      begin: state.text.readingText.termIndexBegin,
+      end: state.text.readingText.termIndexEnd,
+      termCount: state.text.readingText.termCount,
+      editingTerm: state.term.editingTerm,
+      text: state.text.readingText,
+    };
+  },
   {
     getTextTerms: getTextTermsAction,
     setTermIndexBegin: setTermIndexBeginAction,
