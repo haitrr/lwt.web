@@ -35,6 +35,7 @@ export interface TextTermState {
   content: string;
   meaning: string;
   count: number;
+  languageCode: string;
 }
 
 export interface ReadingTextState {

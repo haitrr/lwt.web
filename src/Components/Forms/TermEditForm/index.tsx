@@ -1,7 +1,7 @@
-import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 import { Button, Col, Form, Input, Row } from "antd";
+import { FormInstance } from "antd/lib/form";
 import TermContent from "./TermContent";
 import LearningLevelSelect from "../../Inputs/LearningLevelSelect";
 import normalize from "../../../textNormalizer";
@@ -11,28 +11,56 @@ import {
   createTermAction,
   editTermAction,
   dictionaryTermMeaningAction,
-  setEditingTermAction
+  setEditingTermAction,
 } from "../../../Actions/TermAction";
 import { selectEditingTermValue } from "../../../Selectors/TermSelectors";
 import { selectDictionaryLanguage } from "../../../Selectors/UserSelectors";
 import { TermLearningLevel, getNextLearningLevel } from "../../../Enums";
+import { TextTermState } from "../../../Reducers/TextReducer";
+import { RootState } from "../../../RootReducer";
 
-class TermEditForm extends React.Component {
-  formRef = React.createRef();
+interface TermEditFormProps {
+  value: TextTermState;
+  dictionaryLanguage: string;
+  languages: any[];
+  languageCode: string;
+  dictionaryTerm: any;
+  index: number;
+  createTerm: Function;
+  editTerm: Function;
+  setEditingTerm: Function;
+  className: string;
+  editingTerm: number;
+}
 
-  constructor(props) {
+interface TermEditFormState {
+  lookedUpDictionary: boolean;
+  lookingUpDictionary: boolean;
+}
+
+class TermEditForm extends React.Component<
+  TermEditFormProps,
+  TermEditFormState
+> {
+  formRef = React.createRef<FormInstance>();
+
+  constructor(props: TermEditFormProps) {
     super(props);
     this.state = { lookingUpDictionary: false, lookedUpDictionary: false };
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(
+    prevProps: Readonly<TermEditFormProps>,
+    prevState: Readonly<{}>,
+    snapshot?: any
+  ) {
     const {
       value,
       dictionaryLanguage,
       languages,
       languageCode,
       dictionaryTerm,
-      index
+      index,
     } = this.props;
 
     const { lookedUpDictionary } = this.state;
@@ -48,7 +76,7 @@ class TermEditForm extends React.Component {
       value.meaning === "" &&
       !lookedUpDictionary
     ) {
-      const { code } = languages.find(l => l.code === languageCode);
+      const { code } = languages.find((l) => l.code === languageCode);
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState(
         { lookingUpDictionary: true, lookedUpDictionary: true },
@@ -61,7 +89,7 @@ class TermEditForm extends React.Component {
           ).finally(() => this.setState({ lookingUpDictionary: false }))
       );
     }
-    if (value.index !== prevProps.value.index) {
+    if (value.textTermId !== prevProps.value.textTermId) {
       if (this.formRef.current) {
         this.formRef.current.setFieldsValue({ ...value });
       }
@@ -72,7 +100,7 @@ class TermEditForm extends React.Component {
     }
   }
 
-  handleSubmit = values => {
+  handleSubmit = (values: any) => {
     const { value, createTerm, editTerm, setEditingTerm } = this.props;
     const editedData = values;
     const editedTerm = { ...value, ...editedData };
@@ -84,13 +112,14 @@ class TermEditForm extends React.Component {
     setEditingTerm(null);
   };
 
-  handleBetter = e => {
+  handleBetter = (e: any) => {
     const { value } = this.props;
     e.preventDefault();
     const newValue = {
       ...value,
-      learningLevel: getNextLearningLevel(value.learningLevel)
+      learningLevel: getNextLearningLevel(value.learningLevel),
     };
+    if (!this.formRef.current) throw new Error();
     this.formRef.current.setFieldsValue(newValue);
     this.handleSubmit(newValue);
   };
@@ -169,7 +198,7 @@ class TermEditForm extends React.Component {
                     </Button>
                   </Form.Item>
                 </Col>
-                <Col xs={12} lg={24} l>
+                <Col xs={12} lg={24}>
                   <Form.Item className={styles.saveButton}>
                     <Button
                       type="primary"
@@ -190,46 +219,22 @@ class TermEditForm extends React.Component {
   }
 }
 
-TermEditForm.defaultProps = {
-  className: "",
-  editingTerm: "",
-  value: null,
-  dictionaryLanguage: null,
-  index: null
-};
-
-TermEditForm.propTypes = {
-  className: PropTypes.string,
-  createTerm: PropTypes.func.isRequired,
-  dictionaryLanguage: PropTypes.string,
-  editTerm: PropTypes.func.isRequired,
-  editingTerm: PropTypes.number,
-  form: PropTypes.shape({}).isRequired,
-  languageCode: PropTypes.string.isRequired,
-  languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  setEditingTerm: PropTypes.func.isRequired,
-  value: PropTypes.shape({
-    id: PropTypes.number,
-    content: PropTypes.string,
-    index: PropTypes.number.isRequired,
-    meaning: PropTypes.string
-  }),
-  dictionaryTerm: PropTypes.func.isRequired,
-  index: PropTypes.number
-};
 export default connect(
-  state => ({
-    value: { ...selectEditingTermValue(state) },
-    dictionaryLanguage: selectDictionaryLanguage(state),
-    editingTerm: state.term.editingTerm,
-    languageCode: state.text.readingText.languageCode,
-    languages: state.language.languages,
-    index: state.term.editingTerm
-  }),
+  (state: RootState) => {
+    if (!state.text.readingText) throw new Error();
+    return {
+      value: { ...selectEditingTermValue(state) },
+      dictionaryLanguage: selectDictionaryLanguage(state),
+      editingTerm: state.term.editingTerm,
+      languageCode: state.text.readingText.languageCode,
+      languages: state.language.languages,
+      index: state.term.editingTerm,
+    };
+  },
   {
     setEditingTerm: setEditingTermAction,
     createTerm: createTermAction,
     editTerm: editTermAction,
-    dictionaryTerm: dictionaryTermMeaningAction
+    dictionaryTerm: dictionaryTermMeaningAction,
   }
 )(TermEditForm);
