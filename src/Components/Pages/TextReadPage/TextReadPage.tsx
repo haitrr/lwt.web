@@ -1,21 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import { animateScroll } from "react-scroll";
-import { RouteComponentProps } from "react-router";
-import { readTextAction } from "../../../Actions/TextAction";
 import styles from "./TextReadPage.module.scss";
 import TermEditForm from "../../Forms/TermEditForm";
 import ContentPanel from "./ContentPanel";
 import TextStatistic from "./TextStatistic";
 import { RootState } from "../../../RootReducer";
 
-interface TextReadPageParams {
-  textId: string;
-}
-
-interface TextReadPageProps
-  extends RouteComponentProps<TextReadPageParams, any, any> {
-  readText: Function;
+interface TextReadPageProps {
   terms: any;
   id: any;
   language: any;
@@ -33,13 +25,6 @@ class TextReadPage extends React.Component<TextReadPageProps> {
   utt: any = null;
 
   componentDidMount() {
-    const {
-      readText,
-      match: {
-        params: { textId },
-      },
-    } = this.props;
-    readText(textId);
     this.utt = new SpeechSynthesisUtterance();
     this.bookmark = React.createRef();
     window.speechSynthesis.onvoiceschanged = this.setSpeechVoice;
@@ -137,21 +122,14 @@ class TextReadPage extends React.Component<TextReadPageProps> {
   }
 }
 
-export default connect(
-  (state: RootState) => {
-    if (state.text.readingText) {
-      return {
-        terms: state.text.readingText.terms,
-        language: state.text.readingText.languageCode,
-        title: state.text.readingText.title,
-        id: state.text.readingText.id,
-        languages: state.language.languages,
-        bookmark: state.text.readingText.bookmark,
-      };
-    }
-    return { languages: state.language.languages };
-  },
-  {
-    readText: readTextAction,
-  }
-)(TextReadPage);
+export default connect((state: RootState) => {
+  if (!state.text.readingText) throw new Error();
+  return {
+    terms: state.text.readingText.terms,
+    language: state.text.readingText.languageCode,
+    title: state.text.readingText.title,
+    id: state.text.readingText.id,
+    languages: state.language.languages,
+    bookmark: state.text.readingText.bookmark,
+  };
+})(TextReadPage);

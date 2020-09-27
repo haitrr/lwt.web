@@ -1,6 +1,3 @@
-/**
- * text read page.
- */
-import TextReadPage from "./TextReadPage";
+import TextReadPageLoader from "./TextReadPageLoader";
 
-export default TextReadPage;
+export default TextReadPageLoader;
