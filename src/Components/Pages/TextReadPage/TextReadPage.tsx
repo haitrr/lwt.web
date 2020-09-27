@@ -1,17 +1,37 @@
-import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 import { animateScroll } from "react-scroll";
+import { RouteComponentProps } from "react-router";
 import { readTextAction } from "../../../Actions/TextAction";
 import styles from "./TextReadPage.module.scss";
 import TermEditForm from "../../Forms/TermEditForm";
 import ContentPanel from "./ContentPanel";
 import TextStatistic from "./TextStatistic";
+import { RootState } from "../../../RootReducer";
+
+interface TextReadPageParams {
+  textId: string;
+}
+
+interface TextReadPageProps
+  extends RouteComponentProps<TextReadPageParams, any, any> {
+  readText: Function;
+  terms: any;
+  id: any;
+  language: any;
+  languages: any[];
+  title: string;
+  bookmark: number;
+}
 
 /**
  * text read page.
  */
-class TextReadPage extends React.Component {
+class TextReadPage extends React.Component<TextReadPageProps> {
+  bookmark: any = null;
+
+  utt: any = null;
+
   componentDidMount() {
     const {
       readText,
@@ -25,7 +45,7 @@ class TextReadPage extends React.Component {
     window.speechSynthesis.onvoiceschanged = this.setSpeechVoice;
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps: TextReadPageProps) {
     const { terms, id, language, languages } = this.props;
     return (
       terms !== nextProps.terms ||
@@ -35,7 +55,7 @@ class TextReadPage extends React.Component {
     );
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: TextReadPageProps) {
     const { languages, language } = this.props;
     const shouldSetLanguage =
       prevProps.languages !== languages ||
@@ -90,7 +110,7 @@ class TextReadPage extends React.Component {
     }
   };
 
-  onSpeak = (term) => {
+  onSpeak = (term: any) => {
     this.utt.text = term.content;
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(this.utt);
@@ -118,7 +138,7 @@ class TextReadPage extends React.Component {
 }
 
 export default connect(
-  (state) => {
+  (state: RootState) => {
     if (state.text.readingText) {
       return {
         terms: state.text.readingText.terms,
@@ -135,21 +155,3 @@ export default connect(
     readText: readTextAction,
   }
 )(TextReadPage);
-TextReadPage.defaultProps = {
-  language: null,
-  title: null,
-  id: null,
-  terms: null,
-  bookmark: null,
-};
-
-TextReadPage.propTypes = {
-  match: PropTypes.shape().isRequired,
-  readText: PropTypes.func.isRequired,
-  languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  language: PropTypes.number,
-  title: PropTypes.string,
-  id: PropTypes.number,
-  terms: PropTypes.arrayOf(PropTypes.shape({})),
-  bookmark: PropTypes.number,
-};

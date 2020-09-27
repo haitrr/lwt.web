@@ -38,6 +38,8 @@ export interface TextTermState {
 }
 
 export interface ReadingTextState {
+  title: string;
+  languageCode: string;
   id: number;
   terms: (TextTermState | null)[];
   bookmark: number;
