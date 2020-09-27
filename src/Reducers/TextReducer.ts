@@ -55,6 +55,10 @@ export interface TextState {
   editDetail: any;
 }
 
+export interface TextReadActionPayload {
+  bookmark: number;
+}
+
 const defaultState: TextState = {
   texts: [],
   page: 1,
@@ -94,16 +98,19 @@ const textReducer = handleActions(
         },
       };
     },
-    [TEXT_READ]: (state: TextState, action: Action<any>) => {
+    [TEXT_READ]: (state: TextState, action: Action<TextReadActionPayload>) => {
       if (action.error) {
         return state;
       }
+
+      const { bookmark } = action.payload;
       return {
         ...state,
         readingText: {
           ...action.payload,
-          termIndexEnd: action.payload.bookmark ?? 0,
-          termIndexBegin: action.payload.bookmark ?? 0,
+          // nothing loaded
+          termIndexEnd: (bookmark ?? 0) - 1,
+          termIndexBegin: bookmark ?? 0,
           terms: [],
         },
       };

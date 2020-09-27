@@ -30,13 +30,7 @@ class ContentPanel extends React.Component {
   }
 
   componentDidMount() {
-    const {
-      end,
-      setTermIndexEnd,
-      begin,
-      setTermIndexBegin,
-      text,
-    } = this.props;
+    const { end, setTermIndexEnd, begin, setTermIndexBegin, text } = this.props;
     setTermIndexEnd(Math.min(end + this.displayTerms, text.length - 1));
     setTermIndexBegin(Math.max(begin - Math.floor(this.displayTerms / 2), 0));
   }
@@ -44,7 +38,7 @@ class ContentPanel extends React.Component {
   componentDidUpdate(prevProps) {
     const { begin, end, getTextTerms, textId, terms } = this.props;
     if (begin < prevProps.begin) {
-      getTextTerms(textId, begin, prevProps.begin);
+      getTextTerms(textId, begin, prevProps.begin - 1);
     }
 
     if (prevProps.terms[begin] !== terms[begin] && this.last) {
@@ -52,7 +46,7 @@ class ContentPanel extends React.Component {
     }
 
     if (end > prevProps.end) {
-      getTextTerms(textId, prevProps.end, end);
+      getTextTerms(textId, prevProps.end + 1, end);
     }
   }
 

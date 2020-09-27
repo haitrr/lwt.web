@@ -65,7 +65,6 @@ class Term extends React.Component<TermProps> {
       term.learningLevel !== TermLearningLevel.Skipped &&
       term.learningLevel !== TermLearningLevel.WellKnow
     ) {
-      console.log(term)
       getTermMeaning(term, term.indexFrom);
     }
   };
