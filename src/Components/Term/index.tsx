@@ -26,14 +26,16 @@ interface TermProps extends TermOwnProps {
   getTermMeaning: Function;
   setEditingTerm: Function;
   textId: number;
+  meaning: string;
+  learningLevel: string;
 }
 
 class Term extends React.Component<TermProps> {
   shouldComponentUpdate(nextProps: TermProps) {
-    const { term, bookmark, last } = this.props;
+    const { term, bookmark, last, learningLevel, meaning } = this.props;
     return (
-      nextProps.term.learningLevel !== term.learningLevel ||
-      nextProps.term.meaning !== term.meaning ||
+      nextProps.learningLevel !== learningLevel ||
+      nextProps.meaning !== meaning ||
       nextProps.term.count !== term.count ||
       nextProps.bookmark !== bookmark ||
       last !== nextProps.last
@@ -41,8 +43,8 @@ class Term extends React.Component<TermProps> {
   }
 
   handleHover = () => {
-    const { term, onSpeak } = this.props;
-    if (term.meaning === null) {
+    const { term, onSpeak, meaning } = this.props;
+    if (meaning === null) {
       this.loadTermsMeaning();
     }
     if (!term.count) {
@@ -59,13 +61,13 @@ class Term extends React.Component<TermProps> {
   };
 
   loadTermsMeaning = () => {
-    const { term, getTermMeaning } = this.props;
+    const { term, getTermMeaning, meaning, learningLevel } = this.props;
     if (
       term.id &&
-      term.meaning === undefined &&
-      term.learningLevel !== TermLearningLevel.Ignored &&
-      term.learningLevel !== TermLearningLevel.Skipped &&
-      term.learningLevel !== TermLearningLevel.WellKnow
+      meaning === undefined &&
+      learningLevel !== TermLearningLevel.Ignored &&
+      learningLevel !== TermLearningLevel.Skipped &&
+      learningLevel !== TermLearningLevel.WellKnow
     ) {
       getTermMeaning(term, term.indexFrom);
     }
@@ -73,26 +75,41 @@ class Term extends React.Component<TermProps> {
 
   handleTermClick = (e: any) => {
     e.preventDefault();
-    const { setEditingTerm, term, onSpeak, getTermMeaning } = this.props;
+    const {
+      setEditingTerm,
+      term,
+      onSpeak,
+      getTermMeaning,
+      meaning,
+    } = this.props;
     // load term meaning if not loaded.
     if (!term.count) {
       this.loadTermCountInText();
     }
-    if (term.meaning === null) {
+    if (meaning === null) {
       getTermMeaning(term, term.indexFrom);
     }
     onSpeak(term);
-    setEditingTerm(term.indexFrom);
+    setEditingTerm(term.id);
   };
 
   render() {
-    const { term, bookmark, last, bookmarkRef, onSpeak } = this.props;
-    if (term.learningLevel === TermLearningLevel.Skipped) {
-      return <SkippedTerm term={term} last={last} />;
+    const {
+      term,
+      learningLevel,
+      bookmark,
+      meaning,
+      last,
+      bookmarkRef,
+      onSpeak,
+    } = this.props;
+
+    if (learningLevel === TermLearningLevel.Skipped || !learningLevel) {
+      return <SkippedTerm content={term.content} last={last} />;
     }
     if (
-      term.learningLevel === TermLearningLevel.WellKnow ||
-      term.learningLevel === TermLearningLevel.Ignored ||
+      learningLevel === TermLearningLevel.WellKnow ||
+      learningLevel === TermLearningLevel.Ignored ||
       window.innerWidth < 768
     ) {
       return (
@@ -101,6 +118,8 @@ class Term extends React.Component<TermProps> {
           bookmarkRef={bookmarkRef}
           last={last}
           term={term}
+          meaning={meaning}
+          learningLevel={learningLevel}
           onClick={this.handleTermClick}
         />
       );
@@ -112,6 +131,8 @@ class Term extends React.Component<TermProps> {
         bookmarkRef={bookmarkRef}
         onHover={this.handleHover}
         onSpeak={onSpeak}
+        meaning={meaning}
+        learningLevel={learningLevel}
         term={term}
         last={last}
         bookmark={bookmark}
@@ -123,13 +144,15 @@ class Term extends React.Component<TermProps> {
 export default connect(
   (state: RootState, ownProps: TermOwnProps) => {
     if (state.text.readingText === null) throw new Error();
-    const { terms, id, bookmark } = state.text.readingText;
-    const term = terms.find((t) => t?.textTermId === ownProps.textTermId);
-    if (!term) throw new Error();
+    const { terms, id, bookmark, termValues } = state.text.readingText;
+    const textTerm = terms.find((t) => t?.textTermId === ownProps.textTermId);
+    if (!textTerm) throw new Error();
+    const term = termValues[textTerm.id];
     return {
-      term,
-      bookmark: bookmark === term.indexFrom,
+      term: textTerm,
+      bookmark: bookmark === textTerm.indexFrom,
       textId: id,
+      ...term,
     };
   },
   {

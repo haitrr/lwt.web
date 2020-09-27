@@ -28,17 +28,23 @@ import { RootState } from "../RootReducer";
  */
 
 export interface TextTermState {
-  learningLevel: string;
   indexFrom: number;
   textTermId: number;
   id: number;
   content: string;
-  meaning: string;
   count: number;
   languageCode: string;
 }
 
+export interface TermInfoState {
+  meaning: string;
+  learningLevel: string;
+  content: string;
+  id: number;
+}
+
 export interface ReadingTextState {
+  termValues: { [key: number]: TermInfoState };
   length: number;
   termCount: number;
   title: string;
@@ -117,6 +123,7 @@ const textReducer = handleActions(
           termIndexEnd: (bookmark ?? 0) - 1,
           termIndexBegin: bookmark ?? 0,
           terms: [],
+          termValues: {},
         },
       };
     },
@@ -144,30 +151,26 @@ const textReducer = handleActions(
       }
       return { ...state, readingText: { ...readingText, terms: newTerms } };
     },
-    [TERM_EDITED]: (state: TextState, action: Action<any>) => {
+    [TERM_EDITED]: (state: TextState, action: Action<TermInfoState>) => {
       if (state.readingText === null) throw new Error();
       const editedTerm = action.payload;
       if (!editedTerm) {
         return state;
       }
       const { readingText } = state;
-      const newTerms = [...readingText.terms];
-      const { termIndexBegin, termIndexEnd } = readingText;
-      for (let i = termIndexBegin; i <= termIndexEnd; i += 1) {
-        const newTerm = newTerms[i];
-        if (newTerm) {
-          if (
-            newTerm.content.toUpperCase() === editedTerm.content.toUpperCase()
-          ) {
-            newTerms[i] = {
-              ...editedTerm,
-              content: newTerm.content,
-              index: i,
-            };
-          }
-        }
-      }
-      return { ...state, readingText: { ...readingText, terms: newTerms } };
+      if (!readingText) throw new Error();
+      const newTermValues = {
+        ...readingText.termValues,
+        [editedTerm.id]: {
+          ...readingText.termValues[editedTerm.id],
+          meaning: editedTerm.meaning,
+          learningLevel: editedTerm.learningLevel,
+        },
+      };
+      return {
+        ...state,
+        readingText: { ...readingText, termValues: newTermValues },
+      };
     },
     [TEXT_DELETED]: (state: TextState, action: Action<TextState>) => {
       if (action.payload) {
@@ -200,16 +203,16 @@ const textReducer = handleActions(
       if (!action.payload) {
         return state;
       }
-      const { index, termMeaning } = action.payload;
+      const { id, meaning } = action.payload;
+      const { termValues } = state.readingText;
 
-      const { terms } = state.readingText;
-      const newTerms = [...terms];
-      const newTerm = newTerms.find((t) => t?.indexFrom === index);
-      if (!newTerm) throw new Error();
-      newTerm.meaning = termMeaning.meaning;
+      const newTermValues = {
+        ...termValues,
+        [id]: { ...termValues[id], meaning },
+      };
       return {
         ...state,
-        readingText: { ...state.readingText, terms: newTerms },
+        readingText: { ...state.readingText, termValues: newTermValues },
       };
     },
     [TERM_COUNT_LOADED]: (state: TextState, action: Action<any>) => {
@@ -244,12 +247,12 @@ const textReducer = handleActions(
     },
     [TEXT_TERM_LOADED]: (state: TextState, action: Action<any>) => {
       if (state.readingText === null) throw new Error();
-      const { terms, end } = action.payload;
+      const { terms, end, textTerms } = action.payload;
       let newTerms;
       if (end < state.readingText.termIndexEnd) {
-        newTerms = [...terms, ...state.readingText.terms];
+        newTerms = [...textTerms, ...state.readingText.terms];
       } else {
-        newTerms = [...state.readingText.terms, ...terms];
+        newTerms = [...state.readingText.terms, ...textTerms];
       }
 
       return {
@@ -257,6 +260,7 @@ const textReducer = handleActions(
         readingText: {
           ...state.readingText,
           terms: newTerms,
+          termValues: { ...state.readingText.termValues, ...terms },
         },
       };
     },
@@ -284,18 +288,26 @@ const textReducer = handleActions(
       }
       return { ...state, readingText: { ...readingText, terms: newTerms } };
     },
-    [TERM_DICTIONARY]: (state: TextState, action: Action<any>) => {
+    [TERM_DICTIONARY]: (
+      state: TextState,
+      action: Action<{ meaning: string; id: number }>
+    ) => {
       if (state.readingText === null) throw new Error();
       if (!action.payload) {
         return state;
       }
-      const { index, meaning } = action.payload;
+      const { id, meaning } = action.payload;
 
-      const { terms } = state.readingText;
-      const term = terms.find((t) => t?.indexFrom === index);
-      if (!term) throw new Error();
-      term.meaning = meaning;
-      return { ...state, readingText: { ...state.readingText, terms } };
+      return {
+        ...state,
+        readingText: {
+          ...state.readingText,
+          termValues: {
+            ...state.readingText.termValues,
+            [id]: { ...state.readingText.termValues[id], meaning },
+          },
+        },
+      };
     },
     [TEXT_TERM_COUNT_GET]: (state: TextState, action: Action<any>) => {
       const { termCount, textId } = action.payload;

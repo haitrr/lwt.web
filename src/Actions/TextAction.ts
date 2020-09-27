@@ -38,7 +38,7 @@ export const TEXT_PROCESSED_INDEX_GET = "TEXT_PROCESSED_INDEX_GET";
  */
 export const getTextsAction = createAction(
   TEXT_FETCHED,
-  async (filters, page, itemPerPage) => {
+  async (filters: any, page: number, itemPerPage: number) => {
     const result = await getTextsAsync(filters, page, itemPerPage);
 
     return {
@@ -55,52 +55,62 @@ export const getTextsAction = createAction(
  * set reading text.
  */
 
-export const readTextAction = createAction(TEXT_READ, (textId) =>
+export const readTextAction = createAction(TEXT_READ, (textId: number) =>
   getTextReadAsync(textId)
 );
 
 export const loadTermCountAction = createAction(
   TERM_COUNT_LOADED,
-  async (textId) => getTermCountByLearningLevelAsync(textId)
+  async (textId: number) => getTermCountByLearningLevelAsync(textId)
 );
 
 export const loadReadingTexttermsCountByLearningLevelAction = createAction(
   READING_TEXT_TERMS_COUNT_LOADED,
-  async (textId) => getTermCountByLearningLevelAsync(textId)
+  async (textId: number) => getTermCountByLearningLevelAsync(textId)
 );
 
 /**
  * create text action
  */
-export const createTextAction = createAction(TEXT_CREATED, async (text) =>
+export const createTextAction = createAction(TEXT_CREATED, async (text: any) =>
   createTextAsync(text)
 );
 
-export const deleteTextAction = createAction(TEXT_DELETED, async (textId) => {
-  try {
-    await deleteTextAsync(textId);
-    notification.success({ message: "Text deleted." });
-    return textId;
-  } catch {
-    notification.error({ message: "Can't not delete text, please try again." });
-    return null;
+export const deleteTextAction = createAction(
+  TEXT_DELETED,
+  async (textId: number) => {
+    try {
+      await deleteTextAsync(textId);
+      notification.success({ message: "Text deleted." });
+      return textId;
+    } catch {
+      notification.error({
+        message: "Can't not delete text, please try again.",
+      });
+      return null;
+    }
   }
-});
+);
 
-export const editTextAction = createAction(TEXT_EDITED, async (id, text) => {
-  try {
-    await editTextAsync(id, text);
-    notification.success({ message: "Text saved successfully." });
-    return text;
-  } catch {
-    notification.error({ message: "Can't not save text , please try again." });
-    return null;
+export const editTextAction = createAction(
+  TEXT_EDITED,
+  async (id: number, text: any) => {
+    try {
+      await editTextAsync(id, text);
+      notification.success({ message: "Text saved successfully." });
+      return text;
+    } catch {
+      notification.error({
+        message: "Can't not save text , please try again.",
+      });
+      return null;
+    }
   }
-});
+);
 
 export const getTextEditDetailAction = createAction(
   TEXT_EDIT_DETAIL_FETCHED,
-  async (textId) => {
+  async (textId: number) => {
     try {
       return await getTextEditDetailAsync(textId);
     } catch {
@@ -114,18 +124,18 @@ export const getTextEditDetailAction = createAction(
 
 export const setBookmarkAction = createAction(
   TEXT_BOOKMARK_SET,
-  async (id, index) => {
+  async (id: number, index: number) => {
     await setTextBookmarkAsync(id, index);
   }
 );
 export const selectTermAction = createAction(
   TEXT_TERM_SELECT,
-  async (index) => index
+  async (index: number) => index
 );
 
 export const getTextTermsAction = createAction(
   TEXT_TERM_LOADED,
-  async (textId, indexFrom, indexTo) => {
+  async (textId: number, indexFrom: number, indexTo: number) => {
     const result = await getTextTermsAsync(textId, indexFrom, indexTo);
     return { ...result, begin: indexFrom, end: indexTo };
   }
@@ -133,27 +143,27 @@ export const getTextTermsAction = createAction(
 
 export const setTermIndexBeginAction = createAction(
   TERM_INDEX_BEGIN_SET,
-  (begin) => begin
+  (begin: number) => begin
 );
 export const setTermIndexEndAction = createAction(
   TERM_INDEX_END_SET,
-  (end) => end
+  (end: number) => end
 );
 export const getTermCountInTextAction = createAction(
   TERM_COUNT_IN_TEXT,
-  (termId, textId) => getTermCountInTextAsync(termId, textId)
+  (termId: number, textId: number) => getTermCountInTextAsync(termId, textId)
 );
 
 export const getTermCountAction = createAction(
   TEXT_TERM_COUNT_GET,
-  async (textId) => {
+  async (textId: number) => {
     const { termCount } = await getTermCountAsync(textId);
     return { termCount, textId };
   }
 );
 export const getProcessedIndexAction = createAction(
   TEXT_PROCESSED_INDEX_GET,
-  async (textId) => {
+  async (textId: number) => {
     const { processedIndex } = await getProcessedIndexAsync(textId);
     return { processedIndex, textId };
   }

@@ -9,18 +9,17 @@ import LanguageSelect from "../../Inputs/LanguageSelect";
 import styles from "./TermEditForm.module.scss";
 import {
   createTermAction,
-  editTermAction,
   dictionaryTermMeaningAction,
+  editTermAction,
   setEditingTermAction,
 } from "../../../Actions/TermAction";
-import { selectEditingTermValue } from "../../../Selectors/TermSelectors";
 import { selectDictionaryLanguage } from "../../../Selectors/UserSelectors";
-import { TermLearningLevel, getNextLearningLevel } from "../../../Enums";
-import { TextTermState } from "../../../Reducers/TextReducer";
+import { getNextLearningLevel, TermLearningLevel } from "../../../Enums";
+import { TermInfoState } from "../../../Reducers/TextReducer";
 import { RootState } from "../../../RootReducer";
 
 interface TermEditFormProps {
-  value: TextTermState;
+  value: TermInfoState;
   dictionaryLanguage: string;
   languages: any[];
   languageCode: string;
@@ -62,6 +61,7 @@ class TermEditForm extends React.Component<
       dictionaryTerm,
       index,
     } = this.props;
+    if (!value) return;
 
     const { lookedUpDictionary } = this.state;
     if (index !== prevProps.index) {
@@ -85,11 +85,11 @@ class TermEditForm extends React.Component<
             normalize(value.content, code),
             languageCode,
             dictionaryLanguage,
-            value.indexFrom
+            value.id
           ).finally(() => this.setState({ lookingUpDictionary: false }))
       );
     }
-    if (value.textTermId !== prevProps.value.textTermId) {
+    if (value.id !== prevProps.value?.id) {
       if (this.formRef.current) {
         this.formRef.current.setFieldsValue({ ...value });
       }
@@ -102,8 +102,7 @@ class TermEditForm extends React.Component<
 
   handleSubmit = (values: any) => {
     const { value, createTerm, editTerm, setEditingTerm } = this.props;
-    const editedData = values;
-    const editedTerm = { ...value, ...editedData };
+    const editedTerm = { ...value, ...values };
     if (!value.id) {
       createTerm(editedTerm);
     } else {
@@ -135,7 +134,7 @@ class TermEditForm extends React.Component<
   };
 
   render() {
-    const { value, className, editingTerm } = this.props;
+    const { value, className, editingTerm, languageCode } = this.props;
     if (!editingTerm || !value) {
       return null;
     }
@@ -155,7 +154,7 @@ class TermEditForm extends React.Component<
           <Form.Item
             className={styles.language}
             name="languageCode"
-            initialValue={value.languageCode}
+            initialValue={languageCode}
           >
             <LanguageSelect disabled />
           </Form.Item>
@@ -222,8 +221,9 @@ class TermEditForm extends React.Component<
 export default connect(
   (state: RootState) => {
     if (!state.text.readingText) throw new Error();
+    const { termValues } = state.text.readingText;
     return {
-      value: { ...selectEditingTermValue(state) },
+      value: termValues[state.term.editingTerm],
       dictionaryLanguage: selectDictionaryLanguage(state),
       editingTerm: state.term.editingTerm,
       languageCode: state.text.readingText.languageCode,

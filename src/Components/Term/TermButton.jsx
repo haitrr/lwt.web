@@ -20,16 +20,16 @@ class TermButton extends React.Component {
   };
 
   render() {
-    const { term, bookmark } = this.props;
+    const { term, bookmark, learningLevel } = this.props;
 
     return (
       <button
         type="button"
-        className={`${styles.term} ${styles[`term-${term.learningLevel}`]} ${
+        className={`${styles.term} ${styles[`term-${learningLevel}`]} ${
           bookmark ? styles.bookmark : null
         }`}
         style={
-          term.count && isLearningTerm(term.learningLevel)
+          term.count && isLearningTerm(learningLevel)
             ? {
                 borderBottom: `solid 2px ${
                   importantColors[Math.min(term.count, 49)]
@@ -65,6 +65,7 @@ TermButton.propTypes = {
   setBookmark: PropTypes.func.isRequired,
   selectTerm: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
+  learningLevel: PropTypes.string.isRequired,
 };
 
 export default connect((state) => ({ id: state.text.readingText.id }), {

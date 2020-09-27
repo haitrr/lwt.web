@@ -21,7 +21,7 @@ class TermTooltip extends React.Component {
   state = { loading: false, dictionaried: false };
 
   renderTitle = () => {
-    const { term } = this.props;
+    const { term, meaning } = this.props;
     return (
       <span>
         {term.count ? (
@@ -31,17 +31,17 @@ class TermTooltip extends React.Component {
         ) : (
           <div>Loading term count</div>
         )}
-        <span>{term.meaning}</span>
+        <span>{meaning}</span>
       </span>
     );
   };
 
   better = (e) => {
     e.preventDefault();
-    const { term, editTerm } = this.props;
+    const { term, editTerm, learningLevel } = this.props;
     const newTerm = {
       ...term,
-      learningLevel: getNextLearningLevel(term.learningLevel),
+      learningLevel: getNextLearningLevel(learningLevel),
     };
     editTerm(newTerm);
     this.handleSetBookmark();
@@ -55,10 +55,10 @@ class TermTooltip extends React.Component {
 
   worse = (e) => {
     e.preventDefault();
-    const { term, editTerm } = this.props;
+    const { term, editTerm, learningLevel } = this.props;
     const newTerm = {
       ...term,
-      learningLevel: getPreviousLearningLevel(term.learningLevel),
+      learningLevel: getPreviousLearningLevel(learningLevel),
     };
     editTerm(newTerm);
     this.handleSetBookmark();
@@ -110,7 +110,7 @@ class TermTooltip extends React.Component {
           normalize(term.content, readingLanguageCode),
           readingLanguageCode,
           dictionaryLanguage,
-          term.indexFrom
+          term.id
         ).then(() => this.setState({ loading: false }))
       );
     }
@@ -135,7 +135,7 @@ class TermTooltip extends React.Component {
   };
 
   render() {
-    const { bookmark, bookmarkRef, last, term, onClick } = this.props;
+    const { bookmark, bookmarkRef, last, term, onClick, meaning,learningLevel } = this.props;
     return (
       <Popover
         overlayClassName={styles.tooltip}
@@ -153,6 +153,8 @@ class TermTooltip extends React.Component {
             bookmark={bookmark}
             bookmarkRef={bookmarkRef}
             last={last}
+            meanign={meaning}
+            learningLevel={learningLevel}
             term={term}
             onClick={onClick}
           />

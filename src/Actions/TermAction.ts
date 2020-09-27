@@ -16,15 +16,15 @@ export const TERM_EDITING_MEANING_RESET = "TERM_EDITING_MEANING_RESET";
 export const TERM_GET_MEANING = "TERM_GET_MEANING";
 export const TERM_DICTIONARY = "TERM_DICTIONARY";
 
-export const setEditingTermAction = createAction(TERM_SET, (term) => term);
+export const setEditingTermAction = createAction(TERM_SET, (term: any) => term);
 export const dictionaryTermMeaningAction = createAction(
   TERM_DICTIONARY,
-  async (content, from, to, index) => {
+  async (content: string, from: string, to: string, id: number) => {
     const rs = await getTextMeaningAsync(content.toLowerCase(), from, to);
     if (!rs) {
-      return { meaning: "", index };
+      return { meaning: "", id };
     }
-    return { meaning: rs.meaning, index };
+    return { meaning: rs.meaning, id };
   }
 );
 
@@ -32,23 +32,26 @@ export const resetEditingTermMeaningAction = createAction(
   TERM_EDITING_MEANING_RESET
 );
 
-export const createTermAction = createAction(TERM_CREATED, async (term) => {
-  try {
-    const newTerm = { ...term };
-    newTerm.id = await createTermAsync(term);
-    notification.success({
-      message: "Term is saved",
-    });
-    return newTerm;
-  } catch (e) {
-    notification.error({
-      message: "Can't create term",
-      description: e.message,
-    });
-    return null;
+export const createTermAction = createAction(
+  TERM_CREATED,
+  async (term: any) => {
+    try {
+      const newTerm = { ...term };
+      newTerm.id = await createTermAsync(term);
+      notification.success({
+        message: "Term is saved",
+      });
+      return newTerm;
+    } catch (e) {
+      notification.error({
+        message: "Can't create term",
+        description: e.message,
+      });
+      return null;
+    }
   }
-});
-export const editTermAction = createAction(TERM_EDITED, async (term) => {
+);
+export const editTermAction = createAction(TERM_EDITED, async (term: any) => {
   try {
     await editTermAsync(term);
     notification.success({
@@ -65,10 +68,9 @@ export const editTermAction = createAction(TERM_EDITED, async (term) => {
 });
 export const getTermMeaningAction = createAction(
   TERM_GET_MEANING,
-  async (term, index) => {
+  async (id: number) => {
     try {
-      const termMeaning = await getTermMeaningAsync(term.id);
-      return { termMeaning, index };
+      return await getTermMeaningAsync(id);
     } catch (e) {
       notification.error({
         message: "Can't get term mearning",
