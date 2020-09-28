@@ -29,7 +29,6 @@ interface TermEditFormProps {
   editTerm: Function;
   setEditingTerm: Function;
   className: string;
-  editingTerm: TextTermState;
 }
 
 interface TermEditFormState {
@@ -140,20 +139,20 @@ class TermEditForm extends React.Component<
   };
 
   render() {
-    const { value, className, editingTerm, languageCode } = this.props;
-    if (!editingTerm || !value) {
+    const { value, className, textTerm, languageCode } = this.props;
+    if (!textTerm || !value) {
       return null;
     }
 
     return (
       <Form onFinish={this.handleSubmit} layout="inline" ref={this.formRef}>
         <div className={`${className} ${styles.form}`}>
-          <TermContent term={editingTerm} />
+          <TermContent term={textTerm} />
           <Form.Item
             className={styles.content}
             label="Content"
             name="content"
-            initialValue={editingTerm.content}
+            initialValue={textTerm.content}
           >
             <Input disabled />
           </Form.Item>
@@ -231,7 +230,6 @@ export default connect(
     return {
       value: termValues[state.term.editingTerm?.id],
       dictionaryLanguage: selectDictionaryLanguage(state),
-      editingTerm: state.term.editingTerm,
       languageCode: state.text.readingText.languageCode,
       languages: state.language.languages,
       textTerm: state.term.editingTerm,
