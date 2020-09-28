@@ -1,17 +1,21 @@
 import React from "react";
 import { notification } from "antd";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import PropTypes from "prop-types";
+import CopyToClipboard from "react-copy-to-clipboard";
 import styles from "./TermEditForm.module.scss";
 import { importantColors } from "../../../Enums";
+import { TextTermState } from "../../../Reducers/TextReducer";
 
-const TermContent = ({ term }) => (
+interface TermContentProps {
+  term: TextTermState;
+}
+
+const TermContent: React.FC<TermContentProps> = ({ term }) => (
   <CopyToClipboard
     text={term.content}
     onCopy={() =>
       notification.info({
         message: "Copied to clipboard.",
-        placement: "topRight"
+        placement: "topRight",
       })
     }
   >
@@ -23,9 +27,5 @@ const TermContent = ({ term }) => (
     </div>
   </CopyToClipboard>
 );
-
-TermContent.propTypes = {
-  term: PropTypes.shape({}).isRequired
-};
 
 export default TermContent;
