@@ -27,6 +27,7 @@
     "redux-actions": "2.6.4",
     "redux-devtools-extension": "2.13.7",
     "redux-promise": "0.6.0",
+    "redux-thunk": "^2.3.0",
     "typescript": "^4.0.3"
   },
   "scripts": {

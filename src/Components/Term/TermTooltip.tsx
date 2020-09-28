@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { Popover, Button } from "antd";
 import React from "react";
 import { connect } from "react-redux";
@@ -6,7 +5,7 @@ import styles from "./Term.module.scss";
 import TermButton from "./TermButton";
 import {
   dictionaryTermMeaningAction,
-  editTermAction,
+  editTermActionCreator,
 } from "../../Actions/TermAction";
 import {
   getNextLearningLevel,
@@ -16,9 +15,38 @@ import {
 import { selectDictionaryLanguage } from "../../Selectors/UserSelectors";
 import { setBookmarkAction, selectTermAction } from "../../Actions/TextAction";
 import normalize from "../../textNormalizer";
+import { TextTermState } from "../../Reducers/TextReducer";
+import { RootState } from "../../RootReducer";
 
-class TermTooltip extends React.Component {
+interface TermTooltipProps {
+  term: TextTermState;
+  meaning: string;
+  learningLevel: string;
+  editTerm: Function;
+  onSpeak: Function;
+  setBookmark: Function;
+  textId: number;
+  dictionaryTerm: Function;
+  dictionaryLanguage: string;
+  readingLanguageCode: string;
+  bookmark: boolean;
+  bookmarkRef: any;
+  last: any;
+  onClick: Function;
+  onHover: () => void;
+  setSelectingTerm: Function;
+}
+interface TermTooltipState {
+  loading: boolean;
+  dictionaried: boolean;
+}
+
+class TermTooltip extends React.Component<TermTooltipProps, TermTooltipState> {
   state = { loading: false, dictionaried: false };
+
+  dictionaryTimeout: ReturnType<typeof setTimeout> | null = null;
+
+  hoverTimeout: ReturnType<typeof setTimeout> | null = null;
 
   renderTitle = () => {
     const { term, meaning } = this.props;
@@ -36,7 +64,7 @@ class TermTooltip extends React.Component {
     );
   };
 
-  better = (e) => {
+  better = (e: any) => {
     e.preventDefault();
     const { term, editTerm, learningLevel } = this.props;
     const newTerm = {
@@ -48,12 +76,12 @@ class TermTooltip extends React.Component {
   };
 
   handleSetBookmark = () => {
-    const { textId, index, setBookmark, setSelectingTerm } = this.props;
-    setBookmark(textId, index);
-    setSelectingTerm(index);
+    const { textId, setBookmark, setSelectingTerm, term } = this.props;
+    setBookmark(textId, term.indexFrom);
+    setSelectingTerm(term.indexFrom);
   };
 
-  worse = (e) => {
+  worse = (e: any) => {
     e.preventDefault();
     const { term, editTerm, learningLevel } = this.props;
     const newTerm = {
@@ -64,7 +92,7 @@ class TermTooltip extends React.Component {
     this.handleSetBookmark();
   };
 
-  speak = (e) => {
+  speak = (e: any) => {
     e.preventDefault();
     const { onSpeak, term } = this.props;
     onSpeak(term);
@@ -72,14 +100,14 @@ class TermTooltip extends React.Component {
   };
 
   renderContent = () => {
-    const { term } = this.props;
+    const { meaning } = this.props;
     const { loading } = this.state;
     return (
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <Button
           type="primary"
           onClick={this.better}
-          disabled={term.meaning === null || loading}
+          disabled={meaning === null || loading}
         >
           Better
         </Button>
@@ -87,7 +115,7 @@ class TermTooltip extends React.Component {
           type="primary"
           style={{ marginLeft: "5px" }}
           onClick={this.worse}
-          disabled={term.meaning === null || loading}
+          disabled={meaning === null || loading}
         >
           Worse
         </Button>
@@ -101,9 +129,10 @@ class TermTooltip extends React.Component {
       dictionaryTerm,
       dictionaryLanguage,
       readingLanguageCode,
+      meaning,
     } = this.props;
     const { dictionaried } = this.state;
-    if (term && !dictionaried && term.meaning === "") {
+    if (term && !dictionaried && meaning === "") {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ loading: true, dictionaried: true }, () =>
         dictionaryTerm(
@@ -117,9 +146,9 @@ class TermTooltip extends React.Component {
   };
 
   handleMouseEnter = () => {
-    const { term } = this.props;
+    const { term, meaning } = this.props;
     const { dictionaried } = this.state;
-    if (term && !dictionaried && term.meaning === "") {
+    if (term && !dictionaried && meaning === "") {
       // eslint-disable-next-line react/no-did-update-set-state
       this.dictionaryTimeout = setTimeout(() => {
         this.handleDictionaryTerm();
@@ -130,12 +159,20 @@ class TermTooltip extends React.Component {
   };
 
   handleMouseLeave = () => {
-    clearTimeout(this.hoverTimeout);
-    clearTimeout(this.dictionaryTimeout);
+    clearTimeout(this.hoverTimeout as NodeJS.Timeout);
+    clearTimeout(this.dictionaryTimeout as NodeJS.Timeout);
   };
 
   render() {
-    const { bookmark, bookmarkRef, last, term, onClick, meaning,learningLevel } = this.props;
+    const {
+      bookmark,
+      bookmarkRef,
+      last,
+      term,
+      onClick,
+      meaning,
+      learningLevel,
+    } = this.props;
     return (
       <Popover
         overlayClassName={styles.tooltip}
@@ -164,39 +201,17 @@ class TermTooltip extends React.Component {
   }
 }
 
-TermTooltip.defaultProps = {
-  bookmark: false,
-  last: null,
-};
-
-TermTooltip.propTypes = {
-  term: PropTypes.shape({
-    learningLevel: PropTypes.string.isRequired,
-    meaning: PropTypes.string,
-  }).isRequired,
-  bookmark: PropTypes.bool,
-  bookmarkRef: PropTypes.shape({}).isRequired,
-  last: PropTypes.shape({}),
-  onClick: PropTypes.func.isRequired,
-  onHover: PropTypes.func.isRequired,
-  editTerm: PropTypes.func.isRequired,
-  dictionaryTerm: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
-  readingLanguageCode: PropTypes.string.isRequired,
-  dictionaryLanguage: PropTypes.string.isRequired,
-  setBookmark: PropTypes.func.isRequired,
-  textId: PropTypes.number.isRequired,
-  setSelectingTerm: PropTypes.func.isRequired,
-  onSpeak: PropTypes.func.isRequired,
-};
 export default connect(
-  (state) => ({
-    dictionaryLanguage: selectDictionaryLanguage(state),
-    readingLanguageCode: state.text.readingText.languageCode,
-    textId: state.text.readingText.id,
-  }),
+  (state: RootState) => {
+    if (!state.text.readingText) throw new Error();
+    return {
+      dictionaryLanguage: selectDictionaryLanguage(state),
+      readingLanguageCode: state.text.readingText.languageCode,
+      textId: state.text.readingText.id,
+    };
+  },
   {
-    editTerm: editTermAction,
+    editTerm: editTermActionCreator,
     dictionaryTerm: dictionaryTermMeaningAction,
     setBookmark: setBookmarkAction,
     setSelectingTerm: selectTermAction,

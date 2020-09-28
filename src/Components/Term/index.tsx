@@ -93,7 +93,6 @@ class Term extends React.Component<TermProps> {
   };
 
   render() {
-    console.log("render")
     const {
       term,
       learningLevel,

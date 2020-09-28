@@ -10,13 +10,14 @@ import styles from "./TermEditForm.module.scss";
 import {
   createTermAction,
   dictionaryTermMeaningAction,
-  editTermAction,
+  editTermActionCreator,
   setEditingTermAction,
 } from "../../../Actions/TermAction";
 import { selectDictionaryLanguage } from "../../../Selectors/UserSelectors";
 import { getNextLearningLevel, TermLearningLevel } from "../../../Enums";
 import { TermInfoState, TextTermState } from "../../../Reducers/TextReducer";
 import { RootState } from "../../../RootReducer";
+import { TermEditModel } from "../../../Apis/TermApi";
 
 interface TermEditFormProps {
   value: TermInfoState;
@@ -26,7 +27,7 @@ interface TermEditFormProps {
   languageCode: string;
   dictionaryTerm: any;
   createTerm: Function;
-  editTerm: Function;
+  editTerm: (term: TermEditModel) => Promise<void>;
   setEditingTerm: Function;
   className: string;
 }
@@ -99,15 +100,9 @@ class TermEditForm extends React.Component<
     }
   }
 
-  handleSubmit = (values: any) => {
-    const {
-      value,
-      createTerm,
-      editTerm,
-      setEditingTerm,
-      textTerm,
-    } = this.props;
-    const editedTerm = { ...value, ...values };
+  handleSubmit = (values: { meaning: string; learningLevel: string }) => {
+    const { createTerm, editTerm, setEditingTerm, textTerm } = this.props;
+    const editedTerm = { ...values, id: textTerm.id };
     if (!textTerm.id) {
       createTerm(editedTerm);
     } else {
@@ -238,7 +233,7 @@ export default connect(
   {
     setEditingTerm: setEditingTermAction,
     createTerm: createTermAction,
-    editTerm: editTermAction,
+    editTerm: editTermActionCreator,
     dictionaryTerm: dictionaryTermMeaningAction,
   }
 )(TermEditForm);

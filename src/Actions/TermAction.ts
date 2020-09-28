@@ -5,6 +5,7 @@ import {
   editTermAsync,
   getTermMeaningAsync,
   getTextMeaningAsync,
+  TermEditModel,
 } from "../Apis/TermApi";
 
 export const TERM_GET = "TERM_GET";
@@ -51,7 +52,12 @@ export const createTermAction = createAction(
     }
   }
 );
-export const editTermAction = createAction(TERM_EDITED, async (term: any) => {
+
+export interface TermEditActionPayload {}
+
+const editTermActionPayloadCreator = async (
+  term: TermEditModel
+): Promise<TermEditActionPayload | null> => {
   try {
     await editTermAsync(term);
     notification.success({
@@ -65,7 +71,18 @@ export const editTermAction = createAction(TERM_EDITED, async (term: any) => {
     });
     return null;
   }
-});
+};
+
+export const editTermActionCreator = (term: TermEditModel) => async (
+  dispatch: Function
+) => {
+  const data = await editTermActionPayloadCreator(term);
+  dispatch({
+    type: TERM_EDITED,
+    payload: data,
+  });
+};
+
 export const getTermMeaningAction = createAction(
   TERM_GET_MEANING,
   async (id: number) => {
