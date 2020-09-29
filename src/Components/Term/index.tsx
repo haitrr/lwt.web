@@ -117,7 +117,6 @@ class Term extends React.Component<TermProps> {
           bookmarkRef={bookmarkRef}
           last={last}
           term={term}
-          meaning={meaning}
           learningLevel={learningLevel}
           onClick={this.handleTermClick}
         />

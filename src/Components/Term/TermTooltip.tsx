@@ -33,7 +33,7 @@ interface TermTooltipProps {
   bookmark: boolean;
   bookmarkRef: any;
   last: any;
-  onClick: Function;
+  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   onHover: () => void;
   setSelectingTerm: Function;
 }
@@ -173,7 +173,6 @@ class TermTooltip extends React.Component<TermTooltipProps, TermTooltipState> {
       last,
       term,
       onClick,
-      meaning,
       learningLevel,
     } = this.props;
     return (
@@ -193,7 +192,6 @@ class TermTooltip extends React.Component<TermTooltipProps, TermTooltipState> {
             bookmark={bookmark}
             bookmarkRef={bookmarkRef}
             last={last}
-            meanign={meaning}
             learningLevel={learningLevel}
             term={term}
             onClick={onClick}

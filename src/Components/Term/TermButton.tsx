@@ -1,21 +1,36 @@
-import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 import styles from "./Term.module.scss";
 import { setBookmarkAction, selectTermAction } from "../../Actions/TextAction";
 import { importantColors, isLearningTerm } from "../../Enums";
+import { TextTermState } from "../../Reducers/TextReducer";
+import { RootState } from "../../RootReducer";
 
-class TermButton extends React.Component {
-  onTermClick = (e) => {
+interface TermButtonProps {
+  bookmark: boolean;
+  bookmarkRef: React.MutableRefObject<any>;
+  last: React.MutableRefObject<any>;
+  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  term: TextTermState;
+  setBookmark: Function;
+  selectTerm: Function;
+  id: number;
+  learningLevel: string;
+}
+
+class TermButton extends React.Component<TermButtonProps> {
+  onTermClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const { setBookmark, id, selectTerm, term, onClick } = this.props;
     selectTerm(term.indexFrom);
     setBookmark(id, term.indexFrom);
     onClick(e);
   };
 
-  storageButtonRef = (ref) => {
+  storageButtonRef = (ref: HTMLButtonElement) => {
     const { bookmark, bookmarkRef, last } = this.props;
-    if (bookmark) bookmarkRef.current = ref;
+    if (bookmark) {
+      bookmarkRef.current = ref;
+    }
     if (last) last.current = ref;
   };
 
@@ -36,7 +51,7 @@ class TermButton extends React.Component {
                 }`,
                 marginBottom: "-2px",
               }
-            : null
+            : undefined
         }
         ref={this.storageButtonRef}
         onClick={this.onTermClick}
@@ -51,24 +66,13 @@ class TermButton extends React.Component {
   }
 }
 
-TermButton.defaultProps = {
-  bookmarkRef: null,
-  last: null,
-};
-
-TermButton.propTypes = {
-  bookmark: PropTypes.bool.isRequired,
-  bookmarkRef: PropTypes.shape({}),
-  last: PropTypes.shape({}),
-  onClick: PropTypes.func.isRequired,
-  term: PropTypes.shape({}).isRequired,
-  setBookmark: PropTypes.func.isRequired,
-  selectTerm: PropTypes.func.isRequired,
-  id: PropTypes.number.isRequired,
-  learningLevel: PropTypes.string.isRequired,
-};
-
-export default connect((state) => ({ id: state.text.readingText.id }), {
-  setBookmark: setBookmarkAction,
-  selectTerm: selectTermAction,
-})(TermButton);
+export default connect(
+  (state: RootState) => {
+    if (!state.text.readingText) throw new Error();
+    return { id: state.text.readingText.id };
+  },
+  {
+    setBookmark: setBookmarkAction,
+    selectTerm: selectTermAction,
+  }
+)(TermButton);
