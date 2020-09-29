@@ -17,12 +17,13 @@ import { setBookmarkAction, selectTermAction } from "../../Actions/TextAction";
 import normalize from "../../textNormalizer";
 import { TextTermState } from "../../Reducers/TextReducer";
 import { RootState } from "../../RootReducer";
+import { TermEditModel } from "../../Apis/TermApi";
 
 interface TermTooltipProps {
   term: TextTermState;
   meaning: string;
   learningLevel: string;
-  editTerm: Function;
+  editTerm: (term: TermEditModel) => Promise<void>;
   onSpeak: Function;
   setBookmark: Function;
   textId: number;
@@ -66,10 +67,11 @@ class TermTooltip extends React.Component<TermTooltipProps, TermTooltipState> {
 
   better = (e: any) => {
     e.preventDefault();
-    const { term, editTerm, learningLevel } = this.props;
+    const { term, meaning, editTerm, learningLevel } = this.props;
     const newTerm = {
       ...term,
       learningLevel: getNextLearningLevel(learningLevel),
+      meaning,
     };
     editTerm(newTerm);
     this.handleSetBookmark();
@@ -83,10 +85,11 @@ class TermTooltip extends React.Component<TermTooltipProps, TermTooltipState> {
 
   worse = (e: any) => {
     e.preventDefault();
-    const { term, editTerm, learningLevel } = this.props;
+    const { term, meaning, editTerm, learningLevel } = this.props;
     const newTerm = {
       ...term,
       learningLevel: getPreviousLearningLevel(learningLevel),
+      meaning,
     };
     editTerm(newTerm);
     this.handleSetBookmark();
