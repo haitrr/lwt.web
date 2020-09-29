@@ -1,10 +1,16 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loadTermCountAction } from "../../../Actions/TextAction";
 import { TermLearningLevel } from "../../../Enums";
+import { TextItemState } from "../../../Reducers/TextReducer";
 
-class TotalTerm extends React.Component {
+interface TotalTermProps {
+  value: { [key: string]: number };
+  record: TextItemState;
+  loadTermCounts: Function;
+}
+
+class TotalTerm extends React.Component<TotalTermProps> {
   componentDidMount() {
     const { value, record, loadTermCounts } = this.props;
     if (value === undefined) {
@@ -12,7 +18,7 @@ class TotalTerm extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: TotalTermProps) {
     const { value, record, loadTermCounts } = this.props;
     if (
       value === undefined ||
@@ -36,18 +42,6 @@ class TotalTerm extends React.Component {
     return <span>{sum}</span>;
   }
 }
-TotalTerm.defaultProps = {
-  value: undefined,
-};
-
-TotalTerm.propTypes = {
-  value: PropTypes.number,
-  record: PropTypes.shape({
-    processedIndex: PropTypes.number,
-    length: PropTypes.number,
-  }).isRequired,
-  loadTermCounts: PropTypes.func.isRequired,
-};
 
 export default connect(null, { loadTermCounts: loadTermCountAction })(
   TotalTerm

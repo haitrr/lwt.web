@@ -54,8 +54,14 @@ export interface ReadingTextState {
   termIndexEnd: number;
 }
 
+export interface TextItemState {
+  id: number;
+  processedIndex: number;
+  length: number;
+}
+
 export interface TextState {
-  texts: any[];
+  texts: TextItemState[];
   page: number;
   itemPerPage: number;
   total: number;
@@ -173,7 +179,7 @@ const textReducer = handleActions(
         readingText: { ...readingText, termValues: newTermValues },
       };
     },
-    [TEXT_DELETED]: (state: TextState, action: Action<TextState>) => {
+    [TEXT_DELETED]: (state: TextState, action: Action<number>) => {
       if (action.payload) {
         return {
           ...state,
