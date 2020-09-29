@@ -27,6 +27,7 @@ class TextReadPage extends React.Component<TextReadPageProps> {
   componentDidMount() {
     this.utt = new SpeechSynthesisUtterance();
     this.bookmark = React.createRef();
+    this.setSpeechVoice();
     window.speechSynthesis.onvoiceschanged = this.setSpeechVoice;
   }
 
