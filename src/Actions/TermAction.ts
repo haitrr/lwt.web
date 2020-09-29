@@ -87,6 +87,7 @@ export const getTermMeaningAction = createAction(
   TERM_GET_MEANING,
   async (id: number) => {
     try {
+      console.log(id)
       return await getTermMeaningAsync(id);
     } catch (e) {
       notification.error({

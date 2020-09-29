@@ -68,7 +68,7 @@ class Term extends React.Component<TermProps> {
       learningLevel !== TermLearningLevel.Skipped &&
       learningLevel !== TermLearningLevel.WellKnow
     ) {
-      getTermMeaning(term, term.indexFrom);
+      getTermMeaning(term.id);
     }
   };
 
@@ -86,7 +86,7 @@ class Term extends React.Component<TermProps> {
       this.loadTermCountInText();
     }
     if (meaning === null) {
-      getTermMeaning(term, term.indexFrom);
+      getTermMeaning(term.id);
     }
     onSpeak(term);
     setEditingTerm(term);
