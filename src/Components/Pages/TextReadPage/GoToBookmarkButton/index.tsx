@@ -1,9 +1,12 @@
-import PropTypes from "prop-types";
 import React from "react";
 import icon from "./icon.svg";
 import styles from "./GoToBookmarkButton.module.scss";
 
-const GoToBookmarkButton = ({ onClick }) => (
+interface GoToBookmarkButtonProps {
+  onClick: () => void;
+}
+
+const GoToBookmarkButton: React.FC<GoToBookmarkButtonProps> = ({ onClick }) => (
   <button
     title="Go to bookmark"
     type="button"
@@ -15,7 +18,3 @@ const GoToBookmarkButton = ({ onClick }) => (
 );
 
 export default GoToBookmarkButton;
-
-GoToBookmarkButton.propTypes = {
-  onClick: PropTypes.func.isRequired
-};
