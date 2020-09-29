@@ -3,11 +3,12 @@ import {
   TERM_CREATED,
   TERM_EDITING_GET_MEANING,
   TERM_EDITING_MEANING_RESET,
-  TERM_SET
+  TERM_SET,
 } from "../Actions/TermAction";
+import { TEXT_TERM_SELECT } from "../Actions/TextAction";
 
 const defaultState = {
-  editingTerm: null
+  editingTerm: null,
 };
 export default handleActions(
   {
@@ -17,18 +18,24 @@ export default handleActions(
       }
       return { ...state, editingTerm: null };
     },
-    [TERM_CREATED]: state => ({
+    [TEXT_TERM_SELECT]: (state, action) => {
+      if (action.payload) {
+        return { ...state, selectingTerm: action.payload };
+      }
+      return { ...state, editingTerm: null };
+    },
+    [TERM_CREATED]: (state) => ({
       ...state,
-      editingTerm: null
+      editingTerm: null,
     }),
     [TERM_EDITING_GET_MEANING]: (state, action) => ({
       ...state,
-      editingTermMeaning: action.payload
+      editingTermMeaning: action.payload,
     }),
-    [TERM_EDITING_MEANING_RESET]: state => ({
+    [TERM_EDITING_MEANING_RESET]: (state) => ({
       ...state,
-      editingTermMeaning: ""
-    })
+      editingTermMeaning: "",
+    }),
   },
   defaultState
 );

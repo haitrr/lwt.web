@@ -41,6 +41,7 @@ export interface TermInfoState {
 }
 
 export interface ReadingTextState {
+  termsCountByLearningLevel: any;
   termValues: { [key: number]: TermInfoState };
   length: number;
   termCount: number;

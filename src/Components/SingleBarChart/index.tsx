@@ -1,12 +1,21 @@
-import PropTypes from "prop-types";
 import React from "react";
 import styles from "./SingleBarChart.module.scss";
 
-const SingleBarChart = ({ data }) => {
-  const sum = data.map(i => i.value).reduce((a, b) => a + b);
+export interface SingleBarChartItem {
+  value: number;
+  name: string;
+  color: string;
+}
+
+interface SingleBarChartProps {
+  data: SingleBarChartItem[];
+}
+
+const SingleBarChart: React.FC<SingleBarChartProps> = ({ data }) => {
+  const sum = data.map((i) => i.value).reduce((a, b) => a + b);
   return (
     <span className={styles.bar}>
-      {data.map(item =>
+      {data.map((item) =>
         item.value !== 0 ? (
           <span
             key={item.name}
@@ -20,7 +29,7 @@ const SingleBarChart = ({ data }) => {
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
-              textAlign: "center"
+              textAlign: "center",
             }}
           >
             <div
@@ -28,7 +37,7 @@ const SingleBarChart = ({ data }) => {
                 display: "flex",
                 justifyContent: "center",
                 flexDirection: "column",
-                height: "0.85rem"
+                height: "0.85rem",
               }}
             >
               {item.value}
@@ -38,7 +47,7 @@ const SingleBarChart = ({ data }) => {
                 display: "flex",
                 justifyContent: "center",
                 flexDirection: "column",
-                height: "0.85rem"
+                height: "0.85rem",
               }}
             >
               {`(${Math.round((item.value * 10000) / sum) / 100}%)`}
@@ -48,10 +57,6 @@ const SingleBarChart = ({ data }) => {
       )}
     </span>
   );
-};
-
-SingleBarChart.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape({})).isRequired
 };
 
 export default SingleBarChart;
