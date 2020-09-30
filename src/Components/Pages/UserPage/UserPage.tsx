@@ -1,15 +1,33 @@
-import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
-import { Field, Form, withFormik } from "formik";
+import { Field, Form, FormikProps, withFormik } from "formik";
 import styles from "./UserPage.module.scss";
 import { updateSettingAction } from "../../../Actions/UserAction";
 import { LanguageCode } from "../../../Enums";
+import { RootState } from "../../../RootReducer";
+import { UserSettingUpdateModel } from "../../../Apis/UserApi";
+import { UserState } from "../../../Reducers/UserReducer";
 
-class UserPage extends React.Component {
+export interface Language {
+  code: string;
+  name: string;
+}
+
+interface UserPageProps {
+  languages: Language[];
+  setFieldValue: (name: string, value: any) => void;
+  handleChange: () => void;
+  values: UserSettingUpdateModel;
+  user: UserState;
+  updateUserSetting: Function;
+}
+
+class UserPage extends React.Component<
+  UserPageProps & FormikProps<UserSettingUpdateModel>
+> {
   onAddLanguageSetting = () => {
-    const { languages, setFieldValue } = this.props;
-    const { languageSettings } = this.props.values;
+    const { languages, setFieldValue, values } = this.props;
+    const { languageSettings } = values;
     const newLanguageSettings = [...languageSettings];
     for (let i = 0; i < languages.length; i += 1) {
       const l = languages[i];
@@ -34,24 +52,22 @@ class UserPage extends React.Component {
         <Form>
           <h1>Language settings</h1>
           <br />
-          {values.languageSettings
-            ? values.languageSettings.map((ls, i) => (
-              <div>
-                <h1>{ls.languageCode}</h1>
-                <Field
-                  component="select"
-                  name={`languageSettings[${i}].dictionaryLanguageCode`}
-                  onChange={handleChange}
-                  value={ls.dictionaryLanguageCode}
-                >
-                  {languages &&
+          {values.languageSettings.map((ls, i) => (
+            <React.Fragment>
+              <h1>{ls.languageCode}</h1>
+              <Field
+                component="select"
+                name={`languageSettings[${i}].dictionaryLanguageCode`}
+                onChange={handleChange}
+                value={ls.dictionaryLanguageCode}
+              >
+                {languages &&
                   languages.map((language) => (
                     <option value={language.code}>{language.name}</option>
                   ))}
-                </Field>
-              </div>
-              ))
-            : null}
+              </Field>
+            </React.Fragment>
+          ))}
           <br />
           <button
             disabled={languages.length <= values.languageSettings.length}
@@ -68,14 +84,8 @@ class UserPage extends React.Component {
   }
 }
 
-UserPage.propTypes = {
-  handleChange: PropTypes.func.isRequired,
-  languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  values: PropTypes.shape({}).isRequired,
-};
-
 const connectedUserPage = connect(
-  (state) => ({
+  (state: RootState) => ({
     user: state.user,
     languages: state.language.languages,
   }),
@@ -83,12 +93,12 @@ const connectedUserPage = connect(
     updateUserSetting: updateSettingAction,
   }
 )(
-  withFormik({
-    handleSubmit: (values, { props }) => {
+  withFormik<UserPageProps, UserSettingUpdateModel>({
+    handleSubmit: (values: UserSettingUpdateModel, { props }) => {
       props.updateUserSetting(values);
     },
     enableReinitialize: true,
-    mapPropsToValues: (props) => props.user.setting,
+    mapPropsToValues: (props: UserPageProps) => props.user.setting,
   })(UserPage)
 );
 

@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
 import { languageReducer } from "./Reducers/LanguageReducer";
 import textReducer, { TextState } from "./Reducers/TextReducer";
-import { userReducer } from "./Reducers/UserReducer";
+import userReducer, { UserState } from "./Reducers/UserReducer";
 import termReducer from "./Reducers/TermReducer";
 
 export interface RootState {
-  user: any;
+  user: UserState;
   language: any;
   text: TextState;
   term: any;

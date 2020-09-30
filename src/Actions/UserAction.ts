@@ -4,7 +4,10 @@ import {
   logout,
   registerAsync,
   getSettingAsync,
-  updateSettingAsync
+  updateSettingAsync,
+  RegisterData,
+  LoginData,
+  UserSettingUpdateModel,
 } from "../Apis/UserApi";
 
 export const USER_LOGGED_IN = "USER_LOGGED_IN";
@@ -16,16 +19,19 @@ export const USER_SETTING_UPDATE = "USER_SETTING_UPDATE";
 /**
  * user login action.
  */
-export const loginAction = createAction(USER_LOGGED_IN, async credentials => {
-  const user = await loginAsync(credentials);
-  if (user !== undefined) {
-    return {
-      isLoggedIn: true,
-      ...user
-    };
+export const loginAction = createAction(
+  USER_LOGGED_IN,
+  async (credentials: LoginData) => {
+    const user = await loginAsync(credentials);
+    if (user !== null) {
+      return {
+        isLoggedIn: true,
+        ...user,
+      };
+    }
+    return {};
   }
-  return {};
-});
+);
 
 export const logoutAction = createAction(USER_LOGGED_OUT, () => {
   logout();
@@ -46,7 +52,7 @@ export const getSettingAction = createAction(USER_SETTING_GET, async () => {
 
 export const updateSettingAction = createAction(
   USER_SETTING_UPDATE,
-  async value => {
+  async (value: UserSettingUpdateModel) => {
     try {
       await updateSettingAsync(value);
     } catch (e) {
@@ -54,6 +60,9 @@ export const updateSettingAction = createAction(
     }
   }
 );
-export const registerAction = createAction(USER_REGISTERED, async data => {
-  await registerAsync(data);
-});
+export const registerAction = createAction(
+  USER_REGISTERED,
+  async (data: RegisterData) => {
+    await registerAsync(data);
+  }
+);
