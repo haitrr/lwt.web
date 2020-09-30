@@ -28,7 +28,7 @@ const normalize = (text, languageCode) => {
       // turn all verbs into Infinitive form - "I walked" → "I walk"
       verbs: true,
       // turn 'Vice Admiral John Smith' to 'John Smith'
-      honorifics: false
+      honorifics: false,
     });
     doc.toLowerCase();
     return doc.out();

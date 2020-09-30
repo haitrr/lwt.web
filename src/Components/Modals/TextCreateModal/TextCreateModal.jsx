@@ -23,7 +23,7 @@ class TextCreateModal extends React.Component {
     const { createText, hide, onCreate } = this.props;
     form
       .validateFields()
-      .then(values => {
+      .then((values) => {
         createText(values).then(onCreate);
         form.resetFields();
         hide();
@@ -61,12 +61,12 @@ class TextCreateModal extends React.Component {
 
 export default connect(null, {
   createText: createTextAction,
-  getTexts: getTextsAction
+  getTexts: getTextsAction,
 })(TextCreateModal);
 
 TextCreateModal.propTypes = {
   createText: PropTypes.func.isRequired,
   hide: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
-  onCreate: PropTypes.func.isRequired
+  onCreate: PropTypes.func.isRequired,
 };

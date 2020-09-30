@@ -22,7 +22,7 @@ class LanguageSelect extends React.Component {
         className={className}
         placeholder="Language"
       >
-        {languages.map(language => (
+        {languages.map((language) => (
           <Select.Option key={language.code} value={language.code}>
             {language.name}
           </Select.Option>
@@ -37,16 +37,16 @@ LanguageSelect.propTypes = {
   className: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
 };
 
 LanguageSelect.defaultProps = {
   languages: [],
   className: null,
   value: "",
-  disabled: false
+  disabled: false,
 };
 
-export default connect(state => ({
-  languages: state.language.languages
+export default connect((state) => ({
+  languages: state.language.languages,
 }))(LanguageSelect);

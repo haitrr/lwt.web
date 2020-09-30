@@ -42,11 +42,11 @@ class LoginForm extends React.Component {
 LoginForm.propTypes = {
   className: PropTypes.string,
   form: PropTypes.shape({}).isRequired,
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
 };
 
 LoginForm.defaultProps = {
-  className: ""
+  className: "",
 };
 
 export default LoginForm;

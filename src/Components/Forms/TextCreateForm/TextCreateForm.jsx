@@ -29,13 +29,13 @@ function TextCreateForm(props) {
 }
 
 export default connect(
-  state => ({
-    currentLanguage: state.language.currentLanguage
+  (state) => ({
+    currentLanguage: state.language.currentLanguage,
   }),
   null
 )(TextCreateForm);
 
 TextCreateForm.propTypes = {
   currentLanguage: PropTypes.string.isRequired,
-  formRef: PropTypes.shape({}).isRequired
+  formRef: PropTypes.shape({}).isRequired,
 };

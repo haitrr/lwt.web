@@ -13,5 +13,5 @@ export const getLanguageAction = createAction(LANGUAGE_GET, async () =>
 
 export const selectLanguageAction = createAction(
   LANGUAGE_SELECT,
-  language => language
+  (language) => language
 );

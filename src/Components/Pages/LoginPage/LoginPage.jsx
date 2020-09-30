@@ -10,7 +10,7 @@ import styles from "./LoginPage.module.scss";
  * Login page
  */
 class LoginPage extends React.Component {
-  handleLogin = data => {
+  handleLogin = (data) => {
     const { login } = this.props;
     login(data);
   };
@@ -30,12 +30,12 @@ class LoginPage extends React.Component {
 
 LoginPage.propTypes = {
   login: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 export default connect(
-  state => ({
-    isLoggedIn: state.user.isLoggedIn
+  (state) => ({
+    isLoggedIn: state.user.isLoggedIn,
   }),
   { login: loginAction }
 )(LoginPage);

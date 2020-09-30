@@ -31,14 +31,14 @@ const UserMenu = ({ userName, logout }) => {
 
 UserMenu.propTypes = {
   logout: PropTypes.func.isRequired,
-  userName: PropTypes.string.isRequired
+  userName: PropTypes.string.isRequired,
 };
 
 export default connect(
-  state => ({
-    userName: state.user.userName
+  (state) => ({
+    userName: state.user.userName,
   }),
   {
-    logout: logoutAction
+    logout: logoutAction,
   }
 )(UserMenu);

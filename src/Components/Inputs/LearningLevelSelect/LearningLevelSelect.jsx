@@ -18,7 +18,7 @@ export default class LearningLevelSelect extends React.Component {
       <Radio.Group onChange={onChange} className={styles.select} value={value}>
         <Radio.Button
           style={{
-            backgroundColor: TermLearningColor[TermLearningLevel.UnKnow]
+            backgroundColor: TermLearningColor[TermLearningLevel.UnKnow],
           }}
           value={TermLearningLevel.UnKnow}
         >
@@ -26,7 +26,7 @@ export default class LearningLevelSelect extends React.Component {
         </Radio.Button>
         <Radio.Button
           style={{
-            backgroundColor: TermLearningColor[TermLearningLevel.Learning1]
+            backgroundColor: TermLearningColor[TermLearningLevel.Learning1],
           }}
           value={TermLearningLevel.Learning1}
         >
@@ -34,7 +34,7 @@ export default class LearningLevelSelect extends React.Component {
         </Radio.Button>
         <Radio.Button
           style={{
-            backgroundColor: TermLearningColor[TermLearningLevel.Learning2]
+            backgroundColor: TermLearningColor[TermLearningLevel.Learning2],
           }}
           value={TermLearningLevel.Learning2}
         >
@@ -42,7 +42,7 @@ export default class LearningLevelSelect extends React.Component {
         </Radio.Button>
         <Radio.Button
           style={{
-            backgroundColor: TermLearningColor[TermLearningLevel.Learning3]
+            backgroundColor: TermLearningColor[TermLearningLevel.Learning3],
           }}
           value={TermLearningLevel.Learning3}
         >
@@ -50,7 +50,7 @@ export default class LearningLevelSelect extends React.Component {
         </Radio.Button>
         <Radio.Button
           style={{
-            backgroundColor: TermLearningColor[TermLearningLevel.Learning4]
+            backgroundColor: TermLearningColor[TermLearningLevel.Learning4],
           }}
           value={TermLearningLevel.Learning4}
         >
@@ -58,7 +58,7 @@ export default class LearningLevelSelect extends React.Component {
         </Radio.Button>
         <Radio.Button
           style={{
-            backgroundColor: TermLearningColor[TermLearningLevel.Learning5]
+            backgroundColor: TermLearningColor[TermLearningLevel.Learning5],
           }}
           value={TermLearningLevel.Learning5}
         >
@@ -66,7 +66,7 @@ export default class LearningLevelSelect extends React.Component {
         </Radio.Button>
         <Radio.Button
           style={{
-            backgroundColor: TermLearningColor[TermLearningLevel.WellKnow]
+            backgroundColor: TermLearningColor[TermLearningLevel.WellKnow],
           }}
           value={TermLearningLevel.WellKnow}
         >
@@ -74,7 +74,7 @@ export default class LearningLevelSelect extends React.Component {
         </Radio.Button>
         <Radio.Button
           style={{
-            backgroundColor: TermLearningColor[LearningLevelSelect.Ignored]
+            backgroundColor: TermLearningColor[LearningLevelSelect.Ignored],
           }}
           value={TermLearningLevel.Ignored}
         >
@@ -89,5 +89,5 @@ LearningLevelSelect.propTypes = {
   // eslint-disable-next-line react/require-default-props
   onChange: PropTypes.func,
   // eslint-disable-next-line react/require-default-props
-  value: PropTypes.string
+  value: PropTypes.string,
 };

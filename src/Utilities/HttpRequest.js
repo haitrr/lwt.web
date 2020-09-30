@@ -8,15 +8,15 @@ function defaultResponseErrorHandler(response) {
     response.status === 503
   ) {
     notification.error({
-      message: "Failed to connect to server, please try again later."
+      message: "Failed to connect to server, please try again later.",
     });
   } else if (response.status === 400) {
-    response.json().then(error => {
+    response.json().then((error) => {
       notification.error({ message: error.Message });
     });
   } else {
     notification.error({
-      message: `Error connecting with server ${response.status}:${response.statusText}`
+      message: `Error connecting with server ${response.status}:${response.statusText}`,
     });
   }
   throw response;
@@ -59,13 +59,13 @@ export async function postAsync(
     // credentials: "include", // include, same-origin, *omit
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      ...getAuthenticationHeader()
+      ...getAuthenticationHeader(),
       // "Content-Type": "application/x-www-form-urlencoded",
     },
     method: "POST", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, cors, *same-origin
     redirect: "follow", // manual, *follow, error
-    referrer: "no-referrer" // no-referrer, *client
+    referrer: "no-referrer", // no-referrer, *client
   })
     .then(handleResponse)
     .catch(defaultResponseErrorHandler);
@@ -83,13 +83,13 @@ export async function putAsync(
     // credentials: "include", // include, same-origin, *omit
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      ...getAuthenticationHeader()
+      ...getAuthenticationHeader(),
       // "Content-Type": "application/x-www-form-urlencoded",
     },
     method: "PUT", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, cors, *same-origin
     redirect: "follow", // manual, *follow, error
-    referrer: "no-referrer" // no-referrer, *client
+    referrer: "no-referrer", // no-referrer, *client
   })
     .then(handleResponse)
     .catch(defaultResponseErrorHandler);
@@ -103,7 +103,7 @@ export async function getAsync(
   let fullUrl = url;
   if (params != null) {
     fullUrl += "?";
-    Object.keys(params).forEach(key => {
+    Object.keys(params).forEach((key) => {
       if (params[key] != null) {
         fullUrl += `${key}=${params[key]}&`;
       }
@@ -115,13 +115,13 @@ export async function getAsync(
     // credentials: "include", // include, same-origin, *omit
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      ...getAuthenticationHeader()
+      ...getAuthenticationHeader(),
       // "Content-Type": "application/x-www-form-urlencoded",
     },
     method: "GET", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, cors, *same-origin
     redirect: "follow", // manual, *follow, error
-    referrer: "no-referrer" // no-referrer, *client
+    referrer: "no-referrer", // no-referrer, *client
   })
     .then(handleResponse)
     .catch(defaultResponseErrorHandler);
@@ -135,7 +135,7 @@ export async function deleteAsync(
   let fullUrl = url;
   if (params != null) {
     fullUrl += "?";
-    Object.keys(params).forEach(key => {
+    Object.keys(params).forEach((key) => {
       if (params[key] != null) {
         fullUrl += `${key}=${params[key]}&`;
       }
@@ -147,13 +147,13 @@ export async function deleteAsync(
     // credentials: "include", // include, same-origin, *omit
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      ...getAuthenticationHeader()
+      ...getAuthenticationHeader(),
       // "Content-Type": "application/x-www-form-urlencoded",
     },
     method: "DELETE", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, cors, *same-origin
     redirect: "follow", // manual, *follow, error
-    referrer: "no-referrer" // no-referrer, *client
+    referrer: "no-referrer", // no-referrer, *client
   })
     .then(handleResponse)
     .catch(defaultResponseErrorHandler);
@@ -172,13 +172,13 @@ export async function patchAsync(
     // credentials: "include", // include, same-origin, *omit
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      ...getAuthenticationHeader()
+      ...getAuthenticationHeader(),
       // "Content-Type": "application/x-www-form-urlencoded",
     },
     method: "PATCH", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, cors, *same-origin
     redirect: "follow", // manual, *follow, error
-    referrer: "no-referrer" // no-referrer, *client
+    referrer: "no-referrer", // no-referrer, *client
   })
     .then(handleResponse)
     .catch(defaultResponseErrorHandler);

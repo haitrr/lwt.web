@@ -29,13 +29,13 @@ function TextEditForm(props) {
 }
 
 export default connect(
-  state => ({
-    currentLanguage: state.language.currentLanguage
+  (state) => ({
+    currentLanguage: state.language.currentLanguage,
   }),
   null
 )(TextEditForm);
 
 TextEditForm.propTypes = {
   editDetail: PropTypes.shape({}).isRequired,
-  formRef: PropTypes.shape({}).isRequired
+  formRef: PropTypes.shape({}).isRequired,
 };

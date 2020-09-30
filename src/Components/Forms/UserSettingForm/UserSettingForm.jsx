@@ -7,11 +7,11 @@ function UserSettingForm(props) {
   const { languages } = props;
   return (
     <Form>
-      {languages.map(language => (
+      {languages.map((language) => (
         <div>
           <span>{language.name}</span>
           <Field component="select" name={language.name}>
-            {languages.map(l => (
+            {languages.map((l) => (
               <option value={l.id}>{l.name}</option>
             ))}
           </Field>
@@ -23,12 +23,12 @@ function UserSettingForm(props) {
 }
 
 const connectedUserForm = connect(
-  state => ({ languages: state.language.languages }),
+  (state) => ({ languages: state.language.languages }),
   {}
 )(UserSettingForm);
 
 export default withFormik({})(connectedUserForm);
 
 UserSettingForm.propTypes = {
-  languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired
+  languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };

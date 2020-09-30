@@ -31,7 +31,7 @@ function TextFilterForm({ onFilterChange }) {
 }
 
 TextFilterForm.propTypes = {
-  onFilterChange: PropTypes.func.isRequired
+  onFilterChange: PropTypes.func.isRequired,
 };
 
 TextFilterForm.defaultProps = {};

@@ -59,21 +59,21 @@ class App extends React.Component {
 }
 
 App.defaultProps = {
-  user: {}
+  user: {},
 };
 
 App.propTypes = {
   getLanguages: PropTypes.func.isRequired,
   getSetting: PropTypes.func.isRequired,
-  user: PropTypes.shape()
+  user: PropTypes.shape(),
 };
 
 export default connect(
-  state => ({
-    user: state.user
+  (state) => ({
+    user: state.user,
   }),
   {
     getLanguages: getLanguageAction,
-    getSetting: getSettingAction
+    getSetting: getSettingAction,
   }
 )(App);

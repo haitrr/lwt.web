@@ -53,19 +53,19 @@ class Header extends React.Component {
 
 Header.propTypes = {
   isLoggedIn: PropTypes.bool,
-  logout: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired,
 };
 
 Header.defaultProps = {
-  isLoggedIn: false
+  isLoggedIn: false,
 };
 
 export default connect(
-  state => ({
+  (state) => ({
     isLoggedIn: state.user.isLoggedIn,
-    userName: state.user.userName
+    userName: state.user.userName,
   }),
   {
-    logout: logoutAction
+    logout: logoutAction,
   }
 )(Header);
