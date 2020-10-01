@@ -1,13 +1,20 @@
-import PropTypes from "prop-types";
 import React from "react";
 import { Radio } from "antd";
+import { RadioChangeEvent } from "antd/es/radio";
 import styles from "./LearningLevelSelect.module.scss";
 import { TermLearningLevel, TermLearningColor } from "../../../Enums";
 
 // form item need to be class component.
+interface LearningLevelSelectProps {
+  value: string;
+  onChange: (e: RadioChangeEvent) => void;
+}
+
 // eslint-disable-next-line react/prefer-stateless-function
-export default class LearningLevelSelect extends React.Component {
-  shouldComponentUpdate(nextProps) {
+export default class LearningLevelSelect extends React.Component<
+  LearningLevelSelectProps
+> {
+  shouldComponentUpdate(nextProps: LearningLevelSelectProps) {
     const { value } = this.props;
     return value !== nextProps.value;
   }
@@ -74,7 +81,7 @@ export default class LearningLevelSelect extends React.Component {
         </Radio.Button>
         <Radio.Button
           style={{
-            backgroundColor: TermLearningColor[LearningLevelSelect.Ignored],
+            backgroundColor: TermLearningColor[TermLearningLevel.Ignored],
           }}
           value={TermLearningLevel.Ignored}
         >
@@ -84,10 +91,3 @@ export default class LearningLevelSelect extends React.Component {
     );
   }
 }
-
-LearningLevelSelect.propTypes = {
-  // eslint-disable-next-line react/require-default-props
-  onChange: PropTypes.func,
-  // eslint-disable-next-line react/require-default-props
-  value: PropTypes.string,
-};
