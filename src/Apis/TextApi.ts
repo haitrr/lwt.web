@@ -7,7 +7,7 @@ import {
   patchAsync,
 } from "../Utilities/HttpRequest";
 
-interface TextFilter {}
+export interface TextFilter {}
 
 /**
  * Get the list of text
