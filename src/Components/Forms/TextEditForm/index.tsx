@@ -4,12 +4,7 @@ import { connect } from "react-redux";
 import { FormInstance } from "antd/es/form";
 import LanguageSelect from "../../Inputs/LanguageSelect/LanguageSelect";
 import { RootState } from "../../../RootReducer";
-
-interface TextEditDetail {
-  languageCode: string;
-  title: string;
-  content: string;
-}
+import { TextEditDetail } from "../../../Reducers/TextReducer";
 
 interface TextEditFormProps {
   editDetail: TextEditDetail;

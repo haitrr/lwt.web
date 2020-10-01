@@ -1,27 +1,44 @@
-import PropTypes from "prop-types";
 import { Modal } from "antd";
 import React from "react";
 import { connect } from "react-redux";
+import { FormInstance } from "antd/es/form";
 import TextEditForm from "../../Forms/TextEditForm";
 import {
-  editTextAction,
+  editTextActionCreator,
   getTextEditDetailAction,
 } from "../../../Actions/TextAction";
-import { selectEditDetail } from "../../../Reducers/TextReducer";
+import {
+  selectEditDetail,
+  TextEditDetail,
+} from "../../../Reducers/TextReducer";
+import { RootState } from "../../../RootReducer";
+import { TextEditModel } from "../../../Apis/TextApi";
+
+interface OwnProps {
+  hide: () => void;
+  editingText: number;
+  getEditDetail: (id: number) => void;
+  editDetail: TextEditDetail;
+  editText: (id: number, data: TextEditModel) => Promise<void>;
+  onEdit: () => void;
+  visible: boolean;
+}
+
+type TextEditModalProps = OwnProps;
 
 /**
  * text create modal
  */
-class TextEditModal extends React.Component {
-  formRef = React.createRef();
+class TextEditModal extends React.Component<TextEditModalProps> {
+  formRef = React.createRef<FormInstance>();
 
-  constructor(props) {
+  constructor(props: TextEditModalProps) {
     super(props);
     this.handleOk = this.handleOk.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: TextEditModalProps) {
     const { hide, editingText, getEditDetail, editDetail } = this.props;
     if (prevProps.editingText !== editingText && editingText) {
       getEditDetail(editingText);
@@ -36,9 +53,9 @@ class TextEditModal extends React.Component {
   handleOk() {
     const form = this.formRef.current;
     const { editText, hide, editingText, onEdit } = this.props;
-    form.validateFields().then((values) => {
+    form!.validateFields().then((values) => {
       editText(editingText, values).then(onEdit);
-      form.resetFields();
+      form!.resetFields();
       hide();
     });
   }
@@ -46,7 +63,7 @@ class TextEditModal extends React.Component {
   handleCancel() {
     const { hide } = this.props;
     const form = this.formRef.current;
-    form.resetFields();
+    form!.resetFields();
     hide();
   }
 
@@ -70,26 +87,11 @@ class TextEditModal extends React.Component {
 }
 
 export default connect(
-  (state) => ({
+  (state: RootState) => ({
     editDetail: selectEditDetail(state),
   }),
   {
-    editText: editTextAction,
+    editText: editTextActionCreator,
     getEditDetail: getTextEditDetailAction,
   }
 )(TextEditModal);
-
-TextEditModal.defaultProps = {
-  editingText: null,
-  editDetail: null,
-};
-
-TextEditModal.propTypes = {
-  editText: PropTypes.func.isRequired,
-  hide: PropTypes.func.isRequired,
-  visible: PropTypes.bool.isRequired,
-  onEdit: PropTypes.func.isRequired,
-  editDetail: PropTypes.shape({}),
-  getEditDetail: PropTypes.func.isRequired,
-  editingText: PropTypes.string,
-};

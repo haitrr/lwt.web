@@ -13,6 +13,7 @@ import {
   getTermCountInTextAsync,
   getTermCountAsync,
   getProcessedIndexAsync,
+  TextEditModel,
 } from "../Apis/TextApi";
 
 export const TEXT_FETCHED = "TEXT_FETCHED";
@@ -92,21 +93,29 @@ export const deleteTextAction = createAction(
   }
 );
 
-export const editTextAction = createAction(
-  TEXT_EDITED,
-  async (id: number, text: any) => {
-    try {
-      await editTextAsync(id, text);
-      notification.success({ message: "Text saved successfully." });
-      return text;
-    } catch {
-      notification.error({
-        message: "Can't not save text , please try again.",
-      });
-      return null;
-    }
+const editTextActionPayloadCreator = async (
+  id: number,
+  text: TextEditModel
+) => {
+  try {
+    await editTextAsync(id, text);
+    notification.success({ message: "Text saved successfully." });
+    return text;
+  } catch {
+    notification.error({
+      message: "Can't not save text , please try again.",
+    });
+    return null;
   }
-);
+};
+
+export const editTextActionCreator = (
+  id: number,
+  text: TextEditModel
+) => async (dispatch: Function) => {
+  const payload = await editTextActionPayloadCreator(id, text);
+  dispatch({ type: TEXT_EDITED, payload });
+};
 
 export const getTextEditDetailAction = createAction(
   TEXT_EDIT_DETAIL_FETCHED,

@@ -60,6 +60,12 @@ export interface TextItemState {
   length: number;
 }
 
+export interface TextEditDetail {
+  languageCode: string;
+  title: string;
+  content: string;
+}
+
 export interface TextState {
   texts: TextItemState[];
   page: number;
@@ -67,7 +73,7 @@ export interface TextState {
   total: number;
   filters: any;
   readingText: ReadingTextState | null;
-  editDetail: any;
+  editDetail: TextEditDetail;
 }
 
 export interface TextReadActionPayload {

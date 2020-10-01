@@ -64,7 +64,7 @@ export async function deleteTextAsync(textId: number) {
   return deleteAsync(`${TEXT_API}/${textId}`);
 }
 
-interface TextEditModel {}
+export interface TextEditModel {}
 
 export async function editTextAsync(id: number, text: TextEditModel) {
   return putAsync(TEXT_API, id, text);
