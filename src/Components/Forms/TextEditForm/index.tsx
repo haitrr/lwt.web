@@ -1,13 +1,25 @@
-import PropTypes from "prop-types";
 import { Form, Input } from "antd";
-import React from "react";
+import React, { RefObject } from "react";
 import { connect } from "react-redux";
+import { FormInstance } from "antd/es/form";
 import LanguageSelect from "../../Inputs/LanguageSelect/LanguageSelect";
+import { RootState } from "../../../RootReducer";
+
+interface TextEditDetail {
+  languageCode: string;
+  title: string;
+  content: string;
+}
+
+interface TextEditFormProps {
+  editDetail: TextEditDetail;
+  formRef: RefObject<FormInstance>;
+}
 
 /**
  * text create form
  */
-function TextEditForm(props) {
+function TextEditForm(props: TextEditFormProps) {
   const { editDetail, formRef } = props;
 
   return (
@@ -29,13 +41,8 @@ function TextEditForm(props) {
 }
 
 export default connect(
-  (state) => ({
+  (state: RootState) => ({
     currentLanguage: state.language.currentLanguage,
   }),
-  null
+  {}
 )(TextEditForm);
-
-TextEditForm.propTypes = {
-  editDetail: PropTypes.shape({}).isRequired,
-  formRef: PropTypes.shape({}).isRequired,
-};
