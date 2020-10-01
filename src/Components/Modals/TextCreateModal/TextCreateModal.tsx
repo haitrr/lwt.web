@@ -1,17 +1,27 @@
-import PropTypes from "prop-types";
+import { FormProps } from "antd/lib/form/Form";
 import { Modal } from "antd";
 import React from "react";
 import { connect } from "react-redux";
+import { FormInstance } from "antd/es/form";
 import TextCreateForm from "../../Forms/TextCreateForm";
 import { createTextAction, getTextsAction } from "../../../Actions/TextAction";
+
+interface TextCreateModalProps {
+  createText: Function;
+  hide: () => void;
+  visible: boolean;
+  onCreate: Function;
+}
 
 /**
  * text create modal
  */
-class TextCreateModal extends React.Component {
-  formRef = React.createRef();
+class TextCreateModal extends React.Component<
+  TextCreateModalProps & FormProps
+> {
+  formRef = React.createRef<FormInstance>();
 
-  constructor(props) {
+  constructor(props: TextCreateModalProps) {
     super(props);
     this.saveFormRef = this.saveFormRef.bind(this);
     this.handleOk = this.handleOk.bind(this);
@@ -20,6 +30,7 @@ class TextCreateModal extends React.Component {
 
   handleOk() {
     const form = this.formRef.current;
+    if (!form) throw new Error();
     const { createText, hide, onCreate } = this.props;
     form
       .validateFields()
@@ -33,12 +44,13 @@ class TextCreateModal extends React.Component {
 
   handleCancel() {
     const form = this.formRef.current;
+    if (!form) throw new Error();
     const { hide } = this.props;
     form.resetFields();
     hide();
   }
 
-  saveFormRef(formRef) {
+  saveFormRef(formRef: React.RefObject<FormInstance>) {
     this.formRef = formRef;
   }
 
@@ -63,10 +75,3 @@ export default connect(null, {
   createText: createTextAction,
   getTexts: getTextsAction,
 })(TextCreateModal);
-
-TextCreateModal.propTypes = {
-  createText: PropTypes.func.isRequired,
-  hide: PropTypes.func.isRequired,
-  visible: PropTypes.bool.isRequired,
-  onCreate: PropTypes.func.isRequired,
-};

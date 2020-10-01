@@ -7,11 +7,7 @@ import { LanguageCode } from "../../../Enums";
 import { RootState } from "../../../RootReducer";
 import { UserSettingUpdateModel } from "../../../Apis/UserApi";
 import { UserState } from "../../../Reducers/UserReducer";
-
-export interface Language {
-  code: string;
-  name: string;
-}
+import { Language } from "../../../Reducers/LanguageReducer";
 
 interface UserPageProps {
   languages: Language[];
@@ -84,22 +80,22 @@ class UserPage extends React.Component<
   }
 }
 
-const connectedUserPage = connect(
-  (state: RootState) => ({
-    user: state.user,
-    languages: state.language.languages,
-  }),
-  {
-    updateUserSetting: updateSettingAction,
-  }
-)(
-  withFormik<UserPageProps, UserSettingUpdateModel>({
-    handleSubmit: (values: UserSettingUpdateModel, { props }) => {
-      props.updateUserSetting(values);
-    },
-    enableReinitialize: true,
-    mapPropsToValues: (props: UserPageProps) => props.user.setting,
-  })(UserPage)
+const connectedUserPage = withFormik<UserPageProps, UserSettingUpdateModel>({
+  handleSubmit: (values: UserSettingUpdateModel, { props }) => {
+    props.updateUserSetting(values);
+  },
+  enableReinitialize: true,
+  mapPropsToValues: (props: UserPageProps) => props.user.setting,
+})(
+  connect(
+    (state: RootState) => ({
+      user: state.user,
+      languages: state.language.languages,
+    }),
+    {
+      updateUserSetting: updateSettingAction,
+    }
+  )(UserPage)
 );
 
 export default connectedUserPage;

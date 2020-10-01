@@ -11,17 +11,15 @@ const user = getCurrentUser();
 /**
  * default state
  */
-const defaultState: UserState =
-  user != null ? { isLoggedIn: true, ...user } : { isLoggedIn: false };
-
+export interface UserSetting {
+  languageSettings: LanguageSetting[];
+}
 export interface UserState {
   isLoggedIn: boolean;
   setting: UserSetting;
 }
-
-export interface UserSetting {
-  languageSettings: LanguageSetting[];
-}
+const defaultState: UserState =
+  user != null ? { isLoggedIn: true, ...user } : { isLoggedIn: false };
 
 export interface UserLoggedInActionPayload {}
 
