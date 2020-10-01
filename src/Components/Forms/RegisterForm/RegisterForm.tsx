@@ -4,6 +4,7 @@ import "./RegisterForm.css";
 import { RouteComponentProps, withRouter } from "react-router";
 
 interface RegisterFormValues {
+  userName: string;
   password: string;
   repeatPassword: string;
 }

@@ -43,7 +43,10 @@ export function logout() {
   localStorage.removeItem(TOKEN_LOCAL_STORAGE_KEY);
 }
 
-export interface RegisterData {}
+export interface RegisterData {
+  userName: string;
+  password: string;
+}
 
 export async function registerAsync(data: RegisterData) {
   await postAsync(`${API_ROOT}/user`, data);
