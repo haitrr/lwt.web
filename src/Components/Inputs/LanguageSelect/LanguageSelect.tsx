@@ -1,13 +1,22 @@
 import { Select } from "antd";
 import React from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import { Language } from "../../../Reducers/LanguageReducer";
+import { RootState } from "../../../RootReducer";
+
+interface LanguageSelectProps {
+  value: string;
+  languages: Language[];
+  className: string;
+  onChange: (value: string) => void;
+  disabled: boolean;
+}
 
 /**
  * language select
  */
-class LanguageSelect extends React.Component {
-  shouldComponentUpdate(nextProps) {
+class LanguageSelect extends React.Component<LanguageSelectProps> {
+  shouldComponentUpdate(nextProps: LanguageSelectProps) {
     const { value, languages } = this.props;
     return value !== nextProps.value || languages !== nextProps.languages;
   }
@@ -32,21 +41,6 @@ class LanguageSelect extends React.Component {
   }
 }
 
-LanguageSelect.propTypes = {
-  languages: PropTypes.arrayOf(PropTypes.shape({})),
-  className: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.string,
-  disabled: PropTypes.bool,
-};
-
-LanguageSelect.defaultProps = {
-  languages: [],
-  className: null,
-  value: "",
-  disabled: false,
-};
-
-export default connect((state) => ({
+export default connect((state: RootState) => ({
   languages: state.language.languages,
 }))(LanguageSelect);
