@@ -1,16 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
-import PropTypes from "prop-types";
 import { loginAction } from "../../../Actions/UserAction";
 import LoginForm from "../../Forms/LoginForm/LoginForm";
 import styles from "./LoginPage.module.scss";
+import { RootState } from "../../../RootReducer";
+
+export interface LoginData {}
+
+interface LoginPageProps {
+  isLoggedIn: boolean;
+  login: Function;
+}
 
 /**
  * Login page
  */
-class LoginPage extends React.Component {
-  handleLogin = (data) => {
+class LoginPage extends React.Component<LoginPageProps> {
+  handleLogin = (data: LoginData) => {
     const { login } = this.props;
     login(data);
   };
@@ -28,13 +35,8 @@ class LoginPage extends React.Component {
   }
 }
 
-LoginPage.propTypes = {
-  login: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
-};
-
 export default connect(
-  (state) => ({
+  (state: RootState) => ({
     isLoggedIn: state.user.isLoggedIn,
   }),
   { login: loginAction }
