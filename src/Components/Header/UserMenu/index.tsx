@@ -5,8 +5,14 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styles from "./UserMenu.module.scss";
 import { logoutAction } from "../../../Actions/UserAction";
+import { RootState } from "../../../RootReducer";
 
-const UserMenu = ({ userName, logout }) => {
+interface UserMenuProps {
+  userName: string;
+  logout: () => void;
+}
+
+const UserMenu: React.FC<UserMenuProps> = ({ userName, logout }) => {
   const menu = (
     <Menu className={styles.menu}>
       <Menu.Item>
@@ -35,7 +41,7 @@ UserMenu.propTypes = {
 };
 
 export default connect(
-  (state) => ({
+  (state: RootState) => ({
     userName: state.user.userName,
   }),
   {

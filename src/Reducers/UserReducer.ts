@@ -15,6 +15,7 @@ export interface UserSetting {
   languageSettings: LanguageSetting[];
 }
 export interface UserState {
+  userName: any;
   isLoggedIn: boolean;
   setting: UserSetting;
 }
