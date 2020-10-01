@@ -1,18 +1,24 @@
 import { Button, Form, Input } from "antd";
 import React from "react";
 import "./LoginForm.css";
-import PropTypes from "prop-types";
+
+interface LoginFormValues {}
+
+interface LoginFormProps {
+  className: string;
+  onSubmit: (values: LoginFormValues) => void;
+}
 
 /**
  * login form.
  */
-class LoginForm extends React.Component {
-  constructor(props) {
+class LoginForm extends React.Component<LoginFormProps> {
+  constructor(props: LoginFormProps) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(values) {
+  handleSubmit(values: LoginFormValues) {
     const { onSubmit } = this.props;
     onSubmit(values);
   }
@@ -38,15 +44,5 @@ class LoginForm extends React.Component {
     );
   }
 }
-
-LoginForm.propTypes = {
-  className: PropTypes.string,
-  form: PropTypes.shape({}).isRequired,
-  onSubmit: PropTypes.func.isRequired,
-};
-
-LoginForm.defaultProps = {
-  className: "",
-};
 
 export default LoginForm;
