@@ -7,7 +7,7 @@ import { RootState } from "../../../RootReducer";
 interface LanguageSelectProps {
   value: string;
   languages: Language[];
-  className: string;
+  className: string | undefined;
   onChange: (value: string) => void;
   disabled: boolean;
 }
@@ -16,6 +16,8 @@ interface LanguageSelectProps {
  * language select
  */
 class LanguageSelect extends React.Component<LanguageSelectProps> {
+  static defaultProps = { className: undefined, disabled: false };
+
   shouldComponentUpdate(nextProps: LanguageSelectProps) {
     const { value, languages } = this.props;
     return value !== nextProps.value || languages !== nextProps.languages;
@@ -27,7 +29,7 @@ class LanguageSelect extends React.Component<LanguageSelectProps> {
       <Select
         onChange={onChange}
         value={value}
-        disabled={disabled || false}
+        disabled={disabled}
         className={className}
         placeholder="Language"
       >

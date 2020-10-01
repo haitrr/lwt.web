@@ -11,6 +11,15 @@ export const getLanguageAction = createAction(LANGUAGE_GET, async () =>
   languageApi.getUserLanguageAsync()
 );
 
+export const selectLanguageActionCreator = (language: string) => (
+  dispatch: Function
+) => {
+  dispatch({
+    type: LANGUAGE_SELECT,
+    payload: language,
+  });
+};
+
 export const selectLanguageAction = createAction(
   LANGUAGE_SELECT,
   (language: string) => language
