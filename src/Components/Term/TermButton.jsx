@@ -28,8 +28,8 @@ class TermButton extends React.Component {
       <button
         type="button"
         className={`${styles.term} ${styles[`term-${term.learningLevel}`]} ${
-          bookmark ? styles.bookmark : null
-        }`}
+          isLearningTerm(term.learningLevel) ? "not-invert" : ""
+        } ${bookmark ? styles.bookmark : null}`}
         style={
           term.count && isLearningTerm(term.learningLevel)
             ? {
