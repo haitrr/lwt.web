@@ -40,7 +40,9 @@ function renderTermNumber(record: TextItemState, level: string) {
     counts[TermLearningLevel.Ignored] -
     counts[TermLearningLevel.Skipped];
   return (
-    <div className={`${termStyles[`term-${TermLearningLevel[level]}`]}`}>
+    <div
+      className={`${termStyles[`term-${TermLearningLevel[level]}`]} not-invert`}
+    >
       {`${current}`}
       <br />
       ~
