@@ -42,7 +42,7 @@ UserMenu.propTypes = {
 
 export default connect(
   (state: RootState) => ({
-    userName: state.user.userName,
+    userName: state.user.userName!,
   }),
   {
     logout: logoutAction,

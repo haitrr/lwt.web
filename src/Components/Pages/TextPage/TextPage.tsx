@@ -17,7 +17,7 @@ import TextEditModal from "../../Modals/TextEditModal";
 import { TermLearningLevel } from "../../../Enums";
 import styles from "./TextPage.module.scss";
 import termStyles from "../../Term/Term.module.scss";
-import { parseQueryString } from "../../../Utilities/queryString";
+import parseQueryString from "../../../Utilities/queryString";
 import TotalTerm from "./TotalTerm";
 import TextStatus from "./TextStatus";
 import { Language } from "../../../Reducers/LanguageReducer";
@@ -79,10 +79,6 @@ interface TextPageState {
  * text page
  */
 class TextPage extends React.Component<TextPageProps, TextPageState> {
-  static defaultProps = {
-    filters: {},
-  };
-
   columns: ColumnsType<TextItemState> = [
     {
       title: "Title",
@@ -204,6 +200,10 @@ class TextPage extends React.Component<TextPageProps, TextPageState> {
       render: (value, record) => <TotalTerm value={value} record={record} />,
     },
   ];
+
+  static defaultProps = {
+    filters: {},
+  };
 
   constructor(props: TextPageProps) {
     super(props);

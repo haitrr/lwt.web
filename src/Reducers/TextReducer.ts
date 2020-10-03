@@ -22,6 +22,7 @@ import {
   TERM_GET_MEANING,
 } from "../Actions/TermAction";
 import { RootState } from "../RootReducer";
+import { TextFilter } from "../Apis/TextApi";
 
 /**
  * text reducer
@@ -58,6 +59,8 @@ export interface TextItemState {
   id: number;
   processedIndex: number;
   length: number;
+  termCount: number;
+  counts: { [key: string]: number };
 }
 
 export interface TextEditDetail {
@@ -71,9 +74,9 @@ export interface TextState {
   page: number;
   itemPerPage: number;
   total: number;
-  filters: any;
+  filters: TextFilter;
   readingText: ReadingTextState | null;
-  editDetail: TextEditDetail;
+  editDetail: TextEditDetail | null;
 }
 
 export interface TextReadActionPayload {

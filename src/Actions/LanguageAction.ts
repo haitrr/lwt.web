@@ -7,6 +7,11 @@ import * as languageApi from "../Apis/LanguageApi";
 export const LANGUAGE_GET = "LANGUAGE_GET";
 export const LANGUAGE_SELECT = "LANGUAGE_SELECT";
 
+export const getLanguageActionCreator = () => async (dispatch: Function) => {
+  const data = await languageApi.getUserLanguageAsync();
+  dispatch({ type: LANGUAGE_GET, payload: data });
+};
+
 export const getLanguageAction = createAction(LANGUAGE_GET, async () =>
   languageApi.getUserLanguageAsync()
 );

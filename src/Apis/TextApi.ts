@@ -50,14 +50,14 @@ export async function createTextAsync(text: TextCreateModel) {
  */
 export async function getTextReadAsync(textId: number) {
   try {
-    return await getAsync(`${TEXT_API}/${textId}`, null);
+    return await getAsync(`${TEXT_API}/${textId}`);
   } catch (e) {
     return false;
   }
 }
 
 export async function getTermCountByLearningLevelAsync(textId: number) {
-  return getAsync(`${TEXT_API}/${textId}/term-counts`, null);
+  return getAsync(`${TEXT_API}/${textId}/term-counts`);
 }
 
 export async function deleteTextAsync(textId: number) {

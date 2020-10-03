@@ -6,6 +6,7 @@ import { TextFilter } from "../../../Apis/TextApi";
 
 interface TextFilterFormProps {
   onFilterChange: (values: TextFilter) => void;
+  value: TextFilter;
 }
 
 let textFilterTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -29,6 +30,7 @@ const TextFilterForm: React.FC<TextFilterFormProps> = ({ onFilterChange }) => (
     }}
   >
     <Form.Item name="languageCode">
+      {/* @ts-ignore */}
       <LanguageSelect />
     </Form.Item>
     <Form.Item name="title">

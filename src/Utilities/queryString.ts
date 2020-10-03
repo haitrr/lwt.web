@@ -1,4 +1,4 @@
-export const parseQueryString = queryString => {
+export default (queryString: string) => {
   if (!queryString) {
     return {};
   }
@@ -6,8 +6,8 @@ export const parseQueryString = queryString => {
     throw Error("Invalid query string");
   }
   const queries = queryString.substr(1).split("&");
-  const result = {};
-  queries.forEach(q => {
+  const result: { [key: string]: string } = {};
+  queries.forEach((q) => {
     const [key, value] = q.split("=");
     result[key] = value;
   });

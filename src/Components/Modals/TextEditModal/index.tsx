@@ -16,9 +16,9 @@ import { TextEditModel } from "../../../Apis/TextApi";
 
 interface OwnProps {
   hide: () => void;
-  editingText: number;
+  editingText: number | null;
   getEditDetail: (id: number) => void;
-  editDetail: TextEditDetail;
+  editDetail: TextEditDetail | null;
   editText: (id: number, data: TextEditModel) => Promise<void>;
   onEdit: () => void;
   visible: boolean;
@@ -54,7 +54,7 @@ class TextEditModal extends React.Component<TextEditModalProps> {
     const form = this.formRef.current;
     const { editText, hide, editingText, onEdit } = this.props;
     form!.validateFields().then((values) => {
-      editText(editingText, values).then(onEdit);
+      editText(editingText!, values).then(onEdit);
       form!.resetFields();
       hide();
     });

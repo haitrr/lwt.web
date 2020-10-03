@@ -25,6 +25,7 @@ class TextCreateForm extends React.Component<ComponentProps> {
     return (
       <Form ref={formRef}>
         <Form.Item name="languageCode" initialValue={currentLanguage}>
+          {/* @ts-ignore */}
           <LanguageSelect />
         </Form.Item>
         <Form.Item name="title">

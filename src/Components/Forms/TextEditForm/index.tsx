@@ -6,10 +6,12 @@ import LanguageSelect from "../../Inputs/LanguageSelect/LanguageSelect";
 import { RootState } from "../../../RootReducer";
 import { TextEditDetail } from "../../../Reducers/TextReducer";
 
-interface TextEditFormProps {
+interface OwnProps {
   editDetail: TextEditDetail;
   formRef: RefObject<FormInstance>;
 }
+
+type TextEditFormProps = OwnProps;
 
 /**
  * text create form
@@ -20,6 +22,7 @@ function TextEditForm(props: TextEditFormProps) {
   return (
     <Form ref={formRef}>
       <Form.Item name="languageCode" initialValue={editDetail.languageCode}>
+        {/* @ts-ignore */}
         <LanguageSelect />
       </Form.Item>
       <Form.Item name="title" initialValue={editDetail.title}>

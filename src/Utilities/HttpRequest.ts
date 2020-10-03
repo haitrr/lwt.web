@@ -1,7 +1,7 @@
 import { notification } from "antd";
 import { TOKEN_LOCAL_STORAGE_KEY } from "../Constants";
 
-function defaultResponseErrorHandler(response) {
+function defaultResponseErrorHandler(response: any) {
   if (
     response.status === 404 ||
     response.status === 502 ||
@@ -11,7 +11,7 @@ function defaultResponseErrorHandler(response) {
       message: "Failed to connect to server, please try again later.",
     });
   } else if (response.status === 400) {
-    response.json().then((error) => {
+    response.json().then((error: any) => {
       notification.error({ message: error.Message });
     });
   } else {
@@ -21,7 +21,7 @@ function defaultResponseErrorHandler(response) {
   }
   throw response;
 }
-async function defaultResponseHandler(response) {
+async function defaultResponseHandler(response: any) {
   if (response.ok) {
     try {
       return await response.json();
@@ -36,10 +36,10 @@ async function defaultResponseHandler(response) {
 function getAuthenticationHeader() {
   const token = localStorage.getItem(TOKEN_LOCAL_STORAGE_KEY);
   if (token != null) {
-    return { Authorization: `bearer ${token}` };
+    return [["Authorization", `bearer ${token}`]];
   }
 
-  return {};
+  return [];
 }
 
 /**
@@ -49,19 +49,19 @@ function getAuthenticationHeader() {
  * @param handleResponse response handler
  */
 export async function postAsync(
-  url,
-  body,
+  url: string,
+  body: object,
   handleResponse = defaultResponseHandler
 ) {
   return fetch(url, {
     body: JSON.stringify(body), // body data type must match "Content-Type" header
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
     // credentials: "include", // include, same-origin, *omit
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
+    headers: [
+      ["Content-Type", "application/json; charset=utf-8"],
       ...getAuthenticationHeader(),
       // "Content-Type": "application/x-www-form-urlencoded",
-    },
+    ],
     method: "POST", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, cors, *same-origin
     redirect: "follow", // manual, *follow, error
@@ -72,9 +72,9 @@ export async function postAsync(
 }
 
 export async function putAsync(
-  url,
-  id,
-  body,
+  url: string,
+  id: number | string,
+  body: object,
   handleResponse = defaultResponseHandler
 ) {
   return fetch(`${url}/${id}`, {
@@ -96,8 +96,8 @@ export async function putAsync(
 }
 
 export async function getAsync(
-  url,
-  params,
+  url: string,
+  params: { [key: string]: any } = {},
   handleResponse = defaultResponseHandler
 ) {
   let fullUrl = url;
@@ -128,8 +128,8 @@ export async function getAsync(
 }
 
 export async function deleteAsync(
-  url,
-  params,
+  url: string,
+  params: { [key: string]: any } = {},
   handleResponse = defaultResponseHandler
 ) {
   let fullUrl = url;
@@ -160,10 +160,10 @@ export async function deleteAsync(
 }
 
 export async function patchAsync(
-  url,
-  id,
-  field,
-  body,
+  url: string,
+  id: number,
+  field: string,
+  body: object,
   handleResponse = defaultResponseHandler
 ) {
   return fetch(`${url}/${id}/${field}`, {

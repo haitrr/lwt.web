@@ -14,13 +14,19 @@ const user = getCurrentUser();
 export interface UserSetting {
   languageSettings: LanguageSetting[];
 }
-export interface UserState {
-  userName: any;
+
+export interface UserInfo {
+  setting: UserSetting | null;
+  userName: string | null;
+}
+
+export interface UserState extends UserInfo {
   isLoggedIn: boolean;
-  setting: UserSetting;
 }
 const defaultState: UserState =
-  user != null ? { isLoggedIn: true, ...user } : { isLoggedIn: false };
+  user != null
+    ? { isLoggedIn: true, ...user }
+    : { isLoggedIn: false, setting: null, userName: null };
 
 export interface UserLoggedInActionPayload {}
 

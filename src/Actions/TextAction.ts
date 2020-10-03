@@ -34,6 +34,34 @@ export const TERM_COUNT_IN_TEXT = "TERM_COUNT_IN_TEXT";
 export const TEXT_TERM_COUNT_GET = "TEXT_TERM_COUNT_GET";
 export const TEXT_PROCESSED_INDEX_GET = "TEXT_PROCESSED_INDEX_GET";
 
+const getTextsActionPayloadCreator = async (
+  filters: any,
+  page: number,
+  itemPerPage: number
+) => {
+  const result = await getTextsAsync(filters, page, itemPerPage);
+
+  return {
+    texts: result.items,
+    total: result.total,
+    page,
+    itemPerPage,
+    filters,
+  };
+};
+
+export const getTextsActionCreator = (
+  filters: any,
+  page: number,
+  itemPerPage: number
+) => async (dispatch: Function) => {
+  const data = await getTextsActionPayloadCreator(filters, page, itemPerPage);
+  dispatch({
+    type: TEXT_FETCHED,
+    payload: data,
+  });
+};
+
 /**
  * get texts action
  */
@@ -60,6 +88,12 @@ export const readTextAction = createAction(TEXT_READ, (textId: number) =>
   getTextReadAsync(textId)
 );
 
+export const loadTermCountActionCreator = (textId: number) => (
+  dispatch: Function
+) => {
+  const payload = getTermCountByLearningLevelAsync(textId);
+  dispatch({ key: TERM_COUNT_LOADED, payload });
+};
 export const loadTermCountAction = createAction(
   TERM_COUNT_LOADED,
   async (textId: number) => getTermCountByLearningLevelAsync(textId)
@@ -77,21 +111,27 @@ export const createTextAction = createAction(TEXT_CREATED, async (text: any) =>
   createTextAsync(text)
 );
 
-export const deleteTextAction = createAction(
-  TEXT_DELETED,
-  async (textId: number) => {
-    try {
-      await deleteTextAsync(textId);
-      notification.success({ message: "Text deleted." });
-      return textId;
-    } catch {
-      notification.error({
-        message: "Can't not delete text, please try again.",
-      });
-      return null;
-    }
+const createDeleteTextActionPayload = async (textId: number) => {
+  try {
+    await deleteTextAsync(textId);
+    notification.success({ message: "Text deleted." });
+    return textId;
+  } catch {
+    notification.error({
+      message: "Can't not delete text, please try again.",
+    });
+    return null;
   }
-);
+};
+
+export const deleteTextActionCreator = (textId: number) => (
+  dispatch: Function
+) => {
+  const payload = createDeleteTextActionPayload(textId);
+  dispatch({ type: TEXT_DELETED, payload });
+};
+
+export const deleteTextAction = createAction(TEXT_DELETED);
 
 const editTextActionPayloadCreator = async (
   id: number,

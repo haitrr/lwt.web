@@ -156,6 +156,7 @@ class TermEditForm extends React.Component<
             name="languageCode"
             initialValue={languageCode}
           >
+            {/* @ts-ignore */}
             <LanguageSelect disabled />
           </Form.Item>
 
@@ -180,6 +181,7 @@ class TermEditForm extends React.Component<
                 initialValue={value.learningLevel}
                 className={styles.learningLevel}
               >
+                {/* @ts-ignore */}
                 <LearningLevelSelect />
               </Form.Item>
             </Col>

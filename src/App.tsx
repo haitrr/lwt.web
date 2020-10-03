@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { notification } from "antd";
 import React from "react";
 import { connect } from "react-redux";
@@ -8,19 +7,30 @@ import "antd/dist/antd.css";
 import { Helmet } from "react-helmet";
 import styles from "./App.module.scss";
 import Header from "./Components/Header/Header";
-import { HomePage } from "./Components/Pages/HomePage";
+import HomePage from "./Components/Pages/HomePage";
 import LoginPage from "./Components/Pages/LoginPage/LoginPage";
-import { RegisterPage } from "./Components/Pages/RegisterPage/RegisterPage";
+import RegisterPage from "./Components/Pages/RegisterPage/RegisterPage";
 import TextPage from "./Components/Pages/TextPage";
 import TextReadPage from "./Components/Pages/TextReadPage";
 import { getLanguageAction } from "./Actions/LanguageAction";
 import { getSettingAction } from "./Actions/UserAction";
 import UserPage from "./Components/Pages/UserPage";
+import { UserState } from "./Reducers/UserReducer";
+
+interface OwnProps {}
+
+interface StateProps {
+  user: UserState;
+  getSetting: () => void;
+  getLanguages: () => void;
+}
+
+type AppProps = OwnProps & StateProps;
 
 /**
  * app.
  */
-class App extends React.Component {
+class App extends React.Component<AppProps> {
   componentDidMount() {
     const { user, getSetting } = this.props;
     if (user.isLoggedIn) {
@@ -31,7 +41,7 @@ class App extends React.Component {
     getLanguages();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: AppProps) {
     const { user, getSetting } = this.props;
     if (!prevProps.user.isLoggedIn && user.isLoggedIn) {
       getSetting();
@@ -58,18 +68,8 @@ class App extends React.Component {
   }
 }
 
-App.defaultProps = {
-  user: {},
-};
-
-App.propTypes = {
-  getLanguages: PropTypes.func.isRequired,
-  getSetting: PropTypes.func.isRequired,
-  user: PropTypes.shape(),
-};
-
 export default connect(
-  (state) => ({
+  (state: StateProps) => ({
     user: state.user,
   }),
   {

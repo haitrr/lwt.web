@@ -85,7 +85,7 @@ const connectedUserPage = withFormik<UserPageProps, UserSettingUpdateModel>({
     props.updateUserSetting(values);
   },
   enableReinitialize: true,
-  mapPropsToValues: (props: UserPageProps) => props.user.setting,
+  mapPropsToValues: (props: UserPageProps) => props.user.setting!,
 })(
   connect(
     (state: RootState) => ({

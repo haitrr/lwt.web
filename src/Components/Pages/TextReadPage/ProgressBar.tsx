@@ -5,6 +5,7 @@ import {
   selectBookmark,
   selectTotalTerm,
 } from "../../../Selectors/TextSelector";
+import { RootState } from "../../../RootReducer";
 
 interface ProgressBarProps {
   current: number;
@@ -22,7 +23,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ current, total }) => (
   </div>
 );
 
-export default connect((state) => ({
+export default connect((state: RootState) => ({
   current: selectBookmark(state),
   total: selectTotalTerm(state),
 }))(ProgressBar);
