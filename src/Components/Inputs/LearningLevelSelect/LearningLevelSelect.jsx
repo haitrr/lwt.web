@@ -15,7 +15,7 @@ export default class LearningLevelSelect extends React.Component {
   render() {
     const { value, onChange } = this.props;
     return (
-      <Radio.Group onChange={onChange} className={styles.select} value={value}>
+      <Radio.Group onChange={onChange} className={`${styles.select} not-invert`} value={value}>
         <Radio.Button
           style={{
             backgroundColor: TermLearningColor[TermLearningLevel.UnKnow]
