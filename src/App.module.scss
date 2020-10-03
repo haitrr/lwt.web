@@ -5,14 +5,35 @@
   flex-direction: column;
 }
 
+:global {
+  @media (prefers-color-scheme: dark) {
+    html {
+      filter: invert(1) hue-rotate(180deg);
+    }
+
+    img, picture, video {
+      filter: invert(1) hue-rotate(180deg) ;
+    }
+
+    .not-invert {
+      filter: invert(1) hue-rotate(180deg) ;
+      opacity: 50%;
+    }
+  }
+}
+
 :global(html) {
   height: 100%;
 }
 
-:global(#root){
+:global(#root) {
   height: 100%;
 }
 
 :global(body) {
   height: 100%;
+  color: #252525;
+  @media (prefers-color-scheme: dark) {
+    background-color: #ededed;
+  }
 }

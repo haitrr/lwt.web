@@ -14,7 +14,7 @@ interface SingleBarChartProps {
 const SingleBarChart: React.FC<SingleBarChartProps> = ({ data }) => {
   const sum = data.map((i) => i.value).reduce((a, b) => a + b);
   return (
-    <span className={styles.bar}>
+    <span className={`${styles.bar} not-invert`}>
       {data.map((item) =>
         item.value !== 0 ? (
           <span
