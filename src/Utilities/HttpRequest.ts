@@ -33,13 +33,13 @@ async function defaultResponseHandler(response: any) {
   }
 }
 
-function getAuthenticationHeader() {
+function getAuthenticationHeader(): { [key: string]: string } {
   const token = localStorage.getItem(TOKEN_LOCAL_STORAGE_KEY);
   if (token != null) {
-    return [["Authorization", `bearer ${token}`]];
+    return { Authorization: `bearer ${token}` };
   }
 
-  return [];
+  return {};
 }
 
 /**
@@ -57,11 +57,11 @@ export async function postAsync(
     body: JSON.stringify(body), // body data type must match "Content-Type" header
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
     // credentials: "include", // include, same-origin, *omit
-    headers: [
-      ["Content-Type", "application/json; charset=utf-8"],
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
       ...getAuthenticationHeader(),
       // "Content-Type": "application/x-www-form-urlencoded",
-    ],
+    },
     method: "POST", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, cors, *same-origin
     redirect: "follow", // manual, *follow, error
