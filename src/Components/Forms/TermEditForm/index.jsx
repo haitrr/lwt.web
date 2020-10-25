@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 import { Button, Col, Form, Input, Row } from "antd";
+import { TextField } from "@material-ui/core";
 import TermContent from "./TermContent";
 import LearningLevelSelect from "../../Inputs/LearningLevelSelect";
 import normalize from "../../../textNormalizer";
@@ -11,7 +12,7 @@ import {
   createTermAction,
   editTermAction,
   dictionaryTermMeaningAction,
-  setEditingTermAction
+  setEditingTermAction,
 } from "../../../Actions/TermAction";
 import { selectEditingTermValue } from "../../../Selectors/TermSelectors";
 import { selectDictionaryLanguage } from "../../../Selectors/UserSelectors";
@@ -32,7 +33,7 @@ class TermEditForm extends React.Component {
       languages,
       languageCode,
       dictionaryTerm,
-      index
+      index,
     } = this.props;
 
     const { lookedUpDictionary } = this.state;
@@ -48,7 +49,7 @@ class TermEditForm extends React.Component {
       value.meaning === "" &&
       !lookedUpDictionary
     ) {
-      const { code } = languages.find(l => l.code === languageCode);
+      const { code } = languages.find((l) => l.code === languageCode);
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState(
         { lookingUpDictionary: true, lookedUpDictionary: true },
@@ -72,7 +73,7 @@ class TermEditForm extends React.Component {
     }
   }
 
-  handleSubmit = values => {
+  handleSubmit = (values) => {
     const { value, createTerm, editTerm, setEditingTerm } = this.props;
     const editedData = values;
     const editedTerm = { ...value, ...editedData };
@@ -84,12 +85,12 @@ class TermEditForm extends React.Component {
     setEditingTerm(null);
   };
 
-  handleBetter = e => {
+  handleBetter = (e) => {
     const { value } = this.props;
     e.preventDefault();
     const newValue = {
       ...value,
-      learningLevel: getNextLearningLevel(value.learningLevel)
+      learningLevel: getNextLearningLevel(value.learningLevel),
     };
     this.formRef.current.setFieldsValue(newValue);
     this.handleSubmit(newValue);
@@ -138,11 +139,13 @@ class TermEditForm extends React.Component {
                 initialValue={value.meaning}
                 className={styles.meaning}
               >
-                <Input.TextArea
+                <TextField
                   disabled={this.isActionDisabled()}
-                  autoSize={{ maxRows: 4, minRows: 2 }}
+                  fullWidth
+                  rows={2}
+                  rowsMax={4}
                   placeholder="Meaning"
-                  cols={60}
+                  multiline
                 />
               </Form.Item>
             </Col>
@@ -195,7 +198,7 @@ TermEditForm.defaultProps = {
   editingTerm: "",
   value: null,
   dictionaryLanguage: null,
-  index: null
+  index: null,
 };
 
 TermEditForm.propTypes = {
@@ -212,24 +215,24 @@ TermEditForm.propTypes = {
     id: PropTypes.number,
     content: PropTypes.string,
     index: PropTypes.number.isRequired,
-    meaning: PropTypes.string
+    meaning: PropTypes.string,
   }),
   dictionaryTerm: PropTypes.func.isRequired,
-  index: PropTypes.number
+  index: PropTypes.number,
 };
 export default connect(
-  state => ({
+  (state) => ({
     value: { ...selectEditingTermValue(state) },
     dictionaryLanguage: selectDictionaryLanguage(state),
     editingTerm: state.term.editingTerm,
     languageCode: state.text.readingText.languageCode,
     languages: state.language.languages,
-    index: state.term.editingTerm
+    index: state.term.editingTerm,
   }),
   {
     setEditingTerm: setEditingTermAction,
     createTerm: createTermAction,
     editTerm: editTermAction,
-    dictionaryTerm: dictionaryTermMeaningAction
+    dictionaryTerm: dictionaryTermMeaningAction,
   }
 )(TermEditForm);

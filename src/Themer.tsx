@@ -1,4 +1,4 @@
-import { useMediaQuery } from "@material-ui/core";
+import { CssBaseline, useMediaQuery } from "@material-ui/core";
 import React from "react";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
@@ -15,7 +15,12 @@ const Themer: React.FC = (props) => {
       }),
     [prefersDarkMode]
   );
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      {children}
+    </ThemeProvider>
+  );
 };
 
 export default Themer;
