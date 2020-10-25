@@ -1,3 +1,5 @@
+import styles from "./Components/Term/Term.module.scss"
+
 export const TermLearningLevel = {
   Skipped: "skipped",
 
@@ -32,23 +34,23 @@ export const LanguageCode = {
 };
 
 export const TermLearningColor = {
-  [TermLearningLevel.Skipped]: "white",
+  [TermLearningLevel.Skipped]: styles.termSkipped,
 
-  [TermLearningLevel.Ignored]: "white",
+  [TermLearningLevel.Ignored]: styles.termIgnored,
 
-  [TermLearningLevel.UnKnow]: "#845EC2",
+  [TermLearningLevel.UnKnow]: styles.termUnknown,
 
-  [TermLearningLevel.Learning1]: "#2C73D2",
+  [TermLearningLevel.Learning1]: styles.termLearning1,
 
-  [TermLearningLevel.Learning2]: "#0089BA",
+  [TermLearningLevel.Learning2]: styles.termLearning2,
 
-  [TermLearningLevel.Learning3]: "#008F7A",
+  [TermLearningLevel.Learning3]: styles.termLearning3,
 
-  [TermLearningLevel.Learning4]: "#00C9A7",
+  [TermLearningLevel.Learning4]: styles.termLearning4,
 
-  [TermLearningLevel.Learning5]: "#C4FCEF",
+  [TermLearningLevel.Learning5]: styles.termLearning5,
 
-  [TermLearningLevel.WellKnow]: "whitesmoke",
+  [TermLearningLevel.WellKnow]: styles.termWellKnown,
 };
 
 export const getNextLearningLevel = (learningLevel) => {

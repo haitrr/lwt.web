@@ -18,36 +18,44 @@
   }
 }
 
-.term-ignored {
+.termIgnored, .termSkipped {
   background: white;
 }
 
-.term-unknown {
+.termUnknown {
   background: #845EC2;
 }
 
-.term-learning-1 {
+.termLearning1 {
   background: #2C73D2;
 }
 
-.term-learning-2 {
+.termLearning2 {
   background: #0089BA;
 }
 
-.term-learning-3 {
+.termLearning3 {
   background: #008F7A;
 }
 
-.term-learning-4 {
+.termLearning4 {
   background: #00C9A7;
 }
 
-.term-learning-5 {
+.termLearning5 {
   background: #C4FCEF;
 }
 
-.term-well-known {
+.termWellKnown {
   background: whitesmoke;
+}
+
+.termLearned {
+  background: #009700;
+}
+
+.termLearning {
+  background: #FF0101;
 }
 
 .tooltip {
@@ -64,4 +72,46 @@
   border-radius: 5px;
   position: relative;
   box-shadow: 0 0 0 3px deepskyblue;
+}
+
+@media (prefers-color-scheme: dark) {
+  .termIgnored, .termSkipped {
+    background: #121212;
+  }
+
+  .termWellKnown {
+    background: #1f1f1f;
+  }
+
+  .termUnknown {
+    background: darken(#845EC2, 30%);
+  }
+
+  .termLearning1 {
+    background: darken(#2C73D2, 20%);
+  }
+
+  .termLearning2 {
+    background: darken(#0089BA, 20%);
+  }
+
+  .termLearning3 {
+    background: darken(#0089BA, 15%);
+  }
+
+  .termLearning4 {
+    background: darken(#00C9A7, 30%);
+  }
+
+  .termLearning5 {
+    background: darken(#C4FCEF, 75%);
+  }
+
+  .termLearned {
+    background: darken(#009700,10%);
+  }
+
+  .termLearning {
+    background: darken(#FF0101, 30%);
+  }
 }

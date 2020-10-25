@@ -1,9 +1,14 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
+import classNames from "classnames";
 import styles from "./Term.module.scss";
 import { setBookmarkAction, selectTermAction } from "../../Actions/TextAction";
-import { importantColors, isLearningTerm } from "../../Enums";
+import {
+  importantColors,
+  isLearningTerm,
+  TermLearningColor,
+} from "../../Enums";
 
 class TermButton extends React.Component {
   onTermClick = (e) => {
@@ -23,13 +28,16 @@ class TermButton extends React.Component {
 
   render() {
     const { term, bookmark } = this.props;
+    const className = classNames(
+      styles.term,
+      TermLearningColor[term.learningLevel],
+      { [styles.bookmark]: bookmark }
+    );
 
     return (
       <button
         type="button"
-        className={`${styles.term} ${styles[`term-${term.learningLevel}`]} ${
-          isLearningTerm(term.learningLevel) ? "not-invert" : ""
-        } ${bookmark ? styles.bookmark : null}`}
+        className={className}
         style={
           term.count && isLearningTerm(term.learningLevel)
             ? {

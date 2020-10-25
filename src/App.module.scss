@@ -13,3 +13,12 @@
 :global(#root) {
   height: 100%;
 }
+
+:global{
+  body {
+    @media(prefers-color-scheme: dark) {
+      background: #121212;
+      color: white;
+    }
+  }
+}

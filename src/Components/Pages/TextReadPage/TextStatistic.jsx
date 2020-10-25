@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { connect } from "react-redux";
-import { TermLearningColor, TermLearningLevel } from "../../../Enums";
+import {connect} from "react-redux";
+import {TermLearningColor, TermLearningLevel} from "../../../Enums";
 import SingleBarChart from "../../SingleBarChart";
-import { loadReadingTexttermsCountByLearningLevelAction } from "../../../Actions/TextAction";
+import {loadReadingTexttermsCountByLearningLevelAction} from "../../../Actions/TextAction";
+import styles from "../../Term/Term.module.scss";
 
 function getPracticeCount(termCount, termCountByLearningLevel) {
   return (
@@ -16,7 +17,7 @@ function getPracticeCount(termCount, termCountByLearningLevel) {
 
 class TextStatistic extends React.PureComponent {
   componentDidMount() {
-    const { loadtermsCountByLearningLevel, textId } = this.props;
+    const {loadtermsCountByLearningLevel, textId} = this.props;
     loadtermsCountByLearningLevel(textId);
   }
 
@@ -25,7 +26,7 @@ class TextStatistic extends React.PureComponent {
       terms,
       bookmark,
       loadtermsCountByLearningLevel,
-      textId
+      textId,
     } = this.props;
     if (
       bookmark === prevProps.bookmark &&
@@ -38,14 +39,14 @@ class TextStatistic extends React.PureComponent {
   }
 
   render() {
-    const { termsCountByLearningLevel, termCount } = this.props;
+    const {termsCountByLearningLevel, termCount} = this.props;
     if (!termsCountByLearningLevel) {
       return <div>Loading</div>;
     }
     const termCountByLearningLevel = termsCountByLearningLevel;
     const statistic = [];
     const learningStatistic = [];
-    Object.keys(TermLearningLevel).forEach(learningLevel => {
+    Object.keys(TermLearningLevel).forEach((learningLevel) => {
       if (
         learningLevel === "Skipped" ||
         learningLevel === "Ignored" ||
@@ -55,53 +56,53 @@ class TextStatistic extends React.PureComponent {
       statistic.push({
         name: learningLevel,
         value: termCountByLearningLevel[TermLearningLevel[learningLevel]],
-        color: TermLearningColor[TermLearningLevel[learningLevel]]
+        color: TermLearningColor[TermLearningLevel[learningLevel]],
       });
     });
     const practice = getPracticeCount(termCount, termCountByLearningLevel);
     learningStatistic.push({
       name: "Learned",
-      color: "#009700",
-      value: termCountByLearningLevel[TermLearningLevel.WellKnow]
+      color: styles.termLearned,
+      value: termCountByLearningLevel[TermLearningLevel.WellKnow],
     });
     learningStatistic.push({
       name: "Learning",
-      color: "#FF0101",
-      value: practice
+      color: styles.termLearning,
+      value: practice,
     });
     return (
       <div>
-        <SingleBarChart data={learningStatistic} />
-        <SingleBarChart data={statistic} />
+        <SingleBarChart data={learningStatistic}/>
+        <SingleBarChart data={statistic}/>
       </div>
     );
   }
 }
 
 TextStatistic.defaultProps = {
-  termsCountByLearningLevel: undefined
+  termsCountByLearningLevel: undefined,
 };
 
 TextStatistic.propTypes = {
   terms: PropTypes.arrayOf(
-    PropTypes.shape({ learningLevel: PropTypes.string.isRequired })
+    PropTypes.shape({learningLevel: PropTypes.string.isRequired})
   ).isRequired,
   textId: PropTypes.number.isRequired,
   termCount: PropTypes.number.isRequired,
   bookmark: PropTypes.number.isRequired,
   termsCountByLearningLevel: PropTypes.shape({}),
-  loadtermsCountByLearningLevel: PropTypes.func.isRequired
+  loadtermsCountByLearningLevel: PropTypes.func.isRequired,
 };
 
 export default connect(
-  state => ({
+  (state) => ({
     textId: state.text.readingText.id,
     terms: state.text.readingText.terms,
     termsCountByLearningLevel: state.text.readingText.termsCountByLearningLevel,
     bookmark: state.text.readingText.bookmark,
-    termCount: state.text.readingText.termCount
+    termCount: state.text.readingText.termCount,
   }),
   {
-    loadtermsCountByLearningLevel: loadReadingTexttermsCountByLearningLevelAction
+    loadtermsCountByLearningLevel: loadReadingTexttermsCountByLearningLevelAction,
   }
 )(TextStatistic);
