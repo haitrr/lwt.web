@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Pagination, Popconfirm, Table } from "antd";
-import {Button} from "@material-ui/core"
+import { Button } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -36,7 +36,9 @@ function renderTermNumber(record, level) {
     counts[TermLearningLevel.Ignored] -
     counts[TermLearningLevel.Skipped];
   return (
-    <div className={`${termStyles[`term-${TermLearningLevel[level]}`]} not-invert`}>
+    <div
+      className={`${termStyles[`term-${TermLearningLevel[level]}`]} not-invert`}
+    >
       {`${current}`}
       <br />
       ~

@@ -1,7 +1,9 @@
 import PropTypes from "prop-types";
-import { Form, Input } from "antd";
+import { Form } from "antd";
+import { Input } from "@material-ui/core";
 import React from "react";
 import LanguageSelect from "../../Inputs/LanguageSelect";
+import styles from "./TextFilterForm.module.scss";
 
 /**
  * text filter form
@@ -24,14 +26,14 @@ function TextFilterForm({ onFilterChange }) {
         <LanguageSelect />
       </Form.Item>
       <Form.Item name="title">
-        <Input placeholder="Title" />
+        <Input className={styles.titleInput} placeholder="Title" />
       </Form.Item>
     </Form>
   );
 }
 
 TextFilterForm.propTypes = {
-  onFilterChange: PropTypes.func.isRequired
+  onFilterChange: PropTypes.func.isRequired,
 };
 
 TextFilterForm.defaultProps = {};

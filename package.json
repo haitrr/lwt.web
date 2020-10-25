@@ -58,6 +58,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@types/classnames": "^2.2.10",
+    "@types/react-redux": "^7.1.9",
     "eslint-config-airbnb": "17.1.0",
     "eslint-config-prettier": "3.5.0",
     "eslint-plugin-import": "2.14.0",
