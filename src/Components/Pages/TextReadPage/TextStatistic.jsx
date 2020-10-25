@@ -61,12 +61,12 @@ class TextStatistic extends React.PureComponent {
     const practice = getPracticeCount(termCount, termCountByLearningLevel);
     learningStatistic.push({
       name: "Learned",
-      color: "#a8eb34",
+      color: "#009700",
       value: termCountByLearningLevel[TermLearningLevel.WellKnow]
     });
     learningStatistic.push({
       name: "Learning",
-      color: "#ebab34",
+      color: "#FF0101",
       value: practice
     });
     return (

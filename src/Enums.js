@@ -36,17 +36,17 @@ export const TermLearningColor = {
 
   [TermLearningLevel.Ignored]: "white",
 
-  [TermLearningLevel.UnKnow]: "#addfff",
+  [TermLearningLevel.UnKnow]: "#E25E79",
 
-  [TermLearningLevel.Learning1]: "#f5b8a9",
+  [TermLearningLevel.Learning1]: "#BE604B",
 
-  [TermLearningLevel.Learning2]: "#f5cca9",
+  [TermLearningLevel.Learning2]: "#A16E24",
 
-  [TermLearningLevel.Learning3]: "#f5e1a9",
+  [TermLearningLevel.Learning3]: "#737B16",
 
-  [TermLearningLevel.Learning4]: "#f5f3a9",
+  [TermLearningLevel.Learning4]: "#288336",
 
-  [TermLearningLevel.Learning5]: "#ddffdd",
+  [TermLearningLevel.Learning5]: "#008669",
 
   [TermLearningLevel.WellKnow]: "whitesmoke",
 };

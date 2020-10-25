@@ -6,9 +6,11 @@
   margin-right: 1px;
   font-weight: normal;
   line-height: 32px;
+
   &:focus {
     outline: none;
   }
+
   // need to prevent stupid ant design
   // to insert a space between two chinese characters.
   &::first-letter {
@@ -21,27 +23,27 @@
 }
 
 .term-unknown {
-  background: #addfff;
+  background: #C25E79;
 }
 
 .term-learning-1 {
-  background: #f5b8a9;
+  background: #BE604B;
 }
 
 .term-learning-2 {
-  background: #f5cca9;
+  background: #A16E24;
 }
 
 .term-learning-3 {
-  background: #f5e1a9;
+  background: #737B16;
 }
 
 .term-learning-4 {
-  background: #f5f3a9;
+  background: #288336;
 }
 
 .term-learning-5 {
-  background: #ddffdd;
+  background: #008669;
 }
 
 .term-well-known {
@@ -50,6 +52,7 @@
 
 .tooltip {
   white-space: pre-line;
+
   :global(.ant-popover-title) {
     max-height: 12rem;
     max-width: 20rem;
