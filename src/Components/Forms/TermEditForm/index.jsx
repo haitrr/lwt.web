@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
-import { Button, Col, Form, Input, Row } from "antd";
-import { TextField } from "@material-ui/core";
+import { Col, Form, Input, Row } from "antd";
+import { TextField, Button } from "@material-ui/core";
 import TermContent from "./TermContent";
 import LearningLevelSelect from "../../Inputs/LearningLevelSelect";
 import normalize from "../../../textNormalizer";
@@ -136,15 +136,18 @@ class TermEditForm extends React.Component {
             <Col xl={10} lg={12} xs={24}>
               <Form.Item
                 name="meaning"
-                initialValue={value.meaning}
+                initialValue={value.meaning || ""}
                 className={styles.meaning}
               >
                 <TextField
+                  key="meaning"
+                  variant="outlined"
+                  InputLabelProps={{ shrink: true }}
+                  label="Meaning"
                   disabled={this.isActionDisabled()}
                   fullWidth
                   rows={2}
                   rowsMax={4}
-                  placeholder="Meaning"
                   multiline
                 />
               </Form.Item>
@@ -159,11 +162,12 @@ class TermEditForm extends React.Component {
               </Form.Item>
             </Col>
             <Col xl={4} lg={24} xs={24}>
-              <Row gutter={1}>
+              <Row gutter={3}>
                 <Col xs={12} lg={24}>
                   <Form.Item className={styles.saveButton}>
                     <Button
-                      type="primary"
+                      color="primary"
+                      variant="contained"
                       onClick={this.handleBetter}
                       disabled={this.isActionDisabled()}
                       className={styles.saveButton}
@@ -175,7 +179,8 @@ class TermEditForm extends React.Component {
                 <Col xs={12} lg={24} l>
                   <Form.Item className={styles.saveButton}>
                     <Button
-                      type="primary"
+                      color="primary"
+                      variant="contained"
                       htmlType="submit"
                       disabled={this.isActionDisabled()}
                       className={styles.saveButton}
