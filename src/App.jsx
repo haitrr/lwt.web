@@ -43,7 +43,7 @@ class App extends React.Component {
   render() {
     return (
       <Themer>
-        <Paper>
+        <Paper style={{ height: "100vh" }}>
           <BrowserRouter>
             <div className={styles.layout}>
               <Helmet>
