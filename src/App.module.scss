@@ -16,6 +16,10 @@
 
 @media(prefers-color-scheme: dark) {
   :global {
+    h1, h2, h3, h4, h5, h6, button {
+      background: #121212;
+      color: white;
+    }
     body {
       background: #121212;
       color: white;
