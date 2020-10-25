@@ -3,10 +3,9 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router";
 import {
   getLanguageAction,
-  selectLanguageAction
+  selectLanguageAction,
 } from "../../../Actions/LanguageAction";
 import "./HomePage.css";
-import LanguageSelect from "../../Inputs/LanguageSelect/LanguageSelect";
 
 /**
  * Home page
@@ -20,15 +19,11 @@ class HomePage extends React.Component {
   }
 
   render() {
-    const { isLoggedIn, currentLanguage, selectLanguage } = this.props;
+    const { isLoggedIn } = this.props;
 
     return isLoggedIn ? (
       <div>
         <h1>Home Page</h1>
-        <div>
-          <strong>Language : </strong>
-          <LanguageSelect value={currentLanguage} onChange={selectLanguage} />
-        </div>
       </div>
     ) : (
       <Redirect to="/login" />
@@ -37,14 +32,14 @@ class HomePage extends React.Component {
 }
 
 const connectedHomePage = connect(
-  state => ({
+  (state) => ({
     isLoggedIn: state.user.isLoggedIn,
     languages: state.language.languages,
-    currentLanguage: state.language.currentLanguage
+    currentLanguage: state.language.currentLanguage,
   }),
   {
     getLanguage: getLanguageAction,
-    selectLanguage: selectLanguageAction
+    selectLanguage: selectLanguageAction,
   }
 )(HomePage);
 export { connectedHomePage as HomePage };
