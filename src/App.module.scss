@@ -16,28 +16,8 @@
 
 @media(prefers-color-scheme: dark) {
   :global {
-    h1, h2, h3, h4, h5, h6, button {
-      background: #121212;
-      color: white;
-    }
     body {
       background: #121212;
-      color: white;
-    }
-    .ant-radio-button-wrapper {
-      color: white;
-      &.ant-radio-button-wrapper-checked {
-       background: #cccccc;
-      }
-    }
-
-    .ant-btn-primary {
-      background: darken(#1890ff, 30%);
-      border-color: darken(#1890ff, 25%);
-    }
-
-    .ant-input {
-      background-color: #121212;
       color: white;
     }
   }
