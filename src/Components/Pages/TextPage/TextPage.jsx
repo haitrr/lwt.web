@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
-import { Button, Pagination, Popconfirm, Table } from "antd";
+import { Pagination, Popconfirm, Table } from "antd";
+import {Button} from "@material-ui/core"
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
