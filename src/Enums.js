@@ -46,7 +46,7 @@ export const TermLearningColor = {
 
   [TermLearningLevel.Learning4]: "#288336",
 
-  [TermLearningLevel.Learning5]: "#008669",
+  [TermLearningLevel.Learning5]: "#006669",
 
   [TermLearningLevel.WellKnow]: "whitesmoke",
 };
