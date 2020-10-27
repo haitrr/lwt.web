@@ -3,18 +3,20 @@ import React from "react";
 import classNames from "classnames";
 import { connect } from "react-redux";
 import styles from "./LanguageSelect.module.scss";
+import { TextState } from "../../Pages/TextPage/TextsTable";
 
-interface Language {
+export interface Language {
   code: string;
   name: string;
 }
 
-interface LanguageState {
+export interface LanguageState {
   languages: Language[];
 }
 
-interface RootState {
+export interface RootState {
   language: LanguageState;
+  text: TextState;
 }
 
 interface LanguageSelectProps {

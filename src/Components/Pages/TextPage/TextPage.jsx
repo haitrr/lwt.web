@@ -20,6 +20,7 @@ import termStyles from "../../Term/Term.module.scss";
 import { parseQueryString } from "../../../Utilities/queryString";
 import TotalTerm from "./TotalTerm";
 import TextStatus from "./TextStatus";
+import TextsTable from "./TextsTable";
 
 function renderTermNumber(record, level) {
   const { counts } = record;
@@ -266,9 +267,8 @@ class TextPage extends React.Component {
   }
 
   render() {
-    const { texts, filters, page, total } = this.props;
+    const { filters, page, total } = this.props;
     const {
-      isLoading,
       createModalVisible,
       editModalVisible,
       editingText,
@@ -290,16 +290,17 @@ class TextPage extends React.Component {
         />
         <Button onClick={this.showCreateModal}>Add text</Button>
         <TextFilterForm onFilterChange={this.filterTexts} value={filters} />
-        <Table
-          dataSource={texts}
-          pagination={false}
-          loading={isLoading}
-          columns={this.columns}
-          rowKey="id"
-          className={styles.table}
-          rowClassName={styles.row}
-          scroll={{ x: 1000 }}
-        />
+        <TextsTable />
+        {/* <Table */}
+        {/*  dataSource={texts} */}
+        {/*  pagination={false} */}
+        {/*  loading={isLoading} */}
+        {/*  columns={this.columns} */}
+        {/*  rowKey="id" */}
+        {/*  className={styles.table} */}
+        {/*  rowClassName={styles.row} */}
+        {/*  scroll={{ x: 1000 }} */}
+        {/* /> */}
         <Pagination
           total={total}
           current={page}

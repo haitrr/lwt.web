@@ -39,16 +39,47 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "plugins": [
-      "prettier"
-    ],
     "extends": [
-      "react-app",
-      "airbnb",
-      "prettier"
+      "airbnb-typescript",
+      "airbnb/hooks",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:jest/recommended",
+      "prettier",
+      "prettier/react",
+      "prettier/@typescript-eslint",
+      "plugin:prettier/recommended"
     ],
+    "plugins": [
+      "react",
+      "@typescript-eslint",
+      "jest"
+    ],
+    "env": {
+      "browser": true,
+      "es6": true,
+      "jest": true
+    },
+    "globals": {
+      "Atomics": "readonly",
+      "SharedArrayBuffer": "readonly"
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": 2018,
+      "sourceType": "module",
+      "project": "./tsconfig.json"
+    },
     "rules": {
-      "prettier/prettier": "error"
+      "linebreak-style": "off",
+      "prettier/prettier": [
+        "error",
+        {
+          "endOfLine": "auto"
+        }
+      ]
     }
   },
   "browserslist": [
@@ -60,12 +91,19 @@
   "devDependencies": {
     "@types/classnames": "^2.2.10",
     "@types/react-redux": "^7.1.9",
-    "eslint-config-airbnb": "17.1.0",
-    "eslint-config-prettier": "3.5.0",
-    "eslint-plugin-import": "2.14.0",
-    "eslint-plugin-jsx-a11y": "6.1.2",
-    "eslint-plugin-prettier": "3.0.1",
-    "eslint-plugin-react": "7.12.4",
-    "prettier": "2.1.1"
+    "@types/react-router-dom": "^5.1.6",
+    "@typescript-eslint/eslint-plugin": "^4.6.0",
+    "@typescript-eslint/parser": "^4.6.0",
+    "eslint": "7.2.0",
+    "eslint-config-airbnb": "18.2.0",
+    "eslint-config-airbnb-typescript": "^12.0.0",
+    "eslint-config-prettier": "^6.14.0",
+    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-jest": "^24.1.0",
+    "eslint-plugin-jsx-a11y": "^6.3.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "4.0.0",
+    "prettier": "^2.1.2"
   }
 }
