@@ -1,25 +1,21 @@
 import PropTypes from "prop-types";
 import React from "react";
-import {Radio} from "antd";
+import { Radio } from "antd";
 import styles from "./LearningLevelSelect.module.scss";
-import {TermLearningLevel, TermLearningColor} from "../../../Enums";
+import { TermLearningLevel, TermLearningColor } from "../../../Enums";
 
 // form item need to be class component.
 // eslint-disable-next-line react/prefer-stateless-function
 export default class LearningLevelSelect extends React.Component {
   shouldComponentUpdate(nextProps) {
-    const {value} = this.props;
+    const { value } = this.props;
     return value !== nextProps.value;
   }
 
   render() {
-    const {value, onChange} = this.props;
+    const { value, onChange } = this.props;
     return (
-      <Radio.Group
-        onChange={onChange}
-        className={styles.select}
-        value={value}
-      >
+      <Radio.Group onChange={onChange} className={styles.select} value={value}>
         <Radio.Button
           className={TermLearningColor[TermLearningLevel.UnKnow]}
           value={TermLearningLevel.UnKnow}

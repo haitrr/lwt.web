@@ -181,7 +181,7 @@ class TermEditForm extends React.Component {
                     <Button
                       color="primary"
                       variant="contained"
-                      htmlType="submit"
+                      type="submit"
                       disabled={this.isActionDisabled()}
                       className={styles.saveButton}
                     >
