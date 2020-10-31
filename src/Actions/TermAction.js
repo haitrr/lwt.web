@@ -5,7 +5,7 @@ import {
   editTermAsync,
   getTermAsync,
   getTermMeaningAsync,
-  getTextMeaningAsync
+  getTextMeaningAsync,
 } from "../Apis/TermApi";
 
 export const TERM_GET = "TERM_GET";
@@ -26,7 +26,7 @@ export const getTermAction = createAction(TERM_GET, async (id, index) => {
   }
 });
 
-export const setEditingTermAction = createAction(TERM_SET, term => term);
+export const setEditingTermAction = createAction(TERM_SET, (term) => term);
 export const getEditingTermMeaningAction = createAction(
   TERM_EDITING_GET_MEANING,
   async (content, from, to) => {
@@ -53,33 +53,33 @@ export const resetEditingTermMeaningAction = createAction(
   TERM_EDITING_MEANING_RESET
 );
 
-export const createTermAction = createAction(TERM_CREATED, async term => {
+export const createTermAction = createAction(TERM_CREATED, async (term) => {
   try {
     const newTerm = { ...term };
     newTerm.id = await createTermAsync(term);
     notification.success({
-      message: "Term is saved"
+      message: "Term is saved",
     });
     return newTerm;
   } catch (e) {
     notification.error({
       message: "Can't create term",
-      description: e.message
+      description: e.message,
     });
     return null;
   }
 });
-export const editTermAction = createAction(TERM_EDITED, async term => {
+export const editTermAction = createAction(TERM_EDITED, async (term) => {
   try {
     await editTermAsync(term);
     notification.success({
-      message: "Term is saved"
+      message: "Term is saved",
     });
     return term;
   } catch (e) {
     notification.error({
       message: "Can't edit term",
-      description: e.message
+      description: e.message,
     });
     return null;
   }
@@ -93,7 +93,7 @@ export const getTermMeaningAction = createAction(
     } catch (e) {
       notification.error({
         message: "Can't get term mearning",
-        description: e.message
+        description: e.message,
       });
       return null;
     }

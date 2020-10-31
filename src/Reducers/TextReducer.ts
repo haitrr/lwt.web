@@ -21,7 +21,6 @@ import {
   TERM_GET,
   TERM_GET_MEANING,
 } from "../Actions/TermAction";
-import { RootState } from "../RootReducer";
 
 /**
  * text reducer

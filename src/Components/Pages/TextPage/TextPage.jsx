@@ -1,10 +1,8 @@
 import PropTypes from "prop-types";
-import { Pagination, Popconfirm } from "antd";
+import { Pagination } from "antd";
 import { Button } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { ReadOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { getLanguageAction } from "../../../Actions/LanguageAction";
 import {
   deleteTextAction,
@@ -14,8 +12,6 @@ import {
 import TextFilterForm from "../../Forms/TextFilterForm";
 import TextCreateModal from "../../Modals/TextCreateModal";
 import TextEditModal from "../../Modals/TextEditModal";
-import { TermLearningLevel } from "../../../Enums";
-import termStyles from "../../Term/Term.module.scss";
 import { parseQueryString } from "../../../Utilities/queryString";
 import TextsTable from "./TextsTable";
 
@@ -168,9 +164,7 @@ TextPage.propTypes = {
   getTexts: PropTypes.func.isRequired,
   deleteText: PropTypes.func.isRequired,
   itemPerPage: PropTypes.number.isRequired,
-  languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   page: PropTypes.number.isRequired,
-  texts: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   total: PropTypes.number.isRequired,
   location: PropTypes.shape({ search: PropTypes.string }).isRequired,
   history: PropTypes.shape({}).isRequired,
