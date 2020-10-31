@@ -53,13 +53,13 @@ const TextStatus = ({ text, getTermCount, getProcessedTermCount }) => {
   ]);
 
   if (text.termCount === 0) {
-    return <span style={{ backgroundColor: "#ffd78c" }}>Processing</span>;
+    return <span style={{ backgroundColor: "#FF0101" }}>Processing</span>;
   }
   if (text.termCount === text.processedTermCount) {
-    return <span style={{ backgroundColor: "#a9ff8c" }}>Done</span>;
+    return <span style={{ backgroundColor: "#009700" }}>Done</span>;
   }
   return (
-    <span style={{ backgroundColor: "#f7f18b" }}>
+    <span style={{ backgroundColor: "#5AB7D4" }}>
       {`${text.processedTermCount}/${text.termCount}(${Math.floor(
         (text.processedTermCount * 100) / text.termCount
       )}%)`}

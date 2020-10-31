@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Pagination, Popconfirm, Table } from "antd";
+import { Pagination, Popconfirm } from "antd";
 import { Button } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
@@ -15,168 +15,14 @@ import TextFilterForm from "../../Forms/TextFilterForm";
 import TextCreateModal from "../../Modals/TextCreateModal";
 import TextEditModal from "../../Modals/TextEditModal";
 import { TermLearningLevel } from "../../../Enums";
-import styles from "./TextPage.module.scss";
 import termStyles from "../../Term/Term.module.scss";
 import { parseQueryString } from "../../../Utilities/queryString";
-import TotalTerm from "./TotalTerm";
-import TextStatus from "./TextStatus";
 import TextsTable from "./TextsTable";
-
-function renderTermNumber(record, level) {
-  const { counts } = record;
-  if (!counts) {
-    return <span>-</span>;
-  }
-  const current = counts[TermLearningLevel[level]];
-  if (!current) {
-    return 0;
-  }
-
-  const sum =
-    record.termCount -
-    counts[TermLearningLevel.Ignored] -
-    counts[TermLearningLevel.Skipped];
-  return (
-    <div
-      className={`${termStyles[`term-${TermLearningLevel[level]}`]} not-invert`}
-    >
-      {`${current}`}
-      <br />
-      ~
-      <br />
-      {`${Math.round((current / sum) * 100)}%`}
-    </div>
-  );
-}
 
 /**
  * text page
  */
 class TextPage extends React.Component {
-  columns = [
-    {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
-      width: "30vw",
-    },
-    {
-      title: "Act",
-      key: "actions",
-      width: "auto",
-      render: (_, text) => (
-        <span>
-          <Link
-            disabled={text.processedTermCount === 0}
-            className={styles.actionButton}
-            to={`/text/read/${text.id}`}
-          >
-            <ReadOutlined />
-          </Link>
-          <Popconfirm
-            title="Confirm to delete this text."
-            onConfirm={() => this.handleDelete(text.id)}
-            okText="Delete"
-            okType="danger"
-          >
-            <DeleteOutlined className={styles.deleteButton} />
-          </Popconfirm>
-          <EditOutlined
-            className={styles.editButton}
-            onClick={() => this.handleEdit(text.id)}
-          />
-        </span>
-      ),
-    },
-    {
-      title: "P",
-      key: "progress",
-      dataIndex: "bookmark",
-      render: (value, record) => {
-        let percentage = 0;
-        if (record.termCount === 0) {
-          return "-";
-        }
-        if (value && value !== 0) {
-          percentage = Math.floor((value / record.termCount) * 10000) / 100;
-        }
-        return `${percentage}%`;
-      },
-    },
-    {
-      title: "UK",
-      key: "unknow",
-      dataIndex: "counts.unknown",
-      render: (value, record) => renderTermNumber(record, "UnKnow"),
-    },
-    {
-      title: "L1",
-      key: "Learning1",
-      dataIndex: "counts.learning-1",
-      render: (value, record) => renderTermNumber(record, "Learning1"),
-    },
-    {
-      title: "L2",
-      key: "Learning2",
-      dataIndex: "counts.learning-2",
-      render: (value, record) => renderTermNumber(record, "Learning2"),
-    },
-    {
-      title: "L3",
-      key: "Learning3",
-      dataIndex: "counts.learning-3",
-      render: (value, record) => renderTermNumber(record, "Learning3"),
-    },
-    {
-      title: "L4",
-      key: "Learning4",
-      dataIndex: "counts.learning-4",
-      render: (value, record) => renderTermNumber(record, "Learning4"),
-    },
-    {
-      title: "L5",
-      key: "Learning5",
-      dataIndex: "counts.learning-5",
-      render: (value, record) => renderTermNumber(record, "Learning5"),
-    },
-    {
-      title: "WK",
-      key: "WellKnow",
-      dataIndex: "counts.well-known",
-      render: (_, record) => renderTermNumber(record, "WellKnow"),
-    },
-    {
-      title: "Status",
-      key: "status",
-      render: (_, record) => <TextStatus text={record} />,
-    },
-    {
-      title: "Language",
-      dataIndex: "languageCode",
-      key: "languageCode",
-      render: (value) => {
-        const { languages } = this.props;
-        const language = languages.find((lang) => lang.code === value);
-        if (language) {
-          return language.name;
-        }
-        return "Unknown language";
-      },
-    },
-    {
-      title: "I",
-      key: "Ignored",
-      dataIndex: "counts",
-      render: (value) => (value ? value[TermLearningLevel.Ignored] : "-"),
-    },
-    {
-      title: "T",
-      key: "total",
-      dataIndex: "counts",
-      render: (value, record) => <TotalTerm value={value} record={record} />,
-    },
-  ];
-
   constructor(props) {
     super(props);
     this.showCreateModal = this.showCreateModal.bind(this);
@@ -268,14 +114,10 @@ class TextPage extends React.Component {
 
   render() {
     const { filters, page, total } = this.props;
-    const {
-      createModalVisible,
-      editModalVisible,
-      editingText,
-    } = this.state;
+    const { createModalVisible, editModalVisible, editingText } = this.state;
 
     return (
-      <React.Fragment>
+      <>
         <TextEditModal
           hide={this.hideEditModal}
           onEdit={this.onEdit}
@@ -290,17 +132,7 @@ class TextPage extends React.Component {
         />
         <Button onClick={this.showCreateModal}>Add text</Button>
         <TextFilterForm onFilterChange={this.filterTexts} value={filters} />
-        <TextsTable />
-        {/* <Table */}
-        {/*  dataSource={texts} */}
-        {/*  pagination={false} */}
-        {/*  loading={isLoading} */}
-        {/*  columns={this.columns} */}
-        {/*  rowKey="id" */}
-        {/*  className={styles.table} */}
-        {/*  rowClassName={styles.row} */}
-        {/*  scroll={{ x: 1000 }} */}
-        {/* /> */}
+        <TextsTable onDelete={this.handleDelete} onEdit={this.handleEdit} />
         <Pagination
           total={total}
           current={page}
@@ -308,7 +140,7 @@ class TextPage extends React.Component {
           onChange={this.handlePageChange}
           showQuickJumper
         />
-      </React.Fragment>
+      </>
     );
   }
 }

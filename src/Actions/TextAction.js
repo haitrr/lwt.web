@@ -79,7 +79,7 @@ export const createTextAction = createAction(TEXT_CREATED, async (text) =>
 export const deleteTextAction = createAction(TEXT_DELETED, async (textId) => {
   try {
     await deleteTextAsync(textId);
-    notification.success({ message: "Text deleted." });
+    notification.success({ message: "TextItem deleted." });
     return textId;
   } catch {
     notification.error({ message: "Can't not delete text, please try again." });
@@ -90,7 +90,7 @@ export const deleteTextAction = createAction(TEXT_DELETED, async (textId) => {
 export const editTextAction = createAction(TEXT_EDITED, async (id, text) => {
   try {
     await editTextAsync(id, text);
-    notification.success({ message: "Text saved successfully." });
+    notification.success({ message: "TextItem saved successfully." });
     return text;
   } catch {
     notification.error({ message: "Can't not save text , please try again." });

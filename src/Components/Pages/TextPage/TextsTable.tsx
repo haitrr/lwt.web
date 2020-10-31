@@ -13,31 +13,32 @@ import {
   loadTermCountAction,
 } from "../../../Actions/TextAction";
 import { getLanguageAction } from "../../../Actions/LanguageAction";
-import { RootState } from "../../Inputs/LanguageSelect/LanguageSelect";
 import TextActions from "./TextActions";
-
-export interface Text {
-  title: string;
-  id: number;
-  processedTermCount: number;
-}
-
-export interface TextState {
-  total: any;
-  itemPerPage: any;
-  page: any;
-  filters: any;
-  texts: Text[];
-}
+import TextProgress from "./TextProgress";
+import { Language, RootState } from "../../../RootReducer";
+import { TextItem } from "../../../Reducers/TextReducer";
+import TermNumber from "./TermNumber";
+import { TermLearningLevel } from "../../../Enums";
+import TextStatus from "./TextStatus";
+import TotalTerm from "./TotalTerm";
 
 interface TextsTableProps {
-  texts: Text[];
+  texts: TextItem[];
   onDelete: Function;
   onEdit: Function;
+  languages: Language[];
 }
 
+const getTextLanguage = (language: string, languages: Language[]) => {
+  const lang = languages.find((l) => l.code === language);
+  if (lang) {
+    return lang.name;
+  }
+  return "Unknown language";
+};
+
 const TextsTable: React.FC<TextsTableProps> = (props) => {
-  const { texts, onDelete, onEdit } = props;
+  const { texts, onDelete, onEdit, languages } = props;
 
   return (
     <TableContainer component={Paper}>
@@ -68,6 +69,63 @@ const TextsTable: React.FC<TextsTableProps> = (props) => {
               </TableCell>
               <TableCell>
                 <TextActions text={text} onDelete={onDelete} onEdit={onEdit} />
+              </TableCell>
+              <TableCell>
+                <TextProgress text={text} />
+              </TableCell>
+              <TableCell>
+                <TermNumber
+                  text={text}
+                  learningLevel={TermLearningLevel.UnKnow}
+                />
+              </TableCell>
+              <TableCell>
+                <TermNumber
+                  text={text}
+                  learningLevel={TermLearningLevel.Learning1}
+                />
+              </TableCell>
+              <TableCell>
+                <TermNumber
+                  text={text}
+                  learningLevel={TermLearningLevel.Learning2}
+                />
+              </TableCell>
+              <TableCell>
+                <TermNumber
+                  text={text}
+                  learningLevel={TermLearningLevel.Learning3}
+                />
+              </TableCell>
+              <TableCell>
+                <TermNumber
+                  text={text}
+                  learningLevel={TermLearningLevel.Learning4}
+                />
+              </TableCell>
+              <TableCell>
+                <TermNumber
+                  text={text}
+                  learningLevel={TermLearningLevel.Learning5}
+                />
+              </TableCell>
+              <TableCell>
+                <TermNumber
+                  text={text}
+                  learningLevel={TermLearningLevel.WellKnow}
+                />
+              </TableCell>
+              <TableCell>
+                <TextStatus text={text} />
+              </TableCell>
+              <TableCell>
+                {getTextLanguage(text.languageCode, languages)}
+              </TableCell>
+              <TableCell>
+                {text.counts ? text.counts[TermLearningLevel.Ignored] : "-"}
+              </TableCell>
+              <TableCell>
+                <TotalTerm value={text.counts} record={text} />
               </TableCell>
             </TableRow>
           ))}

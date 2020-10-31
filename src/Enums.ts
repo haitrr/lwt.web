@@ -1,6 +1,6 @@
-import styles from "./Components/Term/Term.module.scss"
+import styles from "./Components/Term/Term.module.scss";
 
-export const TermLearningLevel = {
+export const TermLearningLevel: { [key: string]: string } = {
   Skipped: "skipped",
 
   Ignored: "ignored",
@@ -53,7 +53,7 @@ export const TermLearningColor = {
   [TermLearningLevel.WellKnow]: styles.termWellKnown,
 };
 
-export const getNextLearningLevel = (learningLevel) => {
+export const getNextLearningLevel = (learningLevel: string) => {
   switch (learningLevel) {
     case TermLearningLevel.UnKnow:
       return TermLearningLevel.Learning1;
@@ -72,7 +72,7 @@ export const getNextLearningLevel = (learningLevel) => {
   }
 };
 
-export const getPreviousLearningLevel = (learningLevel) => {
+export const getPreviousLearningLevel = (learningLevel: string) => {
   switch (learningLevel) {
     case TermLearningLevel.UnKnow:
       return TermLearningLevel.Ignored;
@@ -93,7 +93,7 @@ export const getPreviousLearningLevel = (learningLevel) => {
   }
 };
 
-export const isLearningTerm = (learningLevel) =>
+export const isLearningTerm = (learningLevel: string) =>
   LearningTermLevels.includes(learningLevel);
 
 export const importantColors = [

@@ -1,5 +1,5 @@
 /**
- * Text page
+ * TextItem page
  */
 import TextPage from "./TextPage";
 

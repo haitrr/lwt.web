@@ -3,10 +3,10 @@ import { DeleteOutlined, EditOutlined, ReadOutlined } from "@ant-design/icons";
 import { Popconfirm } from "antd";
 import React from "react";
 import styles from "./TextPage.module.scss";
-import { Text } from "./TextsTable";
+import { TextItem } from "../../../Reducers/TextReducer";
 
 export interface TextActionsProps {
-  text: Text;
+  text: TextItem;
   onDelete: Function;
   onEdit: Function;
 }

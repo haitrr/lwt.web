@@ -5,9 +5,9 @@ import { connect } from "react-redux";
 import TextEditForm from "../../Forms/TextEditForm";
 import {
   editTextAction,
-  getTextEditDetailAction
+  getTextEditDetailAction,
 } from "../../../Actions/TextAction";
-import { selectEditDetail } from "../../../Reducers/TextReducer";
+import { selectEditDetail } from "../../../Selectors/TextSelector";
 
 /**
  * text create modal
@@ -36,7 +36,7 @@ class TextEditModal extends React.Component {
   handleOk() {
     const form = this.formRef.current;
     const { editText, hide, editingText, onEdit } = this.props;
-    form.validateFields().then(values => {
+    form.validateFields().then((values) => {
       editText(editingText, values).then(onEdit);
       form.resetFields();
       hide();
@@ -70,18 +70,18 @@ class TextEditModal extends React.Component {
 }
 
 export default connect(
-  state => ({
-    editDetail: selectEditDetail(state)
+  (state) => ({
+    editDetail: selectEditDetail(state),
   }),
   {
     editText: editTextAction,
-    getEditDetail: getTextEditDetailAction
+    getEditDetail: getTextEditDetailAction,
   }
 )(TextEditModal);
 
 TextEditModal.defaultProps = {
   editingText: null,
-  editDetail: null
+  editDetail: null,
 };
 
 TextEditModal.propTypes = {
@@ -91,5 +91,5 @@ TextEditModal.propTypes = {
   onEdit: PropTypes.func.isRequired,
   editDetail: PropTypes.shape({}),
   getEditDetail: PropTypes.func.isRequired,
-  editingText: PropTypes.string
+  editingText: PropTypes.string,
 };

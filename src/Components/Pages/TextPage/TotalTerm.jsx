@@ -14,7 +14,6 @@ class TotalTerm extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { value, record, loadTermCounts } = this.props;
-    console.log(record);
     if (
       value === undefined ||
       record.termCount === 0 ||
