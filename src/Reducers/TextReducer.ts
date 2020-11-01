@@ -26,12 +26,16 @@ import {
  * text reducer
  */
 
+export interface TextEditDetail {
+
+}
+
 export interface TextState {
   total: number;
   itemPerPage: number;
   page: number;
   filters: any;
-  editDetail: any | null;
+  editDetail: TextEditDetail | null;
   texts: TextItem[];
   readingText: ReadingTextState | null;
 }
