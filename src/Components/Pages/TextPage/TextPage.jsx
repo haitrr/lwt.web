@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
-import { Pagination } from "antd";
 import { Button } from "@material-ui/core";
+import Pagination from "@material-ui/lab/Pagination";
 import React from "react";
 import { connect } from "react-redux";
 import { getLanguageAction } from "../../../Actions/LanguageAction";
@@ -90,7 +90,7 @@ class TextPage extends React.Component {
     }));
   };
 
-  handlePageChange(page) {
+  handlePageChange(_, page) {
     const { history } = this.props;
     history.push(`/text?page=${page.toString()}`);
   }
@@ -130,8 +130,8 @@ class TextPage extends React.Component {
         <TextFilterForm onFilterChange={this.filterTexts} value={filters} />
         <TextsTable onDelete={this.handleDelete} onEdit={this.handleEdit} />
         <Pagination
-          total={total}
-          current={page}
+          count={Math.ceil(total / 10)}
+          page={page}
           hideOnSinglePage={false}
           onChange={this.handlePageChange}
           showQuickJumper
