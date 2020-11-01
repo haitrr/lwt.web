@@ -1,6 +1,7 @@
 import React from "react";
-import { TermLearningLevel } from "../../../Enums";
-import termStyles from "../../Term/Term.module.scss";
+import classNames from "classnames";
+import { TermLearningColor, TermLearningLevel } from "../../../Enums";
+import styles from "./TextPage.module.scss";
 import { TextItem } from "../../../Reducers/TextReducer";
 
 const TermNumber = (props: { text: TextItem; learningLevel: string }) => {
@@ -18,8 +19,14 @@ const TermNumber = (props: { text: TextItem; learningLevel: string }) => {
     text.termCount -
     counts[TermLearningLevel.Ignored] -
     counts[TermLearningLevel.Skipped];
+
+  const className = classNames(
+    styles.termNumber,
+    TermLearningColor[learningLevel]
+  );
+
   return (
-    <div className={`${termStyles[`term-${learningLevel}`]}`}>
+    <div className={className}>
       {`${current}`}
       <br />
       ~
