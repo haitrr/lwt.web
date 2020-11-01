@@ -126,7 +126,13 @@ class TextPage extends React.Component {
           visible={createModalVisible}
           onCreate={this.filterTexts}
         />
-        <Button onClick={this.showCreateModal}>Add text</Button>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={this.showCreateModal}
+        >
+          Add text
+        </Button>
         <TextFilterForm onFilterChange={this.filterTexts} value={filters} />
         <TextsTable onDelete={this.handleDelete} onEdit={this.handleEdit} />
         <Pagination
