@@ -7,6 +7,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import { CircularProgress } from "@material-ui/core";
 import {
   deleteTextAction,
   getTextsAction,
@@ -26,6 +27,7 @@ interface TextsTableProps {
   texts: TextItem[];
   onDelete: Function;
   onEdit: Function;
+  isLoading: boolean;
   languages: Language[];
 }
 
@@ -37,100 +39,124 @@ const getTextLanguage = (language: string, languages: Language[]) => {
   return "Unknown language";
 };
 
+const Loading = () => {
+  return (
+    <div
+      style={{
+        width: "100%",
+        padding: "10px 0",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <CircularProgress />
+    </div>
+  );
+};
+
 const TextsTable: React.FC<TextsTableProps> = (props) => {
-  const { texts, onDelete, onEdit, languages } = props;
+  const { texts, onDelete, onEdit, languages, isLoading } = props;
 
   return (
     <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Title</TableCell>
-            <TableCell>Act</TableCell>
-            <TableCell>P</TableCell>
-            <TableCell>UK</TableCell>
-            <TableCell>L1</TableCell>
-            <TableCell>L2</TableCell>
-            <TableCell>L3</TableCell>
-            <TableCell>L4</TableCell>
-            <TableCell>L5</TableCell>
-            <TableCell>WK</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Language</TableCell>
-            <TableCell>I</TableCell>
-            <TableCell>T</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {texts.map((text) => (
-            <TableRow key={text.id}>
-              <TableCell component="th" scope="row">
-                {text.title}
-              </TableCell>
-              <TableCell>
-                <TextActions text={text} onDelete={onDelete} onEdit={onEdit} />
-              </TableCell>
-              <TableCell>
-                <TextProgress text={text} />
-              </TableCell>
-              <TableCell>
-                <TermNumber
-                  text={text}
-                  learningLevel={TermLearningLevel.UnKnow}
-                />
-              </TableCell>
-              <TableCell>
-                <TermNumber
-                  text={text}
-                  learningLevel={TermLearningLevel.Learning1}
-                />
-              </TableCell>
-              <TableCell>
-                <TermNumber
-                  text={text}
-                  learningLevel={TermLearningLevel.Learning2}
-                />
-              </TableCell>
-              <TableCell>
-                <TermNumber
-                  text={text}
-                  learningLevel={TermLearningLevel.Learning3}
-                />
-              </TableCell>
-              <TableCell>
-                <TermNumber
-                  text={text}
-                  learningLevel={TermLearningLevel.Learning4}
-                />
-              </TableCell>
-              <TableCell>
-                <TermNumber
-                  text={text}
-                  learningLevel={TermLearningLevel.Learning5}
-                />
-              </TableCell>
-              <TableCell>
-                <TermNumber
-                  text={text}
-                  learningLevel={TermLearningLevel.WellKnow}
-                />
-              </TableCell>
-              <TableCell>
-                <TextStatus text={text} />
-              </TableCell>
-              <TableCell>
-                {getTextLanguage(text.languageCode, languages)}
-              </TableCell>
-              <TableCell>
-                {text.counts ? text.counts[TermLearningLevel.Ignored] : "-"}
-              </TableCell>
-              <TableCell>
-                <TotalTerm value={text.counts} record={text} />
-              </TableCell>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Title</TableCell>
+              <TableCell>Act</TableCell>
+              <TableCell>P</TableCell>
+              <TableCell>UK</TableCell>
+              <TableCell>L1</TableCell>
+              <TableCell>L2</TableCell>
+              <TableCell>L3</TableCell>
+              <TableCell>L4</TableCell>
+              <TableCell>L5</TableCell>
+              <TableCell>WK</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Language</TableCell>
+              <TableCell>I</TableCell>
+              <TableCell>T</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHead>
+          <TableBody>
+            {texts.map((text) => (
+              <TableRow key={text.id}>
+                <TableCell component="th" scope="row">
+                  {text.title}
+                </TableCell>
+                <TableCell>
+                  <TextActions
+                    text={text}
+                    onDelete={onDelete}
+                    onEdit={onEdit}
+                  />
+                </TableCell>
+                <TableCell>
+                  <TextProgress text={text} />
+                </TableCell>
+                <TableCell>
+                  <TermNumber
+                    text={text}
+                    learningLevel={TermLearningLevel.UnKnow}
+                  />
+                </TableCell>
+                <TableCell>
+                  <TermNumber
+                    text={text}
+                    learningLevel={TermLearningLevel.Learning1}
+                  />
+                </TableCell>
+                <TableCell>
+                  <TermNumber
+                    text={text}
+                    learningLevel={TermLearningLevel.Learning2}
+                  />
+                </TableCell>
+                <TableCell>
+                  <TermNumber
+                    text={text}
+                    learningLevel={TermLearningLevel.Learning3}
+                  />
+                </TableCell>
+                <TableCell>
+                  <TermNumber
+                    text={text}
+                    learningLevel={TermLearningLevel.Learning4}
+                  />
+                </TableCell>
+                <TableCell>
+                  <TermNumber
+                    text={text}
+                    learningLevel={TermLearningLevel.Learning5}
+                  />
+                </TableCell>
+                <TableCell>
+                  <TermNumber
+                    text={text}
+                    learningLevel={TermLearningLevel.WellKnow}
+                  />
+                </TableCell>
+                <TableCell>
+                  <TextStatus text={text} />
+                </TableCell>
+                <TableCell>
+                  {getTextLanguage(text.languageCode, languages)}
+                </TableCell>
+                <TableCell>
+                  {text.counts ? text.counts[TermLearningLevel.Ignored] : "-"}
+                </TableCell>
+                <TableCell>
+                  <TotalTerm value={text.counts} record={text} />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
     </TableContainer>
   );
 };
