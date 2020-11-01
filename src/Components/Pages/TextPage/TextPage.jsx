@@ -110,7 +110,12 @@ class TextPage extends React.Component {
 
   render() {
     const { filters, page, total } = this.props;
-    const { createModalVisible, editModalVisible, editingText, isLoading } = this.state;
+    const {
+      createModalVisible,
+      editModalVisible,
+      editingText,
+      isLoading,
+    } = this.state;
 
     return (
       <>
@@ -134,7 +139,11 @@ class TextPage extends React.Component {
           Add text
         </Button>
         <TextFilterForm onFilterChange={this.filterTexts} value={filters} />
-        <TextsTable isLoading={isLoading} onDelete={this.handleDelete} onEdit={this.handleEdit} />
+        <TextsTable
+          isLoading={isLoading}
+          onDelete={this.handleDelete}
+          onEdit={this.handleEdit}
+        />
         <Pagination
           count={Math.ceil(total / 10)}
           page={page}
