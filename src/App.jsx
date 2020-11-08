@@ -11,7 +11,7 @@ import styles from "./App.module.scss";
 import Header from "./Components/Header/Header";
 import { HomePage } from "./Components/Pages/HomePage";
 import LoginPage from "./Components/Pages/LoginPage/LoginPage";
-import { RegisterPage } from "./Components/Pages/RegisterPage/RegisterPage";
+import RegisterPage from "./Components/Pages/RegisterPage/RegisterPage";
 import TextPage from "./Components/Pages/TextPage";
 import TextReadPage from "./Components/Pages/TextReadPage";
 import { getLanguageAction } from "./Actions/LanguageAction";
