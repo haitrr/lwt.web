@@ -1,13 +1,25 @@
 import { Button, Form, Input, notification } from "antd";
 import React from "react";
 import "./RegisterForm.css";
-import { withRouter } from "react-router";
+import { RouteComponentProps, withRouter } from "react-router";
+
+interface OwnProps {
+  onSubmit: Function;
+}
+
+interface FormValues {
+  userName: string;
+  password: string;
+  repeatPassword: string;
+}
+
+type Props = OwnProps & RouteComponentProps;
 
 /**
  * Register form
  */
-class RegisterForm extends React.Component {
-  handleSubmit = values => {
+class RegisterForm extends React.Component<Props> {
+  handleSubmit = (values: FormValues) => {
     const { onSubmit, history } = this.props;
     if (values.password !== values.repeatPassword) {
       notification.error({ message: "Passwords not match" });
@@ -17,7 +29,7 @@ class RegisterForm extends React.Component {
       .then(() => {
         history.push("/login");
       })
-      .catch(e => {
+      .catch((e: Error) => {
         throw e;
       });
   };
