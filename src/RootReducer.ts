@@ -13,9 +13,14 @@ export interface LanguageState {
   languages: Language[];
 }
 
+export interface UserState {
+  isLoggedIn: boolean;
+}
+
 export interface RootState {
   language: LanguageState;
   text: TextState;
+  user: UserState;
 }
 
 /**
