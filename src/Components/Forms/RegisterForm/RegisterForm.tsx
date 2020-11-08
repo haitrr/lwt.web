@@ -3,9 +3,13 @@ import { Button, TextField } from "@material-ui/core";
 import React from "react";
 import "./RegisterForm.css";
 import { RouteComponentProps, withRouter } from "react-router";
+import { connect } from "react-redux";
+import { registerAction } from "../../../Actions/UserAction";
 
-interface OwnProps {
-  onSubmit: Function;
+interface OwnProps {}
+
+interface DispatchProps {
+  register: Function;
 }
 
 interface FormValues {
@@ -14,28 +18,49 @@ interface FormValues {
   repeatPassword: string;
 }
 
-type Props = OwnProps & RouteComponentProps;
+interface State {
+  submitting: boolean;
+}
+
+type Props = OwnProps & DispatchProps & RouteComponentProps;
 
 /**
  * Register form
  */
-class RegisterForm extends React.Component<Props> {
+class RegisterForm extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { submitting: false };
+  }
+
+  handleRegister = (data: any): Promise<any> => {
+    const { register, history } = this.props;
+    return register(data).then(() => {
+      history.push("/login");
+    });
+  };
+
   handleSubmit = (values: FormValues) => {
-    const { onSubmit, history } = this.props;
+    const { history } = this.props;
     if (values.password !== values.repeatPassword) {
       notification.error({ message: "Passwords not match" });
       return;
     }
-    onSubmit(values)
-      .then(() => {
-        history.push("/login");
-      })
-      .catch((e: Error) => {
-        throw e;
-      });
+
+    this.setState({ submitting: true }, () =>
+      this.handleRegister(values)
+        .then(() => {
+          history.push("/login");
+        })
+        .catch((e: Error) => {
+          this.setState({ submitting: false });
+        })
+    );
   };
 
   render() {
+    const { submitting } = this.state;
+
     return (
       <Form onFinish={this.handleSubmit}>
         <Form.Item name="userName">
@@ -47,11 +72,19 @@ class RegisterForm extends React.Component<Props> {
         <Form.Item name="repeatPassword">
           <TextField type="password" placeholder="Retype password" />
         </Form.Item>
-        <Button variant="contained" color="primary" type="submit">
+        <Button
+          disabled={submitting}
+          variant="contained"
+          color="primary"
+          type="submit"
+        >
           Register
         </Button>
       </Form>
     );
   }
 }
-export default withRouter(RegisterForm);
+
+export default withRouter(
+  connect(null, { register: registerAction })(RegisterForm)
+);
