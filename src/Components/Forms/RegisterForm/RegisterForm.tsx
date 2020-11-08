@@ -1,4 +1,5 @@
-import { Button, Form, Input, notification } from "antd";
+import { Form, notification } from "antd";
+import { Button, TextField } from "@material-ui/core";
 import React from "react";
 import "./RegisterForm.css";
 import { RouteComponentProps, withRouter } from "react-router";
@@ -38,15 +39,15 @@ class RegisterForm extends React.Component<Props> {
     return (
       <Form onFinish={this.handleSubmit}>
         <Form.Item name="userName">
-          <Input placeholder="UserName" />
+          <TextField placeholder="UserName" />
         </Form.Item>
         <Form.Item name="password">
-          <Input type="password" placeholder="Password" />
+          <TextField type="password" placeholder="Password" />
         </Form.Item>
         <Form.Item name="repeatPassword">
-          <Input type="password" placeholder="Retype password" />
+          <TextField type="password" placeholder="Retype password" />
         </Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Button variant="contained" color="primary" type="submit">
           Register
         </Button>
       </Form>

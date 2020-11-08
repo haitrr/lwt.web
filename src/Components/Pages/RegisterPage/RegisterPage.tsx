@@ -23,7 +23,11 @@ class RegisterPage extends React.Component<Props> {
 
   render() {
     return (
-      <div>
+      <div
+        style={{
+          margin: "auto",
+        }}
+      >
         <h1>Register Page</h1>
         <RegisterForm onSubmit={this.handleRegister} />
       </div>
