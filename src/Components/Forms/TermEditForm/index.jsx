@@ -86,7 +86,7 @@ class TermEditForm extends React.Component {
   };
 
   handleBetter = (e) => {
-    const { value } = this.props;
+    const value = this.formRef.current.getFieldsValue();
     e.preventDefault();
     const newValue = {
       ...value,
