@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
 import React from "react";
-import {connect} from "react-redux";
-import {TermLearningColor, TermLearningLevel} from "../../../Enums";
+import { connect } from "react-redux";
+import { TermLearningColor, TermLearningLevel } from "../../../Enums";
 import SingleBarChart from "../../SingleBarChart";
-import {loadReadingTexttermsCountByLearningLevelAction} from "../../../Actions/TextAction";
+import { loadReadingTexttermsCountByLearningLevelAction } from "../../../Actions/TextAction";
 import styles from "../../Term/Term.module.scss";
+import Loading from "../../Loading/Loading";
 
 function getPracticeCount(termCount, termCountByLearningLevel) {
   return (
@@ -17,7 +18,7 @@ function getPracticeCount(termCount, termCountByLearningLevel) {
 
 class TextStatistic extends React.PureComponent {
   componentDidMount() {
-    const {loadtermsCountByLearningLevel, textId} = this.props;
+    const { loadtermsCountByLearningLevel, textId } = this.props;
     loadtermsCountByLearningLevel(textId);
   }
 
@@ -39,9 +40,13 @@ class TextStatistic extends React.PureComponent {
   }
 
   render() {
-    const {termsCountByLearningLevel, termCount} = this.props;
+    const { termsCountByLearningLevel, termCount } = this.props;
     if (!termsCountByLearningLevel) {
-      return <div>Loading</div>;
+      return (
+        <div style={{ height: "2rem" }}>
+          <Loading />
+        </div>
+      );
     }
     const termCountByLearningLevel = termsCountByLearningLevel;
     const statistic = [];
@@ -71,9 +76,9 @@ class TextStatistic extends React.PureComponent {
       value: practice,
     });
     return (
-      <div>
-        <SingleBarChart data={learningStatistic}/>
-        <SingleBarChart data={statistic}/>
+      <div style={{ width: "100%" }}>
+        <SingleBarChart data={learningStatistic} />
+        <SingleBarChart data={statistic} />
       </div>
     );
   }
@@ -85,7 +90,7 @@ TextStatistic.defaultProps = {
 
 TextStatistic.propTypes = {
   terms: PropTypes.arrayOf(
-    PropTypes.shape({learningLevel: PropTypes.string.isRequired})
+    PropTypes.shape({ learningLevel: PropTypes.string.isRequired })
   ).isRequired,
   textId: PropTypes.number.isRequired,
   termCount: PropTypes.number.isRequired,

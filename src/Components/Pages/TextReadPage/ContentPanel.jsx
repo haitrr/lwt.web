@@ -8,9 +8,10 @@ import GoToBookmarkButton from "./GoToBookmarkButton";
 import {
   getTextTermsAction,
   setTermIndexBeginAction,
-  setTermIndexEndAction
+  setTermIndexEndAction,
 } from "../../../Actions/TextAction";
 import { setEditingTermAction } from "../../../Actions/TermAction";
+import Loading from "../../Loading/Loading";
 
 class ContentPanel extends React.Component {
   constructor(props) {
@@ -35,7 +36,7 @@ class ContentPanel extends React.Component {
       setTermIndexEnd,
       begin,
       termCount,
-      setTermIndexBegin
+      setTermIndexBegin,
     } = this.props;
     setTermIndexEnd(Math.min(end + this.displayTerms, termCount - 1));
     setTermIndexBegin(Math.max(begin - Math.floor(this.displayTerms / 2), 0));
@@ -63,7 +64,7 @@ class ContentPanel extends React.Component {
     }
   };
 
-  handleScroll = e => {
+  handleScroll = (e) => {
     e.stopPropagation();
     e.preventDefault();
     if (e.target.id !== "contentPanel") {
@@ -77,7 +78,7 @@ class ContentPanel extends React.Component {
       end,
       setTermIndexEnd,
       setTermIndexBegin,
-      terms
+      terms,
     } = this.props;
     if (editingTerm) {
       setEditingTerm(null);
@@ -106,8 +107,12 @@ class ContentPanel extends React.Component {
   render() {
     const { terms } = this.props;
     const { begin, end, bookmarkRef, onSpeak } = this.props;
-    if (begin === end) {
-      return <h1>Loading</h1>;
+    if (!terms[begin] && !terms[end]) {
+      return (
+        <div style={{ height: "50%" }}>
+          <Loading />;
+        </div>
+      );
     }
     const termElements = [];
     for (let i = begin; i <= end; i += 1) {
@@ -126,7 +131,7 @@ class ContentPanel extends React.Component {
     }
 
     return (
-      <Fragment>
+      <>
         <div
           onScroll={this.handleScroll}
           id="contentPanel"
@@ -137,14 +142,14 @@ class ContentPanel extends React.Component {
         </div>
         <GoToBookmarkButton onClick={this.goToBookmark} />
         <ProgressBar />
-      </Fragment>
+      </>
     );
   }
 }
 
 ContentPanel.defaultProps = {
   terms: null,
-  editingTerm: null
+  editingTerm: null,
 };
 
 ContentPanel.propTypes = {
@@ -159,20 +164,20 @@ ContentPanel.propTypes = {
   getTextTerms: PropTypes.func.isRequired,
   onSpeak: PropTypes.func.isRequired,
   editingTerm: PropTypes.number,
-  setEditingTerm: PropTypes.func.isRequired
+  setEditingTerm: PropTypes.func.isRequired,
 };
 export default connect(
-  state => ({
+  (state) => ({
     terms: state.text.readingText.terms,
     begin: state.text.readingText.termIndexBegin,
     end: state.text.readingText.termIndexEnd,
     termCount: state.text.readingText.termCount,
-    editingTerm: state.term.editingTerm
+    editingTerm: state.term.editingTerm,
   }),
   {
     getTextTerms: getTextTermsAction,
     setTermIndexBegin: setTermIndexBeginAction,
     setTermIndexEnd: setTermIndexEndAction,
-    setEditingTerm: setEditingTermAction
+    setEditingTerm: setEditingTermAction,
   }
 )(ContentPanel);

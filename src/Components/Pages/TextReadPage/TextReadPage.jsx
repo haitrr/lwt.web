@@ -8,6 +8,7 @@ import TermEditForm from "../../Forms/TermEditForm";
 import ContentPanel from "./ContentPanel";
 import TextStatistic from "./TextStatistic";
 import TextTitle from "./TextTitle";
+import Loading from "../../Loading/Loading";
 
 /**
  * text read page.
@@ -100,8 +101,9 @@ class TextReadPage extends React.Component {
   render() {
     const { terms, bookmark, id } = this.props;
     if (!id) {
-      return <h2>Loading</h2>;
+      return <Loading />;
     }
+
     return (
       <div className={styles.readPane}>
         <TextTitle />
