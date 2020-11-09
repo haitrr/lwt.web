@@ -7,6 +7,7 @@ import styles from "./TextReadPage.module.scss";
 import TermEditForm from "../../Forms/TermEditForm";
 import ContentPanel from "./ContentPanel";
 import TextStatistic from "./TextStatistic";
+import TextTitle from "./TextTitle";
 
 /**
  * text read page.
@@ -103,7 +104,7 @@ class TextReadPage extends React.Component {
     }
     return (
       <div className={styles.readPane}>
-        <h2 className={styles.titleSection}>{title}</h2>
+        <TextTitle title={title} />
         <TextStatistic />
         <ContentPanel
           onSpeak={this.onSpeak}
