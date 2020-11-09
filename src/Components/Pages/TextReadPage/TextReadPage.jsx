@@ -98,13 +98,13 @@ class TextReadPage extends React.Component {
   };
 
   render() {
-    const { terms, title, bookmark, id } = this.props;
-    if (!title) {
+    const { terms, bookmark, id } = this.props;
+    if (!id) {
       return <h2>Loading</h2>;
     }
     return (
       <div className={styles.readPane}>
-        <TextTitle title={title} />
+        <TextTitle />
         <TextStatistic />
         <ContentPanel
           onSpeak={this.onSpeak}
@@ -124,7 +124,6 @@ export default connect(
       return {
         terms: state.text.readingText.terms,
         language: state.text.readingText.languageCode,
-        title: state.text.readingText.title,
         id: state.text.readingText.id,
         languages: state.language.languages,
         bookmark: state.text.readingText.bookmark,
@@ -138,7 +137,6 @@ export default connect(
 )(TextReadPage);
 TextReadPage.defaultProps = {
   language: null,
-  title: null,
   id: null,
   terms: null,
   bookmark: null,
@@ -149,7 +147,6 @@ TextReadPage.propTypes = {
   readText: PropTypes.func.isRequired,
   languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   language: PropTypes.number,
-  title: PropTypes.string,
   id: PropTypes.number,
   terms: PropTypes.arrayOf(PropTypes.shape({})),
   bookmark: PropTypes.number,

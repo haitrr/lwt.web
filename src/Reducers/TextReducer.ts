@@ -48,6 +48,7 @@ export interface Term {
 }
 
 export interface ReadingTextState {
+  title: string;
   terms: Term[];
   termIndexBegin: number;
   termsCountByLearningLevel: any;
