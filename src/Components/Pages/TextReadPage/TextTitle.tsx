@@ -6,7 +6,7 @@ interface Props {
 }
 
 const TextTitle: React.FC<Props> = ({ title }) => {
-  return <h2 className={styles.titleSection}>{title}</h2>;
+  return <div className={styles.titleSection}>{title}</div>;
 };
 
 export default TextTitle;
