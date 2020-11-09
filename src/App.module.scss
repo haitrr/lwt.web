@@ -6,9 +6,16 @@
 }
 
 
-:global(html) {
+:global(body) {
   height: 100%;
 }
+
+
+:global(html) {
+  height: unset;
+  width: unset;
+}
+
 
 :global(#root) {
   height: 100%;
