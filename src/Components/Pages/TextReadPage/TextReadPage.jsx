@@ -105,7 +105,7 @@ class TextReadPage extends React.Component {
     }
 
     return (
-      <div className={styles.readPane}>
+      <div className={styles.readPane} id="readPanel">
         <TextTitle />
         <TextStatistic />
         <ContentPanel
