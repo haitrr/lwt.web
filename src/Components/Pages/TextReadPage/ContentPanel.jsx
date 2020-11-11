@@ -106,7 +106,7 @@ class ContentPanel extends React.Component {
 
   render() {
     const { terms } = this.props;
-    const { begin, end, bookmarkRef, onSpeak } = this.props;
+    const { begin, end, bookmarkRef, onSpeak, editingTerm } = this.props;
     if (!terms[begin] && !terms[end]) {
       return (
         <div style={{ height: "50%" }}>
@@ -140,7 +140,7 @@ class ContentPanel extends React.Component {
         >
           {termElements}
         </div>
-        <GoToBookmarkButton onClick={this.goToBookmark} />
+        {!editingTerm && <GoToBookmarkButton onClick={this.goToBookmark} />}
         <ProgressBar />
       </>
     );
