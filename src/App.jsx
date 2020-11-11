@@ -42,7 +42,7 @@ class App extends React.Component {
   render() {
     return (
       <Themer>
-        <Paper style={{ height: "100%" }}>
+        <Paper style={{ minHeight: "-webkit-fill-available" }}>
           <BrowserRouter>
             <div className={styles.layout}>
               <Helmet>
