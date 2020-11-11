@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { connect } from "react-redux";
-import { Col, Form, Input, Row } from "antd";
-import { TextField, Button } from "@material-ui/core";
+import {connect} from "react-redux";
+import {Form, Input } from "antd";
+import {TextField, Button} from "@material-ui/core";
 import TermContent from "./TermContent";
 import LearningLevelSelect from "../../Inputs/LearningLevelSelect";
 import normalize from "../../../textNormalizer";
@@ -14,16 +14,16 @@ import {
   dictionaryTermMeaningAction,
   setEditingTermAction,
 } from "../../../Actions/TermAction";
-import { selectEditingTermValue } from "../../../Selectors/TermSelectors";
-import { selectDictionaryLanguage } from "../../../Selectors/UserSelectors";
-import { TermLearningLevel, getNextLearningLevel } from "../../../Enums";
+import {selectEditingTermValue} from "../../../Selectors/TermSelectors";
+import {selectDictionaryLanguage} from "../../../Selectors/UserSelectors";
+import {TermLearningLevel, getNextLearningLevel} from "../../../Enums";
 
 class TermEditForm extends React.Component {
   formRef = React.createRef();
 
   constructor(props) {
     super(props);
-    this.state = { lookingUpDictionary: false, lookedUpDictionary: false };
+    this.state = {lookingUpDictionary: false, lookedUpDictionary: false};
   }
 
   componentDidUpdate(prevProps) {
@@ -36,10 +36,10 @@ class TermEditForm extends React.Component {
       index,
     } = this.props;
 
-    const { lookedUpDictionary } = this.state;
+    const {lookedUpDictionary} = this.state;
     if (index !== prevProps.index) {
       // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ lookedUpDictionary: false });
+      this.setState({lookedUpDictionary: false});
     }
 
     if (
@@ -49,34 +49,34 @@ class TermEditForm extends React.Component {
       value.meaning === "" &&
       !lookedUpDictionary
     ) {
-      const { code } = languages.find((l) => l.code === languageCode);
+      const {code} = languages.find((l) => l.code === languageCode);
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState(
-        { lookingUpDictionary: true, lookedUpDictionary: true },
+        {lookingUpDictionary: true, lookedUpDictionary: true},
         () =>
           dictionaryTerm(
             normalize(value.content, code),
             languageCode,
             dictionaryLanguage,
             index
-          ).finally(() => this.setState({ lookingUpDictionary: false }))
+          ).finally(() => this.setState({lookingUpDictionary: false}))
       );
     }
     if (value.index !== prevProps.value.index) {
       if (this.formRef.current) {
-        this.formRef.current.setFieldsValue({ ...value });
+        this.formRef.current.setFieldsValue({...value});
       }
     } else if (value.meaning !== prevProps.value.meaning) {
       if (this.formRef.current) {
-        this.formRef.current.setFieldsValue({ meaning: value.meaning });
+        this.formRef.current.setFieldsValue({meaning: value.meaning});
       }
     }
   }
 
   handleSubmit = (values) => {
-    const { value, createTerm, editTerm, setEditingTerm } = this.props;
+    const {value, createTerm, editTerm, setEditingTerm} = this.props;
     const editedData = values;
-    const editedTerm = { ...value, ...editedData };
+    const editedTerm = {...value, ...editedData};
     if (!value.id) {
       createTerm(editedTerm);
     } else {
@@ -97,8 +97,8 @@ class TermEditForm extends React.Component {
   };
 
   isActionDisabled = () => {
-    const { lookingUpDictionary } = this.state;
-    const { value } = this.props;
+    const {lookingUpDictionary} = this.state;
+    const {value} = this.props;
     return (
       lookingUpDictionary ||
       (value.learningLevel !== TermLearningLevel.UnKnow &&
@@ -107,7 +107,7 @@ class TermEditForm extends React.Component {
   };
 
   render() {
-    const { value, className, editingTerm } = this.props;
+    const {value, className, editingTerm} = this.props;
     if (!editingTerm || !value) {
       return null;
     }
@@ -115,83 +115,71 @@ class TermEditForm extends React.Component {
     return (
       <Form onFinish={this.handleSubmit} layout="inline" ref={this.formRef}>
         <div className={`${className} ${styles.form}`}>
-          <TermContent term={value} />
+          <TermContent term={value}/>
           <Form.Item
             className={styles.content}
             label="Content"
             name="content"
             initialValue={value.content}
           >
-            <Input disabled />
+            <Input disabled/>
           </Form.Item>
           <Form.Item
             className={styles.language}
             name="languageCode"
             initialValue={value.languageCode}
           >
-            <LanguageSelect disabled />
+            <LanguageSelect disabled/>
           </Form.Item>
 
-          <Row>
-            <Col xl={10} lg={12} xs={24}>
-              <Form.Item
-                name="meaning"
-                initialValue={value.meaning || ""}
-                className={styles.meaning}
+          <Form.Item
+            name="meaning"
+            initialValue={value.meaning || ""}
+            className={styles.meaning}
+          >
+            <TextField
+              key="meaning"
+              variant="outlined"
+              InputLabelProps={{shrink: true}}
+              label="Meaning"
+              disabled={this.isActionDisabled()}
+              fullWidth
+              rows={2}
+              rowsMax={4}
+              multiline
+            />
+          </Form.Item>
+          <Form.Item
+            name="learningLevel"
+            initialValue={value.learningLevel}
+            className={styles.learningLevel}
+          >
+            <LearningLevelSelect/>
+          </Form.Item>
+          <div className={styles.buttons}>
+            <div className={styles.saveButton}>
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={this.handleBetter}
+                disabled={this.isActionDisabled()}
+                className={styles.saveButton}
               >
-                <TextField
-                  key="meaning"
-                  variant="outlined"
-                  InputLabelProps={{ shrink: true }}
-                  label="Meaning"
-                  disabled={this.isActionDisabled()}
-                  fullWidth
-                  rows={2}
-                  rowsMax={4}
-                  multiline
-                />
-              </Form.Item>
-            </Col>
-            <Col xl={10} lg={12} xs={24}>
-              <Form.Item
-                name="learningLevel"
-                initialValue={value.learningLevel}
-                className={styles.learningLevel}
+                Better
+              </Button>
+            </div>
+            <div className={styles.saveButton}>
+              <Button
+                color="primary"
+                variant="contained"
+                type="submit"
+                disabled={this.isActionDisabled()}
+                className={styles.saveButton}
               >
-                <LearningLevelSelect />
-              </Form.Item>
-            </Col>
-            <Col xl={4} lg={24} xs={24}>
-              <Row gutter={3}>
-                <Col xs={12} lg={24}>
-                  <Form.Item className={styles.saveButton}>
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      onClick={this.handleBetter}
-                      disabled={this.isActionDisabled()}
-                      className={styles.saveButton}
-                    >
-                      Better
-                    </Button>
-                  </Form.Item>
-                </Col>
-                <Col xs={12} lg={24} l>
-                  <Form.Item className={styles.saveButton}>
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      type="submit"
-                      disabled={this.isActionDisabled()}
-                      className={styles.saveButton}
-                    >
-                      Save
-                    </Button>
-                  </Form.Item>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
+                Save
+              </Button>
+            </div>
+          </div>
         </div>
       </Form>
     );
@@ -227,7 +215,7 @@ TermEditForm.propTypes = {
 };
 export default connect(
   (state) => ({
-    value: { ...selectEditingTermValue(state) },
+    value: {...selectEditingTermValue(state)},
     dictionaryLanguage: selectDictionaryLanguage(state),
     editingTerm: state.term.editingTerm,
     languageCode: state.text.readingText.languageCode,
