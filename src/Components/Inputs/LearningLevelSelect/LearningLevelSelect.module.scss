@@ -6,3 +6,27 @@
   -ms-user-select: none;
   user-select: none;
 }
+
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 3rem;
+  width: 100%;
+  padding: 0.25rem;
+}
+
+.option {
+  flex: 1;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border: 1px solid white;
+
+  &.selected {
+    font-weight: bolder;
+    font-size: 1.5rem;
+    border: 2px solid transparent;
+    border-image: conic-gradient(red, yellow, lime, aqua, blue, magenta, red) 1;
+  }
+}

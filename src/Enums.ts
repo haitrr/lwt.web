@@ -53,6 +53,26 @@ export const TermLearningColor = {
   [TermLearningLevel.WellKnow]: styles.termWellKnown,
 };
 
+export const TermLearningLevelShortcut = {
+  [TermLearningLevel.Skipped]: "S",
+
+  [TermLearningLevel.Ignored]: "I",
+
+  [TermLearningLevel.UnKnow]: "UK",
+
+  [TermLearningLevel.Learning1]: "I",
+
+  [TermLearningLevel.Learning2]: "II",
+
+  [TermLearningLevel.Learning3]: "II",
+
+  [TermLearningLevel.Learning4]: "IV",
+
+  [TermLearningLevel.Learning5]: "V",
+
+  [TermLearningLevel.WellKnow]: "WK",
+};
+
 export const getNextLearningLevel = (learningLevel: string) => {
   switch (learningLevel) {
     case TermLearningLevel.UnKnow:
