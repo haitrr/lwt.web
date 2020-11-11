@@ -15,6 +15,7 @@ export interface LanguageState {
 
 export interface UserState {
   isLoggedIn: boolean;
+  userName: string;
 }
 
 export interface RootState {

@@ -4,7 +4,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
-import "antd/dist/antd.css";
 import { Helmet } from "react-helmet";
 import { Paper } from "@material-ui/core";
 import styles from "./App.module.scss";
