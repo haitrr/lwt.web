@@ -2,42 +2,29 @@ import PropTypes from "prop-types";
 import { Popover, Button } from "antd";
 import React from "react";
 import { connect } from "react-redux";
-import styles from "./Term.module.scss";
-import TermButton from "./TermButton";
+import styles from "./TermTooltip.module.scss";
+import TermButton from "../TermButton";
 import {
   dictionaryTermMeaningAction,
   editTermAction,
-} from "../../Actions/TermAction";
+} from "../../../Actions/TermAction";
 import {
   getNextLearningLevel,
   getPreviousLearningLevel,
-  importantColors,
-} from "../../Enums";
-import { selectDictionaryLanguage } from "../../Selectors/UserSelectors";
-import { setBookmarkAction, selectTermAction } from "../../Actions/TextAction";
-import normalize from "../../textNormalizer";
+} from "../../../Enums";
+import { selectDictionaryLanguage } from "../../../Selectors/UserSelectors";
+import {
+  setBookmarkAction,
+  selectTermAction,
+} from "../../../Actions/TextAction";
+import normalize from "../../../textNormalizer";
+import Title from "./Title";
+import Content from "./Content";
 
 class TermTooltip extends React.Component {
   state = { loading: false, dictionaried: false };
 
-  renderTitle = () => {
-    const { term } = this.props;
-    return (
-      <span>
-        {term.count ? (
-          <div style={{ color: importantColors[Math.min(term.count, 49)] }}>
-            {`${term.count} in this text.`}
-          </div>
-        ) : (
-          <div>Loading term count</div>
-        )}
-        <span>{term.meaning}</span>
-      </span>
-    );
-  };
-
-  better = (e) => {
-    e.preventDefault();
+  better = () => {
     const { term, editTerm } = this.props;
     const newTerm = {
       ...term,
@@ -53,8 +40,7 @@ class TermTooltip extends React.Component {
     setSelectingTerm(index);
   };
 
-  worse = (e) => {
-    e.preventDefault();
+  worse = () => {
     const { term, editTerm } = this.props;
     const newTerm = {
       ...term,
@@ -69,30 +55,6 @@ class TermTooltip extends React.Component {
     const { onSpeak, term } = this.props;
     onSpeak(term);
     this.handleSetBookmark();
-  };
-
-  renderContent = () => {
-    const { term } = this.props;
-    const { loading } = this.state;
-    return (
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <Button
-          type="primary"
-          onClick={this.better}
-          disabled={term.meaning === null || loading}
-        >
-          Better
-        </Button>
-        <Button
-          type="primary"
-          style={{ marginLeft: "5px" }}
-          onClick={this.worse}
-          disabled={term.meaning === null || loading}
-        >
-          Worse
-        </Button>
-      </div>
-    );
   };
 
   handleDictionaryTerm = () => {
@@ -140,8 +102,15 @@ class TermTooltip extends React.Component {
     return (
       <Popover
         overlayClassName={styles.tooltip}
-        title={this.renderTitle()}
-        content={this.renderContent()}
+        title={<Title term={term} />}
+        content={
+          <Content
+            term={term}
+            loading={this.state.loading}
+            better={this.better}
+            worse={this.worse}
+          />
+        }
         mouseLeaveDelay={0.5}
         mouseEnterDelay={0.3}
         destroyTooltipOnHide
