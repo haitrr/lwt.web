@@ -30,6 +30,7 @@ const UserMenu: React.FC = () => {
     <div>
       <Button
         aria-controls="simple-menu"
+        color="secondary"
         aria-haspopup="true"
         onClick={handleClick}
       >
