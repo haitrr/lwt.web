@@ -19,7 +19,10 @@ import Title from "./Title";
 import Content from "./Content";
 
 class TermTooltip extends React.Component {
-  state = { loading: false, dictionaried: false };
+  constructor(props) {
+    super(props);
+    this.state = { loading: false, dictionaried: false };
+  }
 
   better = () => {
     const { term, editTerm } = this.props;
