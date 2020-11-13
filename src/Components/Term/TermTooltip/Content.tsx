@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button } from "@material-ui/core";
 import React from "react";
 import { Term } from "../../../Reducers/TextReducer";
 
@@ -13,14 +13,16 @@ const Content: React.FC<Props> = ({ term, loading, better, worse }) => {
   return (
     <div style={{ display: "flex", justifyContent: "space-between" }}>
       <Button
-        type="primary"
+        variant="contained"
+        color="primary"
         onClick={better}
         disabled={term.meaning === null || loading}
       >
         Better
       </Button>
       <Button
-        type="primary"
+        variant="contained"
+        color="primary"
         style={{ marginLeft: "5px" }}
         onClick={worse}
         disabled={term.meaning === null || loading}

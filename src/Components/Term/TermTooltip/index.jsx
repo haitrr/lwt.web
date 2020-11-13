@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Popover } from "@material-ui/core";
+import { Box, Paper, Popper } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import TermButton from "../TermButton";
@@ -93,7 +93,9 @@ class TermTooltip extends React.Component {
   };
 
   handleMouseLeave = () => {
-    this.setState({ alchorEl: null });
+    this.hideTimout = setTimeout(() => {
+      this.setState({ alchorEl: null });
+    }, 100);
     clearTimeout(this.hoverTimeout);
     clearTimeout(this.dictionaryTimeout);
   };
@@ -119,10 +121,11 @@ class TermTooltip extends React.Component {
             onClick={onClick}
           />
         </span>
-        <Popover
+        <Popper
           open={open}
           anchorEl={this.state.alchorEl}
-          style={{ pointerEvents: "none", whiteSpace: "pre-line" }}
+          style={{ whiteSpace: "pre-line" }}
+          placement="top"
           anchorOrigin={{
             vertical: "top",
             horizontal: "center",
@@ -132,18 +135,26 @@ class TermTooltip extends React.Component {
             horizontal: "center",
           }}
           onClose={this.handlePopoverClose}
-          disableRestoreFocus
         >
-          <div style={{ maxWidth: "30vw" }}>
-            <Title term={term} />
-            <Content
-              term={term}
-              loading={this.state.loading}
-              better={this.better}
-              worse={this.worse}
-            />
-          </div>
-        </Popover>
+          <Box
+            p={2}
+            onMouseEnter={() => {
+              clearTimeout(this.hideTimout);
+            }}
+            onMouseLeave={this.handleMouseLeave}
+            style={{ maxWidth: "30vw" }}
+          >
+            <Paper style={{ padding: "1rem" }}>
+              <Title term={term} />
+              <Content
+                term={term}
+                loading={this.state.loading}
+                better={this.better}
+                worse={this.worse}
+              />
+            </Paper>
+          </Box>
+        </Popper>
       </>
     );
   }
