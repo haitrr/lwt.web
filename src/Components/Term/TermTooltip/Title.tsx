@@ -16,7 +16,9 @@ const Title: React.FC<Props> = ({ term }) => {
       ) : (
         <div>Loading term count</div>
       )}
+      <hr />
       <span>{term.meaning}</span>
+      <hr />
     </span>
   );
 };
