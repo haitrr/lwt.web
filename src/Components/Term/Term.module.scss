@@ -58,16 +58,6 @@
   background: #FF0101;
 }
 
-.tooltip {
-  white-space: pre-line;
-
-  :global(.ant-popover-title) {
-    max-height: 12rem;
-    max-width: 20rem;
-    overflow: scroll;
-  }
-}
-
 .bookmark {
   border-radius: 5px;
   position: relative;

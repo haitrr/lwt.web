@@ -1,8 +1,7 @@
 import PropTypes from "prop-types";
-import { Popover } from "antd";
+import { Popover } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-import styles from "./TermTooltip.module.scss";
 import TermButton from "../TermButton";
 import {
   dictionaryTermMeaningAction,
@@ -21,7 +20,7 @@ import Content from "./Content";
 class TermTooltip extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { loading: false, dictionaried: false };
+    this.state = { loading: false, dictionaried: false, alchorEl: null };
   }
 
   better = () => {
@@ -79,7 +78,8 @@ class TermTooltip extends React.Component {
     }
   };
 
-  handleMouseEnter = () => {
+  handleMouseEnter = (event) => {
+    this.setState({ alchorEl: event.currentTarget });
     const { term } = this.props;
     const { dictionaried } = this.state;
     if (term && !dictionaried && term.meaning === "") {
@@ -93,28 +93,20 @@ class TermTooltip extends React.Component {
   };
 
   handleMouseLeave = () => {
+    this.setState({ alchorEl: null });
     clearTimeout(this.hoverTimeout);
     clearTimeout(this.dictionaryTimeout);
   };
 
+  handlePopoverClose = () => {
+    this.setState({ alchorEl: null });
+  };
+
   render() {
     const { bookmark, bookmarkRef, last, term, onClick } = this.props;
+    const open = Boolean(this.state.alchorEl);
     return (
-      <Popover
-        overlayClassName={styles.tooltip}
-        title={<Title term={term} />}
-        content={
-          <Content
-            term={term}
-            loading={this.state.loading}
-            better={this.better}
-            worse={this.worse}
-          />
-        }
-        mouseLeaveDelay={0.5}
-        mouseEnterDelay={0.3}
-        destroyTooltipOnHide
-      >
+      <>
         <span
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
@@ -127,7 +119,32 @@ class TermTooltip extends React.Component {
             onClick={onClick}
           />
         </span>
-      </Popover>
+        <Popover
+          open={open}
+          anchorEl={this.state.alchorEl}
+          style={{ pointerEvents: "none", whiteSpace: "pre-line" }}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+          transformOrigin={{
+            vertical: "bottom",
+            horizontal: "center",
+          }}
+          onClose={this.handlePopoverClose}
+          disableRestoreFocus
+        >
+          <div style={{ maxWidth: "30vw" }}>
+            <Title term={term} />
+            <Content
+              term={term}
+              loading={this.state.loading}
+              better={this.better}
+              worse={this.worse}
+            />
+          </div>
+        </Popover>
+      </>
     );
   }
 }
