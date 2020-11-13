@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Popover, Button } from "antd";
+import { Popover } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 import styles from "./TermTooltip.module.scss";
@@ -8,10 +8,7 @@ import {
   dictionaryTermMeaningAction,
   editTermAction,
 } from "../../../Actions/TermAction";
-import {
-  getNextLearningLevel,
-  getPreviousLearningLevel,
-} from "../../../Enums";
+import { getNextLearningLevel, getPreviousLearningLevel } from "../../../Enums";
 import { selectDictionaryLanguage } from "../../../Selectors/UserSelectors";
 import {
   setBookmarkAction,
