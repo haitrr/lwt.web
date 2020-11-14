@@ -92,7 +92,7 @@ class TextEditModal extends React.Component<Props, State> {
             justifyContent: "center",
           }}
         >
-          <Paper style={{ width: "70vw", padding: "1rem" }}>
+          <Paper style={{ width: "90vw", padding: "1rem" }}>
             <TextEditForm
               onSubmit={this.handleOk}
               onCancel={this.handleCancel}
