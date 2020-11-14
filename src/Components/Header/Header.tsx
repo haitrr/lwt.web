@@ -1,11 +1,9 @@
 import React from "react";
 import { AppBar, Button, IconButton, Toolbar } from "@material-ui/core";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 import { useHistory } from "react-router";
 import HomeIcon from "@material-ui/icons/Home";
-import styles from "./Header.module.scss";
 import UserMenu from "./UserMenu";
 import { RootState } from "../../RootReducer";
 
