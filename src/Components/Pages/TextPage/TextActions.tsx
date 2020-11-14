@@ -11,9 +11,10 @@ export interface TextActionsProps {
   onEdit: Function;
 }
 
-const TextActions: React.FC<TextActionsProps> = (props) => {
-  const { onEdit } = props;
-  const { processedTermCount, id } = props.text;
+const TextActions: React.FC<TextActionsProps> = ({
+  onEdit,
+  text: { id, processedTermCount },
+}) => {
   const history = useHistory();
   return (
     <span>
