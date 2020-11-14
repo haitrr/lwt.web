@@ -77,11 +77,6 @@ class TextPage extends React.Component {
     this.setState((prevState) => ({ prevState, editModalVisible: false }));
   };
 
-  handleDelete = (textId) => {
-    const { deleteText } = this.props;
-    deleteText(textId);
-  };
-
   handleEdit = (textId) => {
     this.setState((state) => ({
       ...state,
@@ -139,11 +134,7 @@ class TextPage extends React.Component {
           Add text
         </Button>
         <TextFilterForm onFilterChange={this.filterTexts} value={filters} />
-        <TextsTable
-          isLoading={isLoading}
-          onDelete={this.handleDelete}
-          onEdit={this.handleEdit}
-        />
+        <TextsTable isLoading={isLoading} onEdit={this.handleEdit} />
         <Pagination
           count={Math.ceil(total / 10)}
           page={page}

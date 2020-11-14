@@ -1,18 +1,17 @@
 import { Link } from "react-router-dom";
-import { DeleteOutlined, EditOutlined, ReadOutlined } from "@ant-design/icons";
-import { Popconfirm } from "antd";
+import { EditOutlined, ReadOutlined } from "@ant-design/icons";
 import React from "react";
 import styles from "./TextPage.module.scss";
 import { TextItem } from "../../../Reducers/TextReducer";
+import DeleteTextButton from "./DeleteTextButton";
 
 export interface TextActionsProps {
   text: TextItem;
-  onDelete: Function;
   onEdit: Function;
 }
 
 const TextActions: React.FC<TextActionsProps> = (props) => {
-  const { onDelete, onEdit } = props;
+  const { onEdit } = props;
   const { processedTermCount, id } = props.text;
   return (
     <span>
@@ -23,14 +22,7 @@ const TextActions: React.FC<TextActionsProps> = (props) => {
       >
         <ReadOutlined />
       </Link>
-      <Popconfirm
-        title="Confirm to delete this text."
-        onConfirm={() => onDelete(id)}
-        okText="Delete"
-        okType="danger"
-      >
-        <DeleteOutlined className={styles.deleteButton} />
-      </Popconfirm>
+      <DeleteTextButton textId={id} />
       <EditOutlined className={styles.editButton} onClick={() => onEdit(id)} />
     </span>
   );

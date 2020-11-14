@@ -25,7 +25,6 @@ import TotalTerm from "./TotalTerm";
 
 interface TextsTableProps {
   texts: TextItem[];
-  onDelete: Function;
   onEdit: Function;
   isLoading: boolean;
   languages: Language[];
@@ -55,9 +54,12 @@ const Loading = () => {
   );
 };
 
-const TextsTable: React.FC<TextsTableProps> = (props) => {
-  const { texts, onDelete, onEdit, languages, isLoading } = props;
-
+const TextsTable: React.FC<TextsTableProps> = ({
+  isLoading,
+  languages,
+  onEdit,
+  texts,
+}) => {
   return (
     <TableContainer component={Paper}>
       {isLoading ? (
@@ -89,11 +91,7 @@ const TextsTable: React.FC<TextsTableProps> = (props) => {
                   {text.title}
                 </TableCell>
                 <TableCell>
-                  <TextActions
-                    text={text}
-                    onDelete={onDelete}
-                    onEdit={onEdit}
-                  />
+                  <TextActions text={text} onEdit={onEdit} />
                 </TableCell>
                 <TableCell>
                   <TextProgress text={text} />
