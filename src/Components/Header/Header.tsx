@@ -16,11 +16,19 @@ const Header = () => {
     <AppBar position="sticky">
       <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
         <div style={{ display: "flex", flexDirection: "row" }}>
-          <IconButton onClick={() => history.push("/")}>
-            <HomeIcon fontSize="large" color="secondary" />
+          <IconButton
+            color="secondary"
+            disabled={!isLoggedIn}
+            onClick={() => history.push("/")}
+          >
+            <HomeIcon fontSize="large" />
           </IconButton>
-          <IconButton onClick={() => history.push("/text")}>
-            <MenuBookIcon fontSize="large" color="secondary" />
+          <IconButton
+            disabled={!isLoggedIn}
+            color="secondary"
+            onClick={() => history.push("/text")}
+          >
+            <MenuBookIcon fontSize="large" />
           </IconButton>
         </div>
         <div>
@@ -28,12 +36,21 @@ const Header = () => {
             <UserMenu />
           ) : (
             <>
-              <Link className={styles.navigationLink} to="/login">
-                <Button>Login</Button>
-              </Link>
-              <Link className={styles.navigationLink} to="/register">
-                <Button>Register</Button>
-              </Link>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => history.push("/login")}
+              >
+                Login
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                style={{ marginLeft: "1rem" }}
+                onClick={() => history.push("/register")}
+              >
+                Register
+              </Button>
             </>
           )}
         </div>
