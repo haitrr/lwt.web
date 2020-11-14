@@ -3,32 +3,29 @@ import {
   TERM_CREATED,
   TERM_EDITING_GET_MEANING,
   TERM_EDITING_MEANING_RESET,
-  TERM_SET
+  TERM_SET,
 } from "../Actions/TermAction";
 
 const defaultState = {
-  editingTerm: null
+  editingTerm: null,
 };
 export default handleActions(
   {
     [TERM_SET]: (state, action) => {
-      if (action.payload) {
-        return { ...state, editingTerm: action.payload };
-      }
-      return { ...state, editingTerm: null };
+      return { ...state, editingTerm: action.payload };
     },
-    [TERM_CREATED]: state => ({
+    [TERM_CREATED]: (state) => ({
       ...state,
-      editingTerm: null
+      editingTerm: null,
     }),
     [TERM_EDITING_GET_MEANING]: (state, action) => ({
       ...state,
-      editingTermMeaning: action.payload
+      editingTermMeaning: action.payload,
     }),
-    [TERM_EDITING_MEANING_RESET]: state => ({
+    [TERM_EDITING_MEANING_RESET]: (state) => ({
       ...state,
-      editingTermMeaning: ""
-    })
+      editingTermMeaning: "",
+    }),
   },
   defaultState
 );
