@@ -1,8 +1,7 @@
 import PropTypes from "prop-types";
-import { Box, Paper, Popper } from "@material-ui/core";
+import { Popper } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-import TermButton from "../TermButton";
 import {
   dictionaryTermMeaningAction,
   editTermAction,
@@ -10,18 +9,17 @@ import {
 import { getNextLearningLevel, getPreviousLearningLevel } from "../../../Enums";
 import { selectDictionaryLanguage } from "../../../Selectors/UserSelectors";
 import {
-  setBookmarkAction,
   selectTermAction,
+  setBookmarkAction,
 } from "../../../Actions/TextAction";
 import normalize from "../../../textNormalizer";
-import Title from "./Title";
-import Content from "./Content";
 import TermAnchor from "./TermAnchor";
+import PopoverBody from "./PopoverBody";
 
 class TermTooltip extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { loading: false, dictionaried: false, alchorEl: null };
+    this.state = { loading: false, dictionaried: false, anchorEl: null };
   }
 
   better = () => {
@@ -80,7 +78,7 @@ class TermTooltip extends React.Component {
   };
 
   handleMouseEnter = (event) => {
-    this.setState({ alchorEl: event.currentTarget });
+    this.setState({ anchorEl: event.currentTarget });
     const { term } = this.props;
     const { dictionaried } = this.state;
     if (term && !dictionaried && term.meaning === "") {
@@ -95,19 +93,24 @@ class TermTooltip extends React.Component {
 
   handleMouseLeave = () => {
     this.hideTimout = setTimeout(() => {
-      this.setState({ alchorEl: null });
+      this.setState({ anchorEl: null });
     }, 100);
     clearTimeout(this.hoverTimeout);
     clearTimeout(this.dictionaryTimeout);
   };
 
   handlePopoverClose = () => {
-    this.setState({ alchorEl: null });
+    this.setState({ anchorEl: null });
+  };
+
+  handleMouseEnterPopper = () => {
+    clearTimeout(this.hideTimout);
   };
 
   render() {
     const { bookmark, bookmarkRef, last, term, onClick } = this.props;
-    const open = Boolean(this.state.alchorEl);
+    const { anchorEl, loading } = this.state;
+    const open = Boolean(anchorEl);
     return (
       <>
         <TermAnchor
@@ -121,7 +124,7 @@ class TermTooltip extends React.Component {
         />
         <Popper
           open={open}
-          anchorEl={this.state.alchorEl}
+          anchorEl={anchorEl}
           style={{ whiteSpace: "pre-line" }}
           placement="top"
           anchorOrigin={{
@@ -134,24 +137,14 @@ class TermTooltip extends React.Component {
           }}
           onClose={this.handlePopoverClose}
         >
-          <Box
-            p={2}
-            onMouseEnter={() => {
-              clearTimeout(this.hideTimout);
-            }}
+          <PopoverBody
+            onMouseEnter={this.handleMouseEnterPopper}
             onMouseLeave={this.handleMouseLeave}
-            style={{ maxWidth: "30vw" }}
-          >
-            <Paper style={{ padding: "1rem" }}>
-              <Title term={term} />
-              <Content
-                term={term}
-                loading={this.state.loading}
-                better={this.better}
-                worse={this.worse}
-              />
-            </Paper>
-          </Box>
+            term={term}
+            loading={loading}
+            better={this.better}
+            worse={this.worse}
+          />
         </Popper>
       </>
     );
