@@ -32,10 +32,6 @@ class TextCreateModal extends React.Component {
     hide();
   };
 
-  saveFormRef = (formRef) => {
-    this.formRef = formRef;
-  };
-
   render() {
     const { visible } = this.props;
 
