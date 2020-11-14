@@ -49,18 +49,16 @@ class TextCreateModal extends React.Component {
             justifyContent: "center",
           }}
         >
-          <div>
-            <Paper style={{ padding: "1rem", width: "90vw" }}>
-              <Typography style={{ textAlign: "center" }}>
-                Add new text
-              </Typography>
-              <TextCreateForm
-                onSubmit={this.handleOk}
-                onCancel={this.handleCancel}
-                formRef={this.formRef}
-              />
-            </Paper>
-          </div>
+          <Paper style={{ padding: "1rem", width: "90vw" }}>
+            <Typography style={{ textAlign: "center" }}>
+              Add new text
+            </Typography>
+            <TextCreateForm
+              onSubmit={this.handleOk}
+              onCancel={this.handleCancel}
+              formRef={this.formRef}
+            />
+          </Paper>
         </div>
       </Modal>
     );
