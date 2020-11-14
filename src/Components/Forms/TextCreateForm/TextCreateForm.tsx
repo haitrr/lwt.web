@@ -14,6 +14,7 @@ interface OwnProps {
   formRef: React.MutableRefObject<FormInstance | null>;
   onSubmit: () => void;
   onCancel: () => void;
+  submitting: boolean;
 }
 
 type Props = OwnProps & StateProps;
@@ -25,6 +26,7 @@ const TextCreateForm: React.FC<Props> = ({
   currentLanguage,
   formRef,
   onSubmit,
+  submitting,
   onCancel,
 }) => {
   return (
@@ -51,10 +53,20 @@ const TextCreateForm: React.FC<Props> = ({
           justifyContent: "space-between",
         }}
       >
-        <Button onClick={onCancel} color="secondary" variant="contained">
+        <Button
+          disabled={submitting}
+          onClick={onCancel}
+          color="secondary"
+          variant="contained"
+        >
           Cancel
         </Button>
-        <Button onClick={onSubmit} color="primary" variant="contained">
+        <Button
+          disabled={submitting}
+          onClick={onSubmit}
+          color="primary"
+          variant="contained"
+        >
           Add
         </Button>
       </div>

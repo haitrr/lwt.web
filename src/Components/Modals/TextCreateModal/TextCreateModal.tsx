@@ -28,6 +28,7 @@ const TextCreateModal: React.FC<Props> = ({
   visible,
 }) => {
   const formRef = React.useRef<FormInstance>(null);
+  const [submitting, setSubmitting] = React.useState<boolean>(false);
 
   const handleOk = () => {
     const form = formRef.current;
@@ -35,9 +36,13 @@ const TextCreateModal: React.FC<Props> = ({
     form
       .validateFields()
       .then((values) => {
-        createText(values).then(onCreate);
-        form.resetFields();
-        hide();
+        setSubmitting(true);
+        createText(values).then(() => {
+          onCreate();
+          setSubmitting(false);
+          form.resetFields();
+          hide();
+        });
       })
       .catch(() => {});
   };
@@ -63,6 +68,7 @@ const TextCreateModal: React.FC<Props> = ({
           <Typography style={{ textAlign: "center" }}>Add new text</Typography>
           <TextCreateForm
             onSubmit={handleOk}
+            submitting={submitting}
             onCancel={handleCancel}
             formRef={formRef}
           />
