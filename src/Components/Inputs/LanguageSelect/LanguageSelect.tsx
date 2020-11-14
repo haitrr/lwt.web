@@ -6,7 +6,7 @@ import styles from "./LanguageSelect.module.scss";
 import { Language, RootState } from "../../../RootReducer";
 
 interface LanguageSelectProps {
-  value: string;
+  value: string | null;
   languages: Language[];
   className: string | undefined;
   onChange: any;
@@ -17,7 +17,7 @@ interface LanguageSelectProps {
  */
 class LanguageSelect extends React.Component<LanguageSelectProps> {
   static defaultProps = {
-    value: "en",
+    value: null,
     onChange: () => {},
     disabled: false,
     className: undefined,
@@ -35,6 +35,7 @@ class LanguageSelect extends React.Component<LanguageSelectProps> {
       <Select
         onChange={onChange}
         value={value}
+        color="primary"
         disabled={disabled || false}
         className={cn}
         placeholder="Language"
