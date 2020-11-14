@@ -9,12 +9,11 @@ import { createTextAction, getTextsAction } from "../../../Actions/TextAction";
 /**
  * text create modal
  */
-class TextCreateModal extends React.Component {
-  formRef = React.createRef();
+const TextCreateModal = ({ createText, hide, onCreate, visible }) => {
+  const formRef = React.useRef();
 
-  handleOk = () => {
-    const form = this.formRef.current;
-    const { createText, hide, onCreate } = this.props;
+  const handleOk = () => {
+    const form = formRef.current;
     form
       .validateFields()
       .then((values) => {
@@ -25,41 +24,34 @@ class TextCreateModal extends React.Component {
       .catch(() => {});
   };
 
-  handleCancel = () => {
-    const form = this.formRef.current;
-    const { hide } = this.props;
+  const handleCancel = () => {
+    const form = formRef.current;
     form.resetFields();
     hide();
   };
 
-  render() {
-    const { visible } = this.props;
-
-    return (
-      <Modal open={visible} onOk={this.handleOk} onCancel={this.handleCancel}>
-        <div
-          style={{
-            display: "flex",
-            height: "100%",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Paper style={{ padding: "1rem", width: "90vw" }}>
-            <Typography style={{ textAlign: "center" }}>
-              Add new text
-            </Typography>
-            <TextCreateForm
-              onSubmit={this.handleOk}
-              onCancel={this.handleCancel}
-              formRef={this.formRef}
-            />
-          </Paper>
-        </div>
-      </Modal>
-    );
-  }
-}
+  return (
+    <Modal open={visible}>
+      <div
+        style={{
+          display: "flex",
+          height: "100%",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Paper style={{ padding: "1rem", width: "90vw" }}>
+          <Typography style={{ textAlign: "center" }}>Add new text</Typography>
+          <TextCreateForm
+            onSubmit={handleOk}
+            onCancel={handleCancel}
+            formRef={formRef}
+          />
+        </Paper>
+      </div>
+    </Modal>
+  );
+};
 
 export default connect(null, {
   createText: createTextAction,
