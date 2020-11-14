@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Form } from "antd";
-import { Input } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import React from "react";
 import LanguageSelect from "../../Inputs/LanguageSelect";
 import styles from "./TextFilterForm.module.scss";
@@ -26,8 +26,15 @@ function TextFilterForm({ onFilterChange }) {
         <LanguageSelect />
       </Form.Item>
       <Form.Item name="title">
-        <Input className={styles.titleInput} placeholder="Title" />
+        <TextField
+          variant="outlined"
+          margin="dense"
+          label="Title"
+          className={styles.titleInput}
+          placeholder="Title"
+        />
       </Form.Item>
+      <hr />
     </Form>
   );
 }

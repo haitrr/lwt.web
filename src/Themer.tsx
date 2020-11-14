@@ -33,6 +33,17 @@ const Themer: React.FC = (props) => {
   const theme = React.useMemo(
     () =>
       createMuiTheme({
+        props: {
+          MuiTextField: {
+            margin: "dense",
+          },
+          MuiFormControl: {
+            margin: "dense",
+          },
+          MuiSelect: {
+            margin: "dense",
+          },
+        },
         palette,
       }),
     [palette]

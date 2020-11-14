@@ -32,11 +32,7 @@ class LanguageSelect extends React.Component<LanguageSelectProps> {
     const { languages, className, onChange, value, disabled } = this.props;
     const cn = classNames(className, styles.select);
     return (
-      <FormControl
-        variant="outlined"
-        style={{ marginTop: "1rem" }}
-        className={cn}
-      >
+      <FormControl variant="outlined" className={cn}>
         <InputLabel id="language-select-label">Language</InputLabel>
         <Select
           labelId="language-select-label"
