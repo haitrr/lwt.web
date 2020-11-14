@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
-import { Modal } from "antd";
+import Modal from "@material-ui/core/Modal";
 import React from "react";
 import { connect } from "react-redux";
+import { Paper, Typography } from "@material-ui/core";
 import TextCreateForm from "../../Forms/TextCreateForm";
 import { createTextAction, getTextsAction } from "../../../Actions/TextAction";
 
@@ -11,19 +12,12 @@ import { createTextAction, getTextsAction } from "../../../Actions/TextAction";
 class TextCreateModal extends React.Component {
   formRef = React.createRef();
 
-  constructor(props) {
-    super(props);
-    this.saveFormRef = this.saveFormRef.bind(this);
-    this.handleOk = this.handleOk.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
-  }
-
-  handleOk() {
+  handleOk = () => {
     const form = this.formRef.current;
     const { createText, hide, onCreate } = this.props;
     form
       .validateFields()
-      .then(values => {
+      .then((values) => {
         createText(values).then(onCreate);
         form.resetFields();
         hide();
@@ -31,14 +25,14 @@ class TextCreateModal extends React.Component {
       .catch(() => {});
   }
 
-  handleCancel() {
+  handleCancel = () => {
     const form = this.formRef.current;
     const { hide } = this.props;
     form.resetFields();
     hide();
   }
 
-  saveFormRef(formRef) {
+  saveFormRef = (formRef)=> {
     this.formRef = formRef;
   }
 
@@ -46,14 +40,22 @@ class TextCreateModal extends React.Component {
     const { visible } = this.props;
 
     return (
-      <Modal
-        visible={visible}
-        title="Add new text"
-        okText="Add"
-        onOk={this.handleOk}
-        onCancel={this.handleCancel}
-      >
-        <TextCreateForm formRef={this.formRef} />
+      <Modal open={visible} onOk={this.handleOk} onCancel={this.handleCancel}>
+        <div
+          style={{
+            display: "flex",
+            height: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <div>
+            <Paper style={{ padding: "1rem", width: "90vw" }}>
+              <Typography style={{textAlign: "center"}}>Add new text</Typography>
+              <TextCreateForm onSubmit={this.handleOk} onCancel={this.handleCancel} formRef={this.formRef} />
+            </Paper>
+          </div>
+        </div>
       </Modal>
     );
   }
@@ -61,12 +63,12 @@ class TextCreateModal extends React.Component {
 
 export default connect(null, {
   createText: createTextAction,
-  getTexts: getTextsAction
+  getTexts: getTextsAction,
 })(TextCreateModal);
 
 TextCreateModal.propTypes = {
   createText: PropTypes.func.isRequired,
   hide: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
-  onCreate: PropTypes.func.isRequired
+  onCreate: PropTypes.func.isRequired,
 };

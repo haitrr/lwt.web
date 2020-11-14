@@ -16,6 +16,13 @@ interface LanguageSelectProps {
  * language select
  */
 class LanguageSelect extends React.Component<LanguageSelectProps> {
+  static defaultProps = {
+    value: "en",
+    onChange: () => {},
+    disabled: false,
+    className: undefined,
+  };
+
   shouldComponentUpdate(nextProps: LanguageSelectProps) {
     const { value, languages } = this.props;
     return value !== nextProps.value || languages !== nextProps.languages;
