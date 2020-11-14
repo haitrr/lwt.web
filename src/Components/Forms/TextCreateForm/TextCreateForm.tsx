@@ -2,7 +2,7 @@ import { Form } from "antd";
 import { Button, TextField } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-import { FormInstance, FormProps } from "antd/es/form";
+import { FormInstance } from "antd/es/form";
 import LanguageSelect from "../../Inputs/LanguageSelect/LanguageSelect";
 import { RootState } from "../../../RootReducer";
 
@@ -11,19 +11,22 @@ interface StateProps {
 }
 
 interface OwnProps {
-  formRef: React.RefObject<FormInstance>;
+  formRef: React.MutableRefObject<FormInstance | null>;
   onSubmit: () => void;
   onCancel: () => void;
 }
 
-type Props = StateProps & FormProps & OwnProps;
+type Props = OwnProps & StateProps;
 
 /**
  * text create form
  */
-const TextCreateForm: React.FC<Props> = (props) => {
-  const { currentLanguage, formRef, onSubmit, onCancel } = props;
-
+const TextCreateForm: React.FC<Props> = ({
+  currentLanguage,
+  formRef,
+  onSubmit,
+  onCancel,
+}) => {
   return (
     <Form ref={formRef}>
       <Form.Item name="languageCode" initialValue={currentLanguage}>
@@ -59,9 +62,6 @@ const TextCreateForm: React.FC<Props> = (props) => {
   );
 };
 
-export default connect(
-  (state: RootState) => ({
-    currentLanguage: state.language.currentLanguage,
-  }),
-  null
-)(TextCreateForm);
+export default connect<StateProps, void, OwnProps, RootState>((state) => ({
+  currentLanguage: state.language.currentLanguage,
+}))(TextCreateForm);

@@ -1,19 +1,37 @@
-import PropTypes from "prop-types";
 import Modal from "@material-ui/core/Modal";
 import React from "react";
 import { connect } from "react-redux";
 import { Paper, Typography } from "@material-ui/core";
+import { FormInstance } from "antd/es/form";
 import TextCreateForm from "../../Forms/TextCreateForm";
-import { createTextAction, getTextsAction } from "../../../Actions/TextAction";
+import { createTextAction } from "../../../Actions/TextAction";
+
+interface StateProps {
+  createText: (values: any) => any;
+}
+
+interface OwnProps {
+  hide: () => void;
+  onCreate: () => void;
+  visible: boolean;
+}
+
+type Props = StateProps & OwnProps;
 
 /**
  * text create modal
  */
-const TextCreateModal = ({ createText, hide, onCreate, visible }) => {
-  const formRef = React.useRef();
+const TextCreateModal: React.FC<Props> = ({
+  createText,
+  hide,
+  onCreate,
+  visible,
+}) => {
+  const formRef = React.useRef<FormInstance>(null);
 
   const handleOk = () => {
     const form = formRef.current;
+    if (!form) throw new Error();
     form
       .validateFields()
       .then((values) => {
@@ -26,6 +44,7 @@ const TextCreateModal = ({ createText, hide, onCreate, visible }) => {
 
   const handleCancel = () => {
     const form = formRef.current;
+    if (!form) throw new Error();
     form.resetFields();
     hide();
   };
@@ -55,12 +74,4 @@ const TextCreateModal = ({ createText, hide, onCreate, visible }) => {
 
 export default connect(null, {
   createText: createTextAction,
-  getTexts: getTextsAction,
 })(TextCreateModal);
-
-TextCreateModal.propTypes = {
-  createText: PropTypes.func.isRequired,
-  hide: PropTypes.func.isRequired,
-  visible: PropTypes.bool.isRequired,
-  onCreate: PropTypes.func.isRequired,
-};
