@@ -23,18 +23,18 @@ class TextCreateModal extends React.Component {
         hide();
       })
       .catch(() => {});
-  }
+  };
 
   handleCancel = () => {
     const form = this.formRef.current;
     const { hide } = this.props;
     form.resetFields();
     hide();
-  }
+  };
 
-  saveFormRef = (formRef)=> {
+  saveFormRef = (formRef) => {
     this.formRef = formRef;
-  }
+  };
 
   render() {
     const { visible } = this.props;
@@ -51,8 +51,14 @@ class TextCreateModal extends React.Component {
         >
           <div>
             <Paper style={{ padding: "1rem", width: "90vw" }}>
-              <Typography style={{textAlign: "center"}}>Add new text</Typography>
-              <TextCreateForm onSubmit={this.handleOk} onCancel={this.handleCancel} formRef={this.formRef} />
+              <Typography style={{ textAlign: "center" }}>
+                Add new text
+              </Typography>
+              <TextCreateForm
+                onSubmit={this.handleOk}
+                onCancel={this.handleCancel}
+                formRef={this.formRef}
+              />
             </Paper>
           </div>
         </div>
