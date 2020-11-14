@@ -35,10 +35,17 @@ const TextCreateForm: React.FC<Props> = ({
         <LanguageSelect />
       </Form.Item>
       <Form.Item name="title">
-        <TextField placeholder="Title" style={{ width: "100%" }} />
+        <TextField
+          variant="outlined"
+          label="Title"
+          placeholder="Title"
+          style={{ width: "100%" }}
+        />
       </Form.Item>
       <Form.Item name="content">
         <TextField
+          variant="outlined"
+          label="Content"
           multiline
           rows={10}
           rowsMax={20}
