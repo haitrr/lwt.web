@@ -9,15 +9,27 @@ const Themer: React.FC = (props) => {
 
   const palette: PaletteOptions = {
     type: prefersDarkMode ? "dark" : "light",
+    primary: {
+      main: "#009688",
+    },
+    secondary: {
+      main: "#ff3d00",
+    },
+    tonalOffset: 0.2,
   };
 
   if (prefersDarkMode) {
+    palette.primary = {
+      main: "#00695f",
+    };
+    palette.secondary = {
+      main: "#b22a00",
+    };
     palette.text = {
       primary: "#dedede",
       secondary: "#999999",
     };
   }
-
   const theme = React.useMemo(
     () =>
       createMuiTheme({
