@@ -47,14 +47,24 @@ class LoginForm extends React.Component<Props, State> {
       <Form className={className} onFinish={this.handleLogin}>
         <h1>LOGIN</h1>
         <Form.Item name="userName" rules={[{ required: true }]}>
-          <TextField placeholder="UserName" />
+          <TextField
+            variant="outlined"
+            style={{ width: "100%", marginBottom: "1rem" }}
+            placeholder="User name"
+          />
         </Form.Item>
         <Form.Item name="password" rules={[{ required: true }]}>
-          <TextField type="password" placeholder="Password" />
+          <TextField
+            variant="outlined"
+            style={{ width: "100%" }}
+            type="password"
+            placeholder="Password"
+          />
         </Form.Item>
         <Form.Item>
           <Button
             disabled={loading}
+            style={{ marginTop: "1rem" }}
             variant="contained"
             color="primary"
             type="submit"
