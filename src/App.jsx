@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { notification } from "antd";
 import React from "react";
 import { connect } from "react-redux";
-import { Route } from "react-router";
+import { Redirect, Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Paper } from "@material-ui/core";
@@ -40,6 +40,7 @@ class App extends React.Component {
   }
 
   render() {
+    const { user } = this.props;
     return (
       <Themer>
         <Paper style={{ height: "-webkit-fill-available" }}>
@@ -49,12 +50,22 @@ class App extends React.Component {
                 <title>Lwt</title>
               </Helmet>
               <Header />
-              <Route path="/" exact component={HomePage} />
               <Route path="/login" exact component={LoginPage} />
               <Route path="/register" exact component={RegisterPage} />
-              <Route path="/text" exact component={TextPage} />
-              <Route path="/text/read/:textId" exact component={TextReadPage} />
-              <Route path="/profile" exact component={UserPage} />
+              {user.isLoggedIn ? (
+                <>
+                  <Route path="/" exact component={HomePage} />
+                  <Route path="/text" exact component={TextPage} />
+                  <Route
+                    path="/text/read/:textId"
+                    exact
+                    component={TextReadPage}
+                  />
+                  <Route path="/profile" exact component={UserPage} />
+                </>
+              ) : (
+                <Redirect to="/login" />
+              )}
             </div>
           </BrowserRouter>
         </Paper>
