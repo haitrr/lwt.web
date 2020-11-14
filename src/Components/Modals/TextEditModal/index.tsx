@@ -1,4 +1,4 @@
-import { Modal } from "antd";
+import { Modal, Paper } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import { FormInstance } from "antd/lib/form";
@@ -27,18 +27,21 @@ interface StateProps {
   editDetail: TextEditDetail | null;
 }
 
+interface State {
+  submitting: boolean;
+}
+
 type Props = OwnProps & StateProps & DispatchProps;
 
 /**
  * text create modal
  */
-class TextEditModal extends React.Component<Props> {
+class TextEditModal extends React.Component<Props, State> {
   formRef = React.createRef<FormInstance>();
 
   constructor(props: Props) {
     super(props);
-    this.handleOk = this.handleOk.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
+    this.state = { submitting: false };
   }
 
   componentDidUpdate(prevProps: Readonly<Props>) {
@@ -53,22 +56,26 @@ class TextEditModal extends React.Component<Props> {
     }
   }
 
-  handleOk() {
+  handleOk = () => {
     const form = this.formRef.current;
     const { editText, hide, editingText, onEdit } = this.props;
+    this.setState({ submitting: true });
     form?.validateFields().then((values) => {
-      editText(editingText, values).then(onEdit);
-      form.resetFields();
-      hide();
+      editText(editingText, values).then(() => {
+        onEdit();
+        this.setState({ submitting: false });
+        form.resetFields();
+        hide();
+      });
     });
-  }
+  };
 
-  handleCancel() {
+  handleCancel = () => {
     const { hide } = this.props;
     const form = this.formRef.current;
     form?.resetFields();
     hide();
-  }
+  };
 
   render() {
     const { visible, editDetail } = this.props;
@@ -76,14 +83,25 @@ class TextEditModal extends React.Component<Props> {
       return null;
     }
     return (
-      <Modal
-        visible={visible}
-        title="Edit text"
-        okText="Save"
-        onOk={this.handleOk}
-        onCancel={this.handleCancel}
-      >
-        <TextEditForm editDetail={editDetail} formRef={this.formRef} />
+      <Modal open={visible} title="Edit text">
+        <div
+          style={{
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Paper style={{ width: "70vw", padding: "1rem" }}>
+            <TextEditForm
+              onSubmit={this.handleOk}
+              onCancel={this.handleCancel}
+              editDetail={editDetail}
+              formRef={this.formRef}
+              submitting={this.state.submitting}
+            />
+          </Paper>
+        </div>
       </Modal>
     );
   }

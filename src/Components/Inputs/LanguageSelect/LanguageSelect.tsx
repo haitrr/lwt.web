@@ -1,4 +1,4 @@
-import { Select, MenuItem } from "@material-ui/core";
+import { Select, MenuItem, FormControl, InputLabel } from "@material-ui/core";
 import React from "react";
 import classNames from "classnames";
 import { connect } from "react-redux";
@@ -17,7 +17,7 @@ interface LanguageSelectProps {
  */
 class LanguageSelect extends React.Component<LanguageSelectProps> {
   static defaultProps = {
-    value: null,
+    value: "",
     onChange: () => {},
     disabled: false,
     className: undefined,
@@ -32,20 +32,27 @@ class LanguageSelect extends React.Component<LanguageSelectProps> {
     const { languages, className, onChange, value, disabled } = this.props;
     const cn = classNames(className, styles.select);
     return (
-      <Select
-        onChange={onChange}
-        value={value}
-        color="primary"
-        disabled={disabled || false}
+      <FormControl
+        variant="outlined"
+        style={{ marginTop: "1rem" }}
         className={cn}
-        placeholder="Language"
       >
-        {languages.map((language) => (
-          <MenuItem key={language.code} value={language.code}>
-            {language.name}
-          </MenuItem>
-        ))}
-      </Select>
+        <InputLabel id="language-select-label">Language</InputLabel>
+        <Select
+          labelId="language-select-label"
+          onChange={onChange}
+          label="Language"
+          value={value}
+          color="primary"
+          disabled={disabled || false}
+        >
+          {languages.map((language) => (
+            <MenuItem key={language.code} value={language.code}>
+              {language.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     );
   }
 }
