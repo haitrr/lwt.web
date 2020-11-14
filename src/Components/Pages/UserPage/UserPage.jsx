@@ -69,7 +69,7 @@ class UserPage extends React.Component {
           </Button>
           <br />
           <Button variant="contained" color="primary" type="submit">
-            Submit
+            Save
           </Button>
         </Form>
       </div>
