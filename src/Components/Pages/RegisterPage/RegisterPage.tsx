@@ -9,9 +9,11 @@ function RegisterPage() {
     <div
       style={{
         margin: "auto",
+        width: "15rem",
+        textAlign: "center",
       }}
     >
-      <h1>Register Page</h1>
+      <h2>Register</h2>
       <RegisterForm />
     </div>
   );

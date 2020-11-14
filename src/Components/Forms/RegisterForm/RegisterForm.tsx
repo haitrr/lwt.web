@@ -64,13 +64,27 @@ class RegisterForm extends React.Component<Props, State> {
     return (
       <Form onFinish={this.handleSubmit}>
         <Form.Item name="userName">
-          <TextField placeholder="UserName" />
+          <TextField
+            variant="outlined"
+            style={{ width: "100%", marginBottom: "1rem" }}
+            placeholder="User Name"
+          />
         </Form.Item>
         <Form.Item name="password">
-          <TextField type="password" placeholder="Password" />
+          <TextField
+            variant="outlined"
+            style={{ width: "100%", marginBottom: "1rem" }}
+            type="password"
+            placeholder="Password"
+          />
         </Form.Item>
         <Form.Item name="repeatPassword">
-          <TextField type="password" placeholder="Retype password" />
+          <TextField
+            variant="outlined"
+            style={{ width: "100%", marginBottom: "1rem" }}
+            type="password"
+            placeholder="Retype password"
+          />
         </Form.Item>
         <Button
           disabled={submitting}
