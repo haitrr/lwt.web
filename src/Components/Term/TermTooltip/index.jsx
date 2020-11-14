@@ -16,6 +16,7 @@ import {
 import normalize from "../../../textNormalizer";
 import Title from "./Title";
 import Content from "./Content";
+import TermAnchor from "./TermAnchor";
 
 class TermTooltip extends React.Component {
   constructor(props) {
@@ -109,18 +110,15 @@ class TermTooltip extends React.Component {
     const open = Boolean(this.state.alchorEl);
     return (
       <>
-        <span
+        <TermAnchor
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
-        >
-          <TermButton
-            bookmark={bookmark}
-            bookmarkRef={bookmarkRef}
-            last={last}
-            term={term}
-            onClick={onClick}
-          />
-        </span>
+          bookmark={bookmark}
+          bookmarkRef={bookmarkRef}
+          last={last}
+          term={term}
+          onClick={onClick}
+        />
         <Popper
           open={open}
           anchorEl={this.state.alchorEl}
