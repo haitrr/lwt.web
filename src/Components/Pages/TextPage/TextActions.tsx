@@ -21,12 +21,13 @@ const TextActions: React.FC<TextActionsProps> = ({
       <IconButton
         disabled={processedTermCount === 0}
         color="primary"
+        size="small"
         onClick={() => history.push(`/text/read/${id}`)}
       >
         <ChromeReaderModeIcon />
       </IconButton>
       <DeleteTextButton textId={id} />
-      <IconButton color="primary" onClick={() => onEdit(id)}>
+      <IconButton size="small" color="primary" onClick={() => onEdit(id)}>
         <EditIcon />
       </IconButton>
     </span>

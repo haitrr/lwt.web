@@ -87,10 +87,20 @@ const TextsTable: React.FC<TextsTableProps> = ({
           <TableBody>
             {texts.map((text) => (
               <TableRow key={text.id}>
-                <TableCell component="th" scope="row">
-                  {text.title}
-                </TableCell>
                 <TableCell>
+                  <div
+                    style={{
+                      maxHeight: "5rem",
+                      display: "flex",
+                      justifyContent: "center",
+                      width: "10rem",
+                      overflow: "scroll",
+                    }}
+                  >
+                    {text.title}
+                  </div>
+                </TableCell>
+                <TableCell style={{ padding: 0 }}>
                   <TextActions text={text} onEdit={onEdit} />
                 </TableCell>
                 <TableCell>
