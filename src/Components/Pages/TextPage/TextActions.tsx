@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
-import { EditOutlined, ReadOutlined } from "@ant-design/icons";
 import React from "react";
-import styles from "./TextPage.module.scss";
+import { IconButton } from "@material-ui/core";
+import { useHistory } from "react-router";
+import ChromeReaderModeIcon from "@material-ui/icons/ChromeReaderMode";
+import EditIcon from "@material-ui/icons/Edit";
 import { TextItem } from "../../../Reducers/TextReducer";
 import DeleteTextButton from "./DeleteTextButton";
 
@@ -13,17 +14,19 @@ export interface TextActionsProps {
 const TextActions: React.FC<TextActionsProps> = (props) => {
   const { onEdit } = props;
   const { processedTermCount, id } = props.text;
+  const history = useHistory();
   return (
     <span>
-      <Link
-        aria-disabled={processedTermCount === 0}
-        className={styles.actionButton}
-        to={`/text/read/${id}`}
+      <IconButton
+        disabled={processedTermCount === 0}
+        onClick={() => history.push(`/text/read/${id}`)}
       >
-        <ReadOutlined />
-      </Link>
+        <ChromeReaderModeIcon />
+      </IconButton>
       <DeleteTextButton textId={id} />
-      <EditOutlined className={styles.editButton} onClick={() => onEdit(id)} />
+      <IconButton onClick={() => onEdit(id)}>
+        <EditIcon />
+      </IconButton>
     </span>
   );
 };
