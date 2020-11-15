@@ -26,7 +26,7 @@ function TextProgress(props: { text: TextItem }) {
       <Button
         variant="contained"
         color="primary"
-        onClick={() => history.push(`/text/${text.id}`)}
+        onClick={() => history.push(`/text/read/${text.id}`)}
       >
         Read
       </Button>
