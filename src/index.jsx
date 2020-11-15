@@ -5,9 +5,21 @@ import { applyMiddleware, createStore } from "redux";
 import promiseMiddleware from "redux-promise";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { Provider } from "react-redux";
+import * as Sentry from "@sentry/browser";
+import { Integrations } from "@sentry/tracing";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import rootReducer from "./RootReducer";
+
+if (process.env.NODE_ENV === "production") {
+  Sentry.init({
+    dsn:
+      "https://8658bd7f18634bd19522e701bcb946e4@o476836.ingest.sentry.io/5517012",
+    integrations: [new Integrations.BrowserTracing()],
+
+    tracesSampleRate: 1.0,
+  });
+}
 
 const store = createStore(
   rootReducer,
