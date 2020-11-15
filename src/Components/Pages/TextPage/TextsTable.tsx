@@ -100,15 +100,15 @@ const TextsTable: React.FC<TextsTableProps> = ({
                       maxHeight: "5rem",
                       display: "flex",
                       justifyContent: "center",
-                      width: "10rem",
+                      width: "20vw",
                       overflow: "scroll",
                     }}
                   >
                     {text.title}
                   </div>
                 </TableCell>
-                <TableCell>{dayjs.utc(text.createdAt).fromNow()}</TableCell>
-                <TableCell style={{ padding: 0 }}>
+                <TableCell align="center">{dayjs.utc(text.createdAt).fromNow()}</TableCell>
+                <TableCell align="center" style={{ padding: 0 }}>
                   <TextActions text={text} onEdit={onEdit} />
                 </TableCell>
                 <TableCell>
