@@ -138,9 +138,7 @@ class TextPage extends React.Component {
         <Pagination
           count={Math.ceil(total / 10)}
           page={page}
-          hideOnSinglePage={false}
           onChange={this.handlePageChange}
-          showQuickJumper
         />
       </>
     );
