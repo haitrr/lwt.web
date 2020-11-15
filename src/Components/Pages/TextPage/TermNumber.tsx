@@ -8,11 +8,11 @@ const TermNumber = (props: { text: TextItem; learningLevel: string }) => {
   const { text, learningLevel } = props;
   const { counts } = text;
   if (!counts) {
-    return <span>-</span>;
+    return <div style={{ minWidth: "2rem" }}>-</div>;
   }
   const current = counts[learningLevel];
   if (!current) {
-    return <span>0</span>;
+    return <div style={{ minWidth: "2rem" }}>0</div>;
   }
 
   const sum =
