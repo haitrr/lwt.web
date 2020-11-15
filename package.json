@@ -16,6 +16,7 @@
     "antd": "4.6.2",
     "classnames": "^2.2.6",
     "compromise": "13.3.2",
+    "dayjs": "^1.9.6",
     "formik": "1.5.8",
     "jwt-decode": "2.2.0",
     "node-sass": "4.13.1",

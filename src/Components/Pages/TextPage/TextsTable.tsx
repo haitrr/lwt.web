@@ -8,6 +8,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { CircularProgress } from "@material-ui/core";
+import dayjs from "dayjs";
+import relativeTime from 'dayjs/plugin/relativeTime';
+import utc from 'dayjs/plugin/utc'
 import {
   deleteTextAction,
   getTextsAction,
@@ -22,6 +25,9 @@ import TermNumber from "./TermNumber";
 import { TermLearningLevel } from "../../../Enums";
 import TextStatus from "./TextStatus";
 import TotalTerm from "./TotalTerm";
+
+dayjs.extend(relativeTime);
+dayjs.extend(utc);
 
 interface TextsTableProps {
   texts: TextItem[];
@@ -69,6 +75,7 @@ const TextsTable: React.FC<TextsTableProps> = ({
           <TableHead>
             <TableRow>
               <TableCell>Title</TableCell>
+              <TableCell>Created</TableCell>
               <TableCell>Act</TableCell>
               <TableCell>P</TableCell>
               <TableCell>UK</TableCell>
@@ -100,6 +107,7 @@ const TextsTable: React.FC<TextsTableProps> = ({
                     {text.title}
                   </div>
                 </TableCell>
+                <TableCell>{dayjs.utc(text.createdAt).fromNow()}</TableCell>
                 <TableCell style={{ padding: 0 }}>
                   <TextActions text={text} onEdit={onEdit} />
                 </TableCell>

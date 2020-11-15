@@ -58,6 +58,7 @@ export interface ReadingTextState {
 }
 
 export interface TextItem {
+  createdAt: string;
   termCount: number;
   progress: number;
   bookmark: number;
