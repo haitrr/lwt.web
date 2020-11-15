@@ -65,6 +65,10 @@
 }
 
 @media (prefers-color-scheme: dark) {
+  .bookmark {
+    box-shadow: 0 0 0 3px #aa3815;
+  }
+  
   .termIgnored, .termSkipped {
     background: #424242;
   }
