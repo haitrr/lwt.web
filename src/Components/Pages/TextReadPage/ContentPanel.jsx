@@ -40,8 +40,8 @@ class ContentPanel extends React.Component {
       termCount,
       setTermIndexBegin,
     } = this.props;
-    setTermIndexEnd(Math.min(end + this.displayTerms, termCount - 1));
     setTermIndexBegin(Math.max(begin - Math.floor(this.displayTerms / 2), 0));
+    setTermIndexEnd(Math.min(end + this.displayTerms, termCount - 1));
   }
 
   componentDidUpdate(prevProps) {
@@ -72,7 +72,10 @@ class ContentPanel extends React.Component {
 
   goToBookmark = () => {
     if (this.bookmarkRef.current) {
-      this.bookmarkRef.current.scrollIntoView({ block: "center" });
+      this.bookmarkRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
     }
   };
 
