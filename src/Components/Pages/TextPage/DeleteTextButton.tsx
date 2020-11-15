@@ -50,7 +50,7 @@ const DeleteTextButton: React.FC<Props> = ({ text, deleteText }) => {
 
   return (
     <div>
-      <IconButton size="small" color="secondary" onClick={handleClickOpen}>
+      <IconButton color="secondary" onClick={handleClickOpen}>
         <DeleteForeverIcon />
       </IconButton>
       <Dialog

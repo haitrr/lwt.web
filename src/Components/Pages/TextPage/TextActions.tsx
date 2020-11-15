@@ -13,7 +13,7 @@ const TextActions: React.FC<TextActionsProps> = ({ onEdit, text: { id } }) => {
   return (
     <span>
       <DeleteTextButton textId={id} />
-      <IconButton size="small" color="primary" onClick={() => onEdit(id)}>
+      <IconButton color="primary" onClick={() => onEdit(id)}>
         <EditIcon />
       </IconButton>
     </span>

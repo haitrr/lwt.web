@@ -75,16 +75,16 @@ const TextsTable: React.FC<TextsTableProps> = ({
           <TableHead>
             <TableRow>
               <TableCell>Title</TableCell>
-              <TableCell>Created</TableCell>
-              <TableCell>Act</TableCell>
+              <TableCell>C</TableCell>
               <TableCell>P</TableCell>
               <TableCell>UK</TableCell>
+              <TableCell>WK</TableCell>
+              <TableCell>Act</TableCell>
               <TableCell>L1</TableCell>
               <TableCell>L2</TableCell>
               <TableCell>L3</TableCell>
               <TableCell>L4</TableCell>
               <TableCell>L5</TableCell>
-              <TableCell>WK</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Language</TableCell>
               <TableCell>I</TableCell>
@@ -109,9 +109,6 @@ const TextsTable: React.FC<TextsTableProps> = ({
                 <TableCell align="center">
                   {dayjs.utc(text.createdAt).fromNow()}
                 </TableCell>
-                <TableCell align="center" style={{ padding: 0 }}>
-                  <TextActions text={text} onEdit={onEdit} />
-                </TableCell>
                 <TableCell>
                   <TextProgress text={text} />
                 </TableCell>
@@ -120,6 +117,15 @@ const TextsTable: React.FC<TextsTableProps> = ({
                     text={text}
                     learningLevel={TermLearningLevel.UnKnow}
                   />
+                </TableCell>
+                <TableCell>
+                  <TermNumber
+                    text={text}
+                    learningLevel={TermLearningLevel.WellKnow}
+                  />
+                </TableCell>
+                <TableCell align="center" style={{ padding: 0 }}>
+                  <TextActions text={text} onEdit={onEdit} />
                 </TableCell>
                 <TableCell>
                   <TermNumber
@@ -149,12 +155,6 @@ const TextsTable: React.FC<TextsTableProps> = ({
                   <TermNumber
                     text={text}
                     learningLevel={TermLearningLevel.Learning5}
-                  />
-                </TableCell>
-                <TableCell>
-                  <TermNumber
-                    text={text}
-                    learningLevel={TermLearningLevel.WellKnow}
                   />
                 </TableCell>
                 <TableCell>
