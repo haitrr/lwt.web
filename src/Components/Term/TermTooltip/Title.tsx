@@ -17,7 +17,9 @@ const Title: React.FC<Props> = ({ term }) => {
         <div>Loading term count</div>
       )}
       <hr />
-      <span>{term.meaning}</span>
+      <div style={{ maxHeight: "20vh", overflow: "scroll" }}>
+        {term.meaning}
+      </div>
       <hr />
     </span>
   );

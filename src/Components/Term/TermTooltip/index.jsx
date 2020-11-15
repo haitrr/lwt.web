@@ -133,14 +133,6 @@ class TermTooltip extends React.Component {
           anchorEl={anchorEl}
           style={{ whiteSpace: "pre-line" }}
           placement="top"
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "center",
-          }}
-          transformOrigin={{
-            vertical: "bottom",
-            horizontal: "center",
-          }}
           onClose={this.handlePopoverClose}
         >
           <PopoverBody
