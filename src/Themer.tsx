@@ -43,6 +43,9 @@ const Themer: React.FC = (props) => {
           MuiSelect: {
             margin: "dense",
           },
+          MuiTableCell: {
+            align: "center",
+          },
         },
         palette,
       }),
