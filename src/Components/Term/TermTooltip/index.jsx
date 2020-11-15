@@ -78,6 +78,8 @@ class TermTooltip extends React.Component {
   };
 
   handleMouseEnter = (event) => {
+    clearTimeout(this.hideTimout);
+    clearTimeout(this.leavePopoverTimout);
     this.setState({ anchorEl: event.currentTarget });
     const { term } = this.props;
     const { dictionaried } = this.state;
@@ -100,11 +102,15 @@ class TermTooltip extends React.Component {
   };
 
   handlePopoverClose = () => {
-    this.setState({ anchorEl: null });
+    this.leavePopoverTimout = setTimeout(
+      () => this.setState({ anchorEl: null }),
+      100
+    );
   };
 
   handleMouseEnterPopper = () => {
     clearTimeout(this.hideTimout);
+    clearTimeout(this.leavePopoverTimout);
   };
 
   render() {
