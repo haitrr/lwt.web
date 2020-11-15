@@ -15,7 +15,6 @@ const Header = () => {
       <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
         <div style={{ display: "flex", flexDirection: "row" }}>
           <IconButton
-            color="secondary"
             disabled={!isLoggedIn}
             onClick={() => history.push("/")}
           >
@@ -23,7 +22,6 @@ const Header = () => {
           </IconButton>
           <IconButton
             disabled={!isLoggedIn}
-            color="secondary"
             onClick={() => history.push("/text")}
           >
             <MenuBookIcon fontSize="large" />
