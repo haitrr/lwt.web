@@ -10,10 +10,10 @@ const Themer: React.FC = (props) => {
   const palette: PaletteOptions = {
     type: prefersDarkMode ? "dark" : "light",
     primary: {
-      main: "#00695f",
+      main: "#33ab9f",
     },
     secondary: {
-      main: "#ff3d00",
+      main: "#ff6333",
     },
     tonalOffset: 0.2,
   };
@@ -23,7 +23,7 @@ const Themer: React.FC = (props) => {
       main: "#00695f",
     };
     palette.secondary = {
-      main: "#b22a00",
+      main: "#b26500",
     };
     palette.text = {
       primary: "#dedede",
