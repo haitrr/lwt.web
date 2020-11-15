@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
-import { animateScroll } from "react-scroll";
 import { readTextAction } from "../../../Actions/TextAction";
 import styles from "./TextReadPage.module.scss";
 import TermEditForm from "../../Forms/TermEditForm";
@@ -23,7 +22,6 @@ class TextReadPage extends React.Component {
     } = this.props;
     readText(textId);
     this.utt = new SpeechSynthesisUtterance();
-    this.bookmark = React.createRef();
     window.speechSynthesis.onvoiceschanged = this.setSpeechVoice;
   }
 
@@ -46,19 +44,6 @@ class TextReadPage extends React.Component {
       prevProps.language !== language;
     if (shouldSetLanguage) {
       this.setSpeechVoice();
-    }
-
-    if (!prevProps.terms && this.bookmark.current) {
-      animateScroll.scrollTo(
-        this.bookmark.current.offsetTop -
-          this.bookmark.current.parentNode.offsetTop -
-          200,
-        {
-          containerId: "contentPanel",
-          smooth: true,
-          ignoreCancelEvents: true,
-        }
-      );
     }
   }
 
@@ -108,12 +93,7 @@ class TextReadPage extends React.Component {
       <div className={styles.readPane} id="readPanel">
         <TextTitle />
         <TextStatistic />
-        <ContentPanel
-          onSpeak={this.onSpeak}
-          textId={id}
-          bookmark={bookmark}
-          bookmarkRef={this.bookmark}
-        />
+        <ContentPanel onSpeak={this.onSpeak} textId={id} bookmark={bookmark} />
         {terms && <TermEditForm className={styles.termEditForm} />}
       </div>
     );

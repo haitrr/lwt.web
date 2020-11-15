@@ -27,7 +27,9 @@ class ContentPanel extends React.Component {
     }
 
     this.begin = React.createRef();
+    this.bookmarkRef = React.createRef();
     this.container = React.createRef();
+    this.loading = true;
   }
 
   componentDidMount() {
@@ -52,15 +54,25 @@ class ContentPanel extends React.Component {
       this.last.scrollIntoView();
     }
 
+    // scroll to the bookmark ofter initial loading
+    if (
+      terms[begin] &&
+      terms[end] &&
+      this.loading &&
+      this.bookmarkRef.current
+    ) {
+      this.loading = false;
+      this.bookmarkRef.current.scrollIntoView({ block: "center" });
+    }
+
     if (end > prevProps.end) {
       getTextTerms(textId, prevProps.end, end);
     }
   }
 
   goToBookmark = () => {
-    const { bookmarkRef } = this.props;
-    if (bookmarkRef.current) {
-      bookmarkRef.current.scrollIntoView({ block: "center" });
+    if (this.bookmarkRef.current) {
+      this.bookmarkRef.current.scrollIntoView({ block: "center" });
     }
   };
 
@@ -106,8 +118,9 @@ class ContentPanel extends React.Component {
 
   render() {
     const { terms } = this.props;
-    const { begin, end, bookmarkRef, onSpeak, editingTerm } = this.props;
-    if (!terms[begin] && !terms[end]) {
+    const { begin, end, onSpeak, editingTerm } = this.props;
+    // initial loading
+    if ((!terms[begin] || !terms[end]) && this.loading) {
       return (
         <div style={{ height: "50%" }}>
           <Loading />;
@@ -120,7 +133,7 @@ class ContentPanel extends React.Component {
         termElements.push(
           <Term
             onSpeak={onSpeak}
-            bookmarkRef={bookmarkRef}
+            bookmarkRef={this.bookmarkRef}
             last={begin === i ? this.begin : null}
             // eslint-disable-next-line react/no-array-index-key
             key={i}
@@ -153,7 +166,6 @@ ContentPanel.defaultProps = {
 };
 
 ContentPanel.propTypes = {
-  bookmarkRef: PropTypes.shape({}).isRequired,
   terms: PropTypes.arrayOf(PropTypes.shape()),
   textId: PropTypes.number.isRequired,
   begin: PropTypes.number.isRequired,
