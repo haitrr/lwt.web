@@ -17,7 +17,7 @@ class TotalTerm extends React.Component<Props> {
 
   componentDidMount() {
     const { value, record, loadTermCounts } = this.props;
-    if (value === undefined) {
+    if (value === null) {
       loadTermCounts(record.id);
     }
   }
