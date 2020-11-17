@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 import { readTextAction } from "../../../Actions/TextAction";
+import { setEditingTermAction } from "../../../Actions/TermAction";
 import styles from "./TextReadPage.module.scss";
 import TermEditForm from "../../Forms/TermEditForm";
 import ContentPanel from "./ContentPanel";
@@ -45,6 +46,11 @@ class TextReadPage extends React.Component {
     if (shouldSetLanguage) {
       this.setSpeechVoice();
     }
+  }
+
+  componentWillUnmount() {
+    const { setEditingTerm } = this.props;
+    setEditingTerm(null);
   }
 
   setSpeechVoice = () => {
@@ -115,6 +121,7 @@ export default connect(
   },
   {
     readText: readTextAction,
+    setEditingTerm: setEditingTermAction,
   }
 )(TextReadPage);
 TextReadPage.defaultProps = {
@@ -132,4 +139,5 @@ TextReadPage.propTypes = {
   id: PropTypes.number,
   terms: PropTypes.arrayOf(PropTypes.shape({})),
   bookmark: PropTypes.number,
+  setEditingTerm: PropTypes.func.isRequired,
 };
