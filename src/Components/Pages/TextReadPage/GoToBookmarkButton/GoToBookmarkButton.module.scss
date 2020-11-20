@@ -1,12 +1,7 @@
-.button {
-  position: fixed;
+button.button {
+  position: absolute;
   bottom: 1rem;
   right: 1rem;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 3rem;
-  padding: 0.5rem;
-  background-color: #D8D8D8;
 }
 
 .icon {
