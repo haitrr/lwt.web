@@ -155,9 +155,9 @@ class ContentPanel extends React.Component {
           ref={this.container}
         >
           {termElements}
+          {!editingTerm && <GoToBookmarkButton onClick={this.goToBookmark} />}
+          <ProgressBar />
         </div>
-        {!editingTerm && <GoToBookmarkButton onClick={this.goToBookmark} />}
-        <ProgressBar />
       </>
     );
   }

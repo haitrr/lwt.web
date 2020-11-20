@@ -41,9 +41,9 @@
 }
 
 .progress {
-  width: 1%;
+  width: 0.3rem;
   max-width: 10px;
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
   height: 100%;
