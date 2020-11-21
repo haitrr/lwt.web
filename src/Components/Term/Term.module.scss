@@ -18,6 +18,12 @@
   }
 }
 
+.termCount {
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  margin-bottom: 2px;
+}
+
 .termIgnored, .termSkipped {
   background: white;
 }

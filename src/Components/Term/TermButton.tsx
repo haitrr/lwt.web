@@ -50,7 +50,10 @@ class TermButton extends React.Component<Props> {
     const className = classNames(
       styles.term,
       TermLearningColor[term.learningLevel],
-      { [styles.bookmark]: bookmark }
+      {
+        [styles.bookmark]: bookmark,
+        [styles.termCount]: term.count && isLearningTerm(term.learningLevel),
+      }
     );
 
     let id;
@@ -63,10 +66,7 @@ class TermButton extends React.Component<Props> {
     const s =
       term.count && isLearningTerm(term.learningLevel)
         ? {
-            borderBottom: `solid 2px ${
-              importantColors[Math.min(term.count, 49)]
-            }`,
-            marginBottom: "-2px",
+            borderBottomColor: importantColors[Math.min(term.count, 49)],
           }
         : undefined;
 
