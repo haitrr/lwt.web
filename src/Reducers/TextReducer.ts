@@ -40,6 +40,8 @@ export interface TextState {
 }
 
 export interface Term {
+  learningLevel: string;
+  index: number;
   id: number;
   count: number;
   meaning: string;
@@ -47,6 +49,7 @@ export interface Term {
 }
 
 export interface ReadingTextState {
+  id: any;
   title: string;
   terms: Term[];
   termIndexBegin: number;
