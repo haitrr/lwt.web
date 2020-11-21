@@ -69,13 +69,7 @@ class Term extends React.Component {
   };
 
   render() {
-    const {
-      term,
-      bookmark,
-      index,
-      onSpeak,
-      isLastBeginIndex,
-    } = this.props;
+    const { term, bookmark, index, onSpeak, isLastBeginIndex } = this.props;
     if (term.learningLevel === TermLearningLevel.Skipped) {
       return <SkippedTerm term={term} isLastBeginTerm={isLastBeginIndex} />;
     }
