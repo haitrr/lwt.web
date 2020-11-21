@@ -19,7 +19,7 @@ const GoToBookmarkButton: React.FC<Props> = ({ onClick, current, total }) => (
   <Fab
     title="Go to bookmark"
     type="button"
-    color="primary"
+    color="secondary"
     className={styles.button}
     onClick={onClick}
   >
