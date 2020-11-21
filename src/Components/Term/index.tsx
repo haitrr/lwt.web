@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import {
   getTermMeaningAction,
   setEditingTermAction,
@@ -10,9 +9,33 @@ import { TermLearningLevel } from "../../Enums";
 import TermButton from "./TermButton";
 import TermTooltip from "./TermTooltip";
 import SkippedTerm from "./SkippedTerm";
+import { RootState } from "../../RootReducer";
+import { Term as TermState } from "../../Reducers/TextReducer";
 
-class Term extends React.Component {
-  shouldComponentUpdate(nextProps) {
+interface StateProps {
+  textId: number;
+  bookmark: boolean;
+  isLastBeginIndex: boolean;
+  term: TermState;
+}
+
+interface OwnProps {
+  onClick: (e: React.MouseEvent | React.KeyboardEvent) => void;
+  bookmark: boolean;
+  index: number;
+  onSpeak: (term: TermState) => void;
+}
+
+interface DispatchProps {
+  setEditingTerm: (index: number) => void;
+  getTermMeaning: (term: TermState, index: number) => void;
+  getTermCountInText: (termId: number, textId: number) => void;
+}
+
+type Props = StateProps & OwnProps & DispatchProps;
+
+class Term extends React.Component<Props> {
+  shouldComponentUpdate(nextProps: Props) {
     const { term, bookmark, isLastBeginIndex } = this.props;
     return (
       nextProps.term.learningLevel !== term.learningLevel ||
@@ -54,7 +77,7 @@ class Term extends React.Component {
     }
   };
 
-  handleTermClick = (e) => {
+  handleTermClick = (e: React.MouseEvent | React.KeyboardEvent) => {
     e.preventDefault();
     const { setEditingTerm, index, term, onSpeak, getTermMeaning } = this.props;
     // load term meaning if not loaded.
@@ -100,34 +123,20 @@ class Term extends React.Component {
   }
 }
 
-Term.defaultProps = {
-  bookmark: false,
-};
-
-Term.propTypes = {
-  setEditingTerm: PropTypes.func.isRequired,
-  term: PropTypes.shape({
-    learningLevel: PropTypes.string.isRequired,
-    meaning: PropTypes.string,
-    count: PropTypes.number,
-  }).isRequired,
-  bookmark: PropTypes.bool,
-  index: PropTypes.number.isRequired,
-  getTermMeaning: PropTypes.func.isRequired,
-  onSpeak: PropTypes.func.isRequired,
-  getTermCountInText: PropTypes.func.isRequired,
-  textId: PropTypes.number.isRequired,
-  isLastBeginIndex: PropTypes.bool.isRequired,
-};
-
 export default connect(
-  (state, ownProps) => ({
-    term: state.text.readingText.terms[ownProps.index],
-    bookmark: state.text.readingText.bookmark === ownProps.index,
-    isLastBeginIndex:
-      state.text.readingText.termLastBeginIndex === ownProps.index,
-    textId: state.text.readingText.id,
-  }),
+  (state: RootState, ownProps: OwnProps) => {
+    if (!state.text.readingText) {
+      throw new Error();
+    }
+
+    return {
+      term: state.text.readingText.terms[ownProps.index],
+      bookmark: state.text.readingText.bookmark === ownProps.index,
+      isLastBeginIndex:
+        state.text.readingText.termLastBeginIndex === ownProps.index,
+      textId: state.text.readingText.id,
+    };
+  },
   {
     setEditingTerm: setEditingTermAction,
     getTermMeaning: getTermMeaningAction,
