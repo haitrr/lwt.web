@@ -81,10 +81,6 @@ class TermButton extends React.Component<Props> {
         onClick={this.onTermClick}
         onKeyDown={this.onTermClick}
       >
-        {
-          // need react fragment here to prevent stupid ant design
-          // to insert a space between two chinese characters.
-        }
         {term.content}
       </span>
     );
