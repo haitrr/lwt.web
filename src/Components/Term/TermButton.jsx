@@ -26,11 +26,7 @@ class TermButton extends React.Component {
   };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const { bookmark, bookmarkRef, last } = this.props;
-    if (bookmark) {
-      console.log("setting");
-      bookmarkRef.current = this.buttonRef.current;
-    }
+    const { last } = this.props;
     if (last) last.current = this.buttonRef.current;
   }
 
@@ -46,6 +42,7 @@ class TermButton extends React.Component {
       <span
         tabIndex="-1"
         role="button"
+        id={bookmark ? "bookmark" : undefined}
         className={className}
         style={
           term.count && isLearningTerm(term.learningLevel)
@@ -72,13 +69,11 @@ class TermButton extends React.Component {
 }
 
 TermButton.defaultProps = {
-  bookmarkRef: null,
   last: null,
 };
 
 TermButton.propTypes = {
   bookmark: PropTypes.bool.isRequired,
-  bookmarkRef: PropTypes.shape({}),
   last: PropTypes.shape({}),
   onClick: PropTypes.func.isRequired,
   term: PropTypes.shape({}).isRequired,

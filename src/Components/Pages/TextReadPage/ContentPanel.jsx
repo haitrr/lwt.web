@@ -29,7 +29,6 @@ class ContentPanel extends React.Component {
     }
 
     this.begin = React.createRef();
-    this.bookmarkRef = React.createRef();
     this.container = React.createRef();
     this.loading = true;
   }
@@ -57,14 +56,12 @@ class ContentPanel extends React.Component {
     }
 
     // scroll to the bookmark ofter initial loading
-    if (
-      terms[begin] &&
-      terms[end] &&
-      this.loading &&
-      this.bookmarkRef.current
-    ) {
-      this.loading = false;
-      this.bookmarkRef.current.scrollIntoView({ block: "center" });
+    if (terms[begin] && terms[end] && this.loading) {
+      const bookmarkEl = document.getElementById("bookmark");
+      if (bookmarkEl) {
+        this.loading = false;
+        bookmarkEl.scrollIntoView({ block: "center" });
+      }
     }
 
     if (end > prevProps.end) {
@@ -73,11 +70,9 @@ class ContentPanel extends React.Component {
   }
 
   goToBookmark = () => {
-    if (this.bookmarkRef.current) {
-      this.bookmarkRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      });
+    const bookmarkEl = document.getElementById("bookmark");
+    if (bookmarkEl) {
+      bookmarkEl.scrollIntoView({ block: "center", behavior: "smooth" });
     }
   };
 
@@ -147,7 +142,6 @@ class ContentPanel extends React.Component {
             >
               <Term
                 onSpeak={onSpeak}
-                bookmarkRef={this.bookmarkRef}
                 last={begin === i ? this.begin : null}
                 // eslint-disable-next-line react/no-array-index-key
                 key={i}
@@ -159,7 +153,6 @@ class ContentPanel extends React.Component {
           termElements.push(
             <Term
               onSpeak={onSpeak}
-              bookmarkRef={this.bookmarkRef}
               last={begin === i ? this.begin : null}
               // eslint-disable-next-line react/no-array-index-key
               key={i}

@@ -69,7 +69,7 @@ class Term extends React.Component {
   };
 
   render() {
-    const { term, bookmark, last, bookmarkRef, index, onSpeak } = this.props;
+    const { term, bookmark, last, index, onSpeak } = this.props;
     if (term.learningLevel === TermLearningLevel.Skipped) {
       return <SkippedTerm term={term} last={last} />;
     }
@@ -81,7 +81,6 @@ class Term extends React.Component {
       return (
         <TermButton
           bookmark={bookmark}
-          bookmarkRef={bookmarkRef}
           last={last}
           term={term}
           onClick={this.handleTermClick}
@@ -92,7 +91,6 @@ class Term extends React.Component {
     return (
       <TermTooltip
         onClick={this.handleTermClick}
-        bookmarkRef={bookmarkRef}
         onHover={this.handleHover}
         onSpeak={onSpeak}
         index={index}
@@ -117,7 +115,6 @@ Term.propTypes = {
     count: PropTypes.number,
   }).isRequired,
   bookmark: PropTypes.bool,
-  bookmarkRef: PropTypes.shape({}).isRequired,
   last: PropTypes.shape({}),
   index: PropTypes.number.isRequired,
   getTermMeaning: PropTypes.func.isRequired,
