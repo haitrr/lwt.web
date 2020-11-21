@@ -11,6 +11,11 @@ import {
 } from "../../Enums";
 
 class TermButton extends React.Component {
+  constructor(props) {
+    super(props);
+    this.buttonRef = React.createRef();
+  }
+
   onTermClick = (e) => {
     // this.utt.text = term.content;
     // window.speechSynthesis.speak(this.utt);
@@ -20,11 +25,14 @@ class TermButton extends React.Component {
     onClick(e);
   };
 
-  storageButtonRef = (ref) => {
+  componentDidUpdate(prevProps, prevState, snapshot) {
     const { bookmark, bookmarkRef, last } = this.props;
-    if (bookmark) bookmarkRef.current = ref;
-    if (last) last.current = ref;
-  };
+    if (bookmark) {
+      console.log("setting");
+      bookmarkRef.current = this.buttonRef.current;
+    }
+    if (last) last.current = this.buttonRef.current;
+  }
 
   render() {
     const { term, bookmark } = this.props;
@@ -49,7 +57,7 @@ class TermButton extends React.Component {
               }
             : null
         }
-        ref={this.storageButtonRef}
+        ref={this.buttonRef}
         onClick={this.onTermClick}
         onKeyDown={this.onTermClick}
       >

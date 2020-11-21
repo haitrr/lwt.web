@@ -70,6 +70,9 @@ class Term extends React.Component {
 
   render() {
     const { term, bookmark, last, bookmarkRef, index, onSpeak } = this.props;
+    if (bookmark) {
+      console.log(index, term);
+    }
     if (term.learningLevel === TermLearningLevel.Skipped) {
       return <SkippedTerm term={term} last={last} />;
     }
