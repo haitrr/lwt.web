@@ -154,7 +154,11 @@ class ContentPanel extends React.Component {
           className={styles.contentPanel}
           ref={this.container}
         >
+          {/* end loading */}
+          {!terms[begin] && <Loading className={styles.loading} />}
           {termElements}
+          {/* begin loading */}
+          {!terms[end] && <Loading className={styles.loading} />}
           <ProgressBar />
         </div>
         {!editingTerm && <GoToBookmarkButton onClick={this.goToBookmark} />}
