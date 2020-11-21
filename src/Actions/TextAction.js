@@ -32,6 +32,7 @@ export const TERM_INDEX_END_SET = "TERM_INDEX_END_SET";
 export const TERM_COUNT_IN_TEXT = "TERM_COUNT_IN_TEXT";
 export const TEXT_TERM_COUNT_GET = "TEXT_TERM_COUNT_GET";
 export const TEXT_PROCESSED_TERM_COUNT_GET = "TEXT_PROCESSED_TERM_COUNT_GET";
+export const VIEWING_TERM_SET = "VIEWING_TERM_SET";
 
 /**
  * get texts action
@@ -139,6 +140,11 @@ export const setTermIndexEndAction = createAction(
   TERM_INDEX_END_SET,
   (end) => end
 );
+
+export const setViewingTermAction = (index) => (dispatch) => {
+  dispatch({ type: VIEWING_TERM_SET, payload: { index } });
+};
+
 export const getTermCountInTextAction = createAction(
   TERM_COUNT_IN_TEXT,
   (termId, textId) => getTermCountInTextAsync(termId, textId)

@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
+import VisibilitySensor from "react-visibility-sensor";
 import styles from "./TextReadPage.module.scss";
 import Term from "../../Term";
 import ProgressBar from "./ProgressBar";
@@ -8,6 +9,7 @@ import GoToBookmarkButton from "./GoToBookmarkButton";
 import {
   getTextTermsAction,
   setTermIndexBeginAction,
+  setViewingTermAction,
   setTermIndexEndAction,
 } from "../../../Actions/TextAction";
 import { setEditingTermAction } from "../../../Actions/TermAction";
@@ -121,7 +123,7 @@ class ContentPanel extends React.Component {
 
   render() {
     const { terms } = this.props;
-    const { begin, end, onSpeak, editingTerm } = this.props;
+    const { begin, end, onSpeak, editingTerm, setViewingTerm } = this.props;
     // initial loading
     if ((!terms[begin] || !terms[end]) && this.loading) {
       return (
@@ -133,16 +135,38 @@ class ContentPanel extends React.Component {
     const termElements = [];
     for (let i = begin; i <= end; i += 1) {
       if (terms[i]) {
-        termElements.push(
-          <Term
-            onSpeak={onSpeak}
-            bookmarkRef={this.bookmarkRef}
-            last={begin === i ? this.begin : null}
-            // eslint-disable-next-line react/no-array-index-key
-            key={i}
-            index={i}
-          />
-        );
+        if (i % 10 === 0) {
+          termElements.push(
+            <VisibilitySensor
+              onChange={(visible) => {
+                if (visible) {
+                  setViewingTerm(i);
+                }
+              }}
+              key={i}
+            >
+              <Term
+                onSpeak={onSpeak}
+                bookmarkRef={this.bookmarkRef}
+                last={begin === i ? this.begin : null}
+                // eslint-disable-next-line react/no-array-index-key
+                key={i}
+                index={i}
+              />
+            </VisibilitySensor>
+          );
+        } else {
+          termElements.push(
+            <Term
+              onSpeak={onSpeak}
+              bookmarkRef={this.bookmarkRef}
+              last={begin === i ? this.begin : null}
+              // eslint-disable-next-line react/no-array-index-key
+              key={i}
+              index={i}
+            />
+          );
+        }
       }
     }
 
@@ -184,6 +208,7 @@ ContentPanel.propTypes = {
   onSpeak: PropTypes.func.isRequired,
   editingTerm: PropTypes.number,
   setEditingTerm: PropTypes.func.isRequired,
+  setViewingTerm: PropTypes.func.isRequired,
 };
 export default connect(
   (state) => ({
@@ -198,5 +223,6 @@ export default connect(
     setTermIndexBegin: setTermIndexBeginAction,
     setTermIndexEnd: setTermIndexEndAction,
     setEditingTerm: setEditingTermAction,
+    setViewingTerm: setViewingTermAction,
   }
 )(ContentPanel);

@@ -13,6 +13,7 @@ import {
   TERM_COUNT_IN_TEXT,
   TEXT_TERM_COUNT_GET,
   TEXT_PROCESSED_TERM_COUNT_GET,
+  VIEWING_TERM_SET,
 } from "../Actions/TextAction";
 import {
   TERM_CREATED,
@@ -26,9 +27,7 @@ import {
  * text reducer
  */
 
-export interface TextEditDetail {
-
-}
+export interface TextEditDetail {}
 
 export interface TextState {
   total: number;
@@ -55,6 +54,7 @@ export interface ReadingTextState {
   bookmark: number;
   termCount: number;
   termIndexEnd: number;
+  viewingTermIndex: number;
 }
 
 export interface TextItem {
@@ -304,6 +304,16 @@ const textReducer = handleActions<TextState, any>(
         t.id === textId ? { ...t, processedTermCount } : t
       );
       return { ...state, texts: newTexts };
+    },
+    [VIEWING_TERM_SET]: (state, action) => {
+      if (!state.readingText) {
+        return state;
+      }
+      const { index } = action.payload;
+      return {
+        ...state,
+        readingText: { ...state.readingText, viewingTermIndex: index },
+      };
     },
   },
   defaultState

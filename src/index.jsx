@@ -7,6 +7,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { Provider } from "react-redux";
 import * as Sentry from "@sentry/browser";
 import { Integrations } from "@sentry/tracing";
+import thunk from "redux-thunk";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import rootReducer from "./RootReducer";
@@ -23,7 +24,7 @@ if (process.env.NODE_ENV === "production") {
 
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(promiseMiddleware))
+  composeWithDevTools(applyMiddleware(promiseMiddleware, thunk))
 );
 
 ReactDOM.render(
