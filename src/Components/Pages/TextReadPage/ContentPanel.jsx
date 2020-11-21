@@ -132,9 +132,19 @@ class ContentPanel extends React.Component {
     }
   };
 
+  handleTermVisible = (index) => (visible) => {
+    if (visible) {
+      const { setViewingTerm } = this.props;
+      clearTimeout(window.setViewingTermTimeout);
+      window.setViewingTermTimeout = setTimeout(() => {
+        setViewingTerm(index);
+      }, 200);
+    }
+  };
+
   render() {
     const { terms } = this.props;
-    const { begin, end, onSpeak, editingTerm, setViewingTerm } = this.props;
+    const { begin, end, onSpeak, editingTerm } = this.props;
     // initial loading
     if ((!terms[begin] || !terms[end]) && this.loading) {
       return (
@@ -148,14 +158,7 @@ class ContentPanel extends React.Component {
       if (terms[i]) {
         if (i % 10 === 0) {
           termElements.push(
-            <VisibilitySensor
-              onChange={(visible) => {
-                if (visible) {
-                  setViewingTerm(i);
-                }
-              }}
-              key={i}
-            >
+            <VisibilitySensor onChange={this.handleTermVisible(i)} key={i}>
               <Term
                 onSpeak={onSpeak}
                 // eslint-disable-next-line react/no-array-index-key
