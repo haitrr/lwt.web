@@ -14,6 +14,7 @@ import {
 } from "../../../Actions/TextAction";
 import { setEditingTermAction } from "../../../Actions/TermAction";
 import Loading from "../../Loading/Loading";
+import { LAST_BEGIN_INDEX_ID } from "../../Term/TermButton";
 
 class ContentPanel extends React.Component {
   constructor(props) {
@@ -51,8 +52,8 @@ class ContentPanel extends React.Component {
       getTextTerms(textId, begin, prevProps.begin);
     }
 
-    if (prevProps.terms[begin] !== terms[begin] && this.last) {
-      this.last.scrollIntoView();
+    if (prevProps.terms[begin] !== terms[begin]) {
+      this.scrollToLast();
     }
 
     // scroll to the bookmark ofter initial loading
@@ -68,6 +69,16 @@ class ContentPanel extends React.Component {
       getTextTerms(textId, prevProps.end, end);
     }
   }
+
+  scrollToLast = () => {
+    const lastBeginEl = document.getElementById(LAST_BEGIN_INDEX_ID);
+    if (lastBeginEl) {
+      lastBeginEl.scrollIntoView();
+      this.renderingLast = false;
+    } else {
+      this.renderingLast = true;
+    }
+  };
 
   goToBookmark = () => {
     const bookmarkEl = document.getElementById("bookmark");
@@ -99,11 +110,16 @@ class ContentPanel extends React.Component {
     if (!terms[begin] || !terms[end]) {
       return;
     }
+
+    if (this.renderingLast) {
+      this.scrollToLast();
+      return;
+    }
+
     const top = e.target.scrollTop < 100;
     if (top) {
       if (begin > 0) {
         setTermIndexBegin(Math.max(begin - this.loadTerms, 0));
-        this.last = this.begin.current;
         return;
       }
     }
@@ -142,7 +158,6 @@ class ContentPanel extends React.Component {
             >
               <Term
                 onSpeak={onSpeak}
-                last={begin === i ? this.begin : null}
                 // eslint-disable-next-line react/no-array-index-key
                 key={i}
                 index={i}
@@ -153,7 +168,6 @@ class ContentPanel extends React.Component {
           termElements.push(
             <Term
               onSpeak={onSpeak}
-              last={begin === i ? this.begin : null}
               // eslint-disable-next-line react/no-array-index-key
               key={i}
               index={i}

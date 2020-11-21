@@ -13,13 +13,13 @@ import SkippedTerm from "./SkippedTerm";
 
 class Term extends React.Component {
   shouldComponentUpdate(nextProps) {
-    const { term, bookmark, last } = this.props;
+    const { term, bookmark, isLastBeginIndex } = this.props;
     return (
       nextProps.term.learningLevel !== term.learningLevel ||
       nextProps.term.meaning !== term.meaning ||
       nextProps.term.count !== term.count ||
       nextProps.bookmark !== bookmark ||
-      last !== nextProps.last
+      isLastBeginIndex !== nextProps.isLastBeginIndex
     );
   }
 
@@ -69,9 +69,15 @@ class Term extends React.Component {
   };
 
   render() {
-    const { term, bookmark, last, index, onSpeak } = this.props;
+    const {
+      term,
+      bookmark,
+      index,
+      onSpeak,
+      isLastBeginIndex,
+    } = this.props;
     if (term.learningLevel === TermLearningLevel.Skipped) {
-      return <SkippedTerm term={term} last={last} />;
+      return <SkippedTerm term={term} isLastBeginTerm={isLastBeginIndex} />;
     }
     if (
       term.learningLevel === TermLearningLevel.WellKnow ||
@@ -81,7 +87,6 @@ class Term extends React.Component {
       return (
         <TermButton
           bookmark={bookmark}
-          last={last}
           term={term}
           onClick={this.handleTermClick}
         />
@@ -95,7 +100,6 @@ class Term extends React.Component {
         onSpeak={onSpeak}
         index={index}
         term={term}
-        last={last}
         bookmark={bookmark}
       />
     );
@@ -104,7 +108,6 @@ class Term extends React.Component {
 
 Term.defaultProps = {
   bookmark: false,
-  last: null,
 };
 
 Term.propTypes = {
@@ -115,18 +118,20 @@ Term.propTypes = {
     count: PropTypes.number,
   }).isRequired,
   bookmark: PropTypes.bool,
-  last: PropTypes.shape({}),
   index: PropTypes.number.isRequired,
   getTermMeaning: PropTypes.func.isRequired,
   onSpeak: PropTypes.func.isRequired,
   getTermCountInText: PropTypes.func.isRequired,
   textId: PropTypes.number.isRequired,
+  isLastBeginIndex: PropTypes.bool.isRequired,
 };
 
 export default connect(
   (state, ownProps) => ({
     term: state.text.readingText.terms[ownProps.index],
     bookmark: state.text.readingText.bookmark === ownProps.index,
+    isLastBeginIndex:
+      state.text.readingText.termLastBeginIndex === ownProps.index,
     textId: state.text.readingText.id,
   }),
   {

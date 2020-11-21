@@ -10,6 +10,8 @@ import {
   TermLearningColor,
 } from "../../Enums";
 
+export const LAST_BEGIN_INDEX_ID = "last-begin-index";
+
 class TermButton extends React.Component {
   constructor(props) {
     super(props);
@@ -25,24 +27,26 @@ class TermButton extends React.Component {
     onClick(e);
   };
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const { last } = this.props;
-    if (last) last.current = this.buttonRef.current;
-  }
-
   render() {
-    const { term, bookmark } = this.props;
+    const { term, bookmark, isLastBeginIndex } = this.props;
     const className = classNames(
       styles.term,
       TermLearningColor[term.learningLevel],
       { [styles.bookmark]: bookmark }
     );
 
+    let id;
+    if (bookmark) {
+      id = "bookmark";
+    } else if (isLastBeginIndex) {
+      id = LAST_BEGIN_INDEX_ID;
+    }
+
     return (
       <span
         tabIndex="-1"
         role="button"
-        id={bookmark ? "bookmark" : undefined}
+        id={id}
         className={className}
         style={
           term.count && isLearningTerm(term.learningLevel)
@@ -68,13 +72,10 @@ class TermButton extends React.Component {
   }
 }
 
-TermButton.defaultProps = {
-  last: null,
-};
+TermButton.defaultProps = {};
 
 TermButton.propTypes = {
   bookmark: PropTypes.bool.isRequired,
-  last: PropTypes.shape({}),
   onClick: PropTypes.func.isRequired,
   term: PropTypes.shape({}).isRequired,
   setBookmark: PropTypes.func.isRequired,
@@ -82,7 +83,14 @@ TermButton.propTypes = {
   id: PropTypes.number.isRequired,
 };
 
-export default connect((state) => ({ id: state.text.readingText.id }), {
-  setBookmark: setBookmarkAction,
-  selectTerm: selectTermAction,
-})(TermButton);
+export default connect(
+  (state, ownProps) => ({
+    id: state.text.readingText.id,
+    isLastBeginIndex:
+      state.text.readingText.termLastBeginIndex === ownProps.term.index,
+  }),
+  {
+    setBookmark: setBookmarkAction,
+    selectTerm: selectTermAction,
+  }
+)(TermButton);

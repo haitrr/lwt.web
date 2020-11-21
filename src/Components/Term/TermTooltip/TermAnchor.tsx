@@ -6,7 +6,6 @@ interface Props {
   onMouseEnter: () => void;
   onMouseLeave: () => void;
   bookmark: boolean;
-  last: React.RefObject<HTMLSpanElement>;
   term: Term;
   onClick: () => void;
 }
@@ -15,7 +14,6 @@ const TermAnchor: React.FC<Props> = ({
   onMouseEnter,
   onMouseLeave,
   bookmark,
-  last,
   term,
   onClick,
 }) => {
@@ -23,7 +21,6 @@ const TermAnchor: React.FC<Props> = ({
     <span onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <TermButton
         bookmark={bookmark}
-        last={last}
         term={term}
         onClick={onClick}
       />

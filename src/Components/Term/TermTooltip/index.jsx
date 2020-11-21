@@ -114,7 +114,7 @@ class TermTooltip extends React.Component {
   };
 
   render() {
-    const { bookmark, last, term, onClick } = this.props;
+    const { bookmark, term, onClick } = this.props;
     const { anchorEl, loading } = this.state;
     const open = Boolean(anchorEl);
     return (
@@ -123,7 +123,6 @@ class TermTooltip extends React.Component {
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
           bookmark={bookmark}
-          last={last}
           term={term}
           onClick={onClick}
         />
@@ -150,7 +149,6 @@ class TermTooltip extends React.Component {
 
 TermTooltip.defaultProps = {
   bookmark: false,
-  last: null,
 };
 
 TermTooltip.propTypes = {
@@ -159,7 +157,6 @@ TermTooltip.propTypes = {
     meaning: PropTypes.string,
   }).isRequired,
   bookmark: PropTypes.bool,
-  last: PropTypes.shape({}),
   onClick: PropTypes.func.isRequired,
   onHover: PropTypes.func.isRequired,
   editTerm: PropTypes.func.isRequired,

@@ -50,6 +50,7 @@ export interface ReadingTextState {
   title: string;
   terms: Term[];
   termIndexBegin: number;
+  termLastBeginIndex: number;
   termsCountByLearningLevel: any;
   bookmark: number;
   termCount: number;
@@ -117,6 +118,7 @@ const textReducer = handleActions<TextState, any>(
           ...action.payload,
           termIndexEnd: action.payload.bookmark ?? 0,
           termIndexBegin: action.payload.bookmark ?? 0,
+          termLastBeginIndex: -1,
           terms: new Array(action.payload.termCount).fill(null),
         },
       };
@@ -252,9 +254,18 @@ const textReducer = handleActions<TextState, any>(
     },
     [TERM_INDEX_BEGIN_SET]: (state, action) => {
       if (!state.readingText) return state;
+      let termLastBeginIndex = state.readingText.termIndexBegin;
+      if (termLastBeginIndex === state.readingText.bookmark) {
+        termLastBeginIndex += 1;
+      }
+
       return {
         ...state,
-        readingText: { ...state.readingText, termIndexBegin: action.payload },
+        readingText: {
+          ...state.readingText,
+          termIndexBegin: action.payload,
+          termLastBeginIndex,
+        },
       };
     },
     [TERM_INDEX_END_SET]: (state, action) => {
