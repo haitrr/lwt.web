@@ -156,7 +156,7 @@ class ContentPanel extends React.Component {
     const termElements = [];
     for (let i = begin; i <= end; i += 1) {
       if (terms[i]) {
-        if (i % 10 === 0) {
+        if (i % 20 === 0) {
           termElements.push(
             <VisibilitySensor onChange={this.handleTermVisible(i)} key={i}>
               <Term
