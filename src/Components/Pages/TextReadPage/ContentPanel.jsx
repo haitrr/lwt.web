@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
-import VisibilitySensor from "react-visibility-sensor";
 import styles from "./TextReadPage.module.scss";
 import Term from "../../Term";
 import ProgressBar from "./ProgressBar";
@@ -15,6 +14,7 @@ import {
 import { setEditingTermAction } from "../../../Actions/TermAction";
 import Loading from "../../Loading/Loading";
 import { LAST_BEGIN_INDEX_ID } from "../../Term/TermButton";
+import TermObserver from "../../Term/TermObserver";
 
 class ContentPanel extends React.Component {
   constructor(props) {
@@ -158,14 +158,14 @@ class ContentPanel extends React.Component {
       if (terms[i]) {
         if (i % 20 === 0) {
           termElements.push(
-            <VisibilitySensor onChange={this.handleTermVisible(i)} key={i}>
+            <TermObserver index={i}>
               <Term
                 onSpeak={onSpeak}
                 // eslint-disable-next-line react/no-array-index-key
                 key={i}
                 index={i}
               />
-            </VisibilitySensor>
+            </TermObserver>
           );
         } else {
           termElements.push(
