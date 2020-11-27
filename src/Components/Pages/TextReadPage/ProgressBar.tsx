@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import styles from "./TextReadPage.module.scss";
-import { selectTotalTerm } from "../../../Selectors/TextSelector";
 import { RootState } from "../../../RootReducer";
 
 interface StateProps {
@@ -26,10 +25,12 @@ ProgressBar.defaultProps = {
   current: 0,
 };
 
-export default connect<StateProps, {}, {}, RootState>((state: RootState) => {
-  if (!state.text.readingText) throw new Error();
-  return {
-    current: state.text.readingText.viewingTermIndex,
-    total: selectTotalTerm(state),
-  };
-})(ProgressBar);
+export default connect<StateProps, null, null, RootState>(
+  (state: RootState) => {
+    if (!state.text.readingText) throw new Error();
+    return {
+      current: state.text.readingText.viewingTermIndex,
+      total: state.text.readingText.termCount,
+    };
+  }
+)(ProgressBar);
