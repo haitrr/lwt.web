@@ -16,6 +16,8 @@ import Loading from "../../Loading/Loading";
 import { LAST_BEGIN_INDEX_ID } from "../../Term/TermButton";
 import TermObserver from "../../Term/TermObserver";
 
+const TermCountPerProgressPoint = 50;
+
 class ContentPanel extends React.Component {
   constructor(props) {
     super(props);
@@ -156,7 +158,7 @@ class ContentPanel extends React.Component {
     const termElements = [];
     for (let i = begin; i <= end; i += 1) {
       if (terms[i]) {
-        if (i % 20 === 0) {
+        if (i % TermCountPerProgressPoint === 0) {
           termElements.push(
             <TermObserver index={i}>
               <Term
