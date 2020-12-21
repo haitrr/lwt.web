@@ -1,5 +1,8 @@
 .layout {
   height: 100%;
+  height: -moz-available;          /* WebKit-based browsers will ignore this. */
+  height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+  height: fill-available;
   display: flex;
   flex-direction: column;
 }
@@ -7,12 +10,17 @@
 
 :global(body) {
   height: 100%;
-  height: -webkit-fill-available;
+  height: -moz-available;          /* WebKit-based browsers will ignore this. */
+  height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+  height: fill-available;
 }
 
 
 :global(html) {
-  height: -webkit-fill-available;
+  height: 100%;
+  height: -moz-available;          /* WebKit-based browsers will ignore this. */
+  height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+  height: fill-available;
   width: unset;
 }
 
