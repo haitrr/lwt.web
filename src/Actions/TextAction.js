@@ -1,5 +1,4 @@
 import { createAction } from "redux-actions";
-import { notification } from "antd";
 import {
   createTextAsync,
   deleteTextAsync,
@@ -80,10 +79,10 @@ export const createTextAction = createAction(TEXT_CREATED, async (text) =>
 export const deleteTextAction = createAction(TEXT_DELETED, async (textId) => {
   try {
     await deleteTextAsync(textId);
-    notification.success({ message: "TextItem deleted." });
+    toast.success("TextItem deleted.");
     return textId;
   } catch {
-    notification.error({ message: "Can't not delete text, please try again." });
+    toast.error("Can't not delete text, please try again.");
     return null;
   }
 });
@@ -91,10 +90,10 @@ export const deleteTextAction = createAction(TEXT_DELETED, async (textId) => {
 export const editTextAction = createAction(TEXT_EDITED, async (id, text) => {
   try {
     await editTextAsync(id, text);
-    notification.success({ message: "TextItem saved successfully." });
+    toast.success("TextItem saved successfully.");
     return text;
   } catch {
-    notification.error({ message: "Can't not save text , please try again." });
+    toast.error("Can't not save text , please try again.");
     return null;
   }
 });
@@ -105,9 +104,7 @@ export const getTextEditDetailAction = createAction(
     try {
       return await getTextEditDetailAsync(textId);
     } catch {
-      notification.error({
-        message: "Something wen't wrong, please try again.",
-      });
+      toast.error("Something wen't wrong, please try again.");
       return null;
     }
   }

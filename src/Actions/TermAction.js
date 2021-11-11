@@ -1,5 +1,5 @@
 import { createAction } from "redux-actions";
-import { notification } from "antd";
+import { toast } from "react-toastify";
 import {
   createTermAsync,
   editTermAsync,
@@ -21,7 +21,15 @@ export const getTermAction = createAction(TERM_GET, async (id, index) => {
   try {
     return { term: await getTermAsync(id), index };
   } catch (e) {
-    notification.error({ message: "Can't get term", description: e.message });
+    toast.error(`Can't get term, ${e.message}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
     return null;
   }
 });
@@ -57,30 +65,22 @@ export const createTermAction = createAction(TERM_CREATED, async (term) => {
   try {
     const newTerm = { ...term };
     newTerm.id = await createTermAsync(term);
-    notification.success({
-      message: "Term is saved",
-    });
+    toast.success("Term is saved")
     return newTerm;
   } catch (e) {
-    notification.error({
-      message: "Can't create term",
-      description: e.message,
-    });
+    toast.error(`Can't create term ${e.message}`)
     return null;
   }
 });
 export const editTermAction = createAction(TERM_EDITED, async (term) => {
   try {
     await editTermAsync(term);
-    notification.success({
-      message: "Term is saved",
-    });
+    toast.success("Term is saved");
     return term;
   } catch (e) {
-    notification.error({
-      message: "Can't edit term",
-      description: e.message,
-    });
+    toast.error(
+      `Can't edit term ${e.message}`
+    );
     return null;
   }
 });
@@ -91,10 +91,9 @@ export const getTermMeaningAction = createAction(
       const termMeaning = await getTermMeaningAsync(term.id);
       return { termMeaning, index };
     } catch (e) {
-      notification.error({
-        message: "Can't get term mearning",
-        description: e.message,
-      });
+      toast.error(
+        `Can't get term mearning ${e.message}`
+      );
       return null;
     }
   }

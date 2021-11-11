@@ -1,4 +1,3 @@
-import { notification } from "antd";
 import { getAsync, postAsync, putAsync } from "../Utilities/HttpRequest";
 import { API_ROOT, DICTIONARY_API_ROOT } from "../Constants";
 
@@ -18,10 +17,7 @@ export async function getTextMeaningAsync(text, from, to) {
         return res.json();
       }
       if (res.status === 404) {
-        notification.info({
-          message: "Meaning not found in dictionary",
-          placement: "topRight"
-        });
+        toast.info("Meaning not found in dictionary");
         return null;
       }
       throw res;

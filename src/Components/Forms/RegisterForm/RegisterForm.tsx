@@ -1,4 +1,5 @@
-import { Form, notification } from "antd";
+import { Form } from "antd";
+import { toast } from "react-toastify";
 import { Button, TextField } from "@material-ui/core";
 import React from "react";
 import "./RegisterForm.css";
@@ -6,7 +7,7 @@ import { RouteComponentProps, withRouter } from "react-router";
 import { connect } from "react-redux";
 import { registerAction } from "../../../Actions/UserAction";
 
-interface OwnProps {}
+interface OwnProps { }
 
 interface DispatchProps {
   register: Function;
@@ -43,7 +44,7 @@ class RegisterForm extends React.Component<Props, State> {
   handleSubmit = (values: FormValues) => {
     const { history } = this.props;
     if (values.password !== values.repeatPassword) {
-      notification.error({ message: "Passwords not match" });
+      toast.error("Passwords not match");
       return;
     }
 

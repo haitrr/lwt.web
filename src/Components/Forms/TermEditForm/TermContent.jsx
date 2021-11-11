@@ -1,5 +1,5 @@
 import React from "react";
-import { notification } from "antd";
+import { toast } from "react-toastify";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import PropTypes from "prop-types";
 import styles from "./TermEditForm.module.scss";
@@ -8,11 +8,17 @@ import { importantColors } from "../../../Enums";
 const TermContent = ({ term }) => (
   <CopyToClipboard
     text={term.content}
-    onCopy={() =>
-      notification.info({
-        message: "Copied to clipboard.",
-        placement: "topRight"
-      })
+    onCopy={() => {
+      toast.info('Copied to clipboard.', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
     }
   >
     <div
