@@ -9,9 +9,9 @@
     "@sentry/browser": "^5.27.4",
     "@sentry/tracing": "^5.27.4",
     "@types/jest": "^26.0.15",
-    "@types/node": "^14.14.2",
-    "@types/react": "^16.9.53",
-    "@types/react-dom": "^16.9.8",
+    "@types/node": "16.11.7",
+    "@types/react": "17.0.34",
+    "@types/react-dom": "17.0.11",
     "antd": "4.6.2",
     "classnames": "2.3.1",
     "compromise": "13.11.4",
@@ -53,8 +53,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@types/classnames": "^2.2.10",
-    "@types/jwt-decode": "^3.1.0",
+    "@types/classnames": "2.3.1",
+    "@types/jwt-decode": "3.1.0",
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.6",
     "@types/redux-actions": "^2.6.1"  
