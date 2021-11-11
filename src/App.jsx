@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import { notification } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 import { Redirect, Route } from "react-router";
@@ -17,6 +16,8 @@ import { getLanguageAction } from "./Actions/LanguageAction";
 import { getSettingAction } from "./Actions/UserAction";
 import UserPage from "./Components/Pages/UserPage";
 import Themer from "./Themer";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 /**
  * app.
@@ -27,7 +28,6 @@ class App extends React.Component {
     if (user.isLoggedIn) {
       getSetting();
     }
-    notification.config({ top: 5, placement: "bottomRight", duration: 1 });
     const { getLanguages } = this.props;
     getLanguages();
   }
@@ -46,6 +46,7 @@ class App extends React.Component {
         <Paper style={{ height: "-webkit-fill-available" }}>
           <BrowserRouter>
             <div className={styles.layout}>
+              <ToastContainer />
               <Helmet>
                 <title>Lwt</title>
               </Helmet>

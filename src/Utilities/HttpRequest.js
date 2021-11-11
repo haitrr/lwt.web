@@ -1,4 +1,4 @@
-import { notification } from "antd";
+import { toast } from "react-toastify";
 import { TOKEN_LOCAL_STORAGE_KEY } from "../Constants";
 
 function defaultResponseErrorHandler(response) {
@@ -7,19 +7,47 @@ function defaultResponseErrorHandler(response) {
     response.status === 502 ||
     response.status === 503
   ) {
-    notification.error({
-      message: "Failed to connect to server, please try again later."
-    });
+      toast.error("Failed to connect to server, please try again later.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
   } else if (response.status === 400) {
     response.json().then(error => {
-      notification.error({ message: error.Message });
+      toast.error(error.Message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
     }).catch(e => {
-      notification.error("bad request")
+      toast.error("Bad request", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
     });
   } else {
-    notification.error({
-      message: `Error connecting with server ${response.status}:${response.statusText}`
-    });
+    toast.error(`Error connecting with server ${response.status}:${response.statusText}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
   }
   throw response;
 }
