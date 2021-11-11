@@ -5,7 +5,6 @@ import {
   getLanguageAction,
   selectLanguageAction,
 } from "../../../Actions/LanguageAction";
-import "./HomePage.css";
 
 /**
  * Home page
