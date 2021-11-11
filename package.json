@@ -28,7 +28,7 @@
     "react-redux": "7.2.2",
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
-    "react-scripts": "3.4.0",
+    "react-scripts": "4.0.3",
     "react-scroll": "1.7.11",
     "react-toastify": "^8.1.0",
     "redux": "4.0.5",
@@ -42,65 +42,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "lint": "eslint --fix --ext .js,.jsx .",
     "build-lm": "react-scripts --max_old_space_size=4096 build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "airbnb-typescript",
-      "airbnb/hooks",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:jest/recommended",
-      "prettier",
-      "prettier/react",
-      "prettier/@typescript-eslint",
-      "plugin:prettier/recommended"
-    ],
-    "overrides": [
-      {
-        "files": [
-          "**/*.tsx"
-        ],
-        "rules": {
-          "react/prop-types": "off",
-          "react/static-property-placement": "off"
-        }
-      }
-    ],
-    "plugins": [
-      "react",
-      "@typescript-eslint",
-      "jest"
-    ],
-    "env": {
-      "browser": true,
-      "es6": true,
-      "jest": true
-    },
-    "globals": {
-      "Atomics": "readonly",
-      "SharedArrayBuffer": "readonly"
-    },
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      },
-      "ecmaVersion": 2018,
-      "sourceType": "module",
-      "createDefaultProgram": true,
-      "project": "./tsconfig.json"
-    },
-    "rules": {
-      "linebreak-style": "off",
-      "prettier/prettier": [
-        "error",
-        {
-          "endOfLine": "auto"
-        }
-      ]
-    }
   },
   "browserslist": [
     ">0.2%",
@@ -113,18 +58,6 @@
     "@types/jwt-decode": "^3.1.0",
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.6",
-    "@types/redux-actions": "^2.6.1",
-    "@typescript-eslint/eslint-plugin": "^4.6.0",
-    "@typescript-eslint/parser": "^4.6.0",
-    "eslint-config-airbnb": "18.2.0",
-    "eslint-config-airbnb-typescript": "^12.0.0",
-    "eslint-config-prettier": "^6.14.0",
-    "eslint-plugin-import": "^2.21.2",
-    "eslint-plugin-jest": "^24.1.0",
-    "eslint-plugin-jsx-a11y": "^6.3.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.20.0",
-    "eslint-plugin-react-hooks": "4.0.0",
-    "prettier": "^2.1.2"
+    "@types/redux-actions": "^2.6.1"
   }
 }
