@@ -13,6 +13,8 @@ function defaultResponseErrorHandler(response) {
   } else if (response.status === 400) {
     response.json().then(error => {
       notification.error({ message: error.Message });
+    }).catch(e => {
+      notification.error("bad request")
     });
   } else {
     notification.error({
