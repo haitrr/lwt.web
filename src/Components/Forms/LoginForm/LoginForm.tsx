@@ -1,7 +1,6 @@
 import { Form } from "antd";
 import { Button, TextField } from "@material-ui/core";
 import React from "react";
-import "./LoginForm.css";
 import { connect } from "react-redux";
 import { loginAction } from "../../../Actions/UserAction";
 
