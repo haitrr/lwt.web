@@ -2,7 +2,6 @@ import { Form } from "antd";
 import { toast } from "react-toastify";
 import { Button, TextField } from "@material-ui/core";
 import React from "react";
-import "./RegisterForm.css";
 import { RouteComponentProps, withRouter } from "react-router";
 import { connect } from "react-redux";
 import { registerAction } from "../../../Actions/UserAction";
