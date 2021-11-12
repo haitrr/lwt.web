@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import {Form} from "antd";
 import {Button, TextField} from "@material-ui/core";
 import React from "react";
