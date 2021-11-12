@@ -1,32 +1,42 @@
 import PropTypes from "prop-types";
-import { Form } from "antd";
-import { Button, TextField } from "@material-ui/core";
+import {Form} from "antd";
+import {Button, TextField} from "@material-ui/core";
 import React from "react";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import LanguageSelect from "../../Inputs/LanguageSelect/LanguageSelect";
+import {RootState} from "../../../RootReducer";
+
+interface Props {
+  editDetail: any
+  formRef: any
+  onSubmit: any
+  onCancel: any
+  submitting: boolean
+}
+
 
 /**
  * text create form
  */
-const TextEditForm = (props) => {
-  const { editDetail, formRef, onSubmit, onCancel, submitting } = props;
+const TextEditForm: React.FC<Props> = (props) => {
+  const {editDetail, formRef, onSubmit, onCancel, submitting} = props;
 
   return (
     <Form ref={formRef}>
       <Form.Item name="languageCode" initialValue={editDetail.languageCode}>
-        <LanguageSelect />
+        <LanguageSelect/>
       </Form.Item>
       <Form.Item name="title" initialValue={editDetail.title}>
         <TextField
           variant="outlined"
           label="Title"
-          style={{ width: "100%", marginTop: "1rem" }}
+          style={{width: "100%", marginTop: "1rem"}}
           placeholder="Title"
         />
       </Form.Item>
       <Form.Item name="content" initialValue={editDetail.content}>
         <TextField
-          style={{ width: "100%", marginTop: "1rem" }}
+          style={{width: "100%", marginTop: "1rem"}}
           variant="outlined"
           label="Content"
           multiline
@@ -35,8 +45,8 @@ const TextEditForm = (props) => {
           placeholder="Please input text content here ..."
         />
       </Form.Item>
-      <hr />
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <hr/>
+      <div style={{display: "flex", justifyContent: "space-between"}}>
         <Button
           disabled={submitting}
           variant="contained"
@@ -59,16 +69,8 @@ const TextEditForm = (props) => {
 };
 
 export default connect(
-  (state) => ({
+  (state: RootState) => ({
     currentLanguage: state.language.currentLanguage,
   }),
   null
 )(TextEditForm);
-
-TextEditForm.propTypes = {
-  editDetail: PropTypes.shape({}).isRequired,
-  formRef: PropTypes.shape({}).isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
-  submitting: PropTypes.bool.isRequired,
-};

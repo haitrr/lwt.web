@@ -1,15 +1,17 @@
 /**
  * Language reducers
  */
-import { handleActions } from "redux-actions";
-import { LANGUAGE_GET, LANGUAGE_SELECT } from "../Actions/LanguageAction";
+import {handleActions} from "redux-actions";
+import {LANGUAGE_GET, LANGUAGE_SELECT} from "../Actions/LanguageAction";
+import {LanguageState} from "../RootReducer";
 
-const defaultState = {
+
+const defaultState: LanguageState = {
   languages: [],
   currentLanguage: "en"
 };
 
-export const languageReducer = handleActions(
+export const languageReducer = handleActions<LanguageState, any>(
   {
     [LANGUAGE_GET]: (state, action) => ({
       ...state,
