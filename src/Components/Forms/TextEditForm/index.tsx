@@ -6,11 +6,11 @@ import LanguageSelect from "../../Inputs/LanguageSelect/LanguageSelect";
 import {RootState} from "../../../RootReducer";
 
 interface Props {
-  editDetail: any
-  formRef: any
-  onSubmit: any
-  onCancel: any
-  submitting: boolean
+  editDetail: any;
+  formRef: any;
+  onSubmit: any;
+  onCancel: any;
+  submitting: boolean;
 }
 
 
