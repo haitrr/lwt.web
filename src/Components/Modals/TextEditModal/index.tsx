@@ -1,15 +1,15 @@
-import { Modal, Paper } from "@material-ui/core";
+import {Modal, Paper} from "@material-ui/core";
 import React from "react";
-import { connect } from "react-redux";
-import { FormInstance } from "antd/lib/form";
+import {connect} from "react-redux";
+import {FormInstance} from "antd/lib/form";
 import TextEditForm from "../../Forms/TextEditForm";
 import {
   editTextAction,
   getTextEditDetailAction,
 } from "../../../Actions/TextAction";
-import { selectEditDetail } from "../../../Selectors/TextSelector";
-import { TextEditDetail } from "../../../Reducers/TextReducer";
-import { RootState } from "../../../RootReducer";
+import {selectEditDetail} from "../../../Selectors/TextSelector";
+import {TextEditDetail} from "../../../Reducers/TextReducer";
+import {RootState} from "../../../RootReducer";
 
 interface OwnProps {
   hide: () => void;
@@ -27,61 +27,55 @@ interface StateProps {
   editDetail: TextEditDetail | null;
 }
 
-interface State {
-  submitting: boolean;
-}
-
 type Props = OwnProps & StateProps & DispatchProps;
 
-/**
- * text create modal
- */
-class TextEditModal extends React.Component<Props, State> {
-  formRef = React.createRef<FormInstance>();
-
-  constructor(props: Props) {
-    super(props);
-    this.state = { submitting: false };
-  }
-
-  componentDidUpdate(prevProps: Readonly<Props>) {
-    const { hide, editingText, getEditDetail, editDetail } = this.props;
-    if (prevProps.editingText !== editingText && editingText) {
-      getEditDetail(editingText);
-    }
-    if (prevProps.editDetail !== editDetail) {
-      if (!editDetail) {
-        hide();
-      }
-    }
-  }
-
-  handleOk = () => {
-    const form = this.formRef.current;
-    const { editText, hide, editingText, onEdit } = this.props;
-    this.setState({ submitting: true });
-    form?.validateFields().then((values) => {
-      editText(editingText, values).then(() => {
-        onEdit();
-        this.setState({ submitting: false });
-        form.resetFields();
-        hide();
-      });
-    });
-  };
-
-  handleCancel = () => {
-    const { hide } = this.props;
-    const form = this.formRef.current;
-    form?.resetFields();
-    hide();
-  };
-
-  render() {
-    const { visible, editDetail } = this.props;
+const TextEditModal: React.FC<Props> =
+  ({
+     visible,
+     editDetail,
+     hide,
+     editingText,
+     getEditDetail,
+     editText,
+     onEdit
+   }) => {
+    const [submitting, setSubmitting] = React.useState(false)
     if (!editDetail) {
       return null;
     }
+    React.useEffect(() => {
+      if (editingText) {
+        getEditDetail(editingText);
+      }
+    }, [editingText])
+
+    React.useEffect(() => {
+      if (!editDetail) {
+        hide();
+      }
+    }, [editDetail])
+
+    const formRef = React.useRef<FormInstance>()
+
+    const handleOk = () => {
+      const form = formRef.current;
+      setSubmitting(true)
+      form?.validateFields().then((values) => {
+        editText(editingText, values).then(() => {
+          onEdit();
+          setSubmitting(false)
+          form.resetFields();
+          hide();
+        });
+      });
+    };
+
+    const handleCancel = () => {
+      const form = formRef.current;
+      form?.resetFields();
+      hide();
+    };
+
     return (
       <Modal open={visible} title="Edit text">
         <div
@@ -92,20 +86,19 @@ class TextEditModal extends React.Component<Props, State> {
             justifyContent: "center",
           }}
         >
-          <Paper style={{ width: "90vw", padding: "1rem" }}>
+          <Paper style={{width: "90vw", padding: "1rem"}}>
             <TextEditForm
-              onSubmit={this.handleOk}
-              onCancel={this.handleCancel}
+              onSubmit={handleOk}
+              onCancel={handleCancel}
               editDetail={editDetail}
-              formRef={this.formRef}
-              submitting={this.state.submitting}
+              formRef={formRef}
+              submitting={submitting}
             />
           </Paper>
         </div>
       </Modal>
     );
   }
-}
 
 // @ts-ignore
 export default connect<StateProps, DispatchProps, OwnProps, RootState>(
