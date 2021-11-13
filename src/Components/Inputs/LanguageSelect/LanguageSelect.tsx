@@ -1,9 +1,9 @@
-import { Select, MenuItem, FormControl, InputLabel } from "@material-ui/core";
+import {Select, MenuItem, FormControl, InputLabel} from "@material-ui/core";
 import React from "react";
 import classNames from "classnames";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import styles from "./LanguageSelect.module.scss";
-import { Language, RootState } from "../../../RootReducer";
+import {Language, RootState} from "../../../RootReducer";
 
 interface LanguageSelectProps {
   value: string | null;
@@ -12,24 +12,17 @@ interface LanguageSelectProps {
   onChange: any;
   disabled: boolean;
 }
-/**
- * language select
- */
-class LanguageSelect extends React.Component<LanguageSelectProps> {
-  static defaultProps = {
-    value: "",
-    onChange: () => {},
-    disabled: false,
-    className: undefined,
-  };
 
-  shouldComponentUpdate(nextProps: LanguageSelectProps) {
-    const { value, languages } = this.props;
-    return value !== nextProps.value || languages !== nextProps.languages;
-  }
+const LanguageSelectFc: React.FC<LanguageSelectProps> =
+  ({
+     languages,
+     value = "",
+     onChange,
+     disabled = false,
+     className = undefined
+   }) => {
 
-  render() {
-    const { languages, className, onChange, value, disabled } = this.props;
+
     const cn = classNames(className, styles.select);
     return (
       <FormControl variant="outlined" className={cn}>
@@ -51,8 +44,13 @@ class LanguageSelect extends React.Component<LanguageSelectProps> {
       </FormControl>
     );
   }
+
+const shouldComponentUpdate = (prevProps: LanguageSelectProps, nextProps: LanguageSelectProps) => {
+  const {value, languages} = prevProps;
+  return value !== nextProps.value || languages !== nextProps.languages;
 }
+
 
 export default connect((state: RootState) => ({
   languages: state.language.languages,
-}))(LanguageSelect);
+}))(React.memo(LanguageSelectFc, shouldComponentUpdate));
