@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React from "react";
 import {connect} from "react-redux";
 import {Redirect, Route} from "react-router";
@@ -18,12 +17,18 @@ import UserPage from "./Components/Pages/UserPage";
 import Themer from "./Themer";
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {RootState, UserState} from "./RootReducer";
 
+interface Props {
+  user: UserState;
+  getSetting: Function;
+  getLanguages: Function;
+}
 
 /**
  * app.
  */
-const App = ({user, getSetting, getLanguages}) => {
+const App: React.FC<Props> = ({user, getSetting, getLanguages}) => {
   React.useEffect(() => {
     if (user.isLoggedIn) {
       getSetting();
@@ -70,18 +75,8 @@ const App = ({user, getSetting, getLanguages}) => {
   );
 }
 
-App.defaultProps = {
-  user: {},
-};
-
-App.propTypes = {
-  getLanguages: PropTypes.func.isRequired,
-  getSetting: PropTypes.func.isRequired,
-  user: PropTypes.shape(),
-};
-
 export default connect(
-  (state) => ({
+  (state: RootState) => ({
     user: state.user,
   }),
   {
