@@ -24,7 +24,6 @@ const LanguageSelect: React.FC<LanguageSelectProps> =
      name
    }) => {
 
-
     const cn = classNames(className, styles.select);
     return (
       <FormControl variant="outlined" className={cn}>
@@ -50,7 +49,7 @@ const LanguageSelect: React.FC<LanguageSelectProps> =
 
 const shouldComponentUpdate = (prevProps: LanguageSelectProps, nextProps: LanguageSelectProps) => {
   const {value, languages} = prevProps;
-  return value !== nextProps.value || languages !== nextProps.languages;
+  return value == nextProps.value && languages == nextProps.languages;
 }
 
 
