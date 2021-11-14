@@ -1,8 +1,7 @@
 import {Modal, Paper} from "@material-ui/core";
 import React from "react";
 import {connect} from "react-redux";
-import {FormInstance} from "antd/lib/form";
-import TextEditForm from "../../Forms/TextEditForm";
+import TextEditForm, {FormValues} from "../../Forms/TextEditForm";
 import {
   editTextAction,
   getTextEditDetailAction,
@@ -10,6 +9,7 @@ import {
 import {selectEditDetail} from "../../../Selectors/TextSelector";
 import {TextEditDetail} from "../../../Reducers/TextReducer";
 import {RootState} from "../../../RootReducer";
+import {FormikProps} from "formik";
 
 interface OwnProps {
   hide: () => void;
@@ -55,24 +55,26 @@ const TextEditModal: React.FC<Props> =
       }
     }, [editDetail])
 
-    const formRef = React.useRef<FormInstance>()
+    const formRef = React.useRef<FormikProps<FormValues>>(null)
 
     const handleOk = () => {
       const form = formRef.current;
       setSubmitting(true)
-      form?.validateFields().then((values) => {
-        editText(editingText, values).then(() => {
-          onEdit();
-          setSubmitting(false)
-          form.resetFields();
-          hide();
-        });
+      form?.validateForm(form?.values).then((errors) => {
+        if (Object.keys(errors).length == 0) {
+          editText(editingText, form?.values).then(() => {
+            onEdit();
+            setSubmitting(false)
+            form?.resetForm();
+            hide();
+          });
+        }
       });
     };
 
     const handleCancel = () => {
       const form = formRef.current;
-      form?.resetFields();
+      form?.resetForm();
       hide();
     };
 

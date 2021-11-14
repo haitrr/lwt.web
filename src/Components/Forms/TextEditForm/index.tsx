@@ -1,4 +1,4 @@
-import {Form} from "antd";
+import {Form, Formik, FormikProps} from "formik";
 import {Button, TextField} from "@material-ui/core";
 import React from "react";
 import {connect} from "react-redux";
@@ -7,10 +7,16 @@ import {RootState} from "../../../RootReducer";
 
 interface Props {
   editDetail: any;
-  formRef: any;
+  formRef?: React.Ref<FormikProps<FormValues>> | undefined;
   onSubmit: any;
   onCancel: any;
   submitting: boolean;
+}
+
+export interface FormValues {
+  title: string;
+  languageCode: string;
+  content: string;
 }
 
 
@@ -21,49 +27,60 @@ const TextEditForm: React.FC<Props> = (props) => {
   const {editDetail, formRef, onSubmit, onCancel, submitting} = props;
 
   return (
-    <Form ref={formRef}>
-      <Form.Item name="languageCode" initialValue={editDetail.languageCode}>
-        <LanguageSelect/>
-      </Form.Item>
-      <Form.Item name="title" initialValue={editDetail.title}>
-        <TextField
-          variant="outlined"
-          label="Title"
-          style={{width: "100%", marginTop: "1rem"}}
-          placeholder="Title"
-        />
-      </Form.Item>
-      <Form.Item name="content" initialValue={editDetail.content}>
-        <TextField
-          style={{width: "100%", marginTop: "1rem"}}
-          variant="outlined"
-          label="Content"
-          multiline
-          rowsMax={20}
-          rows={10}
-          placeholder="Please input text content here ..."
-        />
-      </Form.Item>
-      <hr/>
-      <div style={{display: "flex", justifyContent: "space-between"}}>
-        <Button
-          disabled={submitting}
-          variant="contained"
-          color="secondary"
-          onClick={onCancel}
-        >
-          Cancel
-        </Button>
-        <Button
-          disabled={submitting}
-          variant="contained"
-          color="primary"
-          onClick={onSubmit}
-        >
-          Save
-        </Button>
-      </div>
-    </Form>
+    <Formik
+      onSubmit={onSubmit}
+      innerRef={formRef}
+      initialValues={{
+        title: editDetail.title,
+        languageCode: editDetail.languageCode,
+        content: editDetail.content
+      }}>
+      {({values, handleChange}) => {
+        return <Form>
+          <LanguageSelect value={values.languageCode} name="languageCode" onChange={handleChange}/>
+          <TextField
+            name="title"
+            variant="outlined"
+            onChange={handleChange}
+            value={values.title}
+            label="Title"
+            style={{width: "100%", marginTop: "1rem"}}
+            placeholder="Title"
+          />
+          <TextField
+            style={{width: "100%", marginTop: "1rem"}}
+            name="content"
+            value={values.content}
+            onChange={handleChange}
+            variant="outlined"
+            label="Content"
+            multiline
+            rowsMax={20}
+            rows={10}
+            placeholder="Please input text content here ..."
+          />
+          <hr/>
+          <div style={{display: "flex", justifyContent: "space-between"}}>
+            <Button
+              disabled={submitting}
+              variant="contained"
+              color="secondary"
+              onClick={onCancel}
+            >
+              Cancel
+            </Button>
+            <Button
+              disabled={submitting}
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
+              Save
+            </Button>
+          </div>
+        </Form>
+      }}
+    </Formik>
   );
 };
 
