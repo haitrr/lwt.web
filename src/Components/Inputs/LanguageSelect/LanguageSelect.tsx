@@ -8,18 +8,20 @@ import {Language, RootState} from "../../../RootReducer";
 interface LanguageSelectProps {
   value: string | null;
   languages: Language[];
-  className: string | undefined;
-  onChange: any;
-  disabled: boolean;
+  className?: string | undefined;
+  onChange?: any;
+  disabled?: boolean;
+  name: string;
 }
 
-const LanguageSelectFc: React.FC<LanguageSelectProps> =
+const LanguageSelect: React.FC<LanguageSelectProps> =
   ({
      languages,
      value = "",
      onChange,
      disabled = false,
-     className = undefined
+     className = undefined,
+     name
    }) => {
 
 
@@ -33,6 +35,7 @@ const LanguageSelectFc: React.FC<LanguageSelectProps> =
           label="Language"
           value={value}
           color="primary"
+          name={name}
           disabled={disabled || false}
         >
           {languages.map((language) => (
@@ -53,4 +56,4 @@ const shouldComponentUpdate = (prevProps: LanguageSelectProps, nextProps: Langua
 
 export default connect((state: RootState) => ({
   languages: state.language.languages,
-}))(React.memo(LanguageSelectFc, shouldComponentUpdate));
+}))(React.memo(LanguageSelect, shouldComponentUpdate));
