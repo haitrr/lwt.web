@@ -1,6 +1,6 @@
 import React from "react";
-import { connect } from "react-redux";
-import { Redirect } from "react-router";
+import {connect} from "react-redux";
+import {Redirect} from "react-router";
 import {
   getLanguageAction,
   selectLanguageAction,
@@ -9,25 +9,20 @@ import {
 /**
  * Home page
  */
-class HomePage extends React.Component {
-  componentDidMount() {
-    const { getLanguage, isLoggedIn } = this.props;
+const HomePage = ({getLanguage, isLoggedIn}) => {
+  React.useEffect(() => {
     if (isLoggedIn) {
       getLanguage();
     }
-  }
+  }, [])
 
-  render() {
-    const { isLoggedIn } = this.props;
-
-    return isLoggedIn ? (
-      <div>
-        <h1>Home Page</h1>
-      </div>
-    ) : (
-      <Redirect to="/login" />
-    );
-  }
+  return isLoggedIn ? (
+    <div>
+      <h1>Home Page</h1>
+    </div>
+  ) : (
+    <Redirect to="/login"/>
+  );
 }
 
 const connectedHomePage = connect(
@@ -41,4 +36,4 @@ const connectedHomePage = connect(
     selectLanguage: selectLanguageAction,
   }
 )(HomePage);
-export { connectedHomePage as HomePage };
+export {connectedHomePage as HomePage};
