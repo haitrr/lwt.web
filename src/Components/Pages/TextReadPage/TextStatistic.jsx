@@ -34,6 +34,7 @@ const TextStatistic = (
   const prevProps = usePrevious({bookmark, terms})
   React.useEffect(() => {
     if (
+      prevProps &&
       bookmark === prevProps.bookmark &&
       terms[bookmark] &&
       prevProps.terms[bookmark]
