@@ -1,11 +1,12 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { connect } from "react-redux";
-import { TermLearningColor, TermLearningLevel } from "../../../Enums";
+import {connect} from "react-redux";
+import {TermLearningColor, TermLearningLevel} from "../../../Enums";
 import SingleBarChart from "../../SingleBarChart";
-import { loadReadingTexttermsCountByLearningLevelAction } from "../../../Actions/TextAction";
+import {loadReadingTexttermsCountByLearningLevelAction} from "../../../Actions/TextAction";
 import styles from "../../Term/Term.module.scss";
 import Loading from "../../Loading/Loading";
+import {usePrevious} from "../../../Hooks/usePrevious";
 
 function getPracticeCount(termCount, termCountByLearningLevel) {
   return (
@@ -16,72 +17,71 @@ function getPracticeCount(termCount, termCountByLearningLevel) {
   );
 }
 
-class TextStatistic extends React.PureComponent {
-  componentDidMount() {
-    const { loadtermsCountByLearningLevel, textId } = this.props;
+const TextStatistic = (
+  {
+    loadtermsCountByLearningLevel,
+    termCount,
+    termsCountByLearningLevel,
+    textId,
+    terms,
+    bookmark
+  }) => {
+  React.useEffect(() => {
     loadtermsCountByLearningLevel(textId);
-  }
+  }, [])
 
-  componentDidUpdate(prevProps) {
-    const {
-      terms,
-      bookmark,
-      loadtermsCountByLearningLevel,
-      textId,
-    } = this.props;
+
+  const prevProps = usePrevious({bookmark, terms})
+  React.useEffect(() => {
     if (
       bookmark === prevProps.bookmark &&
       terms[bookmark] &&
-      prevProps.terms[bookmark] &&
-      terms[bookmark].learningLevel !== prevProps.terms[bookmark].learningLevel
+      prevProps.terms[bookmark]
     ) {
       loadtermsCountByLearningLevel(textId);
     }
-  }
+  }, [terms[bookmark]?.learningLevel])
 
-  render() {
-    const { termsCountByLearningLevel, termCount } = this.props;
-    if (!termsCountByLearningLevel) {
-      return (
-        <div style={{ height: "2rem" }}>
-          <Loading />
-        </div>
-      );
-    }
-    const termCountByLearningLevel = termsCountByLearningLevel;
-    const statistic = [];
-    const learningStatistic = [];
-    Object.keys(TermLearningLevel).forEach((learningLevel) => {
-      if (
-        learningLevel === "Skipped" ||
-        learningLevel === "Ignored" ||
-        learningLevel === "WellKnow"
-      )
-        return;
-      statistic.push({
-        name: learningLevel,
-        value: termCountByLearningLevel[TermLearningLevel[learningLevel]],
-        color: TermLearningColor[TermLearningLevel[learningLevel]],
-      });
-    });
-    const practice = getPracticeCount(termCount, termCountByLearningLevel);
-    learningStatistic.push({
-      name: "Learned",
-      color: styles.termLearned,
-      value: termCountByLearningLevel[TermLearningLevel.WellKnow],
-    });
-    learningStatistic.push({
-      name: "Learning",
-      color: styles.termLearning,
-      value: practice,
-    });
+  if (!termsCountByLearningLevel) {
     return (
-      <div style={{ width: "100%" }}>
-        <SingleBarChart data={learningStatistic} />
-        <SingleBarChart data={statistic} />
+      <div style={{height: "2rem"}}>
+        <Loading/>
       </div>
     );
   }
+  const termCountByLearningLevel = termsCountByLearningLevel;
+  const statistic = [];
+  const learningStatistic = [];
+  Object.keys(TermLearningLevel).forEach((learningLevel) => {
+    if (
+      learningLevel === "Skipped" ||
+      learningLevel === "Ignored" ||
+      learningLevel === "WellKnow"
+    )
+      return;
+    statistic.push({
+      name: learningLevel,
+      value: termCountByLearningLevel[TermLearningLevel[learningLevel]],
+      color: TermLearningColor[TermLearningLevel[learningLevel]],
+    });
+  });
+  const practice = getPracticeCount(termCount, termCountByLearningLevel);
+  learningStatistic.push({
+    name: "Learned",
+    color: styles.termLearned,
+    value: termCountByLearningLevel[TermLearningLevel.WellKnow],
+  });
+  learningStatistic.push({
+    name: "Learning",
+    color: styles.termLearning,
+    value: practice,
+  });
+  return (
+    <div style={{width: "100%"}}>
+      <SingleBarChart data={learningStatistic}/>
+      <SingleBarChart data={statistic}/>
+    </div>
+  );
 }
 
 TextStatistic.defaultProps = {
@@ -90,7 +90,7 @@ TextStatistic.defaultProps = {
 
 TextStatistic.propTypes = {
   terms: PropTypes.arrayOf(
-    PropTypes.shape({ learningLevel: PropTypes.string.isRequired })
+    PropTypes.shape({learningLevel: PropTypes.string.isRequired})
   ).isRequired,
   textId: PropTypes.number.isRequired,
   termCount: PropTypes.number.isRequired,
