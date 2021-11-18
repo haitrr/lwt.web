@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
-import { Button } from "@material-ui/core";
+import {Button} from "@material-ui/core";
 import Pagination from "@material-ui/lab/Pagination";
 import React from "react";
-import { connect } from "react-redux";
-import { getLanguageAction } from "../../../Actions/LanguageAction";
+import {connect} from "react-redux";
+import {getLanguageAction} from "../../../Actions/LanguageAction";
 import {
   deleteTextAction,
   getTextsAction,
@@ -12,137 +12,106 @@ import {
 import TextFilterForm from "../../Forms/TextFilterForm";
 import TextCreateModal from "../../Modals/TextCreateModal";
 import TextEditModal from "../../Modals/TextEditModal";
-import { parseQueryString } from "../../../Utilities/queryString";
+import {parseQueryString} from "../../../Utilities/queryString";
 import TextsTable from "./TextsTable";
 
 /**
  * text page
  */
-class TextPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.showCreateModal = this.showCreateModal.bind(this);
-    this.hideCreateModal = this.hideCreateModal.bind(this);
-    this.handlePageChange = this.handlePageChange.bind(this);
-    this.filterTexts = this.filterTexts.bind(this);
-    this.state = {
-      createModalVisible: false,
-      editModalVisible: false,
-      isLoading: true,
-    };
-    const { filters, location, itemPerPage } = props;
+const TextPage = ({filters, total, history, page, location, itemPerPage, getLanguages, getTexts}) => {
+  const [createModalVisible, setCreateModalVisible] = React.useState(false)
+  const [editModalVisible, setEditModalVisible] = React.useState(false)
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [editingText, setEditingText] = React.useState(null)
+  React.useEffect(() => {
     const query = parseQueryString(location.search);
     if (query.page) {
-      this.loadingAndGetTexts(filters, parseInt(query.page, 10), itemPerPage);
+      loadingAndGetTexts(filters, parseInt(query.page, 10), itemPerPage);
     } else {
-      this.loadingAndGetTexts(filters, 1, itemPerPage);
+      loadingAndGetTexts(filters, 1, itemPerPage);
     }
-  }
-
-  componentDidMount() {
-    const { getLanguages } = this.props;
     getLanguages();
-  }
+  }, [])
 
-  componentDidUpdate(prevProps) {
-    const { filters, location, page, itemPerPage } = this.props;
-    if (prevProps.location.search !== location.search) {
-      const query = parseQueryString(location.search);
-      if (query.page) {
-        const newPage = parseInt(query.page, 10);
-        if (newPage !== page) {
-          this.loadingAndGetTexts(filters, newPage, itemPerPage);
-        }
+  React.useEffect(() => {
+    const query = parseQueryString(location.search);
+    if (query.page) {
+      const newPage = parseInt(query.page, 10);
+      if (newPage !== page) {
+        loadingAndGetTexts(filters, newPage, itemPerPage);
       }
     }
-  }
+  }, [location.search])
 
-  onEdit = () => {
-    this.filterTexts();
-    this.setState((state) => ({ ...state, editingText: null }));
+  const onEdit = () => {
+    filterTexts();
+    setEditingText(null)
   };
 
-  loadingAndGetTexts = (filters, page, itemPerPage) => {
-    const { isLoading } = this.state;
-    const { getTexts } = this.props;
+  const loadingAndGetTexts = (filters, page, itemPerPage) => {
     if (!isLoading) {
-      this.setState({ isLoading: true });
+      setIsLoading(true)
     }
     getTexts(filters, page, itemPerPage).then(() => {
-      this.setState({ isLoading: false });
+      setIsLoading(false)
     });
   };
 
-  hideEditModal = () => {
-    this.setState((prevState) => ({ prevState, editModalVisible: false }));
+  const hideEditModal = () => {
+    setEditModalVisible(false);
   };
 
-  handleEdit = (textId) => {
-    this.setState((state) => ({
-      ...state,
-      editingText: textId,
-      editModalVisible: true,
-    }));
+  const handleEdit = (textId) => {
+    setEditingText(textId)
+    setEditModalVisible(true)
   };
 
-  handlePageChange(_, page) {
-    const { history } = this.props;
+  const handlePageChange = (_, page) => {
     history.push(`/text?page=${page.toString()}`);
   }
 
-  filterTexts(filters) {
-    const { itemPerPage } = this.props;
-    this.loadingAndGetTexts(filters, 1, itemPerPage);
+  const filterTexts = (filters) => {
+    loadingAndGetTexts(filters, 1, itemPerPage);
   }
 
-  hideCreateModal() {
-    this.setState((prevState) => ({ prevState, createModalVisible: false }));
+  const hideCreateModal = () => {
+    setCreateModalVisible(false)
   }
 
-  showCreateModal() {
-    this.setState((prevState) => ({ ...prevState, createModalVisible: true }));
+  const showCreateModal = () => {
+    setCreateModalVisible(true)
   }
 
-  render() {
-    const { filters, page, total } = this.props;
-    const {
-      createModalVisible,
-      editModalVisible,
-      editingText,
-      isLoading,
-    } = this.state;
-
-    return (
-      <>
-        <TextEditModal
-          hide={this.hideEditModal}
-          onEdit={this.onEdit}
-          editingText={editingText}
-          visible={editModalVisible}
-        />
-        <TextCreateModal
-          onChange={this.filterTexts}
-          hide={this.hideCreateModal}
-          visible={createModalVisible}
-          onCreate={this.filterTexts}
-        />
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={this.showCreateModal}
-        >
-          Add text
-        </Button>
-        <TextFilterForm onFilterChange={this.filterTexts} value={filters} />
-        <TextsTable isLoading={isLoading} onEdit={this.handleEdit} />
-        <Pagination
-          count={Math.ceil(total / 10)}
-          page={page}
-          onChange={this.handlePageChange}
-        />
-      </>
-    );
-  }
+  return (
+    <>
+      <TextEditModal
+        hide={hideEditModal}
+        onEdit={onEdit}
+        editingText={editingText}
+        visible={editModalVisible}
+      />
+      <TextCreateModal
+        onChange={filterTexts}
+        hide={hideCreateModal}
+        visible={createModalVisible}
+        onCreate={filterTexts}
+      />
+      <Button
+        color="primary"
+        variant="contained"
+        onClick={showCreateModal}
+      >
+        Add text
+      </Button>
+      <TextFilterForm onFilterChange={filterTexts} value={filters}/>
+      <TextsTable isLoading={isLoading} onEdit={handleEdit}/>
+      <Pagination
+        count={Math.ceil(total / 10)}
+        page={page}
+        onChange={handlePageChange}
+      />
+    </>
+  );
 }
 
 export default connect(
@@ -170,7 +139,7 @@ TextPage.propTypes = {
   itemPerPage: PropTypes.number.isRequired,
   page: PropTypes.number.isRequired,
   total: PropTypes.number.isRequired,
-  location: PropTypes.shape({ search: PropTypes.string }).isRequired,
+  location: PropTypes.shape({search: PropTypes.string}).isRequired,
   history: PropTypes.shape({}).isRequired,
 };
 
