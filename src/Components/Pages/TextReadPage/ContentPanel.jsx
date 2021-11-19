@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import styles from "./TextReadPage.module.scss";
 import Term from "../../Term";
 import ProgressBar from "./ProgressBar";
@@ -11,100 +11,98 @@ import {
   setViewingTermAction,
   setTermIndexEndAction,
 } from "../../../Actions/TextAction";
-import { setEditingTermAction } from "../../../Actions/TermAction";
+import {setEditingTermAction} from "../../../Actions/TermAction";
 import Loading from "../../Loading/Loading";
-import { LAST_BEGIN_INDEX_ID } from "../../Term/TermButton";
+import {LAST_BEGIN_INDEX_ID} from "../../Term/TermButton";
 import TermObserver from "../../Term/TermObserver";
+import {usePrevious} from "../../../Hooks/usePrevious";
 
 const TermCountPerProgressPoint = 50;
 
-class ContentPanel extends React.Component {
-  constructor(props) {
-    super(props);
+let displayTerms;
+let renderingLast;
+let loadTerms;
+
+const ContentPanel = (
+  {
+    end,
+    setTermIndexEnd,
+    begin,
+    termCount,
+    getTextTerms,
+    textId,
+    terms,
+    editingTerm,
+    setEditingTerm,
+    onSpeak,
+    setViewingTerm,
+    setTermIndexBegin,
+  }) => {
+  React.useEffect(() => {
     if (window.innerWidth > 700) {
       // desktop
-      this.displayTerms = 1000;
-      this.loadTerms = 300;
+      displayTerms = 1000;
+      loadTerms = 300;
     } else {
       // mobile
-      this.displayTerms = 750;
-      this.loadTerms = 150;
+      displayTerms = 750;
+      loadTerms = 150;
     }
+    setTermIndexBegin(Math.max(begin - Math.floor(displayTerms / 2), 0));
+    setTermIndexEnd(Math.min(end + displayTerms, termCount - 1));
+  }, [])
 
-    this.begin = React.createRef();
-    this.container = React.createRef();
-    this.loading = true;
-  }
+  const container = React.createRef();
+  const [loading, setLoading] = React.useState(true)
 
-  componentDidMount() {
-    const {
-      end,
-      setTermIndexEnd,
-      begin,
-      termCount,
-      setTermIndexBegin,
-    } = this.props;
-    setTermIndexBegin(Math.max(begin - Math.floor(this.displayTerms / 2), 0));
-    setTermIndexEnd(Math.min(end + this.displayTerms, termCount - 1));
-  }
-
-  componentDidUpdate(prevProps) {
-    const { begin, end, getTextTerms, textId, terms } = this.props;
+  const prevProps = usePrevious({begin})
+  React.useEffect(() => {
     if (begin < prevProps.begin) {
       getTextTerms(textId, begin, prevProps.begin);
     }
 
     if (prevProps.terms[begin] !== terms[begin]) {
-      this.scrollToLast();
+      scrollToLast();
     }
 
     // scroll to the bookmark ofter initial loading
-    if (terms[begin] && terms[end] && this.loading) {
+    if (terms[begin] && terms[end] && loading) {
       const bookmarkEl = document.getElementById("bookmark");
       if (bookmarkEl) {
-        this.loading = false;
-        bookmarkEl.scrollIntoView({ block: "center" });
+        setLoading(false);
+        bookmarkEl.scrollIntoView({block: "center"});
       }
     }
 
     if (end > prevProps.end) {
       getTextTerms(textId, prevProps.end, end);
     }
-  }
+  }, [begin, end])
 
-  scrollToLast = () => {
+
+  const scrollToLast = () => {
     const lastBeginEl = document.getElementById(LAST_BEGIN_INDEX_ID);
     if (lastBeginEl) {
       lastBeginEl.scrollIntoView();
-      this.renderingLast = false;
+      renderingLast = false;
     } else {
-      this.renderingLast = true;
+      renderingLast = true;
     }
   };
 
-  goToBookmark = () => {
+  const goToBookmark = () => {
     const bookmarkEl = document.getElementById("bookmark");
     if (bookmarkEl) {
-      bookmarkEl.scrollIntoView({ block: "center", behavior: "smooth" });
+      bookmarkEl.scrollIntoView({block: "center", behavior: "smooth"});
     }
   };
 
-  handleScroll = (e) => {
+  const handleScroll = (e) => {
     e.stopPropagation();
     e.preventDefault();
     if (e.target.id !== "contentPanel") {
       return;
     }
-    const {
-      termCount,
-      begin,
-      editingTerm,
-      setEditingTerm,
-      end,
-      setTermIndexEnd,
-      setTermIndexBegin,
-      terms,
-    } = this.props;
     if (editingTerm) {
       setEditingTerm(null);
     }
@@ -113,15 +111,15 @@ class ContentPanel extends React.Component {
       return;
     }
 
-    if (this.renderingLast) {
-      this.scrollToLast();
+    if (renderingLast) {
+      scrollToLast();
       return;
     }
 
     const top = e.target.scrollTop < 100;
     if (top) {
       if (begin > 0) {
-        setTermIndexBegin(Math.max(begin - this.loadTerms, 0));
+        setTermIndexBegin(Math.max(begin - loadTerms, 0));
         return;
       }
     }
@@ -129,14 +127,13 @@ class ContentPanel extends React.Component {
       e.target.scrollHeight - e.target.scrollTop < e.target.clientHeight + 100;
     if (bottom) {
       if (end < termCount - 1) {
-        setTermIndexEnd(Math.min(end + this.loadTerms, termCount - 1));
+        setTermIndexEnd(Math.min(end + loadTerms, termCount - 1));
       }
     }
   };
 
-  handleTermVisible = (index) => (visible) => {
+  const handleTermVisible = (index) => (visible) => {
     if (visible) {
-      const { setViewingTerm } = this.props;
       clearTimeout(window.setViewingTermTimeout);
       window.setViewingTermTimeout = setTimeout(() => {
         setViewingTerm(index);
@@ -144,63 +141,59 @@ class ContentPanel extends React.Component {
     }
   };
 
-  render() {
-    const { terms } = this.props;
-    const { begin, end, onSpeak, editingTerm } = this.props;
-    // initial loading
-    if ((!terms[begin] || !terms[end]) && this.loading) {
-      return (
-        <div style={{ height: "50%" }}>
-          <Loading />;
-        </div>
-      );
-    }
-    const termElements = [];
-    for (let i = begin; i <= end; i += 1) {
-      if (terms[i]) {
-        if (i % TermCountPerProgressPoint === 0) {
-          termElements.push(
-            <TermObserver index={i}>
-              <Term
-                onSpeak={onSpeak}
-                // eslint-disable-next-line react/no-array-index-key
-                key={i}
-                index={i}
-              />
-            </TermObserver>
-          );
-        } else {
-          termElements.push(
+  // initial loading
+  if ((!terms[begin] || !terms[end]) && loading) {
+    return (
+      <div style={{height: "50%"}}>
+        <Loading/>;
+      </div>
+    );
+  }
+  const termElements = [];
+  for (let i = begin; i <= end; i += 1) {
+    if (terms[i]) {
+      if (i % TermCountPerProgressPoint === 0) {
+        termElements.push(
+          <TermObserver index={i}>
             <Term
               onSpeak={onSpeak}
               // eslint-disable-next-line react/no-array-index-key
               key={i}
               index={i}
             />
-          );
-        }
+          </TermObserver>
+        );
+      } else {
+        termElements.push(
+          <Term
+            onSpeak={onSpeak}
+            // eslint-disable-next-line react/no-array-index-key
+            key={i}
+            index={i}
+          />
+        );
       }
     }
-
-    return (
-      <>
-        <div
-          onScroll={this.handleScroll}
-          id="contentPanel"
-          className={styles.contentPanel}
-          ref={this.container}
-        >
-          {/* end loading */}
-          {!terms[begin] && <Loading className={styles.loading} />}
-          {termElements}
-          {/* begin loading */}
-          {!terms[end] && <Loading className={styles.loading} />}
-          <ProgressBar />
-        </div>
-        {!editingTerm && <GoToBookmarkButton onClick={this.goToBookmark} />}
-      </>
-    );
   }
+
+  return (
+    <>
+      <div
+        onScroll={handleScroll}
+        id="contentPanel"
+        className={styles.contentPanel}
+        ref={container}
+      >
+        {/* end loading */}
+        {!terms[begin] && <Loading className={styles.loading}/>}
+        {termElements}
+        {/* begin loading */}
+        {!terms[end] && <Loading className={styles.loading}/>}
+        <ProgressBar/>
+      </div>
+      {!editingTerm && <GoToBookmarkButton onClick={goToBookmark}/>}
+    </>
+  );
 }
 
 ContentPanel.defaultProps = {
