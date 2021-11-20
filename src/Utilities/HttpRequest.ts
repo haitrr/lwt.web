@@ -103,7 +103,7 @@ export async function postAsync(
 
 export async function putAsync(
   url: string,
-  id: number,
+  id: number | string,
   body: object,
   handleResponse = defaultResponseHandler
 ) {
@@ -127,7 +127,7 @@ export async function putAsync(
 
 export async function getAsync(
   url: string,
-  params: {[key: string]: string},
+  params?: {[key: string]: string},
   handleResponse = defaultResponseHandler
 ) {
   let fullUrl = url;

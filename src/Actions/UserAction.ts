@@ -4,7 +4,7 @@ import {
   logout,
   registerAsync,
   getSettingAsync,
-  updateSettingAsync
+  updateSettingAsync, Credentials, Setting
 } from "../Apis/UserApi";
 
 export const USER_LOGGED_IN = "USER_LOGGED_IN";
@@ -16,7 +16,7 @@ export const USER_SETTING_UPDATE = "USER_SETTING_UPDATE";
 /**
  * user login action.
  */
-export const loginAction = createAction(USER_LOGGED_IN, async credentials => {
+export const loginAction = createAction(USER_LOGGED_IN, async (credentials: Credentials) => {
   const user = await loginAsync(credentials);
   if (user !== undefined) {
     return {
@@ -46,7 +46,7 @@ export const getSettingAction = createAction(USER_SETTING_GET, async () => {
 
 export const updateSettingAction = createAction(
   USER_SETTING_UPDATE,
-  async value => {
+  async (value : Setting)=> {
     try {
       await updateSettingAsync(value);
     } catch (e) {
@@ -54,6 +54,6 @@ export const updateSettingAction = createAction(
     }
   }
 );
-export const registerAction = createAction(USER_REGISTERED, async data => {
+export const registerAction = createAction(USER_REGISTERED, async (data: Credentials) => {
   await registerAsync(data);
 });

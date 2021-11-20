@@ -2,7 +2,7 @@ import jwt_decode from "jwt-decode";
 import { TOKEN_LOCAL_STORAGE_KEY } from "../Constants";
 
 
-interface UserData {
+export interface UserData {
   id: number;
   userName: string;
 }
