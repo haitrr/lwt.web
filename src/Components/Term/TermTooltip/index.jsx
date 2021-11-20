@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
-import { Popper } from "@material-ui/core";
-import React from "react";
-import { connect } from "react-redux";
+import {Popper} from "@material-ui/core";
+import React, {useState} from "react";
+import {connect} from "react-redux";
 import {
   dictionaryTermMeaningAction,
   editTermAction,
 } from "../../../Actions/TermAction";
-import { getNextLearningLevel, getPreviousLearningLevel } from "../../../Enums";
-import { selectDictionaryLanguage } from "../../../Selectors/UserSelectors";
+import {getNextLearningLevel, getPreviousLearningLevel} from "../../../Enums";
+import {selectDictionaryLanguage} from "../../../Selectors/UserSelectors";
 import {
   selectTermAction,
   setBookmarkAction,
@@ -16,135 +16,132 @@ import normalize from "../../../textNormalizer";
 import TermAnchor from "./TermAnchor";
 import PopoverBody from "./PopoverBody";
 
-class TermTooltip extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { loading: false, dictionaried: false, anchorEl: null };
-  }
+const TermTooltip = (
+  {
+    term,
+    bookmark,
+    onSpeak,
+    onClick,
+    onHover,
+    dictionaryLanguage,
+    readingLanguageCode,
+    textId,
+    dictionaryTerm,
+    index,
+    setBookmark,
+    setSelectingTerm,
+    editTerm
+  }) => {
+  const [loading, setLoading] = useState(false);
+  const [dictionaried, setDictionaried] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
 
-  better = () => {
-    const { term, editTerm } = this.props;
+  const better = () => {
     const newTerm = {
       ...term,
       learningLevel: getNextLearningLevel(term.learningLevel),
     };
     editTerm(newTerm);
-    this.handleSetBookmark();
+    handleSetBookmark();
   };
 
-  handleSetBookmark = () => {
-    const { textId, index, setBookmark, setSelectingTerm } = this.props;
+  const handleSetBookmark = () => {
     setBookmark(textId, index);
     setSelectingTerm(index);
   };
 
-  worse = () => {
-    const { term, editTerm } = this.props;
+  const worse = () => {
     const newTerm = {
       ...term,
       learningLevel: getPreviousLearningLevel(term.learningLevel),
     };
     editTerm(newTerm);
-    this.handleSetBookmark();
+    handleSetBookmark();
   };
 
-  speak = (e) => {
+  const speak = (e) => {
     e.preventDefault();
-    const { onSpeak, term } = this.props;
     onSpeak(term);
-    this.handleSetBookmark();
+    handleSetBookmark();
   };
 
-  handleDictionaryTerm = () => {
-    const {
-      term,
-      index,
-      dictionaryTerm,
-      dictionaryLanguage,
-      readingLanguageCode,
-    } = this.props;
-    const { dictionaried } = this.state;
+  const handleDictionaryTerm = () => {
     if (term && !dictionaried && term.meaning === "") {
       // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ loading: true, dictionaried: true }, () =>
-        dictionaryTerm(
-          normalize(term.content, readingLanguageCode),
-          readingLanguageCode,
-          dictionaryLanguage,
-          index
-        ).then(() => this.setState({ loading: false }))
-      );
+      setLoading(true)
+      setDictionaried(true)
+      dictionaryTerm(
+        normalize(term.content, readingLanguageCode),
+        readingLanguageCode,
+        dictionaryLanguage,
+        index
+      ).then(() => setLoading(false))
     }
   };
 
-  handleMouseEnter = (event) => {
+  const handleMouseEnter = (event) => {
     clearTimeout(this.hideTimout);
     clearTimeout(this.leavePopoverTimout);
-    this.setState({ anchorEl: event.currentTarget });
-    const { term } = this.props;
-    const { dictionaried } = this.state;
+    setAnchorEl(event.currentTarget)
+    const {term} = this.props;
+    const {dictionaried} = this.state;
     if (term && !dictionaried && term.meaning === "") {
       // eslint-disable-next-line react/no-did-update-set-state
       this.dictionaryTimeout = setTimeout(() => {
-        this.handleDictionaryTerm();
+        handleDictionaryTerm();
       }, 100);
     }
-    const { onHover } = this.props;
     this.hoverTimeout = setTimeout(onHover, 100);
   };
 
-  handleMouseLeave = () => {
+  const handleMouseLeave = () => {
     this.hideTimout = setTimeout(() => {
-      this.setState({ anchorEl: null });
+      setAnchorEl(null)
     }, 100);
     clearTimeout(this.hoverTimeout);
     clearTimeout(this.dictionaryTimeout);
   };
 
-  handlePopoverClose = () => {
+  const handlePopoverClose = () => {
     this.leavePopoverTimout = setTimeout(
-      () => this.setState({ anchorEl: null }),
+      () => setAnchorEl(null),
       100
     );
   };
 
-  handleMouseEnterPopper = () => {
+  const handleMouseEnterPopper = () => {
     clearTimeout(this.hideTimout);
     clearTimeout(this.leavePopoverTimout);
   };
 
-  render() {
-    const { bookmark, term, onClick } = this.props;
-    const { anchorEl, loading } = this.state;
-    const open = Boolean(anchorEl);
-    return (
-      <>
-        <TermAnchor
-          onMouseEnter={this.handleMouseEnter}
-          onMouseLeave={this.handleMouseLeave}
-          bookmark={bookmark}
+  const open = Boolean(anchorEl);
+  return (
+    <>
+      <TermAnchor
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        bookmark={bookmark}
+        term={term}
+        onClick={onClick}
+      />
+      <Popper
+        open={open}
+        anchorEl={anchorEl}
+        style={{whiteSpace: "pre-line"}}
+        placement="top"
+        onClose={handlePopoverClose}
+      >
+        <PopoverBody
+          onMouseEnter={handleMouseEnterPopper}
+          onMouseLeave={handleMouseLeave}
           term={term}
-          onClick={onClick}
+          loading={loading}
+          better={better}
+          worse={worse}
         />
-        <Popper
-          open={open}
-          anchorEl={anchorEl}
-          style={{ whiteSpace: "pre-line" }}
-          placement="top"
-          onClose={this.handlePopoverClose}
-        >
-          <PopoverBody
-            onMouseEnter={this.handleMouseEnterPopper}
-            onMouseLeave={this.handleMouseLeave}
-            term={term}
-            loading={loading}
-            better={this.better}
-            worse={this.worse}
-          />
-        </Popper>
-      </>
-    );
-  }
+      </Popper>
+    </>
+  );
 }
 
 TermTooltip.defaultProps = {
