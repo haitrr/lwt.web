@@ -1,6 +1,6 @@
 import compromise from "compromise";
 
-const normalize = (text, languageCode) => {
+const normalize = (text: string, languageCode: string) => {
   if (languageCode === "en") {
     const doc = compromise(text);
     doc.normalize({
