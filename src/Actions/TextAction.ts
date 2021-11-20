@@ -34,7 +34,7 @@ export const TEXT_TERM_COUNT_GET = "TEXT_TERM_COUNT_GET";
 export const TEXT_PROCESSED_TERM_COUNT_GET = "TEXT_PROCESSED_TERM_COUNT_GET";
 export const VIEWING_TERM_SET = "VIEWING_TERM_SET";
 
-interface TextFilter {
+export interface TextFilter {
 }
 
 /**
