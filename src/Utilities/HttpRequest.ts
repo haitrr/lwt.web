@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { TOKEN_LOCAL_STORAGE_KEY } from "../Constants";
 
-function defaultResponseErrorHandler(response) {
+function defaultResponseErrorHandler(response: any) {
   if (
     response.status === 404 ||
     response.status === 502 ||
@@ -17,7 +17,7 @@ function defaultResponseErrorHandler(response) {
         progress: undefined,
         });
   } else if (response.status === 400) {
-    response.json().then(error => {
+    response.json().then((error: any) => {
       toast.error(error.Message, {
         position: "top-right",
         autoClose: 5000,
@@ -27,7 +27,7 @@ function defaultResponseErrorHandler(response) {
         draggable: true,
         progress: undefined,
         });
-    }).catch(e => {
+    }).catch(() => {
       toast.error("Bad request", {
         position: "top-right",
         autoClose: 5000,
@@ -51,7 +51,7 @@ function defaultResponseErrorHandler(response) {
   }
   throw response;
 }
-async function defaultResponseHandler(response) {
+async function defaultResponseHandler(response: Response) {
   if (response.ok) {
     try {
       return await response.json();
@@ -69,7 +69,7 @@ function getAuthenticationHeader() {
     return { Authorization: `bearer ${token}` };
   }
 
-  return {};
+  return null;
 }
 
 /**
@@ -79,8 +79,8 @@ function getAuthenticationHeader() {
  * @param handleResponse response handler
  */
 export async function postAsync(
-  url,
-  body,
+  url: string,
+  body: object,
   handleResponse = defaultResponseHandler
 ) {
   return fetch(url, {
@@ -102,9 +102,9 @@ export async function postAsync(
 }
 
 export async function putAsync(
-  url,
-  id,
-  body,
+  url: string,
+  id: number,
+  body: object,
   handleResponse = defaultResponseHandler
 ) {
   return fetch(`${url}/${id}`, {
@@ -126,8 +126,8 @@ export async function putAsync(
 }
 
 export async function getAsync(
-  url,
-  params,
+  url: string,
+  params: {[key: string]: string},
   handleResponse = defaultResponseHandler
 ) {
   let fullUrl = url;
@@ -158,8 +158,8 @@ export async function getAsync(
 }
 
 export async function deleteAsync(
-  url,
-  params,
+  url: string,
+  params: {[key: string]: string},
   handleResponse = defaultResponseHandler
 ) {
   let fullUrl = url;
@@ -190,10 +190,10 @@ export async function deleteAsync(
 }
 
 export async function patchAsync(
-  url,
-  id,
-  field,
-  body,
+  url: string,
+  id: number,
+  field: string,
+  body: object,
   handleResponse = defaultResponseHandler
 ) {
   return fetch(`${url}/${id}/${field}`, {
