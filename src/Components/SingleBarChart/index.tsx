@@ -1,9 +1,8 @@
-import PropTypes from "prop-types";
 import React from "react";
 import classNames from "classnames";
 import styles from "./SingleBarChart.module.scss";
 
-const renderItem = (item, sum) => {
+const renderItem = (item: Item, sum: number) => {
   const className = classNames(styles.section, item.color);
   return item.value !== 0 ? (
     <span
@@ -44,17 +43,23 @@ const renderItem = (item, sum) => {
   ) : null;
 };
 
-const SingleBarChart = ({ data }) => {
+interface Item {
+  name: string;
+  color: string;
+  value: number;
+}
+
+interface Props {
+  data: Item[]
+}
+
+const SingleBarChart: React.FC<Props> = ({data}) => {
   const sum = data.map((i) => i.value).reduce((a, b) => a + b);
   return (
     <span className={`${styles.bar}`}>
       {data.map((item) => renderItem(item, sum))}
     </span>
   );
-};
-
-SingleBarChart.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 export default SingleBarChart;
