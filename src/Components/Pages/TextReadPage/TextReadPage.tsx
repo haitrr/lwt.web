@@ -36,13 +36,12 @@ const TextReadPage: React.FC<Props> = (
   useEffect(() => {
     const {params: {textId}} = match;
     readText(textId);
-    window.speechSynthesis.onvoiceschanged = setSpeechVoice;
     return () => {
       setEditingTerm(null);
     };
-  }, []);
+  }, [match, readText, setEditingTerm]);
 
-  const [utt, setUtt] = React.useState(new SpeechSynthesisUtterance())
+  const [utt] = React.useState(new SpeechSynthesisUtterance())
 
 
   const prevProps = usePrevious({language, languages})
@@ -57,7 +56,7 @@ const TextReadPage: React.FC<Props> = (
         setSpeechVoice();
       }
     };
-  }, [languages, language]);
+  } );
 
   const setSpeechVoice = () => {
     if (language && languages) {
@@ -88,6 +87,7 @@ const TextReadPage: React.FC<Props> = (
     }
   };
 
+  window.speechSynthesis.onvoiceschanged = setSpeechVoice;
   const onSpeak = (term: Term) => {
     utt.text = term.content;
     window.speechSynthesis.cancel();

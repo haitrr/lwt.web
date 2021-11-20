@@ -5,7 +5,6 @@ import {
   USER_SETTING_GET
 } from "../Actions/UserAction";
 import { getCurrentUser } from "../Utilities/JwtTokenHelper";
-import {User} from "@sentry/browser";
 
 export interface UserLanguageSetting {
   languageCode: string;

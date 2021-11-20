@@ -7,7 +7,7 @@ const Themer: React.FC = (props) => {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const { children } = props;
 
-  const palette: PaletteOptions = {
+  const palette: PaletteOptions = React.useMemo(() =>({
     type: prefersDarkMode ? "dark" : "light",
     primary: {
       main: "#33ab9f",
@@ -16,7 +16,7 @@ const Themer: React.FC = (props) => {
       main: "#ff6333",
     },
     tonalOffset: 0.2,
-  };
+  }), [prefersDarkMode]);
 
   if (prefersDarkMode) {
     palette.primary = {

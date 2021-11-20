@@ -66,7 +66,7 @@ const ContentPanel: React.FC<Props> = (
     }
     setTermIndexBegin(Math.max(begin - Math.floor(displayTerms / 2), 0));
     setTermIndexEnd(Math.min(end + displayTerms, termCount - 1));
-  }, [])
+  }, [ begin, end, setTermIndexBegin, setTermIndexEnd, termCount])
 
   const container = React.createRef<HTMLDivElement>();
   const [loading, setLoading] = React.useState(true)
@@ -97,7 +97,7 @@ const ContentPanel: React.FC<Props> = (
         getTextTerms(textId, prevProps.end, end);
       }
     }
-  }, [begin, end])
+  },[prevProps?.begin, prevProps?.terms, prevProps?.end, terms, begin, end, loading, getTextTerms, textId])
 
 
   const scrollToLast = () => {
@@ -149,16 +149,6 @@ const ContentPanel: React.FC<Props> = (
       if (end < termCount - 1) {
         setTermIndexEnd(Math.min(end + loadTerms, termCount - 1));
       }
-    }
-  };
-
-  const handleTermVisible = (index: number) => (visible: boolean) => {
-    let w = window as any
-    if (visible) {
-      clearTimeout(w.setViewingTermTimeout);
-      w.setViewingTermTimeout = setTimeout(() => {
-        setViewingTerm(index);
-      }, 200);
     }
   };
 

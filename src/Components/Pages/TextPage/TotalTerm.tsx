@@ -15,7 +15,7 @@ const TotalTerm: React.FC<Props> = ({value, record, loadTermCounts}) => {
     if (value === null) {
       loadTermCounts(record.id);
     }
-  }, [])
+  }, [loadTermCounts, record.id, value])
 
   React.useEffect(() => {
     if (
@@ -25,7 +25,7 @@ const TotalTerm: React.FC<Props> = ({value, record, loadTermCounts}) => {
     ) {
       loadTermCounts(record.id);
     }
-  }, [record?.processedTermCount])
+  }, [record?.processedTermCount, record.id, record.termCount, value, loadTermCounts])
 
   if (!value) {
     return <span>-</span>;

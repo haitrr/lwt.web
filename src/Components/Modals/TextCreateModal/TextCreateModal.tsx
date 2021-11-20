@@ -38,7 +38,7 @@ const TextCreateModal: React.FC<Props> =
       console.log(form.values)
       form.validateForm(form.values).then(errors => {
         console.log(errors)
-        if (Object.keys(errors).length == 0) {
+        if (Object.keys(errors).length === 0) {
           console.log("creating")
           setSubmitting(true);
           createText(form.values).then(() => {

@@ -20,7 +20,7 @@ const HomePage: React.FC<Props> = ({getLanguage, isLoggedIn}) => {
     if (isLoggedIn) {
       getLanguage();
     }
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return isLoggedIn ? (
     <div>

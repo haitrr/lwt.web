@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React from "react";
 import {connect} from "react-redux";
 import {TermLearningColor, TermLearningLevel} from "../../../Enums";
@@ -39,20 +38,21 @@ const TextStatistic: React.FC<Props> = (
   }) => {
   React.useEffect(() => {
     loadtermsCountByLearningLevel(textId);
-  }, [])
+  }, [loadtermsCountByLearningLevel, textId])
 
 
   const prevProps = usePrevious({bookmark, terms})
+
   React.useEffect(() => {
     if (
-      prevProps &&
-      bookmark === prevProps.bookmark &&
+      bookmark === prevProps?.bookmark &&
       terms[bookmark] &&
-      prevProps.terms[bookmark]
+      prevProps.terms[bookmark] &&
+      terms[bookmark]?.learningLevel !== terms[prevProps.bookmark].learningLevel
     ) {
       loadtermsCountByLearningLevel(textId);
     }
-  }, [terms[bookmark]?.learningLevel])
+  })
 
   if (!termsCountByLearningLevel) {
     return (

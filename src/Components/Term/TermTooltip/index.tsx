@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import {Popper} from "@material-ui/core";
 import React, {useState} from "react";
 import {connect} from "react-redux";
@@ -76,12 +75,6 @@ const TermTooltip: React.FC<Props> = (
     handleSetBookmark();
   };
 
-  const speak = (e: any) => {
-    e.preventDefault();
-    onSpeak(term);
-    handleSetBookmark();
-  };
-
   const handleDictionaryTerm = () => {
     if (term && !dictionaried && term.meaning === "") {
       // eslint-disable-next-line react/no-did-update-set-state
@@ -100,7 +93,6 @@ const TermTooltip: React.FC<Props> = (
   const leavePopoverTimout = React.useRef<any>(undefined)
   const dictionaryTimeout = React.useRef<any>(undefined)
   const hoverTimeout = React.useRef<any>(undefined)
-  const hideTimeOut = React.useRef<any>(undefined)
 
   const handleMouseEnter = (event: any) => {
     clearTimeout(hideTimout.current);
@@ -121,13 +113,6 @@ const TermTooltip: React.FC<Props> = (
     }, 100);
     clearTimeout(hoverTimeout.current);
     clearTimeout(dictionaryTimeout.current);
-  };
-
-  const handlePopoverClose = () => {
-    leavePopoverTimout.current = setTimeout(
-      () => setAnchorEl(null),
-      100
-    );
   };
 
   const handleMouseEnterPopper = () => {
@@ -164,28 +149,6 @@ const TermTooltip: React.FC<Props> = (
   );
 }
 
-TermTooltip.defaultProps = {
-  bookmark: false,
-};
-
-TermTooltip.propTypes = {
-  term: PropTypes.shape({
-    learningLevel: PropTypes.string.isRequired,
-    meaning: PropTypes.string,
-  }).isRequired,
-  bookmark: PropTypes.bool,
-  onClick: PropTypes.func.isRequired,
-  onHover: PropTypes.func.isRequired,
-  editTerm: PropTypes.func.isRequired,
-  dictionaryTerm: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
-  readingLanguageCode: PropTypes.string.isRequired,
-  dictionaryLanguage: PropTypes.string.isRequired,
-  setBookmark: PropTypes.func.isRequired,
-  textId: PropTypes.number.isRequired,
-  setSelectingTerm: PropTypes.func.isRequired,
-  onSpeak: PropTypes.func.isRequired,
-};
 export default connect(
   (state:RootState) => {
     if(!state.text.readingText) {

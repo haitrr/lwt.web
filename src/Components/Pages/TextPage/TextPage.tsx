@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import {Button} from "@material-ui/core";
 import Pagination from "@material-ui/lab/Pagination";
 import React from "react";
@@ -43,17 +42,7 @@ const TextPage: React.FC<Props> = ({filters, total, history, page, location, ite
       loadingAndGetTexts(filters, 1, itemPerPage);
     }
     getLanguages();
-  }, [])
-
-  React.useEffect(() => {
-    const query = parseQueryString(location.search);
-    if (query.page) {
-      const newPage = parseInt(query.page, 10);
-      if (newPage !== page) {
-        loadingAndGetTexts(filters, newPage, itemPerPage);
-      }
-    }
-  }, [location.search])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const onEdit = () => {
     filterTexts();
@@ -68,6 +57,22 @@ const TextPage: React.FC<Props> = ({filters, total, history, page, location, ite
       setIsLoading(false)
     });
   };
+
+  React.useEffect(() => {
+    const query = parseQueryString(location.search);
+    if (query.page) {
+      const newPage = parseInt(query.page, 10);
+      if (newPage !== page) {
+        if (!isLoading) {
+          setIsLoading(true)
+        }
+        getTexts(filters, page, itemPerPage).then(() => {
+          setIsLoading(false)
+        });
+      }
+    }
+  }, [location.search, filters, itemPerPage, page, getTexts, isLoading])
+
 
   const hideEditModal = () => {
     setEditModalVisible(false);

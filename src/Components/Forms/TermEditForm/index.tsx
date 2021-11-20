@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React from "react";
 import {connect} from "react-redux";
 import {Form, FormInstance, Input} from "antd";
@@ -86,7 +85,7 @@ const TermEditForm: React.FC<Props> = (
         formRef.current.setFieldsValue({meaning: value.meaning});
       }
     }
-  }, [index, value?.content, value?.meaning])
+  }, [index, value?.content, value?.meaning]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSubmit = (values: any) => {
     const editedTerm = {...value, ...values};

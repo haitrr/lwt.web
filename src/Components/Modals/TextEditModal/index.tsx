@@ -44,12 +44,12 @@ const TextEditModal: React.FC<Props> =
       if (editingText) {
         getEditDetail(editingText);
       }
-    }, [editingText])
+    }, [editingText]) // eslint-disable-line react-hooks/exhaustive-deps
     React.useEffect(() => {
       if (!editDetail) {
         hide();
       }
-    }, [editDetail])
+    }, [editDetail]) // eslint-disable-line react-hooks/exhaustive-deps
     const formRef = React.useRef<FormikProps<FormValues>>(null)
 
     if (!editDetail) {
@@ -60,7 +60,7 @@ const TextEditModal: React.FC<Props> =
       const form = formRef.current;
       setSubmitting(true)
       form?.validateForm(form?.values).then((errors) => {
-        if (Object.keys(errors).length == 0) {
+        if (Object.keys(errors).length === 0) {
           editText(editingText!, form?.values).then(() => {
             onEdit();
             setSubmitting(false)

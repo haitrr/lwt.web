@@ -22,7 +22,7 @@ const TextFilterForm: React.FC<Props> = ({onFilterChange, values}) => {
     textFilterTimeout = setTimeout(() => {
       onFilterChange(values);
     }, 500);
-  }, [values])
+  }, [values]) // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <Formik initialValues={{
       title: values.title,

@@ -34,13 +34,13 @@ const App: React.FC<Props> = ({user, getSetting, getLanguages}) => {
       getSetting();
     }
     getLanguages();
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   React.useEffect(() => {
     if (user.isLoggedIn) {
       getSetting();
     }
-  }, [user.isLoggedIn])
+  }, [user.isLoggedIn]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Themer>
