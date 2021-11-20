@@ -20,7 +20,6 @@ interface StateProps {
 }
 
 interface OwnProps {
-  bookmark: boolean;
   index: number;
   onSpeak: (term: TermState) => void;
 }

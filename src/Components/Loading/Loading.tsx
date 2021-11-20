@@ -5,7 +5,7 @@ import styles from "./Loading.module.scss";
 
 interface Props {
   color?: "primary" | "secondary" | "inherit";
-  className: string | null;
+  className?: string;
 }
 
 const Loading: React.FC<Props> = ({ color, className }) => {
@@ -15,10 +15,6 @@ const Loading: React.FC<Props> = ({ color, className }) => {
       <CircularProgress color={color} />
     </div>
   );
-};
-
-Loading.defaultProps = {
-  className: null,
 };
 
 export default Loading;

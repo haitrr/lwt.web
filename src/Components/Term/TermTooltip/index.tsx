@@ -15,8 +15,25 @@ import {
 import normalize from "../../../textNormalizer";
 import TermAnchor from "./TermAnchor";
 import PopoverBody from "./PopoverBody";
+import {RootState} from "../../../RootReducer";
 
-const TermTooltip = (
+interface Props {
+  term: any
+  bookmark: any
+  onSpeak: any
+  onClick: any
+  onHover: Function
+  dictionaryLanguage: any
+  readingLanguageCode: any
+  textId: number
+  dictionaryTerm: any
+  index: number
+  setBookmark: Function
+  setSelectingTerm: Function
+  editTerm: Function
+}
+
+const TermTooltip: React.FC<Props> = (
   {
     term,
     bookmark,
@@ -59,7 +76,7 @@ const TermTooltip = (
     handleSetBookmark();
   };
 
-  const speak = (e) => {
+  const speak = (e: any) => {
     e.preventDefault();
     onSpeak(term);
     handleSetBookmark();
@@ -79,39 +96,43 @@ const TermTooltip = (
     }
   };
 
-  const handleMouseEnter = (event) => {
-    clearTimeout(this.hideTimout);
-    clearTimeout(this.leavePopoverTimout);
+  const hideTimout = React.useRef<any>(undefined)
+  const leavePopoverTimout = React.useRef<any>(undefined)
+  const dictionaryTimeout = React.useRef<any>(undefined)
+  const hoverTimeout = React.useRef<any>(undefined)
+  const hideTimeOut = React.useRef<any>(undefined)
+
+  const handleMouseEnter = (event: any) => {
+    clearTimeout(hideTimout.current);
+    clearTimeout(leavePopoverTimout.current);
     setAnchorEl(event.currentTarget)
-    const {term} = this.props;
-    const {dictionaried} = this.state;
     if (term && !dictionaried && term.meaning === "") {
       // eslint-disable-next-line react/no-did-update-set-state
-      this.dictionaryTimeout = setTimeout(() => {
+      dictionaryTimeout.current = setTimeout(() => {
         handleDictionaryTerm();
       }, 100);
     }
-    this.hoverTimeout = setTimeout(onHover, 100);
+    hoverTimeout.current = setTimeout(onHover, 100);
   };
 
   const handleMouseLeave = () => {
-    this.hideTimout = setTimeout(() => {
+    hideTimout.current = setTimeout(() => {
       setAnchorEl(null)
     }, 100);
-    clearTimeout(this.hoverTimeout);
-    clearTimeout(this.dictionaryTimeout);
+    clearTimeout(hoverTimeout.current);
+    clearTimeout(dictionaryTimeout.current);
   };
 
   const handlePopoverClose = () => {
-    this.leavePopoverTimout = setTimeout(
+    leavePopoverTimout.current = setTimeout(
       () => setAnchorEl(null),
       100
     );
   };
 
   const handleMouseEnterPopper = () => {
-    clearTimeout(this.hideTimout);
-    clearTimeout(this.leavePopoverTimout);
+    clearTimeout(hideTimout.current);
+    clearTimeout(leavePopoverTimout.current);
   };
 
   const open = Boolean(anchorEl);
@@ -129,7 +150,6 @@ const TermTooltip = (
         anchorEl={anchorEl}
         style={{whiteSpace: "pre-line"}}
         placement="top"
-        onClose={handlePopoverClose}
       >
         <PopoverBody
           onMouseEnter={handleMouseEnterPopper}
@@ -167,11 +187,16 @@ TermTooltip.propTypes = {
   onSpeak: PropTypes.func.isRequired,
 };
 export default connect(
-  (state) => ({
-    dictionaryLanguage: selectDictionaryLanguage(state),
-    readingLanguageCode: state.text.readingText.languageCode,
-    textId: state.text.readingText.id,
-  }),
+  (state:RootState) => {
+    if(!state.text.readingText) {
+      throw new Error("not reading text");
+    }
+    return ({
+      dictionaryLanguage: selectDictionaryLanguage(state),
+      readingLanguageCode: state.text.readingText.languageCode,
+      textId: state.text.readingText.id,
+    });
+  },
   {
     editTerm: editTermAction,
     dictionaryTerm: dictionaryTermMeaningAction,

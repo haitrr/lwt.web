@@ -6,10 +6,14 @@ import {
   TERM_SET,
 } from "../Actions/TermAction";
 
-const defaultState = {
+export interface TermState {
+  editingTerm: number | null;
+}
+
+const defaultState: TermState = {
   editingTerm: null,
 };
-export default handleActions(
+export default handleActions<TermState, any>(
   {
     [TERM_SET]: (state, action) => {
       return { ...state, editingTerm: action.payload };

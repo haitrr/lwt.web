@@ -2,11 +2,12 @@ import { combineReducers } from "redux";
 import { languageReducer } from "./Reducers/LanguageReducer";
 import textReducer, { TextState } from "./Reducers/TextReducer";
 import { userReducer } from "./Reducers/UserReducer";
-import termReducer from "./Reducers/TermReducer";
+import termReducer, {TermState} from "./Reducers/TermReducer";
 
 export interface Language {
   code: string;
   name: string;
+  speakCode: string;
 }
 
 export interface LanguageState {
@@ -23,6 +24,7 @@ export interface RootState {
   language: LanguageState;
   text: TextState;
   user: UserState;
+  term: TermState;
 }
 
 /**

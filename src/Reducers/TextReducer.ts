@@ -59,6 +59,7 @@ export interface ReadingTextState {
   termCount: number;
   termIndexEnd: number;
   viewingTermIndex: number;
+  languageCode: string;
 }
 
 export interface TextItem {

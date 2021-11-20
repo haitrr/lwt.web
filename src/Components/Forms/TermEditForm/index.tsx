@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import {connect} from "react-redux";
-import {Form, Input} from "antd";
+import {Form, FormInstance, Input} from "antd";
 import {Button, TextField} from "@material-ui/core";
 import TermContent from "./TermContent";
 import LearningLevelSelect from "../../Inputs/LearningLevelSelect";
@@ -18,8 +18,23 @@ import {selectEditingTermValue} from "../../../Selectors/TermSelectors";
 import {selectDictionaryLanguage} from "../../../Selectors/UserSelectors";
 import {getNextLearningLevel, TermLearningLevel} from "../../../Enums";
 import {usePrevious} from "../../../Hooks/usePrevious";
+import {Language, RootState} from "../../../RootReducer";
 
-const TermEditForm = (
+interface Props  {
+  value: any
+  dictionaryLanguage: string
+  languages: Language[]
+  languageCode: string
+  dictionaryTerm: Function
+  editingTerm: number | null
+  editTerm: Function
+  createTerm: Function
+  setEditingTerm: Function
+  index: number | null,
+  className: string
+}
+
+const TermEditForm: React.FC<Props> = (
   {
     value,
     dictionaryLanguage,
@@ -30,16 +45,17 @@ const TermEditForm = (
     editTerm,
     createTerm,
     setEditingTerm,
+    className,
     index,
   }) => {
-  const formRef = React.useRef();
+  const formRef = React.createRef<FormInstance>();
 
   const [dictionary, setDictionary] = React.useState({lookingUpDictionary: false, lookedUpDictionary: false})
 
-  const prevProps = usePrevious({index})
+  const prevProps = usePrevious({index, value})
 
   React.useEffect(() => {
-    if (index !== prevProps.index) {
+    if (index !== prevProps?.index) {
       // eslint-disable-next-line react/no-did-update-set-state
       setDictionary({...dictionary, lookedUpDictionary: false})
     }
@@ -51,7 +67,7 @@ const TermEditForm = (
       value.meaning === "" &&
       !dictionary.lookedUpDictionary
     ) {
-      const {code} = languages.find((l) => l.code === languageCode);
+      const {code} = languages.find((l) => l.code === languageCode)!;
       // eslint-disable-next-line react/no-did-update-set-state
       setDictionary({lookedUpDictionary: true, lookingUpDictionary: true})
       dictionaryTerm(
@@ -61,18 +77,18 @@ const TermEditForm = (
         index
       ).finally(() => setDictionary({...dictionary, lookingUpDictionary: false}))
     }
-    if (value.index !== prevProps.value.index) {
+    if (value.index !== prevProps?.value.index) {
       if (formRef.current) {
-        formRef.current.setFieldsValue({...value});
+        formRef.current?.setFieldsValue({...value});
       }
-    } else if (value.meaning !== prevProps.value.meaning) {
+    } else if (value.meaning !== prevProps?.value.meaning) {
       if (formRef.current) {
         formRef.current.setFieldsValue({meaning: value.meaning});
       }
     }
   }, [index, value?.content, value?.meaning])
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values: any) => {
     const editedTerm = {...value, ...values};
     if (!value.id) {
       createTerm(editedTerm);
@@ -82,14 +98,14 @@ const TermEditForm = (
     setEditingTerm(null);
   };
 
-  const handleBetter = (e) => {
-    const value = formRef.current.getFieldsValue();
+  const handleBetter = (e: any) => {
+    const value = formRef.current?.getFieldsValue();
     e.preventDefault();
     const newValue = {
       ...value,
       learningLevel: getNextLearningLevel(value.learningLevel),
     };
-    formRef.current.setFieldsValue(newValue);
+    formRef.current?.setFieldsValue(newValue);
     handleSubmit(newValue);
   };
 
@@ -105,6 +121,8 @@ const TermEditForm = (
     return null;
   }
 
+  // @ts-ignore
+  // @ts-ignore
   return (
     <Form onFinish={handleSubmit} layout="inline" ref={formRef}>
       <div className={`${className} ${styles.form}`}>
@@ -122,6 +140,7 @@ const TermEditForm = (
           name="languageCode"
           initialValue={value.languageCode}
         >
+          {/*//@ts-ignore*/}
           <LanguageSelect disabled/>
         </Form.Item>
 
@@ -147,6 +166,7 @@ const TermEditForm = (
           initialValue={value.learningLevel}
           className={styles.learningLevel}
         >
+          {/*//@ts-ignore*/}
           <LearningLevelSelect/>
         </Form.Item>
         <div className={styles.buttons}>
@@ -177,43 +197,19 @@ const TermEditForm = (
     </Form>
   );
 }
-
-TermEditForm.defaultProps = {
-  className: "",
-  editingTerm: "",
-  value: null,
-  dictionaryLanguage: null,
-  index: null,
-};
-
-TermEditForm.propTypes = {
-  className: PropTypes.string,
-  createTerm: PropTypes.func.isRequired,
-  dictionaryLanguage: PropTypes.string,
-  editTerm: PropTypes.func.isRequired,
-  editingTerm: PropTypes.number,
-  form: PropTypes.shape({}).isRequired,
-  languageCode: PropTypes.string.isRequired,
-  languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  setEditingTerm: PropTypes.func.isRequired,
-  value: PropTypes.shape({
-    id: PropTypes.number,
-    content: PropTypes.string,
-    index: PropTypes.number.isRequired,
-    meaning: PropTypes.string,
-  }),
-  dictionaryTerm: PropTypes.func.isRequired,
-  index: PropTypes.number,
-};
 export default connect(
-  (state) => ({
+  (state: RootState) => {
+    if(!state.text.readingText) {
+      throw new Error("not reading text")
+    }
+    return ({
     value: {...selectEditingTermValue(state)},
     dictionaryLanguage: selectDictionaryLanguage(state),
     editingTerm: state.term.editingTerm,
     languageCode: state.text.readingText.languageCode,
     languages: state.language.languages,
     index: state.term.editingTerm,
-  }),
+  })},
   {
     setEditingTerm: setEditingTermAction,
     createTerm: createTermAction,

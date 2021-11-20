@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React from "react";
 import {connect} from "react-redux";
 import styles from "./TextReadPage.module.scss";
@@ -16,14 +15,31 @@ import Loading from "../../Loading/Loading";
 import {LAST_BEGIN_INDEX_ID} from "../../Term/TermButton";
 import TermObserver from "../../Term/TermObserver";
 import {usePrevious} from "../../../Hooks/usePrevious";
+import {Term as TermItem} from '../../../Reducers/TextReducer'
+import {RootState} from "../../../RootReducer";
 
 const TermCountPerProgressPoint = 50;
 
 let displayTerms;
-let renderingLast;
-let loadTerms;
+let renderingLast: any;
+let loadTerms: any;
 
-const ContentPanel = (
+interface Props {
+  end: number;
+  setTermIndexEnd: Function;
+  begin: number;
+  termCount: number;
+  getTextTerms: Function;
+  textId: number;
+  terms?: TermItem[],
+  editingTerm: number | null,
+  setEditingTerm: Function,
+  onSpeak: (t: TermItem) => void,
+  setViewingTerm: Function,
+  setTermIndexBegin: Function,
+}
+
+const ContentPanel: React.FC<Props> = (
   {
     end,
     setTermIndexEnd,
@@ -31,8 +47,8 @@ const ContentPanel = (
     termCount,
     getTextTerms,
     textId,
-    terms,
-    editingTerm,
+    terms = [],
+    editingTerm = null,
     setEditingTerm,
     onSpeak,
     setViewingTerm,
@@ -52,19 +68,21 @@ const ContentPanel = (
     setTermIndexEnd(Math.min(end + displayTerms, termCount - 1));
   }, [])
 
-  const container = React.createRef();
+  const container = React.createRef<HTMLDivElement>();
   const [loading, setLoading] = React.useState(true)
 
-  const prevProps = usePrevious({begin})
+  const prevProps = usePrevious({begin, terms, end})
   React.useEffect(() => {
-    if (begin < prevProps.begin) {
-      getTextTerms(textId, begin, prevProps.begin);
-    }
+    if (prevProps?.begin && prevProps?.terms) {
 
-    if (prevProps.terms[begin] !== terms[begin]) {
-      scrollToLast();
-    }
+      if (begin < prevProps.begin) {
+        getTextTerms(textId, begin, prevProps.begin);
+      }
 
+      if (prevProps.terms[begin] !== terms[begin]) {
+        scrollToLast();
+      }
+    }
     // scroll to the bookmark ofter initial loading
     if (terms[begin] && terms[end] && loading) {
       const bookmarkEl = document.getElementById("bookmark");
@@ -74,8 +92,10 @@ const ContentPanel = (
       }
     }
 
-    if (end > prevProps.end) {
-      getTextTerms(textId, prevProps.end, end);
+    if (prevProps?.end) {
+      if (end > prevProps.end) {
+        getTextTerms(textId, prevProps.end, end);
+      }
     }
   }, [begin, end])
 
@@ -97,7 +117,7 @@ const ContentPanel = (
     }
   };
 
-  const handleScroll = (e) => {
+  const handleScroll = (e: any) => {
     e.stopPropagation();
     e.preventDefault();
     if (e.target.id !== "contentPanel") {
@@ -132,10 +152,11 @@ const ContentPanel = (
     }
   };
 
-  const handleTermVisible = (index) => (visible) => {
+  const handleTermVisible = (index: number) => (visible: boolean) => {
+    let w = window as any
     if (visible) {
-      clearTimeout(window.setViewingTermTimeout);
-      window.setViewingTermTimeout = setTimeout(() => {
+      clearTimeout(w.setViewingTermTimeout);
+      w.setViewingTermTimeout = setTimeout(() => {
         setViewingTerm(index);
       }, 200);
     }
@@ -196,33 +217,19 @@ const ContentPanel = (
   );
 }
 
-ContentPanel.defaultProps = {
-  terms: null,
-  editingTerm: null,
-};
-
-ContentPanel.propTypes = {
-  terms: PropTypes.arrayOf(PropTypes.shape()),
-  textId: PropTypes.number.isRequired,
-  begin: PropTypes.number.isRequired,
-  end: PropTypes.number.isRequired,
-  setTermIndexBegin: PropTypes.func.isRequired,
-  setTermIndexEnd: PropTypes.func.isRequired,
-  termCount: PropTypes.number.isRequired,
-  getTextTerms: PropTypes.func.isRequired,
-  onSpeak: PropTypes.func.isRequired,
-  editingTerm: PropTypes.number,
-  setEditingTerm: PropTypes.func.isRequired,
-  setViewingTerm: PropTypes.func.isRequired,
-};
 export default connect(
-  (state) => ({
-    terms: state.text.readingText.terms,
-    begin: state.text.readingText.termIndexBegin,
-    end: state.text.readingText.termIndexEnd,
-    termCount: state.text.readingText.termCount,
-    editingTerm: state.term.editingTerm,
-  }),
+  (state:RootState) => {
+    if(!state.text.readingText) {
+      throw new Error("not reading text")
+    }
+    return ({
+      terms: state.text.readingText.terms,
+      begin: state.text.readingText.termIndexBegin,
+      end: state.text.readingText.termIndexEnd,
+      termCount: state.text.readingText.termCount,
+      editingTerm: state.term.editingTerm,
+    });
+  },
   {
     getTextTerms: getTextTermsAction,
     setTermIndexBegin: setTermIndexBeginAction,

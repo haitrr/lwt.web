@@ -25,7 +25,7 @@ ProgressBar.defaultProps = {
   current: 0,
 };
 
-export default connect<StateProps, null, null, RootState>(
+export default connect<StateProps, null, {}, RootState>(
   (state: RootState) => {
     if (!state.text.readingText) throw new Error();
     return {

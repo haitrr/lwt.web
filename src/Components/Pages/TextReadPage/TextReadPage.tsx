@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {readTextAction} from "../../../Actions/TextAction";
@@ -10,28 +9,48 @@ import TextStatistic from "./TextStatistic";
 import TextTitle from "./TextTitle";
 import Loading from "../../Loading/Loading";
 import {usePrevious} from "../../../Hooks/usePrevious";
+import {Language, RootState} from "../../../RootReducer";
+import {Term} from "../../../Reducers/TextReducer";
+
+interface Props {
+  readText: Function;
+  match: any;
+  setEditingTerm: Function;
+  languages: Language[],
+  language?: string;
+  id?: number;
+  bookmark?: number;
+  term: object;
+  terms?: Term[];
+}
 
 /**
  * text read page.
  */
-const TextReadPage = ({readText, match, setEditingTerm, languages, language, id, bookmark, terms}) => {
+const TextReadPage: React.FC<Props> = (
+  {
+    readText,
+    match,
+    setEditingTerm, languages, language, id, bookmark, terms
+  }) => {
   useEffect(() => {
     const {params: {textId}} = match;
     readText(textId);
-    this.utt = new SpeechSynthesisUtterance();
     window.speechSynthesis.onvoiceschanged = setSpeechVoice;
     return () => {
       setEditingTerm(null);
     };
   }, []);
 
+  const [utt, setUtt] = React.useState(new SpeechSynthesisUtterance())
+
 
   const prevProps = usePrevious({language, languages})
   useEffect(() => {
     return () => {
       const shouldSetLanguage =
-        prevProps.languages !== languages ||
-        !prevProps.language ||
+        prevProps?.languages !== languages ||
+        !prevProps?.language ||
         !prevProps.languages ||
         prevProps.language !== language;
       if (shouldSetLanguage) {
@@ -45,34 +64,34 @@ const TextReadPage = ({readText, match, setEditingTerm, languages, language, id,
       const languageS = languages.find((l) => l.code === language);
       const voices = window.speechSynthesis.getVoices();
       if (languageS) {
-        this.utt.lang = languageS.speakCode;
+        utt.lang = languageS.speakCode;
         if (languageS.speakCode === "zh-CN") {
           const googleVoice = voices.find(
             (v) => v.name === "Google 普通话（中国大陆）"
           );
           if (googleVoice) {
-            this.utt.voice = googleVoice;
+            utt.voice = googleVoice;
           } else {
-            this.utt.voice = voices.find((v) => v.lang === languageS.speakCode);
+            utt.voice = voices.find((v) => v.lang === languageS.speakCode) || null;
           }
         } else if (languageS.speakCode === "en-US") {
           const googleVoice = voices.find(
             (v) => v.name === "Google US English"
           );
           if (googleVoice) {
-            this.utt.voice = googleVoice;
+            utt.voice = googleVoice;
           } else {
-            this.utt.voice = voices.find((v) => v.lang === languageS.speakCode);
+            utt.voice = voices.find((v) => v.lang === languageS.speakCode) || null;
           }
         }
       }
     }
   };
 
-  const onSpeak = (term) => {
-    this.utt.text = term.content;
+  const onSpeak = (term: Term) => {
+    utt.text = term.content;
     window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(this.utt);
+    window.speechSynthesis.speak(utt);
   };
 
   if (!id) {
@@ -83,14 +102,14 @@ const TextReadPage = ({readText, match, setEditingTerm, languages, language, id,
     <div className={styles.readPane} id="readPanel">
       <TextTitle/>
       <TextStatistic/>
-      <ContentPanel onSpeak={onSpeak} textId={id} bookmark={bookmark}/>
+      <ContentPanel onSpeak={onSpeak} textId={id}/>
       {terms && <TermEditForm className={styles.termEditForm}/>}
     </div>
   );
 }
 
 export default connect(
-  (state) => {
+  (state: RootState) => {
     if (state.text.readingText) {
       return {
         terms: state.text.readingText.terms,
@@ -113,22 +132,5 @@ export default connect(
     id !== nextProps.id ||
     languages !== nextProps.languages ||
     language !== nextProps.language
-  );
-}));
-TextReadPage.defaultProps = {
-  language: null,
-  id: null,
-  terms: null,
-  bookmark: null,
-};
-
-TextReadPage.propTypes = {
-  match: PropTypes.shape().isRequired,
-  readText: PropTypes.func.isRequired,
-  languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  language: PropTypes.number,
-  id: PropTypes.number,
-  terms: PropTypes.arrayOf(PropTypes.shape({})),
-  bookmark: PropTypes.number,
-  setEditingTerm: PropTypes.func.isRequired,
-};
+  )
+}))

@@ -3,8 +3,8 @@ import TermButton from "../TermButton";
 import { Term } from "../../../Reducers/TextReducer";
 
 interface Props {
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
+  onMouseEnter: (event: any) => void;
+  onMouseLeave: (event: any) => void;
   bookmark: boolean;
   term: Term;
   onClick: () => void;
