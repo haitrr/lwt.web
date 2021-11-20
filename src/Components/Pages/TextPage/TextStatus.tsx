@@ -4,17 +4,24 @@ import {
   getTermCountAction,
   getProcessedTermCountAction,
 } from "../../../Actions/TextAction";
+import {TextItem} from "../../../Reducers/TextReducer";
 
-const TextStatus = ({ text, getTermCount, getProcessedTermCount }) => {
-  const [getTermCountInterval, setGetTermCountInterval] = React.useState(null);
+interface Props {
+  text: TextItem,
+  getTermCount: Function
+  getProcessedTermCount: Function
+}
+
+const TextStatus: React.FC<Props> = ({ text, getTermCount, getProcessedTermCount }) => {
+  const [getTermCountInterval, setGetTermCountInterval] = React.useState<number | undefined>();
   const [
     getProcessedTermCountInterval,
     setGetProcessedTermCountInterval,
-  ] = React.useState(null);
+  ] = React.useState<number|undefined>();
   React.useEffect(() => {
     if (text.termCount === 0) {
       if (!getTermCountInterval) {
-        const interval = setInterval(() => {
+        const interval: number = window.setInterval(() => {
           getTermCount(text.id);
         }, 2000);
         setGetTermCountInterval(interval);
@@ -35,7 +42,7 @@ const TextStatus = ({ text, getTermCount, getProcessedTermCount }) => {
   React.useEffect(() => {
     if (text.processedTermCount < text.termCount) {
       if (!getProcessedTermCountInterval) {
-        const interval = setInterval(() => {
+        const interval = window.setInterval(() => {
           getProcessedTermCount(text.id);
         }, 2000);
         setGetProcessedTermCountInterval(interval);
