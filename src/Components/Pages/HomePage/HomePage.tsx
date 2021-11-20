@@ -5,11 +5,17 @@ import {
   getLanguageAction,
   selectLanguageAction,
 } from "../../../Actions/LanguageAction";
+import {RootState} from "../../../RootReducer";
+
+interface Props {
+  getLanguage: Function;
+  isLoggedIn: boolean;
+}
 
 /**
  * Home page
  */
-const HomePage = ({getLanguage, isLoggedIn}) => {
+const HomePage: React.FC<Props> = ({getLanguage, isLoggedIn}) => {
   React.useEffect(() => {
     if (isLoggedIn) {
       getLanguage();
@@ -26,7 +32,7 @@ const HomePage = ({getLanguage, isLoggedIn}) => {
 }
 
 const connectedHomePage = connect(
-  (state) => ({
+  (state: RootState) => ({
     isLoggedIn: state.user.isLoggedIn,
     languages: state.language.languages,
     currentLanguage: state.language.currentLanguage,
