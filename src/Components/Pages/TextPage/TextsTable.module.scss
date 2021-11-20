@@ -1,0 +1,11 @@
+.title {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  max-height: 5rem;
+  display: flex;
+  justify-content: center;
+  overflow: scroll;
+  scrollbar-width: "none";
+}

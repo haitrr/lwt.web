@@ -25,6 +25,7 @@ import TermNumber from "./TermNumber";
 import { TermLearningLevel } from "../../../Enums";
 import TextStatus from "./TextStatus";
 import TotalTerm from "./TotalTerm";
+import styles from './TextsTable.module.scss'
 
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
@@ -96,11 +97,13 @@ const TextsTable: React.FC<TextsTableProps> = ({
               <TableRow key={text.id}>
                 <TableCell>
                   <div
+                    className={styles.title}
                     style={{
                       maxHeight: "5rem",
                       display: "flex",
                       justifyContent: "center",
                       overflow: "scroll",
+                      scrollbarWidth: "none",
                     }}
                   >
                     {text.title}
