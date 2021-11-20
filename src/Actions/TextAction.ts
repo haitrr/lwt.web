@@ -34,12 +34,15 @@ export const TEXT_TERM_COUNT_GET = "TEXT_TERM_COUNT_GET";
 export const TEXT_PROCESSED_TERM_COUNT_GET = "TEXT_PROCESSED_TERM_COUNT_GET";
 export const VIEWING_TERM_SET = "VIEWING_TERM_SET";
 
+interface TextFilter {
+}
+
 /**
  * get texts action
  */
 export const getTextsAction = createAction(
   TEXT_FETCHED,
-  async (filters, page, itemPerPage) => {
+  async (filters: TextFilter, page: number, itemPerPage: number) => {
     const result = await getTextsAsync(filters, page, itemPerPage);
 
     return {
@@ -56,28 +59,28 @@ export const getTextsAction = createAction(
  * set reading text.
  */
 
-export const readTextAction = createAction(TEXT_READ, (textId) =>
+export const readTextAction = createAction(TEXT_READ, (textId: number) =>
   getTextReadAsync(textId)
 );
 
 export const loadTermCountAction = createAction(
   TERM_COUNT_LOADED,
-  async (textId) => getTermCountByLearningLevelAsync(textId)
+  async (textId: number) => getTermCountByLearningLevelAsync(textId)
 );
 
 export const loadReadingTexttermsCountByLearningLevelAction = createAction(
   READING_TEXT_TERMS_COUNT_LOADED,
-  async (textId) => getTermCountByLearningLevelAsync(textId)
+  async (textId: number) => getTermCountByLearningLevelAsync(textId)
 );
 
 /**
  * create text action
  */
-export const createTextAction = createAction(TEXT_CREATED, async (text) =>
+export const createTextAction = createAction(TEXT_CREATED, async (text: Text) =>
   createTextAsync(text)
 );
 
-export const deleteTextAction = createAction(TEXT_DELETED, async (textId) => {
+export const deleteTextAction = createAction(TEXT_DELETED, async (textId: number) => {
   try {
     await deleteTextAsync(textId);
     toast.success("TextItem deleted.");
@@ -88,7 +91,7 @@ export const deleteTextAction = createAction(TEXT_DELETED, async (textId) => {
   }
 });
 
-export const editTextAction = createAction(TEXT_EDITED, async (id, text) => {
+export const editTextAction = createAction(TEXT_EDITED, async (id: number, text: Text) => {
   try {
     await editTextAsync(id, text);
     toast.success("TextItem saved successfully.");
@@ -101,7 +104,7 @@ export const editTextAction = createAction(TEXT_EDITED, async (id, text) => {
 
 export const getTextEditDetailAction = createAction(
   TEXT_EDIT_DETAIL_FETCHED,
-  async (textId) => {
+  async (textId: number) => {
     try {
       return await getTextEditDetailAsync(textId);
     } catch {
@@ -113,18 +116,18 @@ export const getTextEditDetailAction = createAction(
 
 export const setBookmarkAction = createAction(
   TEXT_BOOKMARK_SET,
-  async (id, index) => {
+  async (id: number, index: number) => {
     await setTextBookmarkAsync(id, index);
   }
 );
 export const selectTermAction = createAction(
   TEXT_TERM_SELECT,
-  async (index) => index
+  async (index: number) => index
 );
 
 export const getTextTermsAction = createAction(
   TEXT_TERM_LOADED,
-  async (textId, indexFrom, indexTo) => {
+  async (textId: number, indexFrom: number, indexTo: number) => {
     const result = await getTextTermsAsync(textId, indexFrom, indexTo);
     return { ...result, begin: indexFrom, end: indexTo };
   }
@@ -132,32 +135,32 @@ export const getTextTermsAction = createAction(
 
 export const setTermIndexBeginAction = createAction(
   TERM_INDEX_BEGIN_SET,
-  (begin) => begin
+  (begin: number) => begin
 );
 export const setTermIndexEndAction = createAction(
   TERM_INDEX_END_SET,
-  (end) => end
+  (end: number) => end
 );
 
-export const setViewingTermAction = (index) => (dispatch) => {
+export const setViewingTermAction = (index: number) => (dispatch: Function) => {
   dispatch({ type: VIEWING_TERM_SET, payload: { index } });
 };
 
 export const getTermCountInTextAction = createAction(
   TERM_COUNT_IN_TEXT,
-  (termId, textId) => getTermCountInTextAsync(termId, textId)
+  (termId: number, textId: number) => getTermCountInTextAsync(termId, textId)
 );
 
 export const getTermCountAction = createAction(
   TEXT_TERM_COUNT_GET,
-  async (textId) => {
+  async (textId: number) => {
     const { termCount } = await getTermCountAsync(textId);
     return { termCount, textId };
   }
 );
 export const getProcessedTermCountAction = createAction(
   TEXT_PROCESSED_TERM_COUNT_GET,
-  async (textId) => {
+  async (textId: number) => {
     const { processedTermCount } = await getProcessedTermCountAsync(textId);
     return { processedTermCount, textId };
   }
