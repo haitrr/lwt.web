@@ -1,60 +1,46 @@
 import PropTypes from "prop-types";
-import React from "react";
-import { connect } from "react-redux";
-import { readTextAction } from "../../../Actions/TextAction";
-import { setEditingTermAction } from "../../../Actions/TermAction";
+import React, {useEffect} from "react";
+import {connect} from "react-redux";
+import {readTextAction} from "../../../Actions/TextAction";
+import {setEditingTermAction} from "../../../Actions/TermAction";
 import styles from "./TextReadPage.module.scss";
 import TermEditForm from "../../Forms/TermEditForm";
 import ContentPanel from "./ContentPanel";
 import TextStatistic from "./TextStatistic";
 import TextTitle from "./TextTitle";
 import Loading from "../../Loading/Loading";
+import {usePrevious} from "../../../Hooks/usePrevious";
 
 /**
  * text read page.
  */
-class TextReadPage extends React.Component {
-  componentDidMount() {
-    const {
-      readText,
-      match: {
-        params: { textId },
-      },
-    } = this.props;
+const TextReadPage = ({readText, match, setEditingTerm, languages, language, id, bookmark, terms}) => {
+  useEffect(() => {
+    const {params: {textId}} = match;
     readText(textId);
     this.utt = new SpeechSynthesisUtterance();
-    window.speechSynthesis.onvoiceschanged = this.setSpeechVoice;
-  }
+    window.speechSynthesis.onvoiceschanged = setSpeechVoice;
+    return () => {
+      setEditingTerm(null);
+    };
+  }, []);
 
-  shouldComponentUpdate(nextProps) {
-    const { terms, id, language, languages } = this.props;
-    return (
-      terms !== nextProps.terms ||
-      id !== nextProps.id ||
-      languages !== nextProps.languages ||
-      language !== nextProps.language
-    );
-  }
 
-  componentDidUpdate(prevProps) {
-    const { languages, language } = this.props;
-    const shouldSetLanguage =
-      prevProps.languages !== languages ||
-      !prevProps.language ||
-      !prevProps.languages ||
-      prevProps.language !== language;
-    if (shouldSetLanguage) {
-      this.setSpeechVoice();
-    }
-  }
+  const prevProps = usePrevious({language, languages})
+  useEffect(() => {
+    return () => {
+      const shouldSetLanguage =
+        prevProps.languages !== languages ||
+        !prevProps.language ||
+        !prevProps.languages ||
+        prevProps.language !== language;
+      if (shouldSetLanguage) {
+        setSpeechVoice();
+      }
+    };
+  }, [languages, language]);
 
-  componentWillUnmount() {
-    const { setEditingTerm } = this.props;
-    setEditingTerm(null);
-  }
-
-  setSpeechVoice = () => {
-    const { languages, language } = this.props;
+  const setSpeechVoice = () => {
     if (language && languages) {
       const languageS = languages.find((l) => l.code === language);
       const voices = window.speechSynthesis.getVoices();
@@ -83,27 +69,24 @@ class TextReadPage extends React.Component {
     }
   };
 
-  onSpeak = (term) => {
+  const onSpeak = (term) => {
     this.utt.text = term.content;
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(this.utt);
   };
 
-  render() {
-    const { terms, bookmark, id } = this.props;
-    if (!id) {
-      return <Loading />;
-    }
-
-    return (
-      <div className={styles.readPane} id="readPanel">
-        <TextTitle />
-        <TextStatistic />
-        <ContentPanel onSpeak={this.onSpeak} textId={id} bookmark={bookmark} />
-        {terms && <TermEditForm className={styles.termEditForm} />}
-      </div>
-    );
+  if (!id) {
+    return <Loading/>;
   }
+
+  return (
+    <div className={styles.readPane} id="readPanel">
+      <TextTitle/>
+      <TextStatistic/>
+      <ContentPanel onSpeak={onSpeak} textId={id} bookmark={bookmark}/>
+      {terms && <TermEditForm className={styles.termEditForm}/>}
+    </div>
+  );
 }
 
 export default connect(
@@ -117,13 +100,21 @@ export default connect(
         bookmark: state.text.readingText.bookmark,
       };
     }
-    return { languages: state.language.languages };
+    return {languages: state.language.languages};
   },
   {
     readText: readTextAction,
     setEditingTerm: setEditingTermAction,
   }
-)(TextReadPage);
+)(React.memo(TextReadPage, (prevProps, nextProps) => {
+  const {terms, id, language, languages} = prevProps;
+  return !(
+    terms !== nextProps.terms ||
+    id !== nextProps.id ||
+    languages !== nextProps.languages ||
+    language !== nextProps.language
+  );
+}));
 TextReadPage.defaultProps = {
   language: null,
   id: null,
