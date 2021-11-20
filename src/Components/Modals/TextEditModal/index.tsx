@@ -40,22 +40,21 @@ const TextEditModal: React.FC<Props> =
      onEdit
    }) => {
     const [submitting, setSubmitting] = React.useState(false)
-    if (!editDetail) {
-      return null;
-    }
     React.useEffect(() => {
       if (editingText) {
         getEditDetail(editingText);
       }
     }, [editingText])
-
     React.useEffect(() => {
       if (!editDetail) {
         hide();
       }
     }, [editDetail])
-
     const formRef = React.useRef<FormikProps<FormValues>>(null)
+
+    if (!editDetail) {
+      return null;
+    }
 
     const handleOk = () => {
       const form = formRef.current;

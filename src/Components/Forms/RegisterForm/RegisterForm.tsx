@@ -23,16 +23,15 @@ type Props = OwnProps & DispatchProps & RouteComponentProps;
 
 const RegisterForm: React.FC<Props> = ({register}) => {
   const [submitting, setSubmitting] = React.useState(false)
+  const history = useHistory()
 
   const handleRegister = (data: any): Promise<any> => {
-    const history = useHistory()
     return register(data).then(() => {
       history.push("/login");
     });
   };
 
   const handleSubmit = (values: FormValues) => {
-    const history = useHistory()
     if (values.password !== values.repeatPassword) {
       toast.error("Passwords not match");
       return;

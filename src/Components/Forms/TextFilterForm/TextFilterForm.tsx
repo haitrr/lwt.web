@@ -16,42 +16,42 @@ let textFilterTimeout: any = null;
 /**
  * text filter form
  */
-const TextFilterForm: React.FC<Props> = ({onFilterChange, values}) => (
-  <Formik initialValues={{
-    title: values.title,
-    languageCode: values.languageCode,
-  }} onSubmit={() => {
-  }}>
-    {({values, handleChange}) => {
-      React.useEffect(() => {
-        clearTimeout(textFilterTimeout);
-        textFilterTimeout = setTimeout(() => {
-          onFilterChange(values);
-        }, 500);
-      }, [values])
-      console.log(values)
-
-      return <Form>
-        <LanguageSelect
-          name="languageCode"
-          value={values.languageCode}
-          onChange={handleChange}
-        />
-        <TextField
-          name="title"
-          variant="outlined"
-          margin="dense"
-          label="Title"
-          className={styles.titleInput}
-          value={values.title}
-          placeholder="Title"
-          onChange={handleChange}
-        />
-        <hr/>
-      </Form>
-    }}
-  </Formik>
-);
+const TextFilterForm: React.FC<Props> = ({onFilterChange, values}) => {
+  React.useEffect(() => {
+    clearTimeout(textFilterTimeout);
+    textFilterTimeout = setTimeout(() => {
+      onFilterChange(values);
+    }, 500);
+  }, [values])
+  return (
+    <Formik initialValues={{
+      title: values.title,
+      languageCode: values.languageCode,
+    }} onSubmit={() => {
+    }}>
+      {({values, handleChange}) => {
+        return <Form>
+          <LanguageSelect
+            name="languageCode"
+            value={values.languageCode}
+            onChange={handleChange}
+          />
+          <TextField
+            name="title"
+            variant="outlined"
+            margin="dense"
+            label="Title"
+            className={styles.titleInput}
+            value={values.title}
+            placeholder="Title"
+            onChange={handleChange}
+          />
+          <hr/>
+        </Form>
+      }}
+    </Formik>
+  );
+};
 
 TextFilterForm.propTypes = {
   onFilterChange: PropTypes.func.isRequired,

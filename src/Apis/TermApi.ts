@@ -35,6 +35,6 @@ export async function editTermAsync(term: Term) {
   return putAsync(`${API_ROOT}/term`, term.id, term);
 }
 
-export async function getTermMeaningAsync(id: Term) {
+export async function getTermMeaningAsync(id: number) {
   return getAsync(`${API_ROOT}/term/${id}/meaning`);
 }

@@ -25,7 +25,7 @@ interface OwnProps {
 }
 
 interface DispatchProps {
-  setEditingTerm: (index: number) => void;
+  setEditingTerm: Function;
   getTermMeaning: (term: TermState, index: number) => void;
   getTermCountInText: (termId: number, textId: number) => void;
 }
@@ -131,7 +131,7 @@ export default connect(
     getTermMeaning: getTermMeaningAction,
     getTermCountInText: getTermCountInTextAction,
   }
-)(React.memo(Term, ((prevProps, nextProps) => {
+)(React.memo(Term, (prevProps, nextProps) => {
   const {term, bookmark, isLastBeginIndex} = nextProps;
   return !(
     nextProps.term.learningLevel !== term.learningLevel ||
@@ -140,4 +140,4 @@ export default connect(
     nextProps.bookmark !== bookmark ||
     isLastBeginIndex !== nextProps.isLastBeginIndex
   );
-})));
+}));
