@@ -41,7 +41,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "lint": "eslint --fix --ext .js,.jsx .",
+    "lint": "eslint --fix --ext .ts,.tsx .",
     "build-lm": "react-scripts --max_old_space_size=4096 build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -61,5 +61,10 @@
     "@types/react-router-dom": "^5.1.6",
     "@types/redux-actions": "^2.6.1",
     "@types/redux-promise": "^0.5.29"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
   }
 }
