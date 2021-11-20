@@ -13,7 +13,7 @@ import {FormikProps} from "formik";
 
 interface OwnProps {
   hide: () => void;
-  editingText: number;
+  editingText: number | null;
   onEdit: () => void;
   visible: boolean;
 }
@@ -24,7 +24,7 @@ interface DispatchProps {
 }
 
 interface StateProps {
-  editDetail: TextEditDetail | null;
+  editDetail?: TextEditDetail;
 }
 
 type Props = OwnProps & StateProps & DispatchProps;
@@ -62,7 +62,7 @@ const TextEditModal: React.FC<Props> =
       setSubmitting(true)
       form?.validateForm(form?.values).then((errors) => {
         if (Object.keys(errors).length == 0) {
-          editText(editingText, form?.values).then(() => {
+          editText(editingText!, form?.values).then(() => {
             onEdit();
             setSubmitting(false)
             form?.resetForm();

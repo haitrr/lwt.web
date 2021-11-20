@@ -34,7 +34,7 @@ export interface TextState {
   itemPerPage: number;
   page: number;
   filters: any;
-  editDetail: TextEditDetail | null;
+  editDetail: TextEditDetail | undefined;
   texts: TextItem[];
   readingText: ReadingTextState | null;
 }
@@ -80,7 +80,7 @@ const defaultState = {
   itemPerPage: 10,
   total: 0,
   filters: {},
-  editDetail: null,
+  editDetail: undefined,
   readingText: null,
 };
 

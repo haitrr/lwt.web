@@ -4,9 +4,11 @@ import React from "react";
 import LanguageSelect from "../../Inputs/LanguageSelect";
 import styles from "./TextFilterForm.module.scss";
 import {Form, Formik} from "formik";
+import {TextFilter} from "../../../Actions/TextAction";
 
 interface Props {
   onFilterChange: any
+  values: TextFilter
 }
 
 let textFilterTimeout: any = null;
@@ -14,10 +16,10 @@ let textFilterTimeout: any = null;
 /**
  * text filter form
  */
-const TextFilterForm: React.FC<Props> = ({onFilterChange}) => (
+const TextFilterForm: React.FC<Props> = ({onFilterChange, values}) => (
   <Formik initialValues={{
-    title: "",
-    languageCode: ""
+    title: values.title,
+    languageCode: values.languageCode,
   }} onSubmit={() => {
   }}>
     {({values, handleChange}) => {
