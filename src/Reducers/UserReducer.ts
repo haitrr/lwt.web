@@ -5,12 +5,25 @@ import {
   USER_SETTING_GET
 } from "../Actions/UserAction";
 import { getCurrentUser } from "../Utilities/JwtTokenHelper";
+import {User} from "@sentry/browser";
+
+export interface UserLanguageSetting {
+  languageCode: string;
+  dictionaryLanguageCode: string;
+}
+
+export interface UserState {
+  isLoggedIn: boolean;
+  languageSettings?: UserLanguageSetting[]
+  id?: number;
+  userName?: string;
+}
 
 const user = getCurrentUser();
 /**
  * default state
  */
-const defaultState =
+const defaultState: UserState =
   user != null ? { isLoggedIn: true, ...user } : { isLoggedIn: false };
 
 /**

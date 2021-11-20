@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React from "react";
 import {connect} from "react-redux";
 import {Field, Form, withFormik} from "formik";
@@ -7,8 +6,28 @@ import styles from "./UserPage.module.scss";
 import {updateSettingAction} from "../../../Actions/UserAction";
 import {LanguageCode} from "../../../Enums";
 import LanguageSelect from "../../Inputs/LanguageSelect/LanguageSelect";
+import {Language, RootState} from "../../../RootReducer";
+import {UserLanguageSetting} from "../../../Reducers/UserReducer";
 
-const UserPage = ({languages, setFieldValue, values, handleChange}) => {
+interface StateProps {
+  setFieldValue: any
+  values: FormValues
+  handleChange: any,
+}
+
+interface OwnProps {
+  languages: Language[]
+  updateUserSetting: Function,
+  user: any,
+}
+
+type Props = StateProps & OwnProps
+
+interface FormValues {
+  languageSettings: UserLanguageSetting[]
+}
+
+const UserPage: React.FC<Props> = ({languages, setFieldValue, values, handleChange}) => {
   const onAddLanguageSetting = () => {
     const {languageSettings} = values;
     const newLanguageSettings = [...languageSettings];
@@ -37,7 +56,7 @@ const UserPage = ({languages, setFieldValue, values, handleChange}) => {
           ? values.languageSettings.map((ls, i) => (
             <div>
               <h1>
-                {languages.find((l) => l.code === ls.languageCode).name}
+                {languages.find((l) => l.code === ls.languageCode)!.name}
               </h1>
               <Field
                 component={LanguageSelect}
@@ -67,14 +86,8 @@ const UserPage = ({languages, setFieldValue, values, handleChange}) => {
   );
 }
 
-UserPage.propTypes = {
-  handleChange: PropTypes.func.isRequired,
-  languages: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  values: PropTypes.shape({}).isRequired,
-};
-
 const connectedUserPage = connect(
-  (state) => ({
+  (state: RootState) => ({
     user: state.user,
     languages: state.language.languages,
   }),
@@ -82,7 +95,7 @@ const connectedUserPage = connect(
     updateUserSetting: updateSettingAction,
   }
 )(
-  withFormik({
+  withFormik<OwnProps, FormValues>({
     handleSubmit: (values, {props}) => {
       props.updateUserSetting(values);
     },
