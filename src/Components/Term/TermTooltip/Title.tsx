@@ -1,6 +1,7 @@
 import React from "react";
 import { importantColors } from "../../../Enums";
 import { Term } from "../../../Reducers/TextReducer";
+import styles from './Title.module.scss'
 
 interface Props {
   term: Term;
@@ -17,7 +18,7 @@ const Title: React.FC<Props> = ({ term }) => {
         <div>Loading term count</div>
       )}
       <hr />
-      <div style={{ maxHeight: "20vh", overflow: "scroll" }}>
+      <div className={styles.meaning}>
         {term.meaning}
       </div>
       <hr />
