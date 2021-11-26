@@ -96,10 +96,6 @@ const TextStatistic: React.FC<Props> = (
   );
 }
 
-TextStatistic.defaultProps = {
-  termsCountByLearningLevel: undefined,
-};
-
 export default connect(
   (state: RootState) => {
     if (state.text.readingText == null) {
