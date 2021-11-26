@@ -19,7 +19,7 @@ function getPracticeCount(termCount: number, termCountByLearningLevel: any) {
 }
 
 interface Props {
-  loadtermsCountByLearningLevel: Function;
+  loadTermsCountByLearningLevel: Function;
   termCount: number;
   termsCountByLearningLevel: any;
   textId: number;
@@ -29,7 +29,7 @@ interface Props {
 
 const TextStatistic: React.FC<Props> = (
   {
-    loadtermsCountByLearningLevel,
+    loadTermsCountByLearningLevel,
     termCount,
     termsCountByLearningLevel,
     textId,
@@ -37,8 +37,8 @@ const TextStatistic: React.FC<Props> = (
     bookmark
   }) => {
   React.useEffect(() => {
-    loadtermsCountByLearningLevel(textId);
-  }, [loadtermsCountByLearningLevel, textId])
+    loadTermsCountByLearningLevel(textId);
+  }, [loadTermsCountByLearningLevel, textId])
 
 
   const prevProps = usePrevious({bookmark, terms})
@@ -50,7 +50,7 @@ const TextStatistic: React.FC<Props> = (
       prevProps.terms[bookmark] &&
       terms[bookmark]?.learningLevel !== terms[prevProps.bookmark].learningLevel
     ) {
-      loadtermsCountByLearningLevel(textId);
+      loadTermsCountByLearningLevel(textId);
     }
   })
 
