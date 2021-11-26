@@ -132,7 +132,7 @@ export default connect(
     getTermCountInText: getTermCountInTextAction,
   }
 )(React.memo(Term, (prevProps, nextProps) => {
-  const {term, bookmark, isLastBeginIndex} = nextProps;
+  const {term, bookmark, isLastBeginIndex} = prevProps;
   return !(
     nextProps.term.learningLevel !== term.learningLevel ||
     nextProps.term.meaning !== term.meaning ||
