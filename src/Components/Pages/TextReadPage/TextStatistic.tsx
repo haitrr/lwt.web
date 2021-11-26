@@ -42,17 +42,19 @@ const TextStatistic: React.FC<Props> = (
 
 
   const prevProps = usePrevious({bookmark, terms})
-
+  const bookmarkLL = terms[bookmark]?.learningLevel
+  const prevBookmarkLL = prevProps?.terms[prevProps.bookmark].learningLevel
   React.useEffect(() => {
+    console.log(prevProps)
     if (
       bookmark === prevProps?.bookmark &&
       terms[bookmark] &&
       prevProps.terms[bookmark] &&
-      terms[bookmark]?.learningLevel !== terms[prevProps.bookmark].learningLevel
+      bookmarkLL !== prevBookmarkLL
     ) {
       loadTermsCountByLearningLevel(textId);
     }
-  })
+  }, [terms, bookmarkLL, prevBookmarkLL, bookmark, prevProps,textId, loadTermsCountByLearningLevel])
 
   if (!termsCountByLearningLevel) {
     return (
@@ -110,6 +112,6 @@ export default connect(
     });
   },
   {
-    loadtermsCountByLearningLevel: loadReadingTexttermsCountByLearningLevelAction,
+    loadTermsCountByLearningLevel: loadReadingTexttermsCountByLearningLevelAction,
   }
 )(TextStatistic);
