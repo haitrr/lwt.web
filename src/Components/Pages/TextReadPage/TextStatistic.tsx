@@ -43,7 +43,7 @@ const TextStatistic: React.FC<Props> = (
 
   const prevProps = usePrevious({bookmark, terms})
   const bookmarkLL = terms[bookmark]?.learningLevel
-  const prevBookmarkLL = prevProps?.terms[prevProps.bookmark].learningLevel
+  const prevBookmarkLL = prevProps?.terms[prevProps.bookmark]?.learningLevel
   React.useEffect(() => {
     console.log(prevProps)
     if (
