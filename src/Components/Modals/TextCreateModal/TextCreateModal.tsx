@@ -33,17 +33,12 @@ const TextCreateModal: React.FC<Props> =
 
     const handleOk = (e: any) => {
       e.preventDefault();
-      console.log("submitting")
       const form = formRef.current;
       if (!form) throw new Error();
-      console.log(form.values)
       form.validateForm(form.values).then(errors => {
-        console.log(errors)
         if (Object.keys(errors).length === 0) {
-          console.log("creating")
           setSubmitting(true);
           createText(form.values).then(() => {
-            console.log("done")
             onCreate();
             setSubmitting(false);
             form.resetForm()

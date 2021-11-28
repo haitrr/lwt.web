@@ -33,7 +33,7 @@ const TextPage: React.FC<Props> = ({filters, total, history, page, location, ite
   const [createModalVisible, setCreateModalVisible] = React.useState(false)
   const [editModalVisible, setEditModalVisible] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(false)
-  const [editingText, setEditingText] = React.useState<number|null>(null)
+  const [editingText, setEditingText] = React.useState<number | null>(null)
   React.useEffect(() => {
     const query = parseQueryString(location.search);
     if (query.page) {
@@ -49,7 +49,7 @@ const TextPage: React.FC<Props> = ({filters, total, history, page, location, ite
     setEditingText(null)
   };
 
-  const loadingAndGetTexts = (filters: TextFilter| undefined, page: number, itemPerPage: number) => {
+  const loadingAndGetTexts = (filters: TextFilter | undefined, page: number, itemPerPage: number) => {
     if (!isLoading) {
       setIsLoading(true)
     }
@@ -128,6 +128,13 @@ const TextPage: React.FC<Props> = ({filters, total, history, page, location, ite
       />
     </>
   );
+}
+
+TextPage.defaultProps = {
+  filters: {
+    title: "",
+    languageCode: "",
+  },
 }
 
 export default connect(
