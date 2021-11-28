@@ -33,13 +33,13 @@ const TextReadPage: React.FC<Props> = (
     match,
     setEditingTerm, languages, language, id, bookmark, terms
   }) => {
+  const {params: {textId}} = match;
   useEffect(() => {
-    const {params: {textId}} = match;
     readText(textId);
     return () => {
       setEditingTerm(null);
     };
-  }, [match, readText, setEditingTerm]);
+  }, [textId, readText, setEditingTerm]);
 
   const [utt] = React.useState(new SpeechSynthesisUtterance())
 

@@ -66,38 +66,41 @@ const ContentPanel: React.FC<Props> = (
     }
     setTermIndexBegin(Math.max(begin - Math.floor(displayTerms / 2), 0));
     setTermIndexEnd(Math.min(end + displayTerms, termCount - 1));
-  }, [ begin, end, setTermIndexBegin, setTermIndexEnd, termCount])
+  }, [ setTermIndexBegin, setTermIndexEnd, termCount, begin, end])
 
   const container = React.createRef<HTMLDivElement>();
   const [loading, setLoading] = React.useState(true)
 
   const prevProps = usePrevious({begin, terms, end})
   React.useEffect(() => {
-    if (prevProps?.begin && prevProps?.terms) {
-
-      if (begin < prevProps.begin) {
-        getTextTerms(textId, begin, prevProps.begin);
-      }
-
-      if (prevProps.terms[begin] !== terms[begin]) {
-        scrollToLast();
-      }
-    }
-    // scroll to the bookmark ofter initial loading
-    if (terms[begin] && terms[end] && loading) {
-      const bookmarkEl = document.getElementById("bookmark");
-      if (bookmarkEl) {
-        setLoading(false);
-        bookmarkEl.scrollIntoView({block: "center"});
-      }
+    if (prevProps?.begin !== undefined && begin < prevProps?.begin) {
+      getTextTerms(textId, begin, prevProps?.begin);
     }
 
-    if (prevProps?.end) {
+    if (prevProps?.terms[begin] !== terms[begin]) {
+      scrollToLast();
+    }
+  }, [begin, prevProps, getTextTerms, terms, textId])
+
+  React.useEffect(() => {
+    if (prevProps?.end !== undefined) {
       if (end > prevProps.end) {
         getTextTerms(textId, prevProps.end, end);
       }
     }
-  },[prevProps?.begin, prevProps?.terms, prevProps?.end, terms, begin, end, loading, getTextTerms, textId])
+  }, [end, textId, prevProps, getTextTerms])
+
+  React.useEffect(() => {
+    // scroll to the bookmark ofter initial loading
+    if (terms[begin] && terms[end] && loading) {
+      setLoading(false);
+      const bookmarkEl = document.getElementById("bookmark");
+      if (bookmarkEl) {
+        bookmarkEl.scrollIntoView({block: "center"});
+      }
+    }
+
+  },[terms, begin, end, loading])
 
 
   const scrollToLast = () => {

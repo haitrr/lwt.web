@@ -45,7 +45,6 @@ const TextStatistic: React.FC<Props> = (
   const bookmarkLL = terms[bookmark]?.learningLevel
   const prevBookmarkLL = prevProps?.terms[prevProps.bookmark]?.learningLevel
   React.useEffect(() => {
-    console.log(prevProps)
     if (
       bookmark === prevProps?.bookmark &&
       terms[bookmark] &&
