@@ -11,7 +11,7 @@ interface StateProps {
 
 interface OwnProps {
   formRef: React.Ref<FormikProps<FormValues>> | undefined;
-  onSubmit: () => void;
+  onSubmit: (e: any) => void;
   onCancel: () => void;
   submitting: boolean;
 }

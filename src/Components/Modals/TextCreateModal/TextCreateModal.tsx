@@ -31,7 +31,8 @@ const TextCreateModal: React.FC<Props> =
     const formRef = React.useRef<FormikProps<FormValues>>(null);
     const [submitting, setSubmitting] = React.useState<boolean>(false);
 
-    const handleOk = () => {
+    const handleOk = (e: any) => {
+      e.preventDefault();
       console.log("submitting")
       const form = formRef.current;
       if (!form) throw new Error();
