@@ -1,8 +1,8 @@
-import {Button} from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import Pagination from "@material-ui/lab/Pagination";
 import React from "react";
-import {connect} from "react-redux";
-import {getLanguageAction} from "../../../Actions/LanguageAction";
+import { connect } from "react-redux";
+import { getLanguageAction } from "../../../Actions/LanguageAction";
 import {
   deleteTextAction,
   getTextsAction,
@@ -11,9 +11,9 @@ import {
 import TextFilterForm from "../../Forms/TextFilterForm";
 import TextCreateModal from "../../Modals/TextCreateModal";
 import TextEditModal from "../../Modals/TextEditModal";
-import {parseQueryString} from "../../../Utilities/queryString";
+import { parseQueryString } from "../../../Utilities/queryString";
 import TextsTable from "./TextsTable";
-import {RootState} from "../../../RootReducer";
+import { RootState } from "../../../RootReducer";
 
 interface Props {
   filters: TextFilter
@@ -29,13 +29,13 @@ interface Props {
 /**
  * text page
  */
-const TextPage: React.FC<Props> = ({filters, total, history, page, location, itemPerPage, getLanguages, getTexts}) => {
+const TextPage: React.FC<Props> = ({ filters, total, history, page, location, itemPerPage, getLanguages, getTexts }) => {
   const [createModalVisible, setCreateModalVisible] = React.useState(false)
   const [editModalVisible, setEditModalVisible] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(false)
   const [editingText, setEditingText] = React.useState<number | null>(null)
+  const query = parseQueryString(location.search);
   React.useEffect(() => {
-    const query = parseQueryString(location.search);
     if (query.page) {
       loadingAndGetTexts(filters, parseInt(query.page, 10), itemPerPage);
     } else {
@@ -58,20 +58,20 @@ const TextPage: React.FC<Props> = ({filters, total, history, page, location, ite
     });
   };
 
+  const myGetTexts = React.useCallback((page: number) => {
+    setIsLoading(true)
+    getTexts(filters, page, itemPerPage).then(() => {
+      setIsLoading(false)
+    });
+  }, [filters, getTexts, itemPerPage])
+
+  let queryPage = parseInt(query.page, 10);
+  if (Number.isNaN(queryPage)) {
+    queryPage = 1;
+  }
   React.useEffect(() => {
-    const query = parseQueryString(location.search);
-    if (query.page) {
-      const newPage = parseInt(query.page, 10);
-      if (newPage !== page) {
-        if (!isLoading) {
-          setIsLoading(true)
-        }
-        getTexts(filters, page, itemPerPage).then(() => {
-          setIsLoading(false)
-        });
-      }
-    }
-  }, [location.search, filters, itemPerPage, page, getTexts, isLoading])
+    myGetTexts(queryPage)
+  }, [queryPage, myGetTexts])
 
 
   const hideEditModal = () => {
@@ -119,8 +119,8 @@ const TextPage: React.FC<Props> = ({filters, total, history, page, location, ite
       >
         Add text
       </Button>
-      <TextFilterForm onFilterChange={filterTexts} values={filters}/>
-      <TextsTable isLoading={isLoading} onEdit={handleEdit}/>
+      <TextFilterForm onFilterChange={filterTexts} values={filters} />
+      <TextsTable isLoading={isLoading} onEdit={handleEdit} />
       <Pagination
         count={Math.ceil(total / 10)}
         page={page}
