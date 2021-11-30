@@ -1,24 +1,23 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Field, Form, withFormik} from "formik";
+import {Form, Formik} from "formik";
 import {Button} from "@material-ui/core";
 import styles from "./UserPage.module.scss";
 import {updateSettingAction} from "../../../Actions/UserAction";
 import {LanguageCode} from "../../../Enums";
-import LanguageSelect from "../../Inputs/LanguageSelect/LanguageSelect";
-import {Language, RootState} from "../../../RootReducer";
+import {Language, RootState, UserSetting} from "../../../RootReducer";
 import {UserLanguageSetting} from "../../../Reducers/UserReducer";
+import LanguageSettingForm from "./LanguageSettingForm";
+import Loading from "../../Loading/Loading";
 
 interface StateProps {
-  setFieldValue: any
-  values: FormValues
-  handleChange: any,
-}
-
-interface OwnProps {
   languages: Language[]
   updateUserSetting: Function,
   user: any,
+  setting: UserSetting
+}
+
+interface OwnProps {
 }
 
 type Props = StateProps & OwnProps
@@ -27,8 +26,13 @@ interface FormValues {
   languageSettings: UserLanguageSetting[]
 }
 
-const UserPage: React.FC<Props> = ({languages, setFieldValue, values, handleChange}) => {
-  const onAddLanguageSetting = () => {
+const UserPage: React.FC<Props> = (
+  {
+    languages,
+    updateUserSetting,
+    setting
+  }) => {
+  const onAddLanguageSetting = (values: FormValues, setFieldValue: Function) => {
     const {languageSettings} = values;
     const newLanguageSettings = [...languageSettings];
     for (let i = 0; i < languages.length; i += 1) {
@@ -43,65 +47,60 @@ const UserPage: React.FC<Props> = ({languages, setFieldValue, values, handleChan
     }
     setFieldValue("languageSettings", newLanguageSettings);
   };
-
-  if (!languages || !values.languageSettings) {
-    return <h1>Loading</h1>;
+  if (!setting) {
+    return <Loading/>
   }
+
   return (
     <div className={styles.root}>
-      <Form>
-        <h1>Dictionary settings</h1>
-        <br/>
-        {values.languageSettings
-          ? values.languageSettings.map((ls, i) => (
-            <div>
-              <h1>
-                {languages.find((l) => l.code === ls.languageCode)!.name}
-              </h1>
-              <Field
-                component={LanguageSelect}
-                name={`languageSettings[${i}].dictionaryLanguageCode`}
-                onChange={handleChange}
-                value={ls.dictionaryLanguageCode}
-              />
-            </div>
-          ))
-          : null}
-        <br/>
-        <Button
-          variant="contained"
-          color="secondary"
-          disabled={languages.length <= values.languageSettings.length}
-          type="button"
-          onClick={onAddLanguageSetting}
-        >
-          Add
-        </Button>
-        <br/>
-        <Button variant="contained" color="primary" type="submit">
-          Save
-        </Button>
-      </Form>
+      <Formik<FormValues>
+        initialValues={setting}
+        onSubmit={(values) => {
+          updateUserSetting(values)
+        }}
+      >
+        {({handleChange, handleSubmit, values, setFieldValue}) => {
+          return <Form onSubmit={handleSubmit}>
+            <h1>Dictionary settings</h1>
+            <LanguageSettingForm onChange={handleChange} languages={languages}
+                                 languageSettings={values.languageSettings}/>
+            <Button
+              variant="contained"
+              color="secondary"
+              disabled={languages.length <= values.languageSettings.length}
+              type="button"
+              onClick={() => onAddLanguageSetting(values, setFieldValue)}
+            >
+              Add
+            </Button>
+            <br/>
+            <Button variant="contained" color="primary" type="submit">
+              Save
+            </Button>
+          </Form>
+        }}
+      </Formik>
     </div>
   );
 }
 
-const connectedUserPage = connect(
-  (state: RootState) => ({
-    user: state.user,
-    languages: state.language.languages,
-  }),
-  {
-    updateUserSetting: updateSettingAction,
-  }
-)(
-  withFormik<OwnProps, FormValues>({
-    handleSubmit: (values, {props}) => {
-      props.updateUserSetting(values);
-    },
-    enableReinitialize: true,
-    mapPropsToValues: (props) => props.user.setting,
-  })(UserPage)
-);
+const connectedUserPage
+  =
+  connect
+  (
+    (
+      state: RootState) =>
+      ({
+        user: state.user,
+        languages: state.language.languages,
+        setting: state.user.setting
+      }),
+    {
+      updateUserSetting: updateSettingAction,
+    }
+  )
+  (
+    UserPage
+  );
 
 export default connectedUserPage;

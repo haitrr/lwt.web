@@ -5,25 +5,31 @@ import {connect} from "react-redux";
 import styles from "./LanguageSelect.module.scss";
 import {Language, RootState} from "../../../RootReducer";
 
+interface StateProps {
+  languages: Language[];
+}
+
 interface LanguageSelectProps {
   value: string | null;
-  languages: Language[];
   className?: string | undefined;
   onChange?: any;
   disabled?: boolean;
   name: string;
 }
 
-const LanguageSelect: React.FC<LanguageSelectProps> =
+type Props = StateProps & LanguageSelectProps;
+
+const LanguageSelect: React.FC<Props> =
   ({
      languages,
      value = "",
      onChange,
      disabled = false,
      className = undefined,
-     name
+     name,
    }) => {
 
+    console.log(name, onChange, value)
     const cn = classNames(className, styles.select);
     return (
       <FormControl variant="outlined" className={cn}>
@@ -47,12 +53,7 @@ const LanguageSelect: React.FC<LanguageSelectProps> =
     );
   }
 
-const shouldComponentUpdate = (prevProps: LanguageSelectProps, nextProps: LanguageSelectProps) => {
-  const {value, languages} = prevProps;
-  return value === nextProps.value && languages === nextProps.languages;
-}
-
-
-export default connect((state: RootState) => ({
-  languages: state.language.languages,
-}))(React.memo(LanguageSelect, shouldComponentUpdate));
+export default connect<StateProps, void, LanguageSelectProps, RootState>(
+  (state: RootState) => ({
+    languages: state.language.languages,
+  }))(LanguageSelect);

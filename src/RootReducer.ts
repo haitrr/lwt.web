@@ -15,7 +15,7 @@ export interface LanguageState {
   languages: Language[];
 }
 
-interface UserSetting {
+export interface UserSetting {
   languageSettings: UserLanguageSetting[]
 }
 

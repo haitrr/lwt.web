@@ -9,7 +9,7 @@ export const selectDictionaryLanguage = (state: RootState) => {
     l => l.languageCode === state.text.readingText!.languageCode
   );
   if (!language) {
-    throw new Error("not reading text")
+    throw new Error("language not found")
   }
   return language.dictionaryLanguageCode;
 };
