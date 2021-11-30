@@ -159,7 +159,7 @@ const ContentPanel: React.FC<Props> = (
   if ((!terms[begin] || !terms[end]) && loading) {
     return (
       <div style={{height: "50%"}}>
-        <Loading/>;
+        <Loading/>
       </div>
     );
   }
