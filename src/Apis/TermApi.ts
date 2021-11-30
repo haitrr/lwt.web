@@ -19,7 +19,7 @@ export async function getTextMeaningAsync(text: string, from: string, to: string
         return res.json();
       }
       if (res.status === 404) {
-        toast.info("Meaning not found in dictionary");
+        toast.info("Meaning not found in dictionary", {autoClose: 1000});
         return Promise.resolve(null);
       }
       throw res;

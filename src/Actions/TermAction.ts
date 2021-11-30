@@ -76,7 +76,7 @@ export const createTermAction = createAction(TERM_CREATED, async (term: Term) =>
 export const editTermAction = createAction(TERM_EDITED, async (term: Term) => {
   try {
     await editTermAsync(term);
-    toast.success("Term is saved");
+    toast.success("Term is saved", {autoClose: 1000});
     return term;
   } catch (e: any) {
     toast.error(
