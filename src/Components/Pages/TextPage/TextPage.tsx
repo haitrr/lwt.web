@@ -49,14 +49,12 @@ const TextPage: React.FC<Props> = ({ filters, total, history, page, location, it
     setEditingText(null)
   };
 
-  const loadingAndGetTexts = (filters: TextFilter | undefined, page: number, itemPerPage: number) => {
-    if (!isLoading) {
-      setIsLoading(true)
-    }
+  const loadingAndGetTexts = React.useCallback((filters: TextFilter | undefined, page: number, itemPerPage: number) => {
+    setIsLoading(true)
     getTexts(filters, page, itemPerPage).then(() => {
       setIsLoading(false)
     });
-  };
+  }, [getTexts])
 
   const myGetTexts = React.useCallback((page: number) => {
     setIsLoading(true)
@@ -87,9 +85,9 @@ const TextPage: React.FC<Props> = ({ filters, total, history, page, location, it
     history.push(`/text?page=${page.toString()}`);
   }
 
-  const filterTexts = (filters?: TextFilter) => {
-    loadingAndGetTexts(filters, 1, itemPerPage);
-  }
+  const filterTexts = React.useCallback((filters?: TextFilter) => {
+    loadingAndGetTexts(filters, 1, itemPerPage)
+  }, [itemPerPage, loadingAndGetTexts]);
 
   const hideCreateModal = () => {
     setCreateModalVisible(false)

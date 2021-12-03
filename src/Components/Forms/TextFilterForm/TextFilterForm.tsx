@@ -17,20 +17,37 @@ let textFilterTimeout: any = null;
  * text filter form
  */
 const TextFilterForm: React.FC<Props> = ({onFilterChange, values}) => {
+  return (
+    <Formik
+    initialValues={{
+      title: values.title,
+      languageCode: values.languageCode,
+    }}
+    onSubmit={() => {
+    }}>
+      {({values, handleChange}) => {
+        return <InnerForm values={values} handleChange={handleChange} onFilterChange={onFilterChange}/>
+      }}
+    </Formik>
+  );
+};
+
+interface InnerProps {
+  values: TextFilter;
+  handleChange: any;
+  onFilterChange: Function;
+}
+
+
+const InnerForm: React.FC<InnerProps> = ({values, onFilterChange, handleChange}) => {
   React.useEffect(() => {
     clearTimeout(textFilterTimeout);
     textFilterTimeout = setTimeout(() => {
-      onFilterChange(values);
+      onFilterChange({languageCode: values.languageCode, title: values.title});
     }, 500);
-  }, [values]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [values.languageCode, values.title, onFilterChange])
   return (
-    <Formik initialValues={{
-      title: values.title,
-      languageCode: values.languageCode,
-    }} onSubmit={() => {
-    }}>
-      {({values, handleChange}) => {
-        return <Form>
+        <Form>
           <LanguageSelect
             name="languageCode"
             value={values.languageCode}
@@ -48,10 +65,8 @@ const TextFilterForm: React.FC<Props> = ({onFilterChange, values}) => {
           />
           <hr/>
         </Form>
-      }}
-    </Formik>
   );
-};
+}
 
 TextFilterForm.propTypes = {
   onFilterChange: PropTypes.func.isRequired,

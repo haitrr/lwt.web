@@ -29,7 +29,6 @@ const LanguageSelect: React.FC<Props> =
      name,
    }) => {
 
-    console.log(name, onChange, value)
     const cn = classNames(className, styles.select);
     return (
       <FormControl variant="outlined" className={cn}>
