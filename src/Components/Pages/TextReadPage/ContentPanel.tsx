@@ -64,7 +64,6 @@ const ContentPanel: React.FC<Props> = (
       displayTerms = 750;
       loadTerms = 150;
     }
-    console.log("set begin")
     setTermIndexBegin(Math.max(begin - Math.floor(displayTerms / 2), 0));
     setTermIndexEnd(Math.min(end + displayTerms, termCount - 1));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -76,7 +75,6 @@ const ContentPanel: React.FC<Props> = (
   const prevProps = usePrevious({begin, terms, end})
   useDidMountEffect(() => {
     if (prevProps?.begin !== undefined && begin < prevProps?.begin) {
-      console.log("load previous", begin, prevProps.begin)
       getTextTerms(textId, begin, prevProps?.begin);
     }
 
@@ -88,7 +86,6 @@ const ContentPanel: React.FC<Props> = (
   useDidMountEffect(() => {
     if (prevProps?.end !== undefined) {
       if (end > prevProps.end) {
-        console.log("load more")
         getTextTerms(textId, prevProps.end, end);
       }
     }
@@ -146,7 +143,6 @@ const ContentPanel: React.FC<Props> = (
     const top = e.target.scrollTop < 100;
     if (top) {
       if (begin > 0) {
-        console.log("setting begin to "+begin)
         setTermIndexBegin(Math.max(begin - loadTerms, 0));
         return;
       }
