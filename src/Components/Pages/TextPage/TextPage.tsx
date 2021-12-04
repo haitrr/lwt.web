@@ -51,7 +51,6 @@ const TextPage: React.FC<Props> = ({ filters, total, history, page, location, it
   };
 
   const loadingAndGetTexts = React.useCallback((filters: TextFilter | undefined, page: number, itemPerPage: number) => {
-    console.log("loadingAndGetTexts")
     setIsLoading(true)
     getTexts(filters, page, itemPerPage).then(() => {
       setIsLoading(false)
