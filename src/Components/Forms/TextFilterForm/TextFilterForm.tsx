@@ -5,6 +5,7 @@ import LanguageSelect from "../../Inputs/LanguageSelect";
 import styles from "./TextFilterForm.module.scss";
 import {Form, Formik} from "formik";
 import {TextFilter} from "../../../Actions/TextAction";
+import useDidMountEffect from "../../../Hooks/useDidMountEffect";
 
 interface Props {
   onFilterChange: any
@@ -40,7 +41,7 @@ interface InnerProps {
 
 
 const InnerForm: React.FC<InnerProps> = ({values, onFilterChange, handleChange}) => {
-  React.useEffect(() => {
+  useDidMountEffect(() => {
     clearTimeout(textFilterTimeout);
     textFilterTimeout = setTimeout(() => {
       onFilterChange({languageCode: values.languageCode, title: values.title});

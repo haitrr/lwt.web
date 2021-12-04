@@ -14,6 +14,7 @@ import TextEditModal from "../../Modals/TextEditModal";
 import { parseQueryString } from "../../../Utilities/queryString";
 import TextsTable from "./TextsTable";
 import { RootState } from "../../../RootReducer";
+import useDidMountEffect from "../../../Hooks/useDidMountEffect";
 
 interface Props {
   filters: TextFilter
@@ -50,6 +51,7 @@ const TextPage: React.FC<Props> = ({ filters, total, history, page, location, it
   };
 
   const loadingAndGetTexts = React.useCallback((filters: TextFilter | undefined, page: number, itemPerPage: number) => {
+    console.log("loadingAndGetTexts")
     setIsLoading(true)
     getTexts(filters, page, itemPerPage).then(() => {
       setIsLoading(false)
@@ -67,7 +69,7 @@ const TextPage: React.FC<Props> = ({ filters, total, history, page, location, it
   if (Number.isNaN(queryPage)) {
     queryPage = 1;
   }
-  React.useEffect(() => {
+  useDidMountEffect(() => {
     myGetTexts(queryPage)
   }, [queryPage, myGetTexts])
 
