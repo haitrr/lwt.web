@@ -2,6 +2,7 @@ import React from "react";
 import { AppBar, Button, IconButton, Toolbar } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
+import InsightsIcon from '@mui/icons-material/Insights';
 import { useHistory } from "react-router";
 import HomeIcon from "@material-ui/icons/Home";
 import UserMenu from "./UserMenu";
@@ -25,6 +26,12 @@ const Header = () => {
             onClick={() => history.push("/text")}
           >
             <MenuBookIcon fontSize="large" />
+          </IconButton>
+          <IconButton
+            disabled={!isLoggedIn}
+            onClick={() => history.push("/statistics")}
+          >
+            <InsightsIcon fontSize="large" />
           </IconButton>
         </div>
         <div>

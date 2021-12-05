@@ -18,6 +18,7 @@ import Themer from "./Themer";
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {RootState, UserState} from "./RootReducer";
+import StatisticsPage from "./Components/Pages/StatisticsPage";
 
 interface Props {
   user: UserState;
@@ -58,6 +59,7 @@ const App: React.FC<Props> = ({user, getSetting, getLanguages}) => {
               <>
                 <Route path="/" exact component={HomePage}/>
                 <Route path="/text" exact component={TextPage}/>
+                <Route path="/statistics" exact component={StatisticsPage}/>
                 <Route
                   path="/text/read/:textId"
                   exact
