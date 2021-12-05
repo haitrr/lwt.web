@@ -83,3 +83,7 @@ export async function getTermCountAsync(textId: number) {
 export async function getProcessedTermCountAsync(textId: number) {
   return getAsync(`${TEXT_API}/${textId}/processed-term-count`);
 }
+
+export async function getTextCountByLanguages(): Promise<{[key: string]: number}> {
+  return getAsync(`${TEXT_API}/count`);
+}

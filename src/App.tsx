@@ -19,12 +19,15 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {RootState, UserState} from "./RootReducer";
 import StatisticsPage from "./Components/Pages/StatisticsPage";
+import {QueryClient, QueryClientProvider} from "react-query";
 
 interface Props {
   user: UserState;
   getSetting: Function;
   getLanguages: Function;
 }
+
+const queryClient = new QueryClient()
 
 /**
  * app.
@@ -45,34 +48,36 @@ const App: React.FC<Props> = ({user, getSetting, getLanguages}) => {
 
   return (
     <Themer>
-      <Paper style={{height: "-webkit-fill-available"}}>
-        <BrowserRouter>
-          <div className={styles.layout}>
-            <ToastContainer/>
-            <Helmet>
-              <title>Lwt</title>
-            </Helmet>
-            <Header/>
-            <Route path="/login" exact component={LoginPage}/>
-            <Route path="/register" exact component={RegisterPage}/>
-            {user.isLoggedIn ? (
-              <>
-                <Route path="/" exact component={HomePage}/>
-                <Route path="/text" exact component={TextPage}/>
-                <Route path="/statistics" exact component={StatisticsPage}/>
-                <Route
-                  path="/text/read/:textId"
-                  exact
-                  component={TextReadPage}
-                />
-                <Route path="/profile" exact component={UserPage}/>
-              </>
-            ) : (
-              <Redirect to="/login"/>
-            )}
-          </div>
-        </BrowserRouter>
-      </Paper>
+      <QueryClientProvider client={queryClient}>
+        <Paper style={{height: "-webkit-fill-available"}}>
+          <BrowserRouter>
+            <div className={styles.layout}>
+              <ToastContainer/>
+              <Helmet>
+                <title>Lwt</title>
+              </Helmet>
+              <Header/>
+              <Route path="/login" exact component={LoginPage}/>
+              <Route path="/register" exact component={RegisterPage}/>
+              {user.isLoggedIn ? (
+                <>
+                  <Route path="/" exact component={HomePage}/>
+                  <Route path="/text" exact component={TextPage}/>
+                  <Route path="/statistics" exact component={StatisticsPage}/>
+                  <Route
+                    path="/text/read/:textId"
+                    exact
+                    component={TextReadPage}
+                  />
+                  <Route path="/profile" exact component={UserPage}/>
+                </>
+              ) : (
+                <Redirect to="/login"/>
+              )}
+            </div>
+          </BrowserRouter>
+        </Paper>
+      </QueryClientProvider>
     </Themer>
   );
 }
