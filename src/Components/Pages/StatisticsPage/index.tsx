@@ -1,5 +1,6 @@
 import {CSSProperties} from "@material-ui/core/styles/withStyles";
 import TextCountChart from "./TextCountChart";
+import TermCountChart from "./TermCountChart";
 
 const styles: { container: CSSProperties } = {
   container: {
@@ -15,6 +16,10 @@ const StatisticsPage = () => {
     <div>Texts</div>
     <div>
       <TextCountChart/>
+    </div>
+    <div>Terms</div>
+    <div>
+      <TermCountChart/>
     </div>
   </div>
 }

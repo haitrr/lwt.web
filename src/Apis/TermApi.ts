@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { getAsync, postAsync, putAsync } from "../Utilities/HttpRequest";
-import { API_ROOT, DICTIONARY_API_ROOT } from "../Constants";
+import {API_ROOT, DICTIONARY_API_ROOT, TERM_API} from "../Constants";
 import {Term} from "../Reducers/TextReducer";
 
 export async function getTermAsync(id: number) {
@@ -37,4 +37,8 @@ export async function editTermAsync(term: Term) {
 
 export async function getTermMeaningAsync(id: number) {
   return getAsync(`${API_ROOT}/term/${id}/meaning`);
+}
+
+export async function getTermCountByLanguages(): Promise<{[key: string]: number}> {
+  return getAsync(`${TERM_API}/count`);
 }
