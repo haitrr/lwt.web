@@ -7,6 +7,7 @@ import {
   patchAsync,
 } from "../Utilities/HttpRequest";
 import {TextFilter} from "../Actions/TextAction";
+import {TextItem} from "../Reducers/TextReducer";
 
 /**
  * Get the list of text
@@ -86,4 +87,8 @@ export async function getProcessedTermCountAsync(textId: number) {
 
 export async function getTextCountByLanguages(): Promise<{[key: string]: number}> {
   return getAsync(`${TEXT_API}/count`);
+}
+
+export function getLastReadTextAsync(): Promise<TextItem | null> {
+  return getAsync(`${TEXT_API}/last-read`)
 }

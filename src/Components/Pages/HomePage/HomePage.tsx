@@ -6,6 +6,7 @@ import {
   selectLanguageAction,
 } from "../../../Actions/LanguageAction";
 import {RootState} from "../../../RootReducer";
+import LastRead from "./LastRead";
 
 interface Props {
   getLanguage: Function;
@@ -23,8 +24,8 @@ const HomePage: React.FC<Props> = ({getLanguage, isLoggedIn}) => {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return isLoggedIn ? (
-    <div>
-      <h1>Home Page</h1>
+    <div style={{padding: "2rem"}}>
+      <LastRead/>
     </div>
   ) : (
     <Redirect to="/login"/>
