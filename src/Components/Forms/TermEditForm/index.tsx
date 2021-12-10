@@ -1,6 +1,5 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Form, FormInstance, Input} from "antd";
 import {Button, TextField} from "@material-ui/core";
 import TermContent from "./TermContent";
 import LearningLevelSelect from "../../Inputs/LearningLevelSelect";
@@ -18,9 +17,11 @@ import {selectDictionaryLanguage} from "../../../Selectors/UserSelectors";
 import {getNextLearningLevel, TermLearningLevel} from "../../../Enums";
 import {usePrevious} from "../../../Hooks/usePrevious";
 import {Language, RootState} from "../../../RootReducer";
+import {Formik, Form, Field, FormikProps, FieldProps} from "formik";
+import {Term} from "../../../Reducers/TextReducer";
 
-interface Props  {
-  value: any
+interface Props {
+  value: Term;
   dictionaryLanguage: string
   languages: Language[]
   languageCode: string
@@ -29,8 +30,14 @@ interface Props  {
   editTerm: Function
   createTerm: Function
   setEditingTerm: Function
-  index: number | null,
+  index: number | null;
   className: string
+}
+
+interface FormValues {
+  content: string;
+  meaning: string;
+  learningLevel: string;
 }
 
 const TermEditForm: React.FC<Props> = (
@@ -47,7 +54,7 @@ const TermEditForm: React.FC<Props> = (
     className,
     index,
   }) => {
-  const formRef = React.createRef<FormInstance>();
+  const formRef = React.createRef<FormikProps<FormValues>>();
 
   const [dictionary, setDictionary] = React.useState({lookingUpDictionary: false, lookedUpDictionary: false})
 
@@ -78,11 +85,11 @@ const TermEditForm: React.FC<Props> = (
     }
     if (value.index !== prevProps?.value.index) {
       if (formRef.current) {
-        formRef.current?.setFieldsValue({...value});
+        formRef.current?.setValues({...value});
       }
     } else if (value.meaning !== prevProps?.value.meaning) {
       if (formRef.current) {
-        formRef.current.setFieldsValue({meaning: value.meaning});
+        formRef.current.setValues({...formRef.current.values, meaning: value.meaning});
       }
     }
   }, [index, value?.content, value?.meaning]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -98,13 +105,13 @@ const TermEditForm: React.FC<Props> = (
   };
 
   const handleBetter = (e: any) => {
-    const value = formRef.current?.getFieldsValue();
+    const value = formRef.current!.values;
     e.preventDefault();
     const newValue = {
       ...value,
       learningLevel: getNextLearningLevel(value.learningLevel),
     };
-    formRef.current?.setFieldsValue(newValue);
+    formRef.current?.setValues(newValue);
     handleSubmit(newValue);
   };
 
@@ -120,95 +127,112 @@ const TermEditForm: React.FC<Props> = (
     return null;
   }
 
-  // @ts-ignore
-  // @ts-ignore
   return (
-    <Form onFinish={handleSubmit} layout="inline" ref={formRef}>
-      <div className={`${className} ${styles.form}`}>
-        <TermContent term={value}/>
-        <Form.Item
-          className={styles.content}
-          label="Content"
-          name="content"
-          initialValue={value.content}
-        >
-          <Input disabled/>
-        </Form.Item>
-        <Form.Item
-          className={styles.language}
-          name="languageCode"
-          initialValue={value.languageCode}
-        >
-          {/*//@ts-ignore*/}
-          <LanguageSelect disabled/>
-        </Form.Item>
+    <Formik initialValues={value} onSubmit={handleSubmit} innerRef={formRef}>
+      {({values, handleChange, setFieldValue, handleBlur}) => {
+        return <Form>
+          <div className={`${className} ${styles.form}`}>
+            <TermContent term={value}/>
+            <Field
+              className={styles.content}
+              label="Content"
+              name="content"
+              component={TextField}
+              value={values.content}
+            >
+            </Field>
+            <Field
+              className={styles.language}
+              name="languageCode"
+              value={languageCode}
+              component={LanguageSelect}
+              disabled
+            >
+            </Field>
 
-        <Form.Item
-          name="meaning"
-          initialValue={value.meaning || ""}
-          className={styles.meaning}
-        >
-          <TextField
-            key="meaning"
-            variant="outlined"
-            InputLabelProps={{shrink: true}}
-            label="Meaning"
-            disabled={isActionDisabled()}
-            fullWidth
-            rows={2}
-            rowsMax={4}
-            multiline
-          />
-        </Form.Item>
-        <Form.Item
-          name="learningLevel"
-          initialValue={value.learningLevel}
-          className={styles.learningLevel}
-        >
-          {/*//@ts-ignore*/}
-          <LearningLevelSelect/>
-        </Form.Item>
-        <div className={styles.buttons}>
-          <div className={styles.saveButton}>
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={handleBetter}
-              disabled={isActionDisabled()}
-              className={styles.saveButton}
+            <Field
+              name="meaning"
+              value={values.meaning}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              className={styles.meaning}
             >
-              Better
-            </Button>
+              {({field}: FieldProps<FormValues>) => {
+                return <TextField
+                  key="meaning"
+                  variant="outlined"
+                  InputLabelProps={{shrink: true}}
+                  label="Meaning"
+                  value={field.value}
+                  disabled={isActionDisabled()}
+                  onChange={field.onChange}
+                  name={field.name}
+                  onBlur={field.onBlur}
+                  fullWidth
+                  rows={2}
+                  rowsMax={4}
+                  multiline
+                />
+              }
+              }
+            </Field>
+            <Field
+              name="learningLevel"
+              initialValue={value.learningLevel}
+              onBlur={handleBlur}
+              value={values.learningLevel}
+              className={styles.learningLevel}
+              onChange={(value: string) => {
+                setFieldValue("learningLevel", value)
+              }
+              }
+              component={LearningLevelSelect}
+            />
+            <div className={styles.buttons}>
+              <div className={styles.saveButton}>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={handleBetter}
+                  disabled={isActionDisabled()}
+                  className={styles.saveButton}
+                >
+                  Better
+                </Button>
+              </div>
+              <div className={styles.saveButton}>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  type="submit"
+                  disabled={isActionDisabled()}
+                  className={styles.saveButton}
+                >
+                  Save
+                </Button>
+              </div>
+            </div>
           </div>
-          <div className={styles.saveButton}>
-            <Button
-              color="primary"
-              variant="contained"
-              type="submit"
-              disabled={isActionDisabled()}
-              className={styles.saveButton}
-            >
-              Save
-            </Button>
-          </div>
-        </div>
-      </div>
-    </Form>
-  );
+
+        </Form>
+      }}
+    </Formik>
+  )
 }
 export default connect(
   (state: RootState) => {
-    if(!state.text.readingText) {
+    if (!state.text.readingText) {
       throw new Error("not reading text")
     }
     return ({
-    value: {...selectEditingTermValue(state)},
-    dictionaryLanguage: selectDictionaryLanguage(state),
-    editingTerm: state.term.editingTerm,
-    languageCode: state.text.readingText.languageCode,
-    languages: state.language.languages,
-    index: state.term.editingTerm,
-  })},
+      value: {...selectEditingTermValue(state)},
+      dictionaryLanguage: selectDictionaryLanguage(state),
+      editingTerm: state.term.editingTerm,
+      languageCode: state.text.readingText.languageCode,
+      languages: state.language.languages,
+      index: state.term.editingTerm,
+    })
+  },
   {
     setEditingTerm: setEditingTermAction,
     createTerm: createTermAction,

@@ -29,7 +29,7 @@ interface Props {
   value: string;
 }
 
-const LearningLevelSelect: React.FC<Props> = ({ onChange, value }) => {
+const LearningLevelSelect: React.FC<Props> = ({onChange, value}) => {
   const onClick = (val: string) => {
     onChange(val);
   };
