@@ -1,4 +1,4 @@
-import {Form} from "antd";
+import {Form, Formik} from "formik";
 import {toast} from "react-toastify";
 import {Button, TextField} from "@material-ui/core";
 import React from "react";
@@ -42,45 +42,52 @@ const RegisterForm: React.FC<Props> = ({register}) => {
       .then(() => {
         history.push("/login");
       })
-      .catch((e: Error) => {
+      .catch((_: Error) => {
         setSubmitting(false)
       })
   };
 
   return (
-    <Form onFinish={handleSubmit}>
-      <Form.Item name="userName">
-        <TextField
-          variant="outlined"
-          style={{width: "100%", marginBottom: "1rem"}}
-          placeholder="User Name"
-        />
-      </Form.Item>
-      <Form.Item name="password">
-        <TextField
-          variant="outlined"
-          style={{width: "100%", marginBottom: "1rem"}}
-          type="password"
-          placeholder="Password"
-        />
-      </Form.Item>
-      <Form.Item name="repeatPassword">
-        <TextField
-          variant="outlined"
-          style={{width: "100%", marginBottom: "1rem"}}
-          type="password"
-          placeholder="Retype password"
-        />
-      </Form.Item>
-      <Button
-        disabled={submitting}
-        variant="contained"
-        color="primary"
-        type="submit"
-      >
-        Register
-      </Button>
-    </Form>
+    <Formik initialValues={{userName: "", password: "", repeatPassword: ""}} onSubmit={handleSubmit}>
+      {({values, handleChange}) => {
+        return <Form>
+          <TextField
+            value={values.userName}
+            name="userName"
+            onChange={handleChange}
+            variant="outlined"
+            style={{width: "100%", marginBottom: "1rem"}}
+            placeholder="User Name"
+          />
+          <TextField
+            name="password"
+            value={values.password}
+            onChange={handleChange}
+            variant="outlined"
+            style={{width: "100%", marginBottom: "1rem"}}
+            type="password"
+            placeholder="Password"
+          />
+          <TextField
+            name="repeatPassword"
+            onChange={handleChange}
+            value={values.repeatPassword}
+            variant="outlined"
+            style={{width: "100%", marginBottom: "1rem"}}
+            type="password"
+            placeholder="Retype password"
+          />
+          <Button
+            disabled={submitting}
+            variant="contained"
+            color="primary"
+            type="submit"
+          >
+            Register
+          </Button>
+        </Form>
+      }}
+    </Formik>
   );
 }
 
