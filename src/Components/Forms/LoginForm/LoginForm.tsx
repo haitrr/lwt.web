@@ -1,4 +1,4 @@
-import {Form} from "antd";
+import {Form, Formik} from "formik";
 import {Button, TextField} from "@material-ui/core";
 import React, {useState} from "react";
 import {connect} from "react-redux";
@@ -29,35 +29,43 @@ const LoginForm: React.FC<Props> = ({className, login}) => {
     login(data).then(() => setLoading(false))
   };
   return (
-    <Form className={className} onFinish={handleLogin}>
-      <h1>LOGIN</h1>
-      <Form.Item name="userName" rules={[{required: true}]}>
-        <TextField
-          variant="outlined"
-          style={{width: "100%", marginBottom: "1rem"}}
-          placeholder="User name"
-        />
-      </Form.Item>
-      <Form.Item name="password" rules={[{required: true}]}>
-        <TextField
-          variant="outlined"
-          style={{width: "100%"}}
-          type="password"
-          placeholder="Password"
-        />
-      </Form.Item>
-      <Form.Item>
-        <Button
-          disabled={loading}
-          style={{marginTop: "1rem"}}
-          variant="contained"
-          color="primary"
-          type="submit"
-        >
-          Login
-        </Button>
-      </Form.Item>
-    </Form>
+    <Formik initialValues={{userName: "", password: ""}} onSubmit={handleLogin}>
+      {({values, handleChange, handleBlur}) => {
+        return <Form className={className}>
+          <h1>LOGIN</h1>
+          <TextField
+            required
+            name="userName"
+            value={values.userName}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            variant="outlined"
+            style={{width: "100%", marginBottom: "1rem"}}
+            placeholder="User name"
+          />
+          <TextField
+            required
+            name="password"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.password}
+            variant="outlined"
+            style={{width: "100%"}}
+            type="password"
+            placeholder="Password"
+          />
+          <Button
+            disabled={loading}
+            style={{marginTop: "1rem"}}
+            variant="contained"
+            color="primary"
+            type="submit"
+          >
+            Login
+          </Button>
+        </Form>
+      }}
+    </Formik>
   );
 }
 
