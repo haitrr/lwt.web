@@ -156,13 +156,13 @@ const TermEditForm: React.FC<Props> = (
                 value={values.meaning}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className={styles.meaning}
               >
                 {({field}: FieldProps<FormValues>) => {
                   return (
                     <TextField
                       key="meaning"
                       variant="outlined"
+                      InputProps={{classes: {input: styles.meaning}}}
                       InputLabelProps={{shrink: true}}
                       label="Meaning"
                       value={field.value}
