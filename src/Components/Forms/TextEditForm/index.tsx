@@ -57,7 +57,7 @@ const TextEditForm: React.FC<Props> = (props) => {
               label="Content"
               multiline
               maxRows={20}
-              rows={10}
+              minRows={10}
               placeholder="Please input text content here ..."
             />
             <hr/>

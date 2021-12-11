@@ -171,8 +171,8 @@ const TermEditForm: React.FC<Props> = (
                       name={field.name}
                       onBlur={field.onBlur}
                       fullWidth
-                      rows={2}
-                      maxRows={4}
+                      minRows={2}
+                      maxRows={5}
                       multiline
                     />
                   );
