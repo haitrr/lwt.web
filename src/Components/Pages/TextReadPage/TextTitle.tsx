@@ -8,7 +8,12 @@ interface Props {
 }
 
 const TextTitle: React.FC<Props> = ({ title }) => {
-  return <div className={styles.titleSection}>{title}</div>;
+  if (window.innerWidth > 700) {
+    return <div className={styles.titleSection}>{title}</div>;
+  } else {
+    // don't show title on mobile to save space
+    return null;
+  }
 };
 
 export default connect((state: RootState) => {
