@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Button, TextField} from "@material-ui/core";
+import {Button, TextField} from "@mui/material";
 import TermContent from "./TermContent";
 import LearningLevelSelect from "../../Inputs/LearningLevelSelect";
 import normalize from "../../../textNormalizer";
@@ -130,94 +130,98 @@ const TermEditForm: React.FC<Props> = (
   return (
     <Formik initialValues={value} onSubmit={handleSubmit} innerRef={formRef}>
       {({values, handleChange, setFieldValue, handleBlur}) => {
-        return <Form>
-          <div className={`${className} ${styles.form}`}>
-            <TermContent term={value}/>
-            <Field
-              className={styles.content}
-              label="Content"
-              name="content"
-              component={TextField}
-              value={values.content}
-            >
-            </Field>
-            <Field
-              className={styles.language}
-              name="languageCode"
-              value={languageCode}
-              component={LanguageSelect}
-              disabled
-            >
-            </Field>
+        return (
+          <Form>
+            <div className={`${className} ${styles.form}`}>
+              <TermContent term={value}/>
+              <Field
+                className={styles.content}
+                label="Content"
+                name="content"
+                component={TextField}
+                value={values.content}
+              >
+              </Field>
+              <Field
+                className={styles.language}
+                name="languageCode"
+                value={languageCode}
+                component={LanguageSelect}
+                disabled
+              >
+              </Field>
 
-            <Field
-              name="meaning"
-              value={values.meaning}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              className={styles.meaning}
-            >
-              {({field}: FieldProps<FormValues>) => {
-                return <TextField
-                  key="meaning"
-                  variant="outlined"
-                  InputLabelProps={{shrink: true}}
-                  label="Meaning"
-                  value={field.value}
-                  disabled={isActionDisabled()}
-                  onChange={field.onChange}
-                  name={field.name}
-                  onBlur={field.onBlur}
-                  fullWidth
-                  rows={2}
-                  rowsMax={4}
-                  multiline
-                />
-              }
-              }
-            </Field>
-            <Field
-              name="learningLevel"
-              initialValue={value.learningLevel}
-              onBlur={handleBlur}
-              value={values.learningLevel}
-              className={styles.learningLevel}
-              onChange={(value: string) => {
-                setFieldValue("learningLevel", value)
-              }
-              }
-              component={LearningLevelSelect}
-            />
-            <div className={styles.buttons}>
-              <div className={styles.saveButton}>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={handleBetter}
-                  disabled={isActionDisabled()}
-                  className={styles.saveButton}
-                >
-                  Better
-                </Button>
-              </div>
-              <div className={styles.saveButton}>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  type="submit"
-                  disabled={isActionDisabled()}
-                  className={styles.saveButton}
-                >
-                  Save
-                </Button>
+              <Field
+                name="meaning"
+                value={values.meaning}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={styles.meaning}
+              >
+                {({field}: FieldProps<FormValues>) => {
+                  return (
+                    <TextField
+                      key="meaning"
+                      variant="outlined"
+                      InputLabelProps={{shrink: true}}
+                      label="Meaning"
+                      value={field.value}
+                      disabled={isActionDisabled()}
+                      onChange={field.onChange}
+                      name={field.name}
+                      onBlur={field.onBlur}
+                      fullWidth
+                      rows={2}
+                      maxRows={4}
+                      multiline
+                    />
+                  );
+                }
+                }
+              </Field>
+              <Field
+                name="learningLevel"
+                initialValue={value.learningLevel}
+                onBlur={handleBlur}
+                value={values.learningLevel}
+                className={styles.learningLevel}
+                onChange={(value: string) => {
+                  setFieldValue("learningLevel", value)
+                }
+                }
+                component={LearningLevelSelect}
+              />
+              <div className={styles.buttons}>
+                <div className={styles.saveButton}>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={handleBetter}
+                    disabled={isActionDisabled()}
+                    className={styles.saveButton}
+                  >
+                    Better
+                  </Button>
+                </div>
+                <div className={styles.saveButton}>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    type="submit"
+                    disabled={isActionDisabled()}
+                    className={styles.saveButton}
+                  >
+                    Save
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
 
-        </Form>
+          </Form>
+        );
       }}
     </Formik>
-  )
+  );
 }
 export default connect(
   (state: RootState) => {

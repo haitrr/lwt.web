@@ -1,4 +1,4 @@
-import {Button, TextField} from "@material-ui/core";
+import {Button, TextField} from "@mui/material";
 import React from "react";
 import {connect} from "react-redux";
 import LanguageSelect from "../../Inputs/LanguageSelect/LanguageSelect";
@@ -63,7 +63,7 @@ const TextCreateForm: React.FC<Props> =
               value={values.content}
               multiline
               rows={10}
-              rowsMax={20}
+              maxRows={20}
               style={{width: "100%"}}
               placeholder="Please input text content here ..."
             />

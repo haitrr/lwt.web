@@ -1,4 +1,4 @@
-import {TextField} from "@material-ui/core";
+import {TextField} from "@mui/material";
 import React from "react";
 import LanguageSelect from "../../Inputs/LanguageSelect";
 import styles from "./TextFilterForm.module.scss";

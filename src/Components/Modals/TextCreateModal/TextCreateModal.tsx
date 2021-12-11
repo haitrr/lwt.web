@@ -1,7 +1,7 @@
-import Modal from "@material-ui/core/Modal";
+import Modal from "@mui/material/Modal";
 import React from "react";
 import {connect} from "react-redux";
-import {Paper, Typography} from "@material-ui/core";
+import {Paper, Typography} from "@mui/material";
 import {createTextAction} from "../../../Actions/TextAction";
 import TextCreateForm, {FormValues} from "../../Forms/TextCreateForm/TextCreateForm";
 import {FormikProps} from "formik";

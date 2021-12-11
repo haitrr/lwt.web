@@ -1,5 +1,5 @@
 import React from "react";
-import { Fab } from "@material-ui/core";
+import { Fab } from "@mui/material";
 import { connect } from "react-redux";
 import styles from "./GoToBookmarkButton.module.scss";
 import { RootState } from "../../../../RootReducer";

@@ -6,8 +6,8 @@ import {
   DialogContentText,
   DialogTitle,
   IconButton,
-} from "@material-ui/core";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+} from "@mui/material";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import React from "react";
 import { connect } from "react-redux";
 import { RootState } from "../../../RootReducer";
@@ -50,14 +50,10 @@ const DeleteTextButton: React.FC<Props> = ({ text, deleteText }) => {
 
   return (
     <div>
-      <IconButton color="secondary" onClick={handleClickOpen}>
+      <IconButton color="secondary" onClick={handleClickOpen} size="large">
         <DeleteForeverIcon />
       </IconButton>
-      <Dialog
-        disableBackdropClick={deleting}
-        open={dialogOpen}
-        onClose={handleClose}
-      >
+      <Dialog open={dialogOpen} onClose={handleClose}>
         <DialogTitle>Are you sure to delete this text forever ?</DialogTitle>
         <DialogContent>
           <DialogContentText>{text.title}</DialogContentText>

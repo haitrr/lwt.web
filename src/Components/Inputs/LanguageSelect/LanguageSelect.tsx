@@ -1,4 +1,4 @@
-import {Select, MenuItem, FormControl, InputLabel} from "@material-ui/core";
+import {Select, MenuItem, FormControl, InputLabel} from "@mui/material";
 import React from "react";
 import classNames from "classnames";
 import {connect} from "react-redux";

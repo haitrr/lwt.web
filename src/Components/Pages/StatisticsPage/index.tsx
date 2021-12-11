@@ -1,6 +1,6 @@
-import {CSSProperties} from "@material-ui/core/styles/withStyles";
 import TextCountChart from "./TextCountChart";
 import TermCountChart from "./TermCountChart";
+import {CSSProperties} from "react";
 
 const styles: { container: CSSProperties } = {
   container: {

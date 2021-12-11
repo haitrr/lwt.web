@@ -1,6 +1,6 @@
 import React from "react";
-import { IconButton } from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
+import { IconButton } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 import { TextItem } from "../../../Reducers/TextReducer";
 import DeleteTextButton from "./DeleteTextButton";
 
@@ -13,7 +13,7 @@ const TextActions: React.FC<TextActionsProps> = ({ onEdit, text: { id } }) => {
   return (
     <span>
       <DeleteTextButton textId={id} />
-      <IconButton color="primary" onClick={() => onEdit(id)}>
+      <IconButton color="primary" onClick={() => onEdit(id)} size="large">
         <EditIcon />
       </IconButton>
     </span>

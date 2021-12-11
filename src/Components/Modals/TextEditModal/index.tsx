@@ -1,4 +1,4 @@
-import {Modal, Paper} from "@material-ui/core";
+import {Modal, Paper} from "@mui/material";
 import React from "react";
 import {connect} from "react-redux";
 import TextEditForm, {FormValues} from "../../Forms/TextEditForm";

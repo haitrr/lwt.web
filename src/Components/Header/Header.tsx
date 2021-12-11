@@ -1,5 +1,5 @@
 import React from "react";
-import { AppBar, Toolbar } from "@material-ui/core";
+import { AppBar, Toolbar } from "@mui/material";
 import NavigationItems from "./NavigationItems";
 import RightMenus from "./RightMenus";
 

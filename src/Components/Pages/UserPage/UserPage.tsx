@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Form, Formik} from "formik";
-import {Button} from "@material-ui/core";
+import {Button} from "@mui/material";
 import styles from "./UserPage.module.scss";
 import {updateSettingAction} from "../../../Actions/UserAction";
 import {LanguageCode} from "../../../Enums";

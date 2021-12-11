@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Menu, MenuItem } from "@material-ui/core";
+import { Button, Menu, MenuItem } from "@mui/material";
 import { useHistory } from "react-router";
 import { USER_LOGGED_OUT } from "../../../Actions/UserAction";
 import { RootState } from "../../../RootReducer";

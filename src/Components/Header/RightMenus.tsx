@@ -2,7 +2,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../RootReducer";
 import {useHistory} from "react-router";
 import UserMenu from "./UserMenu";
-import {Button} from "@material-ui/core";
+import {Button} from "@mui/material";
 import React from "react";
 
 const RightMenus = () => {

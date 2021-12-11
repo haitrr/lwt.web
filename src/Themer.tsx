@@ -1,13 +1,13 @@
-import { CssBaseline, useMediaQuery } from "@material-ui/core";
+import {CssBaseline, useMediaQuery} from "@mui/material";
 import React from "react";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import { PaletteOptions } from "@material-ui/core/styles/createPalette";
+import {createTheme, ThemeProvider, StyledEngineProvider, PaletteOptions} from "@mui/material/styles";
+
 
 const Themer: React.FC = (props) => {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-  const { children } = props;
+  const {children} = props;
 
-  const palette: PaletteOptions = React.useMemo(() =>({
+  const palette: PaletteOptions = React.useMemo(() => ({
     type: prefersDarkMode ? "dark" : "light",
     primary: {
       main: "#33ab9f",
@@ -32,19 +32,27 @@ const Themer: React.FC = (props) => {
   }
   const theme = React.useMemo(
     () =>
-      createMuiTheme({
-        props: {
+      createTheme({
+        components: {
           MuiTextField: {
-            margin: "dense",
+            defaultProps: {
+              margin: 'dense',
+            }
           },
           MuiFormControl: {
-            margin: "dense",
+            defaultProps: {
+              margin: 'dense',
+            }
           },
           MuiSelect: {
-            margin: "dense",
+            defaultProps: {
+              margin: 'dense',
+            }
           },
           MuiTableCell: {
-            align: "center",
+            defaultProps: {
+              align: 'center',
+            }
           },
         },
         palette,
@@ -52,10 +60,12 @@ const Themer: React.FC = (props) => {
     [palette]
   );
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {children}
-    </ThemeProvider>
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <CssBaseline/>
+        {children}
+      </ThemeProvider>
+    </StyledEngineProvider>
   );
 };
 

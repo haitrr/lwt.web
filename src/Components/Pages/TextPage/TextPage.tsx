@@ -1,5 +1,5 @@
-import { Button } from "@material-ui/core";
-import Pagination from "@material-ui/lab/Pagination";
+import { Button } from "@mui/material";
+import Pagination from '@mui/material/Pagination';
 import React from "react";
 import { connect } from "react-redux";
 import { getLanguageAction } from "../../../Actions/LanguageAction";

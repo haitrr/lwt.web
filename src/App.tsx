@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {Redirect, Route} from "react-router";
 import {BrowserRouter} from "react-router-dom";
 import {Helmet} from "react-helmet";
-import {Paper} from "@material-ui/core";
+import {Paper} from "@mui/material";
 import styles from "./App.module.scss";
 import Header from "./Components/Header/Header";
 import {HomePage} from "./Components/Pages/HomePage";

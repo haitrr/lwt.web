@@ -1,6 +1,6 @@
 import {Form, Formik} from "formik";
 import {toast} from "react-toastify";
-import {Button, TextField} from "@material-ui/core";
+import {Button, TextField} from "@mui/material";
 import React from "react";
 import {RouteComponentProps, useHistory, withRouter} from "react-router";
 import {connect} from "react-redux";
