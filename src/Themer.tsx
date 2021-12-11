@@ -8,7 +8,7 @@ const Themer: React.FC = (props) => {
   const {children} = props;
 
   const palette: PaletteOptions = React.useMemo(() => ({
-    type: prefersDarkMode ? "dark" : "light",
+    mode: prefersDarkMode ? "dark" : "light",
     primary: {
       main: "#33ab9f",
     },

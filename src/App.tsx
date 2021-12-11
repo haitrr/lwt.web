@@ -50,7 +50,7 @@ const App: React.FC<Props> = ({user, getSetting, getLanguages}) => {
   return (
     <Themer>
       <QueryClientProvider client={queryClient}>
-        <Paper style={{height: "-webkit-fill-available"}}>
+        <Paper style={{height: "-webkit-fill-available", overflow: "scroll" }}>
           <BrowserRouter>
             <div className={styles.layout}>
               <ToastContainer/>
