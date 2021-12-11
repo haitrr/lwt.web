@@ -6,20 +6,21 @@ import {Helmet} from "react-helmet";
 import {Paper} from "@mui/material";
 import styles from "./App.module.scss";
 import Header from "./Components/Header/Header";
-import {HomePage} from "./Components/Pages/HomePage";
-import LoginPage from "./Components/Pages/LoginPage/LoginPage";
-import RegisterPage from "./Components/Pages/RegisterPage/RegisterPage";
-import TextPage from "./Components/Pages/TextPage";
-import TextReadPage from "./Components/Pages/TextReadPage";
 import {getLanguageAction} from "./Actions/LanguageAction";
 import {getSettingAction} from "./Actions/UserAction";
-import UserPage from "./Components/Pages/UserPage";
 import Themer from "./Themer";
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {RootState, UserState} from "./RootReducer";
-import StatisticsPage from "./Components/Pages/StatisticsPage";
 import {QueryClient, QueryClientProvider} from "react-query";
+
+const HomePage = React.lazy(() => import('./Components/Pages/HomePage'))
+const LoginPage = React.lazy(() => import('./Components/Pages/LoginPage/LoginPage'))
+const RegisterPage = React.lazy(() => import('./Components/Pages/RegisterPage'))
+const TextPage = React.lazy(() => import('./Components/Pages/TextPage'))
+const TextReadPage = React.lazy(() => import('./Components/Pages/TextReadPage'))
+const UserPage = React.lazy(() => import('./Components/Pages/UserPage'))
+const StatisticsPage = React.lazy(() => import('./Components/Pages/StatisticsPage'))
 
 interface Props {
   user: UserState;
@@ -57,23 +58,25 @@ const App: React.FC<Props> = ({user, getSetting, getLanguages}) => {
                 <title>Lwt</title>
               </Helmet>
               <Header/>
-              <Route path="/login" exact component={LoginPage}/>
-              <Route path="/register" exact component={RegisterPage}/>
-              {user.isLoggedIn ? (
-                <>
-                  <Route path="/" exact component={HomePage}/>
-                  <Route path="/text" exact component={TextPage}/>
-                  <Route path="/statistics" exact component={StatisticsPage}/>
-                  <Route
-                    path="/text/read/:textId"
-                    exact
-                    component={TextReadPage}
-                  />
-                  <Route path="/profile" exact component={UserPage}/>
-                </>
-              ) : (
-                <Redirect to="/login"/>
-              )}
+              <React.Suspense fallback={<div>Loading..</div>}>
+                <Route path="/login" exact component={LoginPage}/>
+                <Route path="/register" exact component={RegisterPage}/>
+                {user.isLoggedIn ? (
+                  <>
+                    <Route path="/" exact component={HomePage}/>
+                    <Route path="/text" exact component={TextPage}/>
+                    <Route path="/statistics" exact component={StatisticsPage}/>
+                    <Route
+                      path="/text/read/:textId"
+                      exact
+                      component={TextReadPage}
+                    />
+                    <Route path="/profile" exact component={UserPage}/>
+                  </>
+                ) : (
+                  <Redirect to="/login"/>
+                )}
+              </React.Suspense>
             </div>
           </BrowserRouter>
         </Paper>

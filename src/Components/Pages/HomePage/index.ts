@@ -1,6 +1,6 @@
 /**
  * Homepage
  */
-import { HomePage } from "./HomePage";
+import {HomePage} from "./HomePage";
 
-export { HomePage };
+export default HomePage;
