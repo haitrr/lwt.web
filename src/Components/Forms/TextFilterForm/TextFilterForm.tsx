@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import {TextField} from "@material-ui/core";
 import React from "react";
 import LanguageSelect from "../../Inputs/LanguageSelect";
@@ -68,10 +67,6 @@ const InnerForm: React.FC<InnerProps> = ({values, onFilterChange, handleChange})
         </Form>
   );
 }
-
-TextFilterForm.propTypes = {
-  onFilterChange: PropTypes.func.isRequired,
-};
 
 TextFilterForm.defaultProps = {};
 
