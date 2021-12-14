@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/Components/Pages/LoginPage/LoginPage.module.scss"],"names":[],"mappings":"AAAA,uBACE,WAAA,CACA,WAAA,CAGF,4BACE,iBAAA","file":"12.51124a90.chunk.css","sourcesContent":[".form {\n  width:15rem;\n  margin: auto;\n}\n\n.loginPage {\n  text-align: center;\n}\n"]}
