@@ -1,4 +1,4 @@
-import {FUNCTION_ROOT} from "../Constants";
+import { API_ROOT } from "../Constants";
 import { getAsync } from "../Utilities/HttpRequest";
 
 /**
@@ -6,7 +6,7 @@ import { getAsync } from "../Utilities/HttpRequest";
  */
 export async function getUserLanguageAsync() {
   try {
-    return await getAsync(`${FUNCTION_ROOT}/get_languages`, {});
+    return await getAsync(`${API_ROOT}/language`, {});
   } catch (e) {
     return null;
   }
