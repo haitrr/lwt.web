@@ -16,7 +16,6 @@ import {
   getTextsAction,
   loadTermCountAction,
 } from "../../../Actions/TextAction";
-import { getLanguageAction } from "../../../Actions/LanguageAction";
 import TextActions from "./TextActions";
 import TextProgress from "./TextProgress";
 import { Language, RootState } from "../../../RootReducer";
@@ -26,6 +25,7 @@ import { TermLearningLevel } from "../../../Enums";
 import TextStatus from "./TextStatus";
 import TotalTerm from "./TotalTerm";
 import styles from './TextsTable.module.scss'
+import useLanguages from "../../../Hooks/useLanguages";
 
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
@@ -34,7 +34,6 @@ interface TextsTableProps {
   texts: TextItem[];
   onEdit: Function;
   isLoading: boolean;
-  languages: Language[];
 }
 
 const getTextLanguage = (language: string, languages: Language[]) => {
@@ -63,10 +62,14 @@ const Loading = () => {
 
 const TextsTable: React.FC<TextsTableProps> = ({
   isLoading,
-  languages,
   onEdit,
   texts,
 }) => {
+  const { data: languages } = useLanguages();
+  if (!languages) {
+    return <Loading />
+  }
+
   return (
     <TableContainer component={Paper}>
       {isLoading ? (
@@ -188,11 +191,9 @@ export default connect(
     page: state.text.page,
     itemPerPage: state.text.itemPerPage,
     total: state.text.total,
-    languages: state.language.languages,
   }),
   {
     getTexts: getTextsAction,
-    getLanguages: getLanguageAction,
     deleteText: deleteTextAction,
     getTermCount: loadTermCountAction,
   }
