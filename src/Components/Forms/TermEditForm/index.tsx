@@ -59,7 +59,7 @@ const TermEditForm: React.FC<Props> = (
   const [dictionary, setDictionary] = React.useState({ lookingUpDictionary: false, lookedUpDictionary: false })
 
   const prevProps = usePrevious({ index, value })
-  const { data: languages } = useLanguages();
+  const { languages } = useLanguages();
   React.useEffect(() => {
     if(!languages) {
       return;

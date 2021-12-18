@@ -31,7 +31,7 @@ const UserPage: React.FC<Props> = (
     updateUserSetting,
     setting
   }) => {
-  const { data: languages } = useLanguages();
+  const { languages } = useLanguages();
   if (!languages) {
     return <Loading />
   }

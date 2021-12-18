@@ -3,7 +3,7 @@ import {getTextCountByLanguages} from "../Apis/TextApi";
 import useLanguages from "./useLanguages";
 
 const useTextCounts = () => {
-  const {data: languages, isLoading, error} = useLanguages();
+  const {languages, isLoading, error} = useLanguages();
   if(error) {
     throw error;
   }

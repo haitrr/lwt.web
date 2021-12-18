@@ -35,7 +35,6 @@ const HomePage: React.FC<Props> = ({getLanguage, isLoggedIn}) => {
 const connectedHomePage = connect(
   (state: RootState) => ({
     isLoggedIn: state.user.isLoggedIn,
-    languages: state.language.languages,
     currentLanguage: state.language.currentLanguage,
   }),
   {

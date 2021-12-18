@@ -11,12 +11,12 @@ import Loading from "../../Loading/Loading";
 import {usePrevious} from "../../../Hooks/usePrevious";
 import {Language, RootState} from "../../../RootReducer";
 import {Term} from "../../../Reducers/TextReducer";
+import useLanguages from "../../../Hooks/useLanguages";
 
 interface Props {
   readText: Function;
   match: any;
   setEditingTerm: Function;
-  languages: Language[],
   language?: string;
   id?: number;
   bookmark?: number;
@@ -31,7 +31,7 @@ const TextReadPage: React.FC<Props> = (
   {
     readText,
     match,
-    setEditingTerm, languages, language, id, bookmark, terms
+    setEditingTerm, language, id, bookmark, terms
   }) => {
   const {params: {textId}} = match;
   useEffect(() => {
@@ -44,13 +44,12 @@ const TextReadPage: React.FC<Props> = (
   const [utt] = React.useState(new SpeechSynthesisUtterance())
 
 
-  const prevProps = usePrevious({language, languages})
+  const {languages} = useLanguages();
+  const prevProps = usePrevious({language})
   useEffect(() => {
     return () => {
       const shouldSetLanguage =
-        prevProps?.languages !== languages ||
         !prevProps?.language ||
-        !prevProps.languages ||
         prevProps.language !== language;
       if (shouldSetLanguage) {
         setSpeechVoice();
@@ -94,7 +93,7 @@ const TextReadPage: React.FC<Props> = (
     window.speechSynthesis.speak(utt);
   };
 
-  if (!id) {
+  if (!id || !languages) {
     return <Loading/>;
   }
 
@@ -115,22 +114,20 @@ export default connect(
         terms: state.text.readingText.terms,
         language: state.text.readingText.languageCode,
         id: state.text.readingText.id,
-        languages: state.language.languages,
         bookmark: state.text.readingText.bookmark,
       };
     }
-    return {languages: state.language.languages};
+    return {};
   },
   {
     readText: readTextAction,
     setEditingTerm: setEditingTermAction,
   }
 )(React.memo(TextReadPage, (prevProps, nextProps) => {
-  const {terms, id, language, languages} = prevProps;
+  const {terms, id, language} = prevProps;
   return !(
     terms !== nextProps.terms ||
     id !== nextProps.id ||
-    languages !== nextProps.languages ||
     language !== nextProps.language
   )
 }))

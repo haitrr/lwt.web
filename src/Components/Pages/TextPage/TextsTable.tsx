@@ -65,7 +65,7 @@ const TextsTable: React.FC<TextsTableProps> = ({
   onEdit,
   texts,
 }) => {
-  const { data: languages } = useLanguages();
+  const { languages } = useLanguages();
   if (!languages) {
     return <Loading />
   }

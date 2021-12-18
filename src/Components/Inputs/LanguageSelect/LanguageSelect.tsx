@@ -29,7 +29,7 @@ const LanguageSelect: React.FC<Props> =
     name,
   }) => {
 
-    const { data: languages } = useLanguages()
+    const { languages } = useLanguages()
     if (!languages) {
       return <Loading />;
     }

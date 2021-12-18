@@ -3,7 +3,7 @@ import useLanguages from "./useLanguages";
 import {getLastReadTextAsync} from "../Apis/TextApi";
 
 const useLastReadText = () => {
-  const {data: languages, isLoading, error} = useLanguages();
+  const {languages, isLoading, error} = useLanguages();
   if(error) {
     throw error;
   }

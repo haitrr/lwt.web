@@ -25,7 +25,6 @@ const StatisticsPage = React.lazy(() => import('./Components/Pages/StatisticsPag
 interface Props {
   user: UserState;
   getSetting: Function;
-  getLanguages: Function;
 }
 
 const queryClient = new QueryClient()
@@ -33,12 +32,11 @@ const queryClient = new QueryClient()
 /**
  * app.
  */
-const App: React.FC<Props> = ({user, getSetting, getLanguages}) => {
+const App: React.FC<Props> = ({user, getSetting}) => {
   React.useEffect(() => {
     if (user.isLoggedIn) {
       getSetting();
     }
-    getLanguages();
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   React.useEffect(() => {
@@ -90,7 +88,6 @@ export default connect(
     user: state.user,
   }),
   {
-    getLanguages: getLanguageAction,
     getSetting: getSettingAction,
   }
 )(App);

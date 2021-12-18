@@ -3,7 +3,7 @@ import useLanguages from "./useLanguages";
 import {getTermCountByLanguages} from "../Apis/TermApi";
 
 const useTermCounts = () => {
-  const {data: languages, isLoading, error} = useLanguages();
+  const {languages, isLoading, error} = useLanguages();
   if(error) {
     throw error;
   }
