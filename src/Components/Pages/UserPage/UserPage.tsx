@@ -1,17 +1,17 @@
 import React from "react";
-import {connect} from "react-redux";
-import {Form, Formik} from "formik";
-import {Button} from "@mui/material";
+import { connect } from "react-redux";
+import { Form, Formik } from "formik";
+import { Button } from "@mui/material";
 import styles from "./UserPage.module.scss";
-import {updateSettingAction} from "../../../Actions/UserAction";
-import {LanguageCode} from "../../../Enums";
-import {Language, RootState, UserSetting} from "../../../RootReducer";
-import {UserLanguageSetting} from "../../../Reducers/UserReducer";
+import { updateSettingAction } from "../../../Actions/UserAction";
+import { LanguageCode } from "../../../Enums";
+import { RootState, UserSetting } from "../../../RootReducer";
+import { UserLanguageSetting } from "../../../Reducers/UserReducer";
 import LanguageSettingForm from "./LanguageSettingForm";
 import Loading from "../../Loading/Loading";
+import useLanguages from "../../../Hooks/useLanguages";
 
 interface StateProps {
-  languages: Language[]
   updateUserSetting: Function,
   user: any,
   setting: UserSetting
@@ -28,12 +28,16 @@ interface FormValues {
 
 const UserPage: React.FC<Props> = (
   {
-    languages,
     updateUserSetting,
     setting
   }) => {
+  const { data: languages } = useLanguages();
+  if (!languages) {
+    return <Loading />
+  }
+
   const onAddLanguageSetting = (values: FormValues, setFieldValue: Function) => {
-    const {languageSettings} = values;
+    const { languageSettings } = values;
     const newLanguageSettings = [...languageSettings];
     for (let i = 0; i < languages.length; i += 1) {
       const l = languages[i];
@@ -48,7 +52,7 @@ const UserPage: React.FC<Props> = (
     setFieldValue("languageSettings", newLanguageSettings);
   };
   if (!setting) {
-    return <Loading/>
+    return <Loading />
   }
 
   return (
@@ -59,11 +63,11 @@ const UserPage: React.FC<Props> = (
           updateUserSetting(values)
         }}
       >
-        {({handleChange, handleSubmit, values, setFieldValue}) => {
+        {({ handleChange, handleSubmit, values, setFieldValue }) => {
           return <Form onSubmit={handleSubmit}>
             <h1>Dictionary settings</h1>
             <LanguageSettingForm onChange={handleChange} languages={languages}
-                                 languageSettings={values.languageSettings}/>
+              languageSettings={values.languageSettings} />
             <Button
               variant="contained"
               color="secondary"
@@ -73,7 +77,7 @@ const UserPage: React.FC<Props> = (
             >
               Add
             </Button>
-            <br/>
+            <br />
             <Button variant="contained" color="primary" type="submit">
               Save
             </Button>
@@ -87,20 +91,19 @@ const UserPage: React.FC<Props> = (
 const connectedUserPage
   =
   connect
-  (
     (
-      state: RootState) =>
+      (
+        state: RootState) =>
       ({
         user: state.user,
-        languages: state.language.languages,
         setting: state.user.setting
       }),
-    {
-      updateUserSetting: updateSettingAction,
-    }
-  )
-  (
-    UserPage
-  );
+      {
+        updateUserSetting: updateSettingAction,
+      }
+    )
+    (
+      UserPage
+    );
 
 export default connectedUserPage;
