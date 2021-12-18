@@ -2,7 +2,6 @@ import { Button } from "@mui/material";
 import Pagination from '@mui/material/Pagination';
 import React from "react";
 import { connect } from "react-redux";
-import { getLanguageAction } from "../../../Actions/LanguageAction";
 import {
   deleteTextAction,
   getTextsAction,

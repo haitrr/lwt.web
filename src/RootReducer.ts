@@ -12,7 +12,6 @@ export interface Language {
 
 export interface LanguageState {
   currentLanguage: string;
-  languages: Language[];
 }
 
 export interface UserSetting {

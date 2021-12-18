@@ -6,7 +6,6 @@ import {Helmet} from "react-helmet";
 import {Paper} from "@mui/material";
 import styles from "./App.module.scss";
 import Header from "./Components/Header/Header";
-import {getLanguageAction} from "./Actions/LanguageAction";
 import {getSettingAction} from "./Actions/UserAction";
 import Themer from "./Themer";
 import {ToastContainer} from 'react-toastify';
