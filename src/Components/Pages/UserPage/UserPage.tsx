@@ -66,7 +66,7 @@ const UserPage: React.FC<Props> = (
         {({ handleChange, handleSubmit, values, setFieldValue }) => {
           return <Form onSubmit={handleSubmit}>
             <h1>Dictionary settings</h1>
-            <LanguageSettingForm onChange={handleChange} languages={languages}
+            <LanguageSettingForm onChange={handleChange}
               languageSettings={values.languageSettings} />
             <Button
               variant="contained"

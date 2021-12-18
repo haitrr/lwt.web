@@ -1,6 +1,6 @@
 import React from "react";
-import {connect} from "react-redux";
-import {Button, TextField} from "@mui/material";
+import { connect } from "react-redux";
+import { Button, TextField } from "@mui/material";
 import TermContent from "./TermContent";
 import LearningLevelSelect from "../../Inputs/LearningLevelSelect";
 import normalize from "../../../textNormalizer";
@@ -12,18 +12,19 @@ import {
   editTermAction,
   setEditingTermAction,
 } from "../../../Actions/TermAction";
-import {selectEditingTermValue} from "../../../Selectors/TermSelectors";
-import {selectDictionaryLanguage} from "../../../Selectors/UserSelectors";
-import {getNextLearningLevel, TermLearningLevel} from "../../../Enums";
-import {usePrevious} from "../../../Hooks/usePrevious";
-import {Language, RootState} from "../../../RootReducer";
-import {Formik, Form, Field, FormikProps, FieldProps} from "formik";
-import {Term} from "../../../Reducers/TextReducer";
+import { selectEditingTermValue } from "../../../Selectors/TermSelectors";
+import { selectDictionaryLanguage } from "../../../Selectors/UserSelectors";
+import { getNextLearningLevel, TermLearningLevel } from "../../../Enums";
+import { usePrevious } from "../../../Hooks/usePrevious";
+import { Language, RootState } from "../../../RootReducer";
+import { Formik, Form, Field, FormikProps, FieldProps } from "formik";
+import { Term } from "../../../Reducers/TextReducer";
+import useLanguages from "../../../Hooks/useLanguages";
+import Loading from "../../Loading/Loading";
 
 interface Props {
   value: Term;
   dictionaryLanguage: string
-  languages: Language[]
   languageCode: string
   dictionaryTerm: Function
   editingTerm: number | null
@@ -44,7 +45,6 @@ const TermEditForm: React.FC<Props> = (
   {
     value,
     dictionaryLanguage,
-    languages,
     languageCode,
     dictionaryTerm,
     editingTerm,
@@ -56,14 +56,17 @@ const TermEditForm: React.FC<Props> = (
   }) => {
   const formRef = React.createRef<FormikProps<FormValues>>();
 
-  const [dictionary, setDictionary] = React.useState({lookingUpDictionary: false, lookedUpDictionary: false})
+  const [dictionary, setDictionary] = React.useState({ lookingUpDictionary: false, lookedUpDictionary: false })
 
-  const prevProps = usePrevious({index, value})
-
+  const prevProps = usePrevious({ index, value })
+  const { data: languages } = useLanguages();
   React.useEffect(() => {
+    if(!languages) {
+      return;
+    }
     if (index !== prevProps?.index) {
       // eslint-disable-next-line react/no-did-update-set-state
-      setDictionary({...dictionary, lookedUpDictionary: false})
+      setDictionary({ ...dictionary, lookedUpDictionary: false })
     }
 
     if (
@@ -73,29 +76,29 @@ const TermEditForm: React.FC<Props> = (
       value.meaning === "" &&
       !dictionary.lookedUpDictionary
     ) {
-      const {code} = languages.find((l) => l.code === languageCode)!;
+      const { code } = languages.find((l) => l.code === languageCode)!;
       // eslint-disable-next-line react/no-did-update-set-state
-      setDictionary({lookedUpDictionary: true, lookingUpDictionary: true})
+      setDictionary({ lookedUpDictionary: true, lookingUpDictionary: true })
       dictionaryTerm(
         normalize(value.content, code),
         languageCode,
         dictionaryLanguage,
         index
-      ).finally(() => setDictionary({...dictionary, lookingUpDictionary: false}))
+      ).finally(() => setDictionary({ ...dictionary, lookingUpDictionary: false }))
     }
     if (value.index !== prevProps?.value.index) {
       if (formRef.current) {
-        formRef.current?.setValues({...value});
+        formRef.current?.setValues({ ...value });
       }
     } else if (value.meaning !== prevProps?.value.meaning) {
       if (formRef.current) {
-        formRef.current.setValues({...formRef.current.values, meaning: value.meaning});
+        formRef.current.setValues({ ...formRef.current.values, meaning: value.meaning });
       }
     }
   }, [index, value?.content, value?.meaning]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSubmit = (values: any) => {
-    const editedTerm = {...value, ...values};
+    const editedTerm = { ...value, ...values };
     if (!value.id) {
       createTerm(editedTerm);
     } else {
@@ -127,13 +130,17 @@ const TermEditForm: React.FC<Props> = (
     return null;
   }
 
+  if (!languages) {
+    return <Loading />;
+  }
+
   return (
     <Formik initialValues={value} onSubmit={handleSubmit} innerRef={formRef}>
-      {({values, handleChange, setFieldValue, handleBlur}) => {
+      {({ values, handleChange, setFieldValue, handleBlur }) => {
         return (
           <Form>
             <div className={`${className} ${styles.form}`}>
-              <TermContent term={value}/>
+              <TermContent term={value} />
               <Field
                 className={styles.content}
                 label="Content"
@@ -157,13 +164,13 @@ const TermEditForm: React.FC<Props> = (
                 onChange={handleChange}
                 onBlur={handleBlur}
               >
-                {({field}: FieldProps<FormValues>) => {
+                {({ field }: FieldProps<FormValues>) => {
                   return (
                     <TextField
                       key="meaning"
                       variant="outlined"
-                      InputProps={{classes: {input: styles.meaning}}}
-                      InputLabelProps={{shrink: true}}
+                      InputProps={{ classes: { input: styles.meaning } }}
+                      InputLabelProps={{ shrink: true }}
                       label="Meaning"
                       value={field.value}
                       disabled={isActionDisabled()}
@@ -229,11 +236,10 @@ export default connect(
       throw new Error("not reading text")
     }
     return ({
-      value: {...selectEditingTermValue(state)},
+      value: { ...selectEditingTermValue(state) },
       dictionaryLanguage: selectDictionaryLanguage(state),
       editingTerm: state.term.editingTerm,
       languageCode: state.text.readingText.languageCode,
-      languages: state.language.languages,
       index: state.term.editingTerm,
     })
   },

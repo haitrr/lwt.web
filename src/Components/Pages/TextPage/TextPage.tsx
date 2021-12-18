@@ -23,14 +23,13 @@ interface Props {
   page: number
   location: any
   itemPerPage: number
-  getLanguages: Function
   getTexts: Function
 }
 
 /**
  * text page
  */
-const TextPage: React.FC<Props> = ({ filters, total, history, page, location, itemPerPage, getLanguages, getTexts }) => {
+const TextPage: React.FC<Props> = ({ filters, total, history, page, location, itemPerPage, getTexts }) => {
   const [createModalVisible, setCreateModalVisible] = React.useState(false)
   const [editModalVisible, setEditModalVisible] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(false)
@@ -42,7 +41,6 @@ const TextPage: React.FC<Props> = ({ filters, total, history, page, location, it
     } else {
       loadingAndGetTexts(filters, 1, itemPerPage);
     }
-    getLanguages();
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const onEdit = () => {
@@ -143,11 +141,9 @@ export default connect(
     page: state.text.page,
     itemPerPage: state.text.itemPerPage,
     total: state.text.total,
-    languages: state.language.languages,
   }),
   {
     getTexts: getTextsAction,
-    getLanguages: getLanguageAction,
     deleteText: deleteTextAction,
     getTermCount: loadTermCountAction,
   }
