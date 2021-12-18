@@ -1,16 +1,16 @@
 import LanguageSelect from "../../Inputs/LanguageSelect/LanguageSelect";
 import React from "react";
-import {Language} from "../../../RootReducer";
 import {UserLanguageSetting} from "../../../Reducers/UserReducer";
 import Loading from "../../Loading/Loading";
+import useLanguages from "../../../Hooks/useLanguages";
 
 interface Props {
   languageSettings: UserLanguageSetting[];
-  languages: Language[];
   onChange: Function;
 }
 
-const LanguageSettingForm: React.FC<Props> = ({languages, onChange, languageSettings}) => {
+const LanguageSettingForm: React.FC<Props> = ({onChange, languageSettings}) => {
+  const {data: languages} = useLanguages();
   if (!languages || !languageSettings) {
     return <Loading/>
   }
