@@ -3,7 +3,7 @@ import React from "react";
 import classNames from "classnames";
 import { connect } from "react-redux";
 import styles from "./LanguageSelect.module.scss";
-import { Language, RootState } from "../../../RootReducer";
+import { RootState } from "../../../RootReducer";
 import useLanguages from "../../../Hooks/useLanguages";
 import Loading from "../../Loading/Loading";
 

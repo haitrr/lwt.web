@@ -9,7 +9,7 @@ import TextStatistic from "./TextStatistic";
 import TextTitle from "./TextTitle";
 import Loading from "../../Loading/Loading";
 import {usePrevious} from "../../../Hooks/usePrevious";
-import {Language, RootState} from "../../../RootReducer";
+import {RootState} from "../../../RootReducer";
 import {Term} from "../../../Reducers/TextReducer";
 import useLanguages from "../../../Hooks/useLanguages";
 

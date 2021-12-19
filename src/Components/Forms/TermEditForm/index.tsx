@@ -16,7 +16,7 @@ import { selectEditingTermValue } from "../../../Selectors/TermSelectors";
 import { selectDictionaryLanguage } from "../../../Selectors/UserSelectors";
 import { getNextLearningLevel, TermLearningLevel } from "../../../Enums";
 import { usePrevious } from "../../../Hooks/usePrevious";
-import { Language, RootState } from "../../../RootReducer";
+import { RootState } from "../../../RootReducer";
 import { Formik, Form, Field, FormikProps, FieldProps } from "formik";
 import { Term } from "../../../Reducers/TextReducer";
 import useLanguages from "../../../Hooks/useLanguages";
