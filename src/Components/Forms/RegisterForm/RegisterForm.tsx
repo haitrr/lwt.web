@@ -2,15 +2,13 @@ import {Form, Formik} from "formik";
 import {toast} from "react-toastify";
 import {Button, TextField} from "@mui/material";
 import React from "react";
-import {RouteComponentProps, useHistory, withRouter} from "react-router";
-import {connect} from "react-redux";
-import {registerAction} from "../../../Actions/UserAction";
+import {RouteComponentProps, useHistory} from "react-router";
+import { registerAsync } from "../../../Apis/UserApi";
 
 interface OwnProps {
 }
 
 interface DispatchProps {
-  register: Function;
 }
 
 interface FormValues {
@@ -21,12 +19,12 @@ interface FormValues {
 
 type Props = OwnProps & DispatchProps & RouteComponentProps;
 
-const RegisterForm: React.FC<Props> = ({register}) => {
+const RegisterForm: React.FC<Props> = () => {
   const [submitting, setSubmitting] = React.useState(false)
   const history = useHistory()
 
   const handleRegister = (data: any): Promise<any> => {
-    return register(data).then(() => {
+    return registerAsync(data).then(() => {
       history.push("/login");
     });
   };
@@ -91,6 +89,4 @@ const RegisterForm: React.FC<Props> = ({register}) => {
   );
 }
 
-export default withRouter(
-  connect(null, {register: registerAction})(RegisterForm)
-);
+export default RegisterForm;
