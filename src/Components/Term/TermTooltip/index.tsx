@@ -6,7 +6,6 @@ import {
   editTermAction,
 } from "../../../Actions/TermAction";
 import {getNextLearningLevel, getPreviousLearningLevel} from "../../../Enums";
-import {selectDictionaryLanguage} from "../../../Selectors/UserSelectors";
 import {
   selectTermAction,
   setBookmarkAction,
@@ -15,6 +14,7 @@ import normalize from "../../../textNormalizer";
 import TermAnchor from "./TermAnchor";
 import PopoverBody from "./PopoverBody";
 import {RootState} from "../../../RootReducer";
+import useUserSettings from "../../../Hooks/useUserSettings";
 
 interface Props {
   term: any
@@ -22,7 +22,6 @@ interface Props {
   onSpeak: any
   onClick: any
   onHover: Function
-  dictionaryLanguage: any
   readingLanguageCode: any
   textId: number
   dictionaryTerm: any
@@ -39,7 +38,6 @@ const TermTooltip: React.FC<Props> = (
     onSpeak,
     onClick,
     onHover,
-    dictionaryLanguage,
     readingLanguageCode,
     textId,
     dictionaryTerm,
@@ -74,6 +72,9 @@ const TermTooltip: React.FC<Props> = (
     editTerm(newTerm);
     handleSetBookmark();
   };
+
+  const {userSettings} = useUserSettings();
+  const dictionaryLanguage =  userSettings?.languageSettings?.find(l => l.languageCode === readingLanguageCode)!.dictionaryLanguageCode;
 
   const handleDictionaryTerm = () => {
     if (term && !dictionaried && term.meaning === "") {
@@ -155,7 +156,6 @@ export default connect(
       throw new Error("not reading text");
     }
     return ({
-      dictionaryLanguage: selectDictionaryLanguage(state),
       readingLanguageCode: state.text.readingText.languageCode,
       textId: state.text.readingText.id,
     });

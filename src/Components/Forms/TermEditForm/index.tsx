@@ -13,7 +13,6 @@ import {
   setEditingTermAction,
 } from "../../../Actions/TermAction";
 import { selectEditingTermValue } from "../../../Selectors/TermSelectors";
-import { selectDictionaryLanguage } from "../../../Selectors/UserSelectors";
 import { getNextLearningLevel, TermLearningLevel } from "../../../Enums";
 import { usePrevious } from "../../../Hooks/usePrevious";
 import { RootState } from "../../../RootReducer";
@@ -21,10 +20,10 @@ import { Formik, Form, Field, FormikProps, FieldProps } from "formik";
 import { Term } from "../../../Reducers/TextReducer";
 import useLanguages from "../../../Hooks/useLanguages";
 import Loading from "../../Loading/Loading";
+import useUserSettings from "../../../Hooks/useUserSettings";
 
 interface Props {
   value: Term;
-  dictionaryLanguage: string
   languageCode: string
   dictionaryTerm: Function
   editingTerm: number | null
@@ -44,7 +43,6 @@ interface FormValues {
 const TermEditForm: React.FC<Props> = (
   {
     value,
-    dictionaryLanguage,
     languageCode,
     dictionaryTerm,
     editingTerm,
@@ -60,6 +58,8 @@ const TermEditForm: React.FC<Props> = (
 
   const prevProps = usePrevious({ index, value })
   const { languages } = useLanguages();
+  const {userSettings} = useUserSettings();
+  const dictionaryLanguage = userSettings?.languageSettings.find(l => l.languageCode === languageCode)!.dictionaryLanguageCode;
   React.useEffect(() => {
     if(!languages) {
       return;
@@ -237,7 +237,6 @@ export default connect(
     }
     return ({
       value: { ...selectEditingTermValue(state) },
-      dictionaryLanguage: selectDictionaryLanguage(state),
       editingTerm: state.term.editingTerm,
       languageCode: state.text.readingText.languageCode,
       index: state.term.editingTerm,

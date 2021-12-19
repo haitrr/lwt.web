@@ -2,7 +2,7 @@ import {Form, Formik} from "formik";
 import {toast} from "react-toastify";
 import {Button, TextField} from "@mui/material";
 import React from "react";
-import {RouteComponentProps, useHistory} from "react-router";
+import {useHistory} from "react-router";
 import { registerAsync } from "../../../Apis/UserApi";
 
 interface OwnProps {
@@ -17,7 +17,7 @@ interface FormValues {
   repeatPassword: string;
 }
 
-type Props = OwnProps & DispatchProps & RouteComponentProps;
+type Props = OwnProps & DispatchProps;
 
 const RegisterForm: React.FC<Props> = () => {
   const [submitting, setSubmitting] = React.useState(false)

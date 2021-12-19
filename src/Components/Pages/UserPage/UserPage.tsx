@@ -8,8 +8,9 @@ import { UserLanguageSetting } from "../../../Reducers/UserReducer";
 import LanguageSettingForm from "./LanguageSettingForm";
 import Loading from "../../Loading/Loading";
 import useLanguages from "../../../Hooks/useLanguages";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { getSettingAsync, updateSettingAsync } from "../../../Apis/UserApi";
+import { useMutation, useQueryClient } from "react-query";
+import { updateSettingAsync } from "../../../Apis/UserApi";
+import useUserSettings from "../../../Hooks/useUserSettings";
 
 interface StateProps {
 }
@@ -22,15 +23,6 @@ type Props = StateProps & OwnProps
 interface FormValues {
   languageSettings: UserLanguageSetting[]
 }
-
-const useUserSettings = () => {
-  const { data, error, isLoading } = useQuery<UserSetting, Error>("userSettings", () => {
-    return getSettingAsync();
-  }, { staleTime: 6000000 })
-
-  return { userSettings: data, error, isLoading };
-}
-
 
 const UserPage: React.FC<Props> = () => {
   const { languages } = useLanguages();
