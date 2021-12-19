@@ -6,7 +6,6 @@ import {RootState} from "../../../RootReducer";
 import {Formik, Form, ErrorMessage, FormikProps} from 'formik';
 
 interface StateProps {
-  currentLanguage: string;
 }
 
 interface OwnProps {
@@ -26,7 +25,6 @@ type Props = OwnProps & StateProps;
 
 const TextCreateForm: React.FC<Props> =
   ({
-     currentLanguage,
      formRef,
      onSubmit,
      submitting,
@@ -35,7 +33,7 @@ const TextCreateForm: React.FC<Props> =
     return (
       <Formik
         initialValues={{
-          languageCode: currentLanguage,
+          languageCode: "",
           title: "",
           content: ""
         }}
@@ -98,5 +96,4 @@ const TextCreateForm: React.FC<Props> =
   };
 
 export default connect<StateProps, void, OwnProps, RootState>((state) => ({
-  currentLanguage: state.language.currentLanguage,
 }))(TextCreateForm);

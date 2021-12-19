@@ -7,7 +7,6 @@ import {LanguageState} from "../RootReducer";
 
 
 const defaultState: LanguageState = {
-  currentLanguage: "en",
 };
 
 export const languageReducer = handleActions<LanguageState, any>(

@@ -88,7 +88,6 @@ const TextEditForm: React.FC<Props> = (props) => {
 
 export default connect(
   (state: RootState) => ({
-    currentLanguage: state.language.currentLanguage,
   }),
   null
 )(TextEditForm);

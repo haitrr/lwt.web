@@ -1,9 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Redirect} from "react-router";
-import {
-  selectLanguageAction,
-} from "../../../Actions/LanguageAction";
 import {RootState} from "../../../RootReducer";
 import LastRead from "./LastRead";
 
@@ -34,10 +31,8 @@ const HomePage: React.FC<Props> = ({getLanguage, isLoggedIn}) => {
 const connectedHomePage = connect(
   (state: RootState) => ({
     isLoggedIn: state.user.isLoggedIn,
-    currentLanguage: state.language.currentLanguage,
   }),
   {
-    selectLanguage: selectLanguageAction,
   }
 )(HomePage);
 export {connectedHomePage as HomePage};
