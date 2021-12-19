@@ -1,5 +1,4 @@
 import { combineReducers } from "redux";
-import { languageReducer } from "./Reducers/LanguageReducer";
 import textReducer, { TextState } from "./Reducers/TextReducer";
 import {UserLanguageSetting, userReducer} from "./Reducers/UserReducer";
 import termReducer, {TermState} from "./Reducers/TermReducer";
@@ -35,7 +34,6 @@ export interface RootState {
  */
 export default combineReducers({
   user: userReducer,
-  language: languageReducer,
   text: textReducer,
   term: termReducer,
 });
