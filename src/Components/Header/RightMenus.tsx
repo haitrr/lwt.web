@@ -1,15 +1,14 @@
-import {useSelector} from "react-redux";
-import {RootState} from "../../RootReducer";
 import {useHistory} from "react-router";
 import UserMenu from "./UserMenu";
 import {Button} from "@mui/material";
-import React from "react";
+import useUser from "../../Hooks/useUser";
 
 const RightMenus = () => {
-  const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
+  const [user] = useUser();
+  console.log(user);
   const history = useHistory();
   return <>
-    {isLoggedIn ? (
+    {!!user ? (
       <UserMenu />
     ) : (
       <>

@@ -1,15 +1,14 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Redirect } from "react-router";
 import RegisterForm from "../../Forms/RegisterForm";
-import { RootState } from "../../../RootReducer";
+import useUser from "../../../Hooks/useUser";
 
 /**
  * register page
  */
 const RegisterPage: React.FC = () => {
-  const isLoggedIn = useSelector<RootState>((state) => state.user.isLoggedIn);
-  if (isLoggedIn) {
+  const [user] = useUser();
+  if (user) {
     return <Redirect to="/" />;
   }
 

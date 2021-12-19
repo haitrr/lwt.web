@@ -1,25 +1,17 @@
 import React from "react";
-import {connect} from "react-redux";
 import {Redirect} from "react-router";
-import {RootState} from "../../../RootReducer";
+import useUser from "../../../Hooks/useUser";
 import LastRead from "./LastRead";
 
 interface Props {
-  getLanguage: Function;
-  isLoggedIn: boolean;
 }
 
 /**
  * Home page
  */
-const HomePage: React.FC<Props> = ({getLanguage, isLoggedIn}) => {
-  React.useEffect(() => {
-    if (isLoggedIn) {
-      getLanguage();
-    }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
-
-  return isLoggedIn ? (
+const HomePage: React.FC<Props> = () => {
+  const [user] = useUser();
+  return user ? (
     <div style={{padding: "2rem"}}>
       <LastRead/>
     </div>
@@ -28,11 +20,5 @@ const HomePage: React.FC<Props> = ({getLanguage, isLoggedIn}) => {
   );
 }
 
-const connectedHomePage = connect(
-  (state: RootState) => ({
-    isLoggedIn: state.user.isLoggedIn,
-  }),
-  {
-  }
-)(HomePage);
+const connectedHomePage = HomePage;
 export {connectedHomePage as HomePage};

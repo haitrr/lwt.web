@@ -1,14 +1,10 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Button, Menu, MenuItem } from "@mui/material";
 import { useHistory } from "react-router";
-import { USER_LOGGED_OUT } from "../../../Actions/UserAction";
-import { RootState } from "../../../RootReducer";
-import { logout } from "../../../Apis/UserApi";
+import useUser from "../../../Hooks/useUser";
 
 const UserMenu: React.FC = () => {
-  const userName = useSelector((state: RootState) => state.user.userName);
-  const dispatch = useDispatch();
+  const [user, logout] = useUser();
   const history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -22,9 +18,13 @@ const UserMenu: React.FC = () => {
 
   const handleLogout = () => {
     logout();
-    dispatch({ type: USER_LOGGED_OUT });
     history.push("/login");
   };
+
+  if(!user) {
+    throw new Error("User is not logged in");
+  }
+  console.log(user);
 
   return (
     <div>
@@ -33,7 +33,7 @@ const UserMenu: React.FC = () => {
         aria-haspopup="true"
         onClick={handleClick}
       >
-        {userName}
+        {user.userName}
       </Button>
       <Menu
         id="simple-menu"
@@ -46,7 +46,8 @@ const UserMenu: React.FC = () => {
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </div>
-  );
-};
-
+  )
+}
+  
+  
 export default UserMenu;

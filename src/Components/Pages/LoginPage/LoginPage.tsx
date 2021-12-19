@@ -1,12 +1,9 @@
-import React from "react";
-import { connect } from "react-redux";
 import { Redirect } from "react-router";
 import LoginForm from "../../Forms/LoginForm/LoginForm";
 import styles from "./LoginPage.module.scss";
-import { RootState } from "../../../RootReducer";
+import useUser from "../../../Hooks/useUser";
 
 interface StateProps {
-  isLoggedIn: boolean;
 }
 
 interface OwnProps {}
@@ -17,9 +14,9 @@ type Props = OwnProps & StateProps;
  * Login page
  */
 function LoginPage(props: Props) {
-  const { isLoggedIn } = props;
+  const [user] = useUser();
 
-  return isLoggedIn ? (
+  return user ? (
     <Redirect to="/" />
   ) : (
     <div className={styles.loginPage}>
@@ -28,6 +25,4 @@ function LoginPage(props: Props) {
   );
 }
 
-export default connect((state: RootState) => ({
-  isLoggedIn: state.user.isLoggedIn,
-}))(LoginPage);
+export default LoginPage;

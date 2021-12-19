@@ -17,7 +17,6 @@ export interface UserSetting {
 }
 
 export interface UserState {
-  isLoggedIn: boolean;
   userName: string;
   setting: UserSetting;
 }
