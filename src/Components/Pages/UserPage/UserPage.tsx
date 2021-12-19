@@ -1,20 +1,17 @@
 import React from "react";
-import { connect } from "react-redux";
 import { Form, Formik } from "formik";
 import { Button } from "@mui/material";
 import styles from "./UserPage.module.scss";
-import { updateSettingAction } from "../../../Actions/UserAction";
 import { LanguageCode } from "../../../Enums";
-import { RootState, UserSetting } from "../../../RootReducer";
+import { UserSetting } from "../../../RootReducer";
 import { UserLanguageSetting } from "../../../Reducers/UserReducer";
 import LanguageSettingForm from "./LanguageSettingForm";
 import Loading from "../../Loading/Loading";
 import useLanguages from "../../../Hooks/useLanguages";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { getSettingAsync, updateSettingAsync } from "../../../Apis/UserApi";
 
 interface StateProps {
-  updateUserSetting: Function,
-  user: any,
-  setting: UserSetting
 }
 
 interface OwnProps {
@@ -26,12 +23,28 @@ interface FormValues {
   languageSettings: UserLanguageSetting[]
 }
 
-const UserPage: React.FC<Props> = (
-  {
-    updateUserSetting,
-    setting
-  }) => {
+const useUserSettings = () => {
+  const { data, error, isLoading } = useQuery<UserSetting, Error>("userSettings", () => {
+    return getSettingAsync();
+  }, { staleTime: 6000000 })
+
+  return { userSettings: data, error, isLoading };
+}
+
+
+const UserPage: React.FC<Props> = () => {
   const { languages } = useLanguages();
+  const { userSettings } = useUserSettings();
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation(async (settings: UserSetting) => {
+    await updateSettingAsync(settings);
+    return settings;
+  }, {
+    onSuccess: (settings: UserSetting) => {
+      queryClient.setQueryData("userSettings", settings);
+    }
+  });
+
   if (!languages) {
     return <Loading />
   }
@@ -51,16 +64,16 @@ const UserPage: React.FC<Props> = (
     }
     setFieldValue("languageSettings", newLanguageSettings);
   };
-  if (!setting) {
+  if (!userSettings) {
     return <Loading />
   }
 
   return (
     <div className={styles.root}>
       <Formik<FormValues>
-        initialValues={setting}
+        initialValues={userSettings}
         onSubmit={(values) => {
-          updateUserSetting(values)
+          mutate(values)
         }}
       >
         {({ handleChange, handleSubmit, values, setFieldValue }) => {
@@ -88,22 +101,5 @@ const UserPage: React.FC<Props> = (
   );
 }
 
-const connectedUserPage
-  =
-  connect
-    (
-      (
-        state: RootState) =>
-      ({
-        user: state.user,
-        setting: state.user.setting
-      }),
-      {
-        updateUserSetting: updateSettingAction,
-      }
-    )
-    (
-      UserPage
-    );
 
-export default connectedUserPage;
+export default UserPage;

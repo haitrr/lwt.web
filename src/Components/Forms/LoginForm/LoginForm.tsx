@@ -1,14 +1,13 @@
-import {Form, Formik} from "formik";
-import {Button, TextField} from "@mui/material";
-import React, {useState} from "react";
-import {connect} from "react-redux";
-import {loginAction} from "../../../Actions/UserAction";
+import { Form, Formik } from "formik";
+import { Button, TextField } from "@mui/material";
+import React, { useContext, useState } from "react";
+import { loginAsync } from "../../../Apis/UserApi";
+import { UserContext } from "../../../App";
 
 interface StateProps {
 }
 
 interface DispatchProps {
-  login: Function;
 }
 
 interface OwnProps {
@@ -22,15 +21,16 @@ interface FormValues {
   password: string;
 }
 
-const LoginForm: React.FC<Props> = ({className, login}) => {
+const LoginForm: React.FC<Props> = ({ className }) => {
   const [loading, setLoading] = useState(false)
+  const [, , login] = useContext(UserContext);
   const handleLogin = (data: FormValues) => {
     setLoading(true)
-    login(data).then(() => setLoading(false))
+    loginAsync(data).then((token) => login(token)).finally(() => setLoading(false))
   };
   return (
-    <Formik initialValues={{userName: "", password: ""}} onSubmit={handleLogin}>
-      {({values, handleChange, handleBlur}) => {
+    <Formik initialValues={{ userName: "", password: "" }} onSubmit={handleLogin}>
+      {({ values, handleChange, handleBlur }) => {
         return <Form className={className}>
           <h1>LOGIN</h1>
           <TextField
@@ -40,7 +40,7 @@ const LoginForm: React.FC<Props> = ({className, login}) => {
             onChange={handleChange}
             onBlur={handleBlur}
             variant="outlined"
-            style={{width: "100%", marginBottom: "1rem"}}
+            style={{ width: "100%", marginBottom: "1rem" }}
             placeholder="User name"
           />
           <TextField
@@ -50,13 +50,13 @@ const LoginForm: React.FC<Props> = ({className, login}) => {
             onBlur={handleBlur}
             value={values.password}
             variant="outlined"
-            style={{width: "100%"}}
+            style={{ width: "100%" }}
             type="password"
             placeholder="Password"
           />
           <Button
             disabled={loading}
-            style={{marginTop: "1rem"}}
+            style={{ marginTop: "1rem" }}
             variant="contained"
             color="primary"
             type="submit"
@@ -69,4 +69,4 @@ const LoginForm: React.FC<Props> = ({className, login}) => {
   );
 }
 
-export default connect(null, {login: loginAction})(LoginForm);
+export default LoginForm;

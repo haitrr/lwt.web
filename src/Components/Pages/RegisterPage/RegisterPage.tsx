@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Redirect } from "react-router";
 import RegisterForm from "../../Forms/RegisterForm";
-import useUser from "../../../Hooks/useUser";
+import { UserContext } from "../../../App";
 
 /**
  * register page
  */
 const RegisterPage: React.FC = () => {
-  const [user] = useUser();
+  const [user] = useContext(UserContext);
   if (user) {
     return <Redirect to="/" />;
   }

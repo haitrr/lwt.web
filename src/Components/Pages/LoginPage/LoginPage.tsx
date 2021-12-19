@@ -1,7 +1,8 @@
 import { Redirect } from "react-router";
 import LoginForm from "../../Forms/LoginForm/LoginForm";
 import styles from "./LoginPage.module.scss";
-import useUser from "../../../Hooks/useUser";
+import { useContext } from "react";
+import { UserContext } from "../../../App";
 
 interface StateProps {
 }
@@ -14,7 +15,8 @@ type Props = OwnProps & StateProps;
  * Login page
  */
 function LoginPage(props: Props) {
-  const [user] = useUser();
+  const [user] = useContext(UserContext);
+  console.log(user)
 
   return user ? (
     <Redirect to="/" />

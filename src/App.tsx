@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext, useContext } from "react";
 import { Redirect, Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import { Helmet } from "react-helmet";
@@ -9,7 +9,7 @@ import Themer from "./Themer";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { QueryClient, QueryClientProvider } from "react-query";
-import useUser from "./Hooks/useUser";
+import useUser, { User } from "./Hooks/useUser";
 
 const HomePage = React.lazy(() => import('./Components/Pages/HomePage'))
 const LoginPage = React.lazy(() => import('./Components/Pages/LoginPage/LoginPage'))
@@ -23,17 +23,20 @@ interface Props {
 }
 
 const queryClient = new QueryClient()
+export const UserContext = createContext<[User| null, () => void, (token :string) => void]>([null, () => {}, () => {}]);
 
 /**
  * app.
  */
 const App: React.FC<Props> = () => {
-
+  const [user, logout, login] = useUser();
   return (
     <Themer>
       <QueryClientProvider client={queryClient}>
         <Paper style={{ height: "-webkit-fill-available", overflow: "scroll" }}>
+          <UserContext.Provider value={[user, logout, login]}>
           <Pages />
+          </UserContext.Provider>
         </Paper>
       </QueryClientProvider>
     </Themer>
@@ -41,7 +44,7 @@ const App: React.FC<Props> = () => {
 }
 
 const Pages = () => {
-  const [user] = useUser();
+  const [user] = useContext(UserContext);
   return <BrowserRouter>
     <div className={styles.layout}>
       <ToastContainer />

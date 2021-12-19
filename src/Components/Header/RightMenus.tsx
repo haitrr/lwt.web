@@ -1,14 +1,14 @@
 import {useHistory} from "react-router";
 import UserMenu from "./UserMenu";
 import {Button} from "@mui/material";
-import useUser from "../../Hooks/useUser";
+import { UserContext } from "../../App";
+import { useContext } from "react";
 
 const RightMenus = () => {
-  const [user] = useUser();
-  console.log(user);
+  const [user] = useContext(UserContext);
   const history = useHistory();
   return <>
-    {!!user ? (
+    {user ? (
       <UserMenu />
     ) : (
       <>

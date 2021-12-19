@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Menu, MenuItem } from "@mui/material";
 import { useHistory } from "react-router";
-import useUser from "../../../Hooks/useUser";
+import { UserContext } from "../../../App";
 
 const UserMenu: React.FC = () => {
-  const [user, logout] = useUser();
+  const [user, logout] = useContext(UserContext);
   const history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -24,7 +24,6 @@ const UserMenu: React.FC = () => {
   if(!user) {
     throw new Error("User is not logged in");
   }
-  console.log(user);
 
   return (
     <div>

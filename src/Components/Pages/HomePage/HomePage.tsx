@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import {Redirect} from "react-router";
-import useUser from "../../../Hooks/useUser";
+import { UserContext } from "../../../App";
 import LastRead from "./LastRead";
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
  * Home page
  */
 const HomePage: React.FC<Props> = () => {
-  const [user] = useUser();
+  const [user] = useContext(UserContext);
   return user ? (
     <div style={{padding: "2rem"}}>
       <LastRead/>
