@@ -7,7 +7,6 @@ import {
   getTermCountByLearningLevelAsync,
   getTextEditDetailAsync,
   getTextReadAsync,
-  getTextsAsync,
   getTextTermsAsync,
   setTextBookmarkAsync,
   getTermCountInTextAsync,
@@ -15,7 +14,6 @@ import {
   getProcessedTermCountAsync,
 } from "../Apis/TextApi";
 
-export const TEXT_FETCHED = "TEXT_FETCHED";
 export const TEXT_CREATED = "TEXT_CREATED";
 export const TEXT_DELETED = "TEXT_DELETED";
 export const TEXT_READ = "TEXT_READ";
@@ -38,24 +36,6 @@ export interface TextFilter {
   title: string;
   languageCode: string;
 }
-
-/**
- * get texts action
- */
-export const getTextsAction = createAction(
-  TEXT_FETCHED,
-  async (filters: TextFilter, page: number, itemPerPage: number) => {
-    const result = await getTextsAsync(filters, page, itemPerPage);
-
-    return {
-      texts: result.items,
-      total: result.total,
-      page,
-      itemPerPage,
-      filters,
-    };
-  }
-);
 
 /**
  * set reading text.

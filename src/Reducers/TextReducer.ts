@@ -5,7 +5,6 @@ import {
   TERM_INDEX_END_SET,
   TEXT_DELETED,
   TEXT_EDIT_DETAIL_FETCHED,
-  TEXT_FETCHED,
   TEXT_READ,
   TEXT_TERM_LOADED,
   TEXT_TERM_SELECT,
@@ -87,13 +86,6 @@ const defaultState = {
 // @ts-ignore
 const textReducer = handleActions<TextState, any>(
   {
-    [TEXT_FETCHED]: (state, action) => {
-      const { payload } = action;
-      if (payload === null) {
-        return { ...state, texts: [] };
-      }
-      return { ...payload };
-    },
     [TERM_GET]: (state, action) => {
       if (!state.readingText) {
         throw new Error();
