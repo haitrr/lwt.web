@@ -1,43 +1,24 @@
 import React from "react";
-import {connect} from "react-redux";
-import {loadTermCountAction} from "../../../Actions/TextAction";
-import {TermLearningLevel} from "../../../Enums";
-import {TextItem} from "../../../Reducers/TextReducer";
+import { TermLearningLevel } from "../../../Enums";
+import { TextItem } from "../../../Reducers/TextReducer";
+import useTextTermsCount from "../../../Hooks/useTextTermsCountByLearningLevel";
 
 interface Props {
-  value: { [key: string]: number } | null;
   record: TextItem;
-  loadTermCounts: (id: number) => void;
 }
 
-const TotalTerm: React.FC<Props> = ({value, record, loadTermCounts}) => {
-  React.useEffect(() => {
-    if (value === null) {
-      loadTermCounts(record.id);
-    }
-  }, [loadTermCounts, record.id, value])
+const TotalTerm: React.FC<Props> = ({ record }) => {
+  const { counts } = useTextTermsCount(record.id);
 
-  React.useEffect(() => {
-    if (
-      value === undefined ||
-      record.termCount === 0 ||
-      (record.processedTermCount < record.termCount)
-    ) {
-      loadTermCounts(record.id);
-    }
-  }, [record?.processedTermCount, record.id, record.termCount, value, loadTermCounts])
-
-  if (!value) {
+  if (!counts) {
     return <span>-</span>;
   }
   let sum = 0;
-  Object.keys(value).map((key) => {
-    if (key !== TermLearningLevel.Skipped) sum += value[key];
+  Object.keys(counts).map((key) => {
+    if (key !== TermLearningLevel.Skipped) sum += counts[key];
     return null;
   });
   return <span>{sum}</span>;
 }
 
-export default connect(null, {loadTermCounts: loadTermCountAction})(
-  TotalTerm
-);
+export default TotalTerm;

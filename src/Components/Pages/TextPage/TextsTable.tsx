@@ -1,6 +1,5 @@
 import React from "react";
 import Table from "@mui/material/Table";
-import { connect } from "react-redux";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -11,14 +10,9 @@ import { CircularProgress } from "@mui/material";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import utc from "dayjs/plugin/utc";
-import {
-  deleteTextAction,
-  getTextsAction,
-  loadTermCountAction,
-} from "../../../Actions/TextAction";
 import TextActions from "./TextActions";
 import TextProgress from "./TextProgress";
-import { Language, RootState } from "../../../RootReducer";
+import { Language } from "../../../RootReducer";
 import { TextItem } from "../../../Reducers/TextReducer";
 import TermNumber from "./TermNumber";
 import { TermLearningLevel } from "../../../Enums";
@@ -31,9 +25,10 @@ dayjs.extend(relativeTime);
 dayjs.extend(utc);
 
 interface TextsTableProps {
-  texts: TextItem[];
+  texts?: TextItem[];
   onEdit: Function;
   isLoading: boolean;
+  reloadTexts: () => void;
 }
 
 const getTextLanguage = (language: string, languages: Language[]) => {
@@ -64,11 +59,13 @@ const TextsTable: React.FC<TextsTableProps> = ({
   isLoading,
   onEdit,
   texts,
+  reloadTexts,
 }) => {
   const { languages } = useLanguages();
-  if (!languages) {
+  if (!languages || !texts) {
     return <Loading />
   }
+  console.log(texts)
 
   return (
     <TableContainer component={Paper}>
@@ -131,7 +128,7 @@ const TextsTable: React.FC<TextsTableProps> = ({
                   />
                 </TableCell>
                 <TableCell align="center" style={{ padding: 0 }}>
-                  <TextActions text={text} onEdit={onEdit} />
+                  <TextActions text={text} onEdit={onEdit} onDelete={reloadTexts} />
                 </TableCell>
                 <TableCell>
                   <TermNumber
@@ -173,7 +170,7 @@ const TextsTable: React.FC<TextsTableProps> = ({
                   {text.counts ? text.counts[TermLearningLevel.Ignored] : "-"}
                 </TableCell>
                 <TableCell>
-                  <TotalTerm value={text.counts} record={text} />
+                  <TotalTerm record={text} />
                 </TableCell>
               </TableRow>
             ))}
@@ -184,17 +181,4 @@ const TextsTable: React.FC<TextsTableProps> = ({
   );
 };
 
-export default connect(
-  (state: RootState) => ({
-    texts: state.text.texts,
-    filters: state.text.filters,
-    page: state.text.page,
-    itemPerPage: state.text.itemPerPage,
-    total: state.text.total,
-  }),
-  {
-    getTexts: getTextsAction,
-    deleteText: deleteTextAction,
-    getTermCount: loadTermCountAction,
-  }
-)(TextsTable);
+export default TextsTable;

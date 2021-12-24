@@ -1,74 +1,44 @@
 import { Button } from "@mui/material";
 import Pagination from '@mui/material/Pagination';
 import React from "react";
-import { connect } from "react-redux";
 import {
-  deleteTextAction,
-  getTextsAction,
-  loadTermCountAction, TextFilter,
+  TextFilter,
 } from "../../../Actions/TextAction";
 import TextFilterForm from "../../Forms/TextFilterForm";
 import TextCreateModal from "../../Modals/TextCreateModal";
 import TextEditModal from "../../Modals/TextEditModal";
 import { parseQueryString } from "../../../Utilities/queryString";
 import TextsTable from "./TextsTable";
-import { RootState } from "../../../RootReducer";
-import useDidMountEffect from "../../../Hooks/useDidMountEffect";
+import useTexts from "../../../Hooks/useTexts";
 
 interface Props {
-  filters: TextFilter
-  total: number
   history: any
-  page: number
   location: any
-  itemPerPage: number
-  getTexts: Function
 }
 
 /**
  * text page
  */
-const TextPage: React.FC<Props> = ({ filters, total, history, page, location, itemPerPage, getTexts }) => {
+const TextPage: React.FC<Props> = ({ history, location }) => {
   const [createModalVisible, setCreateModalVisible] = React.useState(false)
   const [editModalVisible, setEditModalVisible] = React.useState(false)
-  const [isLoading, setIsLoading] = React.useState(false)
   const [editingText, setEditingText] = React.useState<number | null>(null)
+  const [filters, setFilters] = React.useState<TextFilter>({ title: "", languageCode: "" });
   const query = parseQueryString(location.search);
-  React.useEffect(() => {
-    if (query.page) {
-      loadingAndGetTexts(filters, parseInt(query.page, 10), itemPerPage);
-    } else {
-      loadingAndGetTexts(filters, 1, itemPerPage);
-    }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  const page = query.page ? parseInt(query.page, 10) : 1;
+  const itemPerPage = 10;
 
+  const { texts, isLoading, refetch } = useTexts(filters, page, itemPerPage);
   const onEdit = () => {
-    filterTexts();
+    refetch();
     setEditingText(null)
   };
 
-  const loadingAndGetTexts = React.useCallback((filters: TextFilter | undefined, page: number, itemPerPage: number) => {
-    setIsLoading(true)
-    getTexts(filters, page, itemPerPage).then(() => {
-      setIsLoading(false)
-    });
-  }, [getTexts])
-
-  const myGetTexts = React.useCallback((page: number) => {
-    setIsLoading(true)
-    getTexts(filters, page, itemPerPage).then(() => {
-      setIsLoading(false)
-    });
-  }, [filters, getTexts, itemPerPage])
 
   let queryPage = parseInt(query.page, 10);
   if (Number.isNaN(queryPage)) {
     queryPage = 1;
   }
-  useDidMountEffect(() => {
-    myGetTexts(queryPage)
-  }, [queryPage, myGetTexts])
-
 
   const hideEditModal = () => {
     setEditModalVisible(false);
@@ -82,10 +52,6 @@ const TextPage: React.FC<Props> = ({ filters, total, history, page, location, it
   const handlePageChange = (_: any, page: number) => {
     history.push(`/text?page=${page.toString()}`);
   }
-
-  const filterTexts = React.useCallback((filters?: TextFilter) => {
-    loadingAndGetTexts(filters, 1, itemPerPage)
-  }, [itemPerPage, loadingAndGetTexts]);
 
   const hideCreateModal = () => {
     setCreateModalVisible(false)
@@ -106,7 +72,7 @@ const TextPage: React.FC<Props> = ({ filters, total, history, page, location, it
       <TextCreateModal
         hide={hideCreateModal}
         visible={createModalVisible}
-        onCreate={filterTexts}
+        onCreate={refetch}
       />
       <Button
         color="primary"
@@ -115,10 +81,10 @@ const TextPage: React.FC<Props> = ({ filters, total, history, page, location, it
       >
         Add text
       </Button>
-      <TextFilterForm onFilterChange={filterTexts} values={filters} />
-      <TextsTable isLoading={isLoading} onEdit={handleEdit} />
+      <TextFilterForm onFilterChange={setFilters} values={filters} />
+      <TextsTable isLoading={isLoading} onEdit={handleEdit} texts={texts?.items} reloadTexts={refetch} />
       <Pagination
-        count={Math.ceil(total / 10)}
+        count={Math.ceil((texts?.total ?? 0) / 10)}
         page={page}
         onChange={handlePageChange}
       />
@@ -126,24 +92,4 @@ const TextPage: React.FC<Props> = ({ filters, total, history, page, location, it
   );
 }
 
-TextPage.defaultProps = {
-  filters: {
-    title: "",
-    languageCode: "",
-  },
-}
-
-export default connect(
-  (state: RootState) => ({
-    texts: state.text.texts,
-    filters: state.text.filters,
-    page: state.text.page,
-    itemPerPage: state.text.itemPerPage,
-    total: state.text.total,
-  }),
-  {
-    getTexts: getTextsAction,
-    deleteText: deleteTextAction,
-    getTermCount: loadTermCountAction,
-  }
-)(TextPage);
+export default TextPage;

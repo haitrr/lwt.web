@@ -9,28 +9,26 @@ import {
 } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import React from "react";
-import { connect } from "react-redux";
-import { RootState } from "../../../RootReducer";
 import { TextItem } from "../../../Reducers/TextReducer";
-import { deleteTextAction } from "../../../Actions/TextAction";
+import { useMutation } from "react-query";
+import { deleteTextAsync } from "../../../Apis/TextApi";
 
 interface DispatchProps {
-  deleteText: (id: number) => any;
 }
 
 interface OwnProps {
-  textId: number;
 }
 
 interface StateProps {
   text: TextItem;
+  onDelete: () => void;
 }
 
 type Props = StateProps & DispatchProps & OwnProps;
 
-const DeleteTextButton: React.FC<Props> = ({ text, deleteText }) => {
+
+const DeleteTextButton: React.FC<Props> = ({ text, onDelete }) => {
   const [dialogOpen, setDialogOpen] = React.useState<boolean>(false);
-  const [deleting, setDeleting] = React.useState<boolean>(false);
 
   const handleClickOpen = () => {
     setDialogOpen(true);
@@ -40,12 +38,12 @@ const DeleteTextButton: React.FC<Props> = ({ text, deleteText }) => {
     setDialogOpen(false);
   };
 
+  const { mutate: deleteText, isLoading: deleting } = useMutation((id: number) => {
+    return deleteTextAsync(id);
+  }, { onSettled: handleClose, onSuccess: onDelete });
+
   const handleConfirm = () => {
-    setDeleting(true);
-    deleteText(text.id).then(() => {
-      setDeleting(false);
-      handleClose();
-    });
+    deleteText(text.id)
   };
 
   return (
@@ -83,13 +81,4 @@ const DeleteTextButton: React.FC<Props> = ({ text, deleteText }) => {
   );
 };
 
-export default connect<StateProps, DispatchProps, OwnProps, RootState>(
-  (state, ownProps) => {
-    const text = state.text.texts.find((t) => t.id === ownProps.textId);
-    if (!text) throw new Error();
-    return {
-      text,
-    };
-  },
-  { deleteText: deleteTextAction }
-)(DeleteTextButton);
+export default DeleteTextButton;

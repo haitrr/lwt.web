@@ -9,10 +9,15 @@ import {
 import {TextFilter} from "../Actions/TextAction";
 import {TextItem} from "../Reducers/TextReducer";
 
+export type GetTextResponse = {
+  items: TextItem[];
+  total: number;
+}
+
 /**
  * Get the list of text
  */
-export async function getTextsAsync(filters: TextFilter, page: number, itemPerPage: number) {
+export async function getTextsAsync(filters: TextFilter, page: number, itemPerPage: number): Promise<GetTextResponse> {
   try {
     return await getAsync(TEXT_API, {
       ...filters,
@@ -20,7 +25,7 @@ export async function getTextsAsync(filters: TextFilter, page: number, itemPerPa
       itemPerPage,
     });
   } catch (e) {
-    return null;
+    return {items: [], total: 0}
   }
 }
 
@@ -50,7 +55,12 @@ export async function getTextReadAsync(textId: number) {
   }
 }
 
-export async function getTermCountByLearningLevelAsync(textId: number) {
+export type TextTermsCountByLearningLevel = {
+  counts: {[key: string]: number};
+  id: number;
+}
+
+export async function getTermCountByLearningLevelAsync(textId: number): Promise<TextTermsCountByLearningLevel> {
   return getAsync(`${TEXT_API}/${textId}/term-counts`);
 }
 
@@ -77,7 +87,9 @@ export async function getTermCountInTextAsync(termId: number, textId: number) {
   return getAsync(`${TEXT_API}/${textId}/terms/${termId}/count`);
 }
 
-export async function getTermCountAsync(textId: number) {
+export type TextTermsCount = {[key: string]: number}
+
+export async function getTermCountAsync(textId: number): Promise<TextTermsCount> {
   return getAsync(`${TEXT_API}/${textId}/term-count`);
 }
 

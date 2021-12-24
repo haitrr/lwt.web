@@ -7,13 +7,14 @@ import DeleteTextButton from "./DeleteTextButton";
 export interface TextActionsProps {
   text: TextItem;
   onEdit: Function;
+  onDelete: () => void;
 }
 
-const TextActions: React.FC<TextActionsProps> = ({ onEdit, text: { id } }) => {
+const TextActions: React.FC<TextActionsProps> = ({ onEdit, text, onDelete }) => {
   return (
     <span>
-      <DeleteTextButton textId={id} />
-      <IconButton color="primary" onClick={() => onEdit(id)} size="large">
+      <DeleteTextButton text={text} onDelete={onDelete} />
+      <IconButton color="primary" onClick={() => onEdit(text.id)} size="large">
         <EditIcon />
       </IconButton>
     </span>
