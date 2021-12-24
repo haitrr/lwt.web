@@ -22,7 +22,6 @@ const useUser = () => {
             setUser(jwt_decode(token));
         }
         else {
-            console.log("wtf")
             setUser(null)
         }
     }, [token])

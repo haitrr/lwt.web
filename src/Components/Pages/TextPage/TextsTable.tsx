@@ -65,7 +65,6 @@ const TextsTable: React.FC<TextsTableProps> = ({
   if (!languages || !texts) {
     return <Loading />
   }
-  console.log(texts)
 
   return (
     <TableContainer component={Paper}>

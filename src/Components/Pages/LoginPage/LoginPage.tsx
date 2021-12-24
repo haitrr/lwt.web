@@ -16,7 +16,6 @@ type Props = OwnProps & StateProps;
  */
 function LoginPage(props: Props) {
   const [user] = useContext(UserContext);
-  console.log(user)
 
   return user ? (
     <Redirect to="/" />

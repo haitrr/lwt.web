@@ -25,7 +25,6 @@ export async function loginAsync(data: Credentials): Promise<string> {
   const result = await postAsync(`${API_ROOT}/user/login`, data);
   const { token } = result;
 
-  console.log(token)
   return token;
 }
 
