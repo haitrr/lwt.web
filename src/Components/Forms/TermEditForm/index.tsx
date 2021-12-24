@@ -21,6 +21,7 @@ import { Term } from "../../../Reducers/TextReducer";
 import useLanguages from "../../../Hooks/useLanguages";
 import Loading from "../../Loading/Loading";
 import useUserSettings from "../../../Hooks/useUserSettings";
+import { useQueryClient } from "react-query";
 
 interface Props {
   value: Term;
@@ -31,7 +32,8 @@ interface Props {
   createTerm: Function
   setEditingTerm: Function
   index: number | null;
-  className: string
+  className: string;
+  textId: number;
 }
 
 interface FormValues {
@@ -49,6 +51,7 @@ const TermEditForm: React.FC<Props> = (
     editTerm,
     createTerm,
     setEditingTerm,
+    textId,
     className,
     index,
   }) => {
@@ -58,10 +61,10 @@ const TermEditForm: React.FC<Props> = (
 
   const prevProps = usePrevious({ index, value })
   const { languages } = useLanguages();
-  const {userSettings} = useUserSettings();
+  const { userSettings } = useUserSettings();
   const dictionaryLanguage = userSettings?.languageSettings.find(l => l.languageCode === languageCode)!.dictionaryLanguageCode;
   React.useEffect(() => {
-    if(!languages) {
+    if (!languages) {
       return;
     }
     if (index !== prevProps?.index) {
@@ -96,13 +99,18 @@ const TermEditForm: React.FC<Props> = (
       }
     }
   }, [index, value?.content, value?.meaning]) // eslint-disable-line react-hooks/exhaustive-deps
+  const queryClient = useQueryClient();
 
   const handleSubmit = (values: any) => {
     const editedTerm = { ...value, ...values };
     if (!value.id) {
-      createTerm(editedTerm);
+      createTerm(editedTerm).then(() => {
+        queryClient.fetchQuery({ queryKey: `textTermsCountByLL:${textId}` });
+      });
     } else {
-      editTerm(editedTerm);
+      editTerm(editedTerm).then(() => {
+        queryClient.fetchQuery({ queryKey: `textTermsCountByLL:${textId}` });
+      });
     }
     setEditingTerm(null);
   };
@@ -240,6 +248,7 @@ export default connect(
       editingTerm: state.term.editingTerm,
       languageCode: state.text.readingText.languageCode,
       index: state.term.editingTerm,
+      textId: state.text.readingText.id,
     })
   },
   {

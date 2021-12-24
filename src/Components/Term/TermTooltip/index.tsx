@@ -15,6 +15,7 @@ import TermAnchor from "./TermAnchor";
 import PopoverBody from "./PopoverBody";
 import {RootState} from "../../../RootReducer";
 import useUserSettings from "../../../Hooks/useUserSettings";
+import { useQueryClient } from "react-query";
 
 interface Props {
   term: any
@@ -50,12 +51,16 @@ const TermTooltip: React.FC<Props> = (
   const [dictionaried, setDictionaried] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
+  const queryClient = useQueryClient();
+
   const better = () => {
     const newTerm = {
       ...term,
       learningLevel: getNextLearningLevel(term.learningLevel),
     };
-    editTerm(newTerm);
+    editTerm(newTerm).then(() => {
+      queryClient.fetchQuery({ queryKey: `textTermsCountByLL:${textId}` });
+    });
     handleSetBookmark();
   };
 
@@ -69,7 +74,9 @@ const TermTooltip: React.FC<Props> = (
       ...term,
       learningLevel: getPreviousLearningLevel(term.learningLevel),
     };
-    editTerm(newTerm);
+    editTerm(newTerm).then(() => {
+      queryClient.fetchQuery({ queryKey: `textTermsCountByLL:${textId}` });
+    });
     handleSetBookmark();
   };
 
