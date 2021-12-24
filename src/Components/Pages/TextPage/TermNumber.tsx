@@ -3,11 +3,11 @@ import classNames from "classnames";
 import { TermLearningColor, TermLearningLevel } from "../../../Enums";
 import styles from "./TextPage.module.scss";
 import { TextItem } from "../../../Reducers/TextReducer";
-import useTextTermsCount from "../../../Hooks/useTextTermsCountByLearningLevel";
+import useTextTermsCountByLearningLevel from "../../../Hooks/useTextTermsCountByLearningLevel";
 
 const TermNumber = (props: { text: TextItem; learningLevel: string }) => {
   const { text, learningLevel } = props;
-  const { counts } = useTextTermsCount(text.id);
+  const { counts } = useTextTermsCountByLearningLevel(text.id);
 
   if (!counts) {
     return <div style={{ minWidth: "2rem" }}>-</div>;

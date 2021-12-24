@@ -100,7 +100,7 @@ const TextReadPage: React.FC<Props> = (
   return (
     <div className={styles.readPane} id="readPanel">
       <TextTitle/>
-      <TextStatistic/>
+      <TextStatistic textId={id}/>
       <ContentPanel onSpeak={onSpeak} textId={id}/>
       {terms && <TermEditForm className={styles.termEditForm}/>}
     </div>

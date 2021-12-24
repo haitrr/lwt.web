@@ -87,7 +87,9 @@ export async function getTermCountInTextAsync(termId: number, textId: number) {
   return getAsync(`${TEXT_API}/${textId}/terms/${termId}/count`);
 }
 
-export type TextTermsCount = {[key: string]: number}
+export type TextTermsCount = {
+  termCount: number;
+}
 
 export async function getTermCountAsync(textId: number): Promise<TextTermsCount> {
   return getAsync(`${TEXT_API}/${textId}/term-count`);

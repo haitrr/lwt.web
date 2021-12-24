@@ -1,14 +1,14 @@
 import React from "react";
 import { TermLearningLevel } from "../../../Enums";
 import { TextItem } from "../../../Reducers/TextReducer";
-import useTextTermsCount from "../../../Hooks/useTextTermsCountByLearningLevel";
+import useTextTermsCountByLearningLevel from "../../../Hooks/useTextTermsCountByLearningLevel";
 
 interface Props {
   record: TextItem;
 }
 
 const TotalTerm: React.FC<Props> = ({ record }) => {
-  const { counts } = useTextTermsCount(record.id);
+  const { counts } = useTextTermsCountByLearningLevel(record.id);
 
   if (!counts) {
     return <span>-</span>;
