@@ -29,11 +29,16 @@ export async function getTextsAsync(filters: TextFilter, page: number, itemPerPa
   }
 }
 
+export type TextCreateModel = {
+  title: string;
+  languageCode: string;
+  content: string;
+}
 /**
  * create a text
  * @param text the text to create
  */
-export async function createTextAsync(text: Text) {
+export async function createTextAsync(text: TextCreateModel) {
   try {
     await postAsync(TEXT_API, text);
 

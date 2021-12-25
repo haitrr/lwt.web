@@ -1,13 +1,12 @@
 import Modal from "@mui/material/Modal";
 import React from "react";
-import {connect} from "react-redux";
-import {Paper, Typography} from "@mui/material";
-import {createTextAction} from "../../../Actions/TextAction";
-import TextCreateForm, {FormValues} from "../../Forms/TextCreateForm/TextCreateForm";
-import {FormikProps} from "formik";
+import { Paper, Typography } from "@mui/material";
+import TextCreateForm, { FormValues } from "../../Forms/TextCreateForm/TextCreateForm";
+import { FormikProps } from "formik";
+import { useMutation } from "react-query";
+import { createTextAsync, TextCreateModel } from "../../../Apis/TextApi";
 
 interface StateProps {
-  createText: (values: any) => any;
 }
 
 interface OwnProps {
@@ -23,13 +22,23 @@ type Props = StateProps & OwnProps;
  */
 const TextCreateModal: React.FC<Props> =
   ({
-     createText,
-     hide,
-     onCreate,
-     visible,
-   }) => {
+    hide,
+    onCreate,
+    visible,
+  }) => {
+
     const formRef = React.useRef<FormikProps<FormValues>>(null);
-    const [submitting, setSubmitting] = React.useState<boolean>(false);
+    const { mutate: createText, isLoading: submitting } = useMutation((text: TextCreateModel) => {
+      return createTextAsync(text)
+    }, {
+      onSuccess: onCreate,
+      onSettled: () => {
+        const form = formRef.current;
+        if (!form) throw new Error();
+        form.resetForm()
+        hide();
+      }
+    })
 
     const handleOk = (e: any) => {
       e.preventDefault();
@@ -37,13 +46,7 @@ const TextCreateModal: React.FC<Props> =
       if (!form) throw new Error();
       form.validateForm(form.values).then(errors => {
         if (Object.keys(errors).length === 0) {
-          setSubmitting(true);
-          createText(form.values).then(() => {
-            onCreate();
-            setSubmitting(false);
-            form.resetForm()
-            hide();
-          });
+          createText(form.values);
         }
       })
     }
@@ -65,8 +68,8 @@ const TextCreateModal: React.FC<Props> =
             justifyContent: "center",
           }}
         >
-          <Paper style={{padding: "1rem", width: "90vw"}}>
-            <Typography style={{textAlign: "center"}}>Add new text</Typography>
+          <Paper style={{ padding: "1rem", width: "90vw" }}>
+            <Typography style={{ textAlign: "center" }}>Add new text</Typography>
             <TextCreateForm
               onSubmit={handleOk}
               submitting={submitting}
@@ -79,6 +82,4 @@ const TextCreateModal: React.FC<Props> =
     );
   };
 
-export default connect(null, {
-  createText: createTextAction,
-})(TextCreateModal);
+export default TextCreateModal;

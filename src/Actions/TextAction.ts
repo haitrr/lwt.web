@@ -1,3 +1,4 @@
+import { TextCreateModel } from './../Apis/TextApi';
 import { toast } from "react-toastify";
 import { createAction } from "redux-actions";
 import {
@@ -58,7 +59,7 @@ export const loadReadingTexttermsCountByLearningLevelAction = createAction(
 /**
  * create text action
  */
-export const createTextAction = createAction(TEXT_CREATED, async (text: Text) =>
+export const createTextAction = createAction(TEXT_CREATED, async (text: TextCreateModel) =>
   createTextAsync(text)
 );
 
