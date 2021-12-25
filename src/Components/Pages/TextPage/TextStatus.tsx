@@ -80,7 +80,4 @@ const TextStatus: React.FC<Props> = ({ text }) => {
   );
 };
 
-export default connect(null, {
-  getTermCount: getTermCountAction,
-  getProcessedTermCount: getProcessedTermCountAction,
-})(TextStatus);
+export default TextStatus;
