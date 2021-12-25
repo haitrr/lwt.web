@@ -1,9 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
-import {
-  getTermCountAction,
-  getProcessedTermCountAction,
-} from "../../../Actions/TextAction";
 import { TextItem } from "../../../Reducers/TextReducer";
 import useTextProcessedTermCount from "../../../Hooks/useTextProcessedTermsCount";
 import useTextTermsCount from "../../../Hooks/useTextTermsCount";

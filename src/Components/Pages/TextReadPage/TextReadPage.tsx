@@ -1,16 +1,16 @@
-import React, {useEffect} from "react";
-import {connect} from "react-redux";
-import {readTextAction} from "../../../Actions/TextAction";
-import {setEditingTermAction} from "../../../Actions/TermAction";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { readTextAction } from "../../../Actions/TextAction";
+import { setEditingTermAction } from "../../../Actions/TermAction";
 import styles from "./TextReadPage.module.scss";
 import TermEditForm from "../../Forms/TermEditForm";
 import ContentPanel from "./ContentPanel";
 import TextStatistic from "./TextStatistic";
 import TextTitle from "./TextTitle";
 import Loading from "../../Loading/Loading";
-import {usePrevious} from "../../../Hooks/usePrevious";
-import {RootState} from "../../../RootReducer";
-import {Term} from "../../../Reducers/TextReducer";
+import { usePrevious } from "../../../Hooks/usePrevious";
+import { RootState } from "../../../RootReducer";
+import { Term } from "../../../Reducers/TextReducer";
 import useLanguages from "../../../Hooks/useLanguages";
 
 interface Props {
@@ -19,9 +19,9 @@ interface Props {
   setEditingTerm: Function;
   language?: string;
   id?: number;
-  bookmark?: number;
   term: object;
   terms?: Term[];
+  title: string;
 }
 
 /**
@@ -31,9 +31,13 @@ const TextReadPage: React.FC<Props> = (
   {
     readText,
     match,
-    setEditingTerm, language, id, bookmark, terms
+    setEditingTerm,
+    language,
+    id,
+    terms,
+    title
   }) => {
-  const {params: {textId}} = match;
+  const { params: { textId } } = match;
   useEffect(() => {
     readText(textId);
     return () => {
@@ -44,8 +48,8 @@ const TextReadPage: React.FC<Props> = (
   const [utt] = React.useState(new SpeechSynthesisUtterance())
 
 
-  const {languages} = useLanguages();
-  const prevProps = usePrevious({language})
+  const { languages } = useLanguages();
+  const prevProps = usePrevious({ language })
   useEffect(() => {
     return () => {
       const shouldSetLanguage =
@@ -55,7 +59,7 @@ const TextReadPage: React.FC<Props> = (
         setSpeechVoice();
       }
     };
-  } );
+  });
 
   const setSpeechVoice = () => {
     if (language && languages) {
@@ -94,15 +98,15 @@ const TextReadPage: React.FC<Props> = (
   };
 
   if (!id || !languages) {
-    return <Loading/>;
+    return <Loading />;
   }
 
   return (
     <div className={styles.readPane} id="readPanel">
-      <TextTitle/>
-      <TextStatistic textId={id}/>
-      <ContentPanel onSpeak={onSpeak} textId={id}/>
-      {terms && <TermEditForm className={styles.termEditForm}/>}
+      <TextTitle title={title} />
+      <TextStatistic textId={id} />
+      <ContentPanel onSpeak={onSpeak} textId={id} />
+      {terms && <TermEditForm className={styles.termEditForm} />}
     </div>
   );
 }
@@ -115,16 +119,17 @@ export default connect(
         language: state.text.readingText.languageCode,
         id: state.text.readingText.id,
         bookmark: state.text.readingText.bookmark,
+        title: state.text.readingText.title,
       };
     }
-    return {};
+    return {title: ""};
   },
   {
     readText: readTextAction,
     setEditingTerm: setEditingTermAction,
   }
 )(React.memo(TextReadPage, (prevProps, nextProps) => {
-  const {terms, id, language} = prevProps;
+  const { terms, id, language } = prevProps;
   return !(
     terms !== nextProps.terms ||
     id !== nextProps.id ||
