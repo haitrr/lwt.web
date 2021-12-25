@@ -4,32 +4,36 @@ import {
   getTermCountAction,
   getProcessedTermCountAction,
 } from "../../../Actions/TextAction";
-import {TextItem} from "../../../Reducers/TextReducer";
+import { TextItem } from "../../../Reducers/TextReducer";
+import useTextProcessedTermCount from "../../../Hooks/useTextProcessedTermsCount";
+import useTextTermsCount from "../../../Hooks/useTextTermsCount";
+import { useQueryClient } from "react-query";
 
 interface Props {
   text: TextItem,
-  getTermCount: Function
-  getProcessedTermCount: Function
 }
 
-const TextStatus: React.FC<Props> = ({ text, getTermCount, getProcessedTermCount }) => {
+const TextStatus: React.FC<Props> = ({ text }) => {
+  const { processedTermCount, refetch: refetchProcessedTermsCount } = useTextProcessedTermCount(text.id);
+  const { termCount, refetch: refetchTermCount } = useTextTermsCount(text.id);
   const [getTermCountInterval, setGetTermCountInterval] = React.useState<number | undefined>();
+  const queryClient = useQueryClient();
   const [
     getProcessedTermCountInterval,
     setGetProcessedTermCountInterval,
-  ] = React.useState<number|undefined>();
+  ] = React.useState<number | undefined>();
   React.useEffect(() => {
-    if (text.termCount === 0) {
+    if (termCount === 0) {
       if (!getTermCountInterval) {
         const interval: number = window.setInterval(() => {
-          getTermCount(text.id);
+          refetchTermCount();
         }, 2000);
         setGetTermCountInterval(interval);
       }
     } else {
       clearInterval(getTermCountInterval);
     }
-  }, [getTermCount, getTermCountInterval, text.id, text.termCount]);
+  }, [termCount, getTermCountInterval, refetchTermCount]);
 
   React.useEffect(
     () => () => {
@@ -40,35 +44,37 @@ const TextStatus: React.FC<Props> = ({ text, getTermCount, getProcessedTermCount
   );
 
   React.useEffect(() => {
-    if (text.processedTermCount < text.termCount) {
-      if (!getProcessedTermCountInterval) {
-        const interval = window.setInterval(() => {
-          getProcessedTermCount(text.id);
-        }, 2000);
-        setGetProcessedTermCountInterval(interval);
+    if (termCount !== undefined && processedTermCount !== undefined) {
+      if (processedTermCount < termCount) {
+        if (!getProcessedTermCountInterval) {
+          const interval = window.setInterval(() => {
+            refetchProcessedTermsCount();
+            queryClient.fetchQuery(`textTermsCountByLL:${text.id}`);
+          }, 2000);
+          setGetProcessedTermCountInterval(interval);
+        }
+      } else {
+        clearInterval(getProcessedTermCountInterval);
       }
-    } else {
-      clearInterval(getProcessedTermCountInterval);
     }
   }, [
-    getProcessedTermCount,
-    getProcessedTermCountInterval,
-    getTermCountInterval,
-    text.id,
-    text.processedTermCount,
-    text.termCount,
+    getProcessedTermCountInterval, processedTermCount, refetchProcessedTermsCount, termCount,queryClient, text.id,
   ]);
 
-  if (text.termCount === 0) {
+  if (termCount === undefined || processedTermCount === undefined) {
+    return <span>-</span>
+  }
+
+  if (termCount === 0) {
     return <span style={{ backgroundColor: "#FF0101" }}>Processing</span>;
   }
-  if (text.termCount === text.processedTermCount) {
+  if (termCount === processedTermCount) {
     return <span style={{ backgroundColor: "#009700" }}>Done</span>;
   }
   return (
     <span style={{ backgroundColor: "#5AB7D4" }}>
-      {`${text.processedTermCount}/${text.termCount}(${Math.floor(
-        (text.processedTermCount * 100) / text.termCount
+      {`${processedTermCount}/${termCount}(${Math.floor(
+        (processedTermCount * 100) / termCount
       )}%)`}
     </span>
   );

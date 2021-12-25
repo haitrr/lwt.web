@@ -100,7 +100,11 @@ export async function getTermCountAsync(textId: number): Promise<TextTermsCount>
   return getAsync(`${TEXT_API}/${textId}/term-count`);
 }
 
-export async function getProcessedTermCountAsync(textId: number) {
+export type TextProcessedTermsCountResponse = {
+  processedTermCount: number;
+}
+
+export async function getProcessedTermCountAsync(textId: number): Promise<TextProcessedTermsCountResponse> {
   return getAsync(`${TEXT_API}/${textId}/processed-term-count`);
 }
 
