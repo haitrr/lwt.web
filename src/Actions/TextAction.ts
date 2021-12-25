@@ -11,7 +11,6 @@ import {
     getTextTermsAsync,
     setTextBookmarkAsync,
     getTermCountInTextAsync,
-    getTermCountAsync,
 } from '../Apis/TextApi';
 
 export const TEXT_CREATED = 'TEXT_CREATED';
@@ -27,7 +26,6 @@ export const TEXT_TERM_LOADED = 'TEXT_TERM_LOADED';
 export const TERM_INDEX_BEGIN_SET = 'TERM_INDEX_BEGIN_SET';
 export const TERM_INDEX_END_SET = 'TERM_INDEX_END_SET';
 export const TERM_COUNT_IN_TEXT = 'TERM_COUNT_IN_TEXT';
-export const TEXT_TERM_COUNT_GET = 'TEXT_TERM_COUNT_GET';
 export const VIEWING_TERM_SET = 'VIEWING_TERM_SET';
 
 export interface TextFilter {
@@ -109,8 +107,3 @@ export const setViewingTermAction = (index: number) => (dispatch: Function) => {
 export const getTermCountInTextAction = createAction(TERM_COUNT_IN_TEXT, (termId: number, textId: number) =>
     getTermCountInTextAsync(termId, textId),
 );
-
-export const getTermCountAction = createAction(TEXT_TERM_COUNT_GET, async (textId: number) => {
-    const { termCount } = await getTermCountAsync(textId);
-    return { termCount, textId };
-});

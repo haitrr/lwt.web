@@ -10,7 +10,6 @@ import {
     TEXT_TERM_SELECT,
     READING_TEXT_TERMS_COUNT_LOADED,
     TERM_COUNT_IN_TEXT,
-    TEXT_TERM_COUNT_GET,
     VIEWING_TERM_SET,
 } from '../Actions/TextAction';
 import { TERM_CREATED, TERM_DICTIONARY, TERM_EDITED, TERM_GET, TERM_GET_MEANING } from '../Actions/TermAction';
@@ -287,11 +286,6 @@ const textReducer = handleActions<TextState, any>(
             const { terms } = state.readingText;
             terms[index] = { ...terms[index], meaning };
             return { ...state, readingText: { ...state.readingText, terms } };
-        },
-        [TEXT_TERM_COUNT_GET]: (state, action) => {
-            const { termCount, textId } = action.payload;
-            const newTexts = state.texts.map((t) => (t.id === textId ? { ...t, termCount } : t));
-            return { ...state, texts: newTexts };
         },
         [VIEWING_TERM_SET]: (state, action) => {
             if (!state.readingText) {
