@@ -1,9 +1,7 @@
 import {Form, Formik, FormikProps} from "formik";
 import {Button, TextField} from "@mui/material";
 import React from "react";
-import {connect} from "react-redux";
 import LanguageSelect from "../../Inputs/LanguageSelect/LanguageSelect";
-import {RootState} from "../../../RootReducer";
 
 interface Props {
   editDetail: any;
@@ -86,8 +84,4 @@ const TextEditForm: React.FC<Props> = (props) => {
   );
 };
 
-export default connect(
-  (state: RootState) => ({
-  }),
-  null
-)(TextEditForm);
+export default TextEditForm;
