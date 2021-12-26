@@ -5,19 +5,13 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import { registerAsync } from '../../../Apis/UserApi';
 
-interface OwnProps {}
-
-interface DispatchProps {}
-
 interface FormValues {
   userName: string;
   password: string;
   repeatPassword: string;
 }
 
-type Props = OwnProps & DispatchProps;
-
-const RegisterForm: React.FC<Props> = () => {
+const RegisterForm: React.FC = () => {
   const [submitting, setSubmitting] = React.useState(false);
   const history = useHistory();
 

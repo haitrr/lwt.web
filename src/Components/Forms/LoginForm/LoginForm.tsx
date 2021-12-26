@@ -4,15 +4,11 @@ import React, { useContext, useState } from 'react';
 import { loginAsync } from '../../../Apis/UserApi';
 import { UserContext } from '../../../App';
 
-interface StateProps {}
-
-interface DispatchProps {}
-
 interface OwnProps {
   className: string;
 }
 
-type Props = OwnProps & StateProps & DispatchProps;
+type Props = OwnProps;
 
 interface FormValues {
   userName: string;

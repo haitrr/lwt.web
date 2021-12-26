@@ -1,13 +1,9 @@
 import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import React from 'react';
 import classNames from 'classnames';
-import { connect } from 'react-redux';
 import styles from './LanguageSelect.module.scss';
-import { RootState } from '../../../RootReducer';
 import useLanguages from '../../../Hooks/useLanguages';
 import Loading from '../../Loading/Loading';
-
-interface StateProps {}
 
 interface LanguageSelectProps {
   value: string | null;
@@ -17,7 +13,7 @@ interface LanguageSelectProps {
   name: string;
 }
 
-type Props = StateProps & LanguageSelectProps;
+type Props = LanguageSelectProps;
 
 const LanguageSelect: React.FC<Props> = ({ value = '', onChange, disabled = false, className = undefined, name }) => {
   const { languages } = useLanguages();
@@ -47,4 +43,4 @@ const LanguageSelect: React.FC<Props> = ({ value = '', onChange, disabled = fals
   );
 };
 
-export default connect<StateProps, void, LanguageSelectProps, RootState>((state: RootState) => ({}))(LanguageSelect);
+export default LanguageSelect;

@@ -23,7 +23,9 @@ const TextFilterForm: React.FC<Props> = ({ onFilterChange, values }) => {
         title: values.title,
         languageCode: values.languageCode,
       }}
-      onSubmit={() => {}}
+      onSubmit={() => {
+        return;
+      }}
     >
       {({ values, handleChange }) => {
         return <InnerForm values={values} handleChange={handleChange} onFilterChange={onFilterChange} />;
@@ -35,7 +37,7 @@ const TextFilterForm: React.FC<Props> = ({ onFilterChange, values }) => {
 interface InnerProps {
   values: TextFilter;
   handleChange: any;
-  onFilterChange: Function;
+  onFilterChange: (values: TextFilter) => void;
 }
 
 const InnerForm: React.FC<InnerProps> = ({ values, onFilterChange, handleChange }) => {

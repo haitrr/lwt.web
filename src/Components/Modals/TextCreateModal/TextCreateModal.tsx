@@ -6,15 +6,13 @@ import { FormikProps } from 'formik';
 import { useMutation } from 'react-query';
 import { createTextAsync, TextCreateModel } from '../../../Apis/TextApi';
 
-interface StateProps {}
-
 interface OwnProps {
   hide: () => void;
   onCreate: () => void;
   visible: boolean;
 }
 
-type Props = StateProps & OwnProps;
+type Props = OwnProps;
 
 /**
  * text create modal

@@ -1,11 +1,7 @@
 import { Button, TextField } from '@mui/material';
 import React from 'react';
-import { connect } from 'react-redux';
 import LanguageSelect from '../../Inputs/LanguageSelect/LanguageSelect';
-import { RootState } from '../../../RootReducer';
 import { Formik, Form, ErrorMessage, FormikProps } from 'formik';
-
-interface StateProps {}
 
 interface OwnProps {
   formRef: React.Ref<FormikProps<FormValues>> | undefined;
@@ -20,7 +16,7 @@ export interface FormValues {
   content: string;
 }
 
-type Props = OwnProps & StateProps;
+type Props = OwnProps;
 
 const TextCreateForm: React.FC<Props> = ({ formRef, onSubmit, submitting, onCancel }) => {
   return (
@@ -78,4 +74,4 @@ const TextCreateForm: React.FC<Props> = ({ formRef, onSubmit, submitting, onCanc
   );
 };
 
-export default connect<StateProps, void, OwnProps, RootState>((state) => ({}))(TextCreateForm);
+export default TextCreateForm;

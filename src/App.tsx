@@ -19,19 +19,21 @@ const TextReadPage = React.lazy(() => import('./Components/Pages/TextReadPage'))
 const UserPage = React.lazy(() => import('./Components/Pages/UserPage'));
 const StatisticsPage = React.lazy(() => import('./Components/Pages/StatisticsPage'));
 
-interface Props {}
-
 const queryClient = new QueryClient();
 export const UserContext = createContext<[User | null, () => void, (token: string) => void]>([
   null,
-  () => {},
-  () => {},
+  () => {
+    return;
+  },
+  () => {
+    return;
+  },
 ]);
 
 /**
  * app.
  */
-const App: React.FC<Props> = () => {
+const App: React.FC = () => {
   const [user, logout, login] = useUser();
   return (
     <Themer>
