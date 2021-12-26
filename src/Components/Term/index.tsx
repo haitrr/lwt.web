@@ -82,16 +82,7 @@ const Term: React.FC<Props> = ({ index, onSpeak }) => {
     return <TermButton bookmark={bookmark} term={term} onClick={handleTermClick} />;
   }
 
-  return (
-    <TermTooltip
-      onClick={handleTermClick}
-      onHover={handleHover}
-      onSpeak={onSpeak}
-      index={index}
-      term={term}
-      bookmark={bookmark}
-    />
-  );
+  return <TermTooltip onClick={handleTermClick} onHover={handleHover} index={index} term={term} bookmark={bookmark} />;
 };
 
 export default Term;
