@@ -1,39 +1,29 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Button, TextField } from "@mui/material";
-import TermContent from "./TermContent";
-import LearningLevelSelect from "../../Inputs/LearningLevelSelect";
-import normalize from "../../../textNormalizer";
-import LanguageSelect from "../../Inputs/LanguageSelect";
-import styles from "./TermEditForm.module.scss";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, TextField } from '@mui/material';
+import TermContent from './TermContent';
+import LearningLevelSelect from '../../Inputs/LearningLevelSelect';
+import normalize from '../../../textNormalizer';
+import LanguageSelect from '../../Inputs/LanguageSelect';
+import styles from './TermEditForm.module.scss';
 import {
   createTermAction,
   dictionaryTermMeaningAction,
   editTermAction,
   setEditingTermAction,
-} from "../../../Actions/TermAction";
-import { selectEditingTermValue } from "../../../Selectors/TermSelectors";
-import { getNextLearningLevel, TermLearningLevel } from "../../../Enums";
-import { usePrevious } from "../../../Hooks/usePrevious";
-import { RootState } from "../../../RootReducer";
-import { Formik, Form, Field, FormikProps, FieldProps } from "formik";
-import { Term } from "../../../Reducers/TextReducer";
-import useLanguages from "../../../Hooks/useLanguages";
-import Loading from "../../Loading/Loading";
-import useUserSettings from "../../../Hooks/useUserSettings";
-import { useQueryClient } from "react-query";
+} from '../../../Actions/TermAction';
+import { selectEditingTermValue } from '../../../Selectors/TermSelectors';
+import { getNextLearningLevel, TermLearningLevel } from '../../../Enums';
+import { usePrevious } from '../../../Hooks/usePrevious';
+import { RootState } from '../../../RootReducer';
+import { Formik, Form, Field, FormikProps, FieldProps } from 'formik';
+import useLanguages from '../../../Hooks/useLanguages';
+import Loading from '../../Loading/Loading';
+import useUserSettings from '../../../Hooks/useUserSettings';
+import { useQueryClient } from 'react-query';
 
 interface Props {
-  value: Term;
-  languageCode: string
-  dictionaryTerm: Function
-  editingTerm: number | null
-  editTerm: Function
-  createTerm: Function
-  setEditingTerm: Function
-  index: number | null;
   className: string;
-  textId: number;
 }
 
 interface FormValues {
@@ -42,52 +32,51 @@ interface FormValues {
   learningLevel: string;
 }
 
-const TermEditForm: React.FC<Props> = (
-  {
-    value,
-    languageCode,
-    dictionaryTerm,
-    editingTerm,
-    editTerm,
-    createTerm,
-    setEditingTerm,
-    textId,
-    className,
-    index,
-  }) => {
+const TermEditForm: React.FC<Props> = ({ className }) => {
   const formRef = React.createRef<FormikProps<FormValues>>();
+  const dispatch = useDispatch();
+  const { value, editingTerm, languageCode, index, textId } = useSelector((state: RootState) => {
+    if (!state.text.readingText) {
+      throw new Error('not reading text');
+    }
+    return {
+      value: { ...selectEditingTermValue(state) },
+      editingTerm: state.term.editingTerm,
+      languageCode: state.text.readingText.languageCode,
+      index: state.term.editingTerm,
+      textId: state.text.readingText.id,
+    };
+  });
 
-  const [dictionary, setDictionary] = React.useState({ lookingUpDictionary: false, lookedUpDictionary: false })
+  const [dictionary, setDictionary] = React.useState({ lookingUpDictionary: false, lookedUpDictionary: false });
 
-  const prevProps = usePrevious({ index, value })
+  const prevProps = usePrevious({ index, value });
   const { languages } = useLanguages();
   const { userSettings } = useUserSettings();
-  const dictionaryLanguage = userSettings?.languageSettings.find(l => l.languageCode === languageCode)!.dictionaryLanguageCode;
+  const dictionaryLanguage = userSettings?.languageSettings.find(
+    (l) => l.languageCode === languageCode,
+  )!.dictionaryLanguageCode;
   React.useEffect(() => {
     if (!languages) {
       return;
     }
     if (index !== prevProps?.index) {
       // eslint-disable-next-line react/no-did-update-set-state
-      setDictionary({ ...dictionary, lookedUpDictionary: false })
+      setDictionary({ ...dictionary, lookedUpDictionary: false });
     }
 
     if (
       // meaning is loaded but empty
       value.content &&
       // unknown term
-      value.meaning === "" &&
+      value.meaning === '' &&
       !dictionary.lookedUpDictionary
     ) {
       const { code } = languages.find((l) => l.code === languageCode)!;
       // eslint-disable-next-line react/no-did-update-set-state
-      setDictionary({ lookedUpDictionary: true, lookingUpDictionary: true })
-      dictionaryTerm(
-        normalize(value.content, code),
-        languageCode,
-        dictionaryLanguage,
-        index
-      ).finally(() => setDictionary({ ...dictionary, lookingUpDictionary: false }))
+      setDictionary({ lookedUpDictionary: true, lookingUpDictionary: true });
+      dispatch(dictionaryTermMeaningAction(normalize(value.content, code), languageCode, dictionaryLanguage!, index!));
+      setDictionary({ ...dictionary, lookingUpDictionary: false });
     }
     if (value.index !== prevProps?.value.index) {
       if (formRef.current) {
@@ -98,24 +87,22 @@ const TermEditForm: React.FC<Props> = (
         formRef.current.setValues({ ...formRef.current.values, meaning: value.meaning });
       }
     }
-  }, [index, value?.content, value?.meaning]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [index, value?.content, value?.meaning]); // eslint-disable-line react-hooks/exhaustive-deps
   const queryClient = useQueryClient();
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = async (values: any) => {
     const editedTerm = { ...value, ...values };
     if (!value.id) {
-      createTerm(editedTerm).then(() => {
-        queryClient.fetchQuery({ queryKey: `textTermsCountByLL:${textId}` });
-      });
+      dispatch(createTermAction(editedTerm));
+      await queryClient.fetchQuery({ queryKey: `textTermsCountByLL:${textId}` });
     } else {
-      editTerm(editedTerm).then(() => {
-        queryClient.fetchQuery({ queryKey: `textTermsCountByLL:${textId}` });
-      });
+      dispatch(editTermAction(editedTerm));
+      await queryClient.fetchQuery({ queryKey: `textTermsCountByLL:${textId}` });
     }
-    setEditingTerm(null);
+    dispatch(setEditingTermAction(null));
   };
 
-  const handleBetter = (e: any) => {
+  const handleBetter = async (e: any) => {
     const value = formRef.current!.values;
     e.preventDefault();
     const newValue = {
@@ -123,14 +110,12 @@ const TermEditForm: React.FC<Props> = (
       learningLevel: getNextLearningLevel(value.learningLevel),
     };
     formRef.current?.setValues(newValue);
-    handleSubmit(newValue);
+    await handleSubmit(newValue);
   };
 
   const isActionDisabled = () => {
     return (
-      dictionary.lookingUpDictionary ||
-      (value.learningLevel !== TermLearningLevel.UnKnow &&
-        value.meaning === null)
+      dictionary.lookingUpDictionary || (value.learningLevel !== TermLearningLevel.UnKnow && value.meaning === null)
     );
   };
 
@@ -155,23 +140,16 @@ const TermEditForm: React.FC<Props> = (
                 name="content"
                 component={TextField}
                 value={values.content}
-              >
-              </Field>
+              />
               <Field
                 className={styles.language}
                 name="languageCode"
                 value={languageCode}
                 component={LanguageSelect}
                 disabled
-              >
-              </Field>
+              />
 
-              <Field
-                name="meaning"
-                value={values.meaning}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              >
+              <Field name="meaning" value={values.meaning} onChange={handleChange} onBlur={handleBlur}>
                 {({ field }: FieldProps<FormValues>) => {
                   return (
                     <TextField
@@ -191,8 +169,7 @@ const TermEditForm: React.FC<Props> = (
                       multiline
                     />
                   );
-                }
-                }
+                }}
               </Field>
               <Field
                 name="learningLevel"
@@ -201,9 +178,8 @@ const TermEditForm: React.FC<Props> = (
                 value={values.learningLevel}
                 className={styles.learningLevel}
                 onChange={(value: string) => {
-                  setFieldValue("learningLevel", value)
-                }
-                }
+                  setFieldValue('learningLevel', value);
+                }}
                 component={LearningLevelSelect}
               />
               <div className={styles.buttons}>
@@ -231,30 +207,10 @@ const TermEditForm: React.FC<Props> = (
                 </div>
               </div>
             </div>
-
           </Form>
         );
       }}
     </Formik>
   );
-}
-export default connect(
-  (state: RootState) => {
-    if (!state.text.readingText) {
-      throw new Error("not reading text")
-    }
-    return ({
-      value: { ...selectEditingTermValue(state) },
-      editingTerm: state.term.editingTerm,
-      languageCode: state.text.readingText.languageCode,
-      index: state.term.editingTerm,
-      textId: state.text.readingText.id,
-    })
-  },
-  {
-    setEditingTerm: setEditingTermAction,
-    createTerm: createTermAction,
-    editTerm: editTermAction,
-    dictionaryTerm: dictionaryTermMeaningAction,
-  }
-)(TermEditForm);
+};
+export default TermEditForm;
