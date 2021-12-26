@@ -6,7 +6,7 @@ import DeleteTextButton from './DeleteTextButton';
 
 export interface TextActionsProps {
   text: TextItem;
-  onEdit: Function;
+  onEdit: (id: number) => void;
   onDelete: () => void;
 }
 

@@ -9,8 +9,6 @@ export interface Language {
   speakCode: string;
 }
 
-export interface LanguageState {}
-
 export interface UserSetting {
   languageSettings: UserLanguageSetting[];
 }
@@ -21,7 +19,6 @@ export interface UserState {
 }
 
 export interface RootState {
-  language: LanguageState;
   text: TextState;
   user: UserState;
   term: TermState;

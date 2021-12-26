@@ -4,16 +4,10 @@ import styles from './LoginPage.module.scss';
 import { useContext } from 'react';
 import { UserContext } from '../../../App';
 
-interface StateProps {}
-
-interface OwnProps {}
-
-type Props = OwnProps & StateProps;
-
 /**
  * Login page
  */
-function LoginPage(props: Props) {
+function LoginPage() {
   const [user] = useContext(UserContext);
 
   return user ? (

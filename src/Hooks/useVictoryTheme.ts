@@ -12,7 +12,7 @@ const useVictoryTheme = () => {
         ...darkTheme.pie?.style,
         labels: {
           ...darkTheme.pie?.style?.labels,
-          // @ts-ignore
+          // @ts-expect-error: wrong type definition from lib
           fill: white,
         },
       },

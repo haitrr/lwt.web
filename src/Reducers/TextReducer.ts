@@ -78,7 +78,6 @@ const defaultState = {
   readingText: null,
 };
 
-// @ts-ignore
 const textReducer = handleActions<TextState, any>(
   {
     [TERM_GET]: (state, action) => {

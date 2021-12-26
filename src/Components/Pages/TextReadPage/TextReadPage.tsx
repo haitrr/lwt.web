@@ -43,7 +43,7 @@ const TextReadPage: React.FC<Props> = () => {
     return () => {
       dispatch(setEditingTermAction(null));
     };
-  }, [textId]);
+  }, [dispatch, textId]);
 
   const [utt] = React.useState(new SpeechSynthesisUtterance());
 

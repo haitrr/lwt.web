@@ -12,6 +12,7 @@ import {
   setTextBookmarkAsync,
   getTermCountInTextAsync,
 } from '../Apis/TextApi';
+import { Dispatch } from 'redux';
 
 export const TEXT_CREATED = 'TEXT_CREATED';
 export const TEXT_DELETED = 'TEXT_DELETED';
@@ -100,7 +101,7 @@ export const getTextTermsAction = createAction(
 export const setTermIndexBeginAction = createAction(TERM_INDEX_BEGIN_SET, (begin: number) => begin);
 export const setTermIndexEndAction = createAction(TERM_INDEX_END_SET, (end: number) => end);
 
-export const setViewingTermAction = (index: number) => (dispatch: Function) => {
+export const setViewingTermAction = (index: number) => (dispatch: Dispatch) => {
   dispatch({ type: VIEWING_TERM_SET, payload: { index } });
 };
 

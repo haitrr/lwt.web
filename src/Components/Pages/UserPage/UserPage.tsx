@@ -12,17 +12,11 @@ import { useMutation, useQueryClient } from 'react-query';
 import { updateSettingAsync } from '../../../Apis/UserApi';
 import useUserSettings from '../../../Hooks/useUserSettings';
 
-interface StateProps {}
-
-interface OwnProps {}
-
-type Props = StateProps & OwnProps;
-
 interface FormValues {
   languageSettings: UserLanguageSetting[];
 }
 
-const UserPage: React.FC<Props> = () => {
+const UserPage: React.FC = () => {
   const { languages } = useLanguages();
   const { userSettings } = useUserSettings();
   const queryClient = useQueryClient();
@@ -42,7 +36,7 @@ const UserPage: React.FC<Props> = () => {
     return <Loading />;
   }
 
-  const onAddLanguageSetting = (values: FormValues, setFieldValue: Function) => {
+  const onAddLanguageSetting = (values: FormValues, setFieldValue: (fieldName: string, value: any) => void) => {
     const { languageSettings } = values;
     const newLanguageSettings = [...languageSettings];
     for (let i = 0; i < languages.length; i += 1) {

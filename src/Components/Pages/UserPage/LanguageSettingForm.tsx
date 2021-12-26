@@ -6,7 +6,7 @@ import useLanguages from '../../../Hooks/useLanguages';
 
 interface Props {
   languageSettings: UserLanguageSetting[];
-  onChange: Function;
+  onChange: () => void;
 }
 
 const LanguageSettingForm: React.FC<Props> = ({ onChange, languageSettings }) => {

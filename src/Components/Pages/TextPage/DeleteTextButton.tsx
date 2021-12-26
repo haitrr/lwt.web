@@ -13,16 +13,12 @@ import { TextItem } from '../../../Reducers/TextReducer';
 import { useMutation } from 'react-query';
 import { deleteTextAsync } from '../../../Apis/TextApi';
 
-interface DispatchProps {}
-
-interface OwnProps {}
-
-interface StateProps {
+interface OwnProps {
   text: TextItem;
   onDelete: () => void;
 }
 
-type Props = StateProps & DispatchProps & OwnProps;
+type Props = OwnProps;
 
 const DeleteTextButton: React.FC<Props> = ({ text, onDelete }) => {
   const [dialogOpen, setDialogOpen] = React.useState<boolean>(false);
