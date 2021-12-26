@@ -1,15 +1,15 @@
-import React from "react";
-import {Term} from "../../../Reducers/TextReducer";
+import React from 'react';
+import { Term } from '../../../Reducers/TextReducer';
 
 interface Props {
-  term: Term
+  term: Term;
 }
 
 /**
  * term edit page.
  */
 const TermEditPage = (props: Props) => {
-  const {term} = props;
+  const { term } = props;
 
   return (
     <div>

@@ -1,11 +1,10 @@
-import { Redirect } from "react-router";
-import LoginForm from "../../Forms/LoginForm/LoginForm";
-import styles from "./LoginPage.module.scss";
-import { useContext } from "react";
-import { UserContext } from "../../../App";
+import { Redirect } from 'react-router';
+import LoginForm from '../../Forms/LoginForm/LoginForm';
+import styles from './LoginPage.module.scss';
+import { useContext } from 'react';
+import { UserContext } from '../../../App';
 
-interface StateProps {
-}
+interface StateProps {}
 
 interface OwnProps {}
 

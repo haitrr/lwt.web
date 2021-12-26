@@ -1,6 +1,6 @@
-import React from "react";
-import TermButton from "../TermButton";
-import { Term } from "../../../Reducers/TextReducer";
+import React from 'react';
+import TermButton from '../TermButton';
+import { Term } from '../../../Reducers/TextReducer';
 
 interface Props {
   onMouseEnter: (event: any) => void;
@@ -10,20 +10,10 @@ interface Props {
   onClick: () => void;
 }
 
-const TermAnchor: React.FC<Props> = ({
-  onMouseEnter,
-  onMouseLeave,
-  bookmark,
-  term,
-  onClick,
-}) => {
+const TermAnchor: React.FC<Props> = ({ onMouseEnter, onMouseLeave, bookmark, term, onClick }) => {
   return (
     <span onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-      <TermButton
-        bookmark={bookmark}
-        term={term}
-        onClick={onClick}
-      />
+      <TermButton bookmark={bookmark} term={term} onClick={onClick} />
     </span>
   );
 };

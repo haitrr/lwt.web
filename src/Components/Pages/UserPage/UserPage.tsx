@@ -1,44 +1,45 @@
-import React from "react";
-import { Form, Formik } from "formik";
-import { Button } from "@mui/material";
-import styles from "./UserPage.module.scss";
-import { LanguageCode } from "../../../Enums";
-import { UserSetting } from "../../../RootReducer";
-import { UserLanguageSetting } from "../../../Reducers/UserReducer";
-import LanguageSettingForm from "./LanguageSettingForm";
-import Loading from "../../Loading/Loading";
-import useLanguages from "../../../Hooks/useLanguages";
-import { useMutation, useQueryClient } from "react-query";
-import { updateSettingAsync } from "../../../Apis/UserApi";
-import useUserSettings from "../../../Hooks/useUserSettings";
+import React from 'react';
+import { Form, Formik } from 'formik';
+import { Button } from '@mui/material';
+import styles from './UserPage.module.scss';
+import { LanguageCode } from '../../../Enums';
+import { UserSetting } from '../../../RootReducer';
+import { UserLanguageSetting } from '../../../Reducers/UserReducer';
+import LanguageSettingForm from './LanguageSettingForm';
+import Loading from '../../Loading/Loading';
+import useLanguages from '../../../Hooks/useLanguages';
+import { useMutation, useQueryClient } from 'react-query';
+import { updateSettingAsync } from '../../../Apis/UserApi';
+import useUserSettings from '../../../Hooks/useUserSettings';
 
-interface StateProps {
-}
+interface StateProps {}
 
-interface OwnProps {
-}
+interface OwnProps {}
 
-type Props = StateProps & OwnProps
+type Props = StateProps & OwnProps;
 
 interface FormValues {
-  languageSettings: UserLanguageSetting[]
+  languageSettings: UserLanguageSetting[];
 }
 
 const UserPage: React.FC<Props> = () => {
   const { languages } = useLanguages();
   const { userSettings } = useUserSettings();
   const queryClient = useQueryClient();
-  const { mutate } = useMutation(async (settings: UserSetting) => {
-    await updateSettingAsync(settings);
-    return settings;
-  }, {
-    onSuccess: (settings: UserSetting) => {
-      queryClient.setQueryData("userSettings", settings);
-    }
-  });
+  const { mutate } = useMutation(
+    async (settings: UserSetting) => {
+      await updateSettingAsync(settings);
+      return settings;
+    },
+    {
+      onSuccess: (settings: UserSetting) => {
+        queryClient.setQueryData('userSettings', settings);
+      },
+    },
+  );
 
   if (!languages) {
-    return <Loading />
+    return <Loading />;
   }
 
   const onAddLanguageSetting = (values: FormValues, setFieldValue: Function) => {
@@ -54,10 +55,10 @@ const UserPage: React.FC<Props> = () => {
         break;
       }
     }
-    setFieldValue("languageSettings", newLanguageSettings);
+    setFieldValue('languageSettings', newLanguageSettings);
   };
   if (!userSettings) {
-    return <Loading />
+    return <Loading />;
   }
 
   return (
@@ -65,33 +66,33 @@ const UserPage: React.FC<Props> = () => {
       <Formik<FormValues>
         initialValues={userSettings}
         onSubmit={(values) => {
-          mutate(values)
+          mutate(values);
         }}
       >
         {({ handleChange, handleSubmit, values, setFieldValue }) => {
-          return <Form onSubmit={handleSubmit}>
-            <h1>Dictionary settings</h1>
-            <LanguageSettingForm onChange={handleChange}
-              languageSettings={values.languageSettings} />
-            <Button
-              variant="contained"
-              color="secondary"
-              disabled={languages.length <= values.languageSettings.length}
-              type="button"
-              onClick={() => onAddLanguageSetting(values, setFieldValue)}
-            >
-              Add
-            </Button>
-            <br />
-            <Button variant="contained" color="primary" type="submit">
-              Save
-            </Button>
-          </Form>
+          return (
+            <Form onSubmit={handleSubmit}>
+              <h1>Dictionary settings</h1>
+              <LanguageSettingForm onChange={handleChange} languageSettings={values.languageSettings} />
+              <Button
+                variant="contained"
+                color="secondary"
+                disabled={languages.length <= values.languageSettings.length}
+                type="button"
+                onClick={() => onAddLanguageSetting(values, setFieldValue)}
+              >
+                Add
+              </Button>
+              <br />
+              <Button variant="contained" color="primary" type="submit">
+                Save
+              </Button>
+            </Form>
+          );
         }}
       </Formik>
     </div>
   );
-}
-
+};
 
 export default UserPage;

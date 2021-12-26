@@ -5,7 +5,7 @@ export interface UserLanguageSetting {
 
 export interface UserState {
   isLoggedIn: boolean;
-  languageSettings?: UserLanguageSetting[]
+  languageSettings?: UserLanguageSetting[];
   id?: number;
   userName?: string;
 }

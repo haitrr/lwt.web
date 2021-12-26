@@ -1,31 +1,25 @@
-import React from "react";
-import classNames from "classnames";
-import { TermLearningColor, TermLearningLevel } from "../../../Enums";
-import styles from "./TextPage.module.scss";
-import { TextItem } from "../../../Reducers/TextReducer";
-import useTextTermsCountByLearningLevel from "../../../Hooks/useTextTermsCountByLearningLevel";
+import React from 'react';
+import classNames from 'classnames';
+import { TermLearningColor, TermLearningLevel } from '../../../Enums';
+import styles from './TextPage.module.scss';
+import { TextItem } from '../../../Reducers/TextReducer';
+import useTextTermsCountByLearningLevel from '../../../Hooks/useTextTermsCountByLearningLevel';
 
 const TermNumber = (props: { text: TextItem; learningLevel: string }) => {
   const { text, learningLevel } = props;
   const { counts } = useTextTermsCountByLearningLevel(text.id);
 
   if (!counts) {
-    return <div style={{ minWidth: "2rem" }}>-</div>;
+    return <div style={{ minWidth: '2rem' }}>-</div>;
   }
   const current = counts[learningLevel];
   if (!current) {
-    return <div style={{ minWidth: "2rem" }}>0</div>;
+    return <div style={{ minWidth: '2rem' }}>0</div>;
   }
 
-  const sum =
-    text.termCount -
-    counts[TermLearningLevel.Ignored] -
-    counts[TermLearningLevel.Skipped];
+  const sum = text.termCount - counts[TermLearningLevel.Ignored] - counts[TermLearningLevel.Skipped];
 
-  const className = classNames(
-    styles.termNumber,
-    TermLearningColor[learningLevel]
-  );
+  const className = classNames(styles.termNumber, TermLearningColor[learningLevel]);
 
   return (
     <div className={className}>

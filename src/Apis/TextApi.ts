@@ -1,18 +1,12 @@
-import { TEXT_API } from "../Constants";
-import {
-  deleteAsync,
-  getAsync,
-  postAsync,
-  putAsync,
-  patchAsync,
-} from "../Utilities/HttpRequest";
-import {TextFilter} from "../Actions/TextAction";
-import {TextItem} from "../Reducers/TextReducer";
+import { TEXT_API } from '../Constants';
+import { deleteAsync, getAsync, postAsync, putAsync, patchAsync } from '../Utilities/HttpRequest';
+import { TextFilter } from '../Actions/TextAction';
+import { TextItem } from '../Reducers/TextReducer';
 
 export type GetTextResponse = {
   items: TextItem[];
   total: number;
-}
+};
 
 /**
  * Get the list of text
@@ -25,7 +19,7 @@ export async function getTextsAsync(filters: TextFilter, page: number, itemPerPa
       itemPerPage,
     });
   } catch (e) {
-    return {items: [], total: 0}
+    return { items: [], total: 0 };
   }
 }
 
@@ -33,7 +27,7 @@ export type TextCreateModel = {
   title: string;
   languageCode: string;
   content: string;
-}
+};
 /**
  * create a text
  * @param text the text to create
@@ -61,9 +55,9 @@ export async function getTextReadAsync(textId: number) {
 }
 
 export type TextTermsCountByLearningLevel = {
-  counts: {[key: string]: number};
+  counts: { [key: string]: number };
   id: number;
-}
+};
 
 export async function getTermCountByLearningLevelAsync(textId: number): Promise<TextTermsCountByLearningLevel> {
   return getAsync(`${TEXT_API}/${textId}/term-counts`);
@@ -82,7 +76,7 @@ export async function getTextEditDetailAsync(textId: number) {
 }
 
 export async function setTextBookmarkAsync(id: number, index: number) {
-  return patchAsync(`${TEXT_API}`, id, "bookmark", { termIndex: index });
+  return patchAsync(`${TEXT_API}`, id, 'bookmark', { termIndex: index });
 }
 export async function getTextTermsAsync(textId: number, indexFrom: number, indexTo: number) {
   return getAsync(`${TEXT_API}/${textId}/terms`, { indexFrom, indexTo });
@@ -94,7 +88,7 @@ export async function getTermCountInTextAsync(termId: number, textId: number) {
 
 export type TextTermsCount = {
   termCount: number;
-}
+};
 
 export async function getTermCountAsync(textId: number): Promise<TextTermsCount> {
   return getAsync(`${TEXT_API}/${textId}/term-count`);
@@ -102,16 +96,16 @@ export async function getTermCountAsync(textId: number): Promise<TextTermsCount>
 
 export type TextProcessedTermsCountResponse = {
   processedTermCount: number;
-}
+};
 
 export async function getProcessedTermCountAsync(textId: number): Promise<TextProcessedTermsCountResponse> {
   return getAsync(`${TEXT_API}/${textId}/processed-term-count`);
 }
 
-export async function getTextCountByLanguages(): Promise<{[key: string]: number}> {
+export async function getTextCountByLanguages(): Promise<{ [key: string]: number }> {
   return getAsync(`${TEXT_API}/count`);
 }
 
 export function getLastReadTextAsync(): Promise<TextItem | null> {
-  return getAsync(`${TEXT_API}/last-read`)
+  return getAsync(`${TEXT_API}/last-read`);
 }

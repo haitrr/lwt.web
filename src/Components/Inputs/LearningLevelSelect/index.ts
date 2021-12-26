@@ -1,3 +1,3 @@
-import LearningLevelSelect from "./LearningLevelSelect";
+import LearningLevelSelect from './LearningLevelSelect';
 
 export default LearningLevelSelect;

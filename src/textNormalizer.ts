@@ -1,7 +1,7 @@
-import compromise from "compromise";
+import compromise from 'compromise';
 
 const normalize = (text: string, languageCode: string) => {
-  if (languageCode === "en") {
+  if (languageCode === 'en') {
     const doc = compromise(text);
     doc.normalize({
       // remove hyphens, newlines, and force one space between words
@@ -28,7 +28,7 @@ const normalize = (text: string, languageCode: string) => {
       // turn all verbs into Infinitive form - "I walked" → "I walk"
       verbs: true,
       // turn 'Vice Admiral John Smith' to 'John Smith'
-      honorifics: false
+      honorifics: false,
     });
     doc.toLowerCase();
     return doc.out();

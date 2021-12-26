@@ -1,25 +1,25 @@
-import React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { CircularProgress } from "@mui/material";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import utc from "dayjs/plugin/utc";
-import TextActions from "./TextActions";
-import TextProgress from "./TextProgress";
-import { Language } from "../../../RootReducer";
-import { TextItem } from "../../../Reducers/TextReducer";
-import TermNumber from "./TermNumber";
-import { TermLearningLevel } from "../../../Enums";
-import TextStatus from "./TextStatus";
-import TotalTerm from "./TotalTerm";
-import styles from './TextsTable.module.scss'
-import useLanguages from "../../../Hooks/useLanguages";
+import React from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { CircularProgress } from '@mui/material';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import utc from 'dayjs/plugin/utc';
+import TextActions from './TextActions';
+import TextProgress from './TextProgress';
+import { Language } from '../../../RootReducer';
+import { TextItem } from '../../../Reducers/TextReducer';
+import TermNumber from './TermNumber';
+import { TermLearningLevel } from '../../../Enums';
+import TextStatus from './TextStatus';
+import TotalTerm from './TotalTerm';
+import styles from './TextsTable.module.scss';
+import useLanguages from '../../../Hooks/useLanguages';
 
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
@@ -36,18 +36,18 @@ const getTextLanguage = (language: string, languages: Language[]) => {
   if (lang) {
     return lang.name;
   }
-  return "Unknown language";
+  return 'Unknown language';
 };
 
 const Loading = () => {
   return (
     <div
       style={{
-        width: "100%",
-        padding: "10px 0",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        width: '100%',
+        padding: '10px 0',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
       <CircularProgress />
@@ -55,15 +55,10 @@ const Loading = () => {
   );
 };
 
-const TextsTable: React.FC<TextsTableProps> = ({
-  isLoading,
-  onEdit,
-  texts,
-  reloadTexts,
-}) => {
+const TextsTable: React.FC<TextsTableProps> = ({ isLoading, onEdit, texts, reloadTexts }) => {
   const { languages } = useLanguages();
   if (!languages || !texts) {
-    return <Loading />
+    return <Loading />;
   }
 
   return (
@@ -98,76 +93,49 @@ const TextsTable: React.FC<TextsTableProps> = ({
                   <div
                     className={styles.title}
                     style={{
-                      maxHeight: "5rem",
-                      display: "flex",
-                      justifyContent: "center",
-                      overflow: "scroll",
-                      scrollbarWidth: "none",
+                      maxHeight: '5rem',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      overflow: 'scroll',
+                      scrollbarWidth: 'none',
                     }}
                   >
                     {text.title}
                   </div>
                 </TableCell>
-                <TableCell align="center">
-                  {dayjs.utc(text.createdAt).fromNow()}
-                </TableCell>
+                <TableCell align="center">{dayjs.utc(text.createdAt).fromNow()}</TableCell>
                 <TableCell>
                   <TextProgress text={text} />
                 </TableCell>
                 <TableCell>
-                  <TermNumber
-                    text={text}
-                    learningLevel={TermLearningLevel.UnKnow}
-                  />
+                  <TermNumber text={text} learningLevel={TermLearningLevel.UnKnow} />
                 </TableCell>
                 <TableCell>
-                  <TermNumber
-                    text={text}
-                    learningLevel={TermLearningLevel.WellKnow}
-                  />
+                  <TermNumber text={text} learningLevel={TermLearningLevel.WellKnow} />
                 </TableCell>
                 <TableCell align="center" style={{ padding: 0 }}>
                   <TextActions text={text} onEdit={onEdit} onDelete={reloadTexts} />
                 </TableCell>
                 <TableCell>
-                  <TermNumber
-                    text={text}
-                    learningLevel={TermLearningLevel.Learning1}
-                  />
+                  <TermNumber text={text} learningLevel={TermLearningLevel.Learning1} />
                 </TableCell>
                 <TableCell>
-                  <TermNumber
-                    text={text}
-                    learningLevel={TermLearningLevel.Learning2}
-                  />
+                  <TermNumber text={text} learningLevel={TermLearningLevel.Learning2} />
                 </TableCell>
                 <TableCell>
-                  <TermNumber
-                    text={text}
-                    learningLevel={TermLearningLevel.Learning3}
-                  />
+                  <TermNumber text={text} learningLevel={TermLearningLevel.Learning3} />
                 </TableCell>
                 <TableCell>
-                  <TermNumber
-                    text={text}
-                    learningLevel={TermLearningLevel.Learning4}
-                  />
+                  <TermNumber text={text} learningLevel={TermLearningLevel.Learning4} />
                 </TableCell>
                 <TableCell>
-                  <TermNumber
-                    text={text}
-                    learningLevel={TermLearningLevel.Learning5}
-                  />
+                  <TermNumber text={text} learningLevel={TermLearningLevel.Learning5} />
                 </TableCell>
                 <TableCell>
                   <TextStatus text={text} />
                 </TableCell>
-                <TableCell>
-                  {getTextLanguage(text.languageCode, languages)}
-                </TableCell>
-                <TableCell>
-                  {text.counts ? text.counts[TermLearningLevel.Ignored] : "-"}
-                </TableCell>
+                <TableCell>{getTextLanguage(text.languageCode, languages)}</TableCell>
+                <TableCell>{text.counts ? text.counts[TermLearningLevel.Ignored] : '-'}</TableCell>
                 <TableCell>
                   <TotalTerm record={text} />
                 </TableCell>

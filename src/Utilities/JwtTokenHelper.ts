@@ -1,6 +1,5 @@
-import jwt_decode from "jwt-decode";
-import { TOKEN_LOCAL_STORAGE_KEY } from "../Constants";
-
+import jwt_decode from 'jwt-decode';
+import { TOKEN_LOCAL_STORAGE_KEY } from '../Constants';
 
 export interface UserData {
   id: number;

@@ -1,21 +1,17 @@
-import { API_ROOT, TOKEN_LOCAL_STORAGE_KEY } from "../Constants";
-import { getAsync, postAsync, putAsync } from "../Utilities/HttpRequest";
+import { API_ROOT, TOKEN_LOCAL_STORAGE_KEY } from '../Constants';
+import { getAsync, postAsync, putAsync } from '../Utilities/HttpRequest';
 
 export function getSettingAsync() {
   return getAsync(`${API_ROOT}/user/setting`);
 }
 
-export interface Setting {
-
-}
+export interface Setting {}
 
 export function updateSettingAsync(settings: Setting) {
-  return putAsync(`${API_ROOT}/user`, "setting", settings);
+  return putAsync(`${API_ROOT}/user`, 'setting', settings);
 }
 
-export interface Credentials {
-
-}
+export interface Credentials {}
 
 /**
  * login a user async
@@ -32,9 +28,7 @@ export function logout() {
   localStorage.removeItem(TOKEN_LOCAL_STORAGE_KEY);
 }
 
-export interface RegisterData {
-
-}
+export interface RegisterData {}
 
 export async function registerAsync(data: RegisterData) {
   await postAsync(`${API_ROOT}/user`, data);

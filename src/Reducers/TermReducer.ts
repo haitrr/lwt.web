@@ -1,10 +1,5 @@
-import { handleActions } from "redux-actions";
-import {
-  TERM_CREATED,
-  TERM_EDITING_GET_MEANING,
-  TERM_EDITING_MEANING_RESET,
-  TERM_SET,
-} from "../Actions/TermAction";
+import { handleActions } from 'redux-actions';
+import { TERM_CREATED, TERM_EDITING_GET_MEANING, TERM_EDITING_MEANING_RESET, TERM_SET } from '../Actions/TermAction';
 
 export interface TermState {
   editingTerm: number | null;
@@ -28,8 +23,8 @@ export default handleActions<TermState, any>(
     }),
     [TERM_EDITING_MEANING_RESET]: (state) => ({
       ...state,
-      editingTermMeaning: "",
+      editingTermMeaning: '',
     }),
   },
-  defaultState
+  defaultState,
 );

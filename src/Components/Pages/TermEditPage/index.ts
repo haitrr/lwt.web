@@ -1,6 +1,6 @@
 /**
  * export.
  */
-import { TermEditPage } from "./TermEditPage";
+import { TermEditPage } from './TermEditPage';
 
 export { TermEditPage };

@@ -1,11 +1,7 @@
-import React from "react";
-import styles from "./LearningLevelSelect.module.scss";
-import {
-  TermLearningLevel,
-  TermLearningColor,
-  TermLearningLevelShortcut,
-} from "../../../Enums";
-import Option from "./Option";
+import React from 'react';
+import styles from './LearningLevelSelect.module.scss';
+import { TermLearningLevel, TermLearningColor, TermLearningLevelShortcut } from '../../../Enums';
+import Option from './Option';
 
 const optionLevels = [
   TermLearningLevel.UnKnow,
@@ -29,7 +25,7 @@ interface Props {
   value: string;
 }
 
-const LearningLevelSelect: React.FC<Props> = ({onChange, value}) => {
+const LearningLevelSelect: React.FC<Props> = ({ onChange, value }) => {
   const onClick = (val: string) => {
     onChange(val);
   };

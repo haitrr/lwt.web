@@ -1,10 +1,9 @@
-import React, { useContext } from "react";
-import {Redirect} from "react-router";
-import { UserContext } from "../../../App";
-import LastRead from "./LastRead";
+import React, { useContext } from 'react';
+import { Redirect } from 'react-router';
+import { UserContext } from '../../../App';
+import LastRead from './LastRead';
 
-interface Props {
-}
+interface Props {}
 
 /**
  * Home page
@@ -12,13 +11,13 @@ interface Props {
 const HomePage: React.FC<Props> = () => {
   const [user] = useContext(UserContext);
   return user ? (
-    <div style={{padding: "2rem"}}>
-      <LastRead/>
+    <div style={{ padding: '2rem' }}>
+      <LastRead />
     </div>
   ) : (
-    <Redirect to="/login"/>
+    <Redirect to="/login" />
   );
-}
+};
 
 const connectedHomePage = HomePage;
-export {connectedHomePage as HomePage};
+export { connectedHomePage as HomePage };

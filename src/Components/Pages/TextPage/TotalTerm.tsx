@@ -1,7 +1,7 @@
-import React from "react";
-import { TermLearningLevel } from "../../../Enums";
-import { TextItem } from "../../../Reducers/TextReducer";
-import useTextTermsCountByLearningLevel from "../../../Hooks/useTextTermsCountByLearningLevel";
+import React from 'react';
+import { TermLearningLevel } from '../../../Enums';
+import { TextItem } from '../../../Reducers/TextReducer';
+import useTextTermsCountByLearningLevel from '../../../Hooks/useTextTermsCountByLearningLevel';
 
 interface Props {
   record: TextItem;
@@ -19,6 +19,6 @@ const TotalTerm: React.FC<Props> = ({ record }) => {
     return null;
   });
   return <span>{sum}</span>;
-}
+};
 
 export default TotalTerm;

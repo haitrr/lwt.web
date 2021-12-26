@@ -1,6 +1,6 @@
-import React from "react";
-import classNames from "classnames";
-import styles from "./SingleBarChart.module.scss";
+import React from 'react';
+import classNames from 'classnames';
+import styles from './SingleBarChart.module.scss';
 
 const renderItem = (item: Item, sum: number) => {
   const className = classNames(styles.section, item.color);
@@ -9,32 +9,32 @@ const renderItem = (item: Item, sum: number) => {
       key={item.name}
       className={className}
       style={{
-        paddingLeft: "0.2rem",
-        paddingRight: "0.2rem",
-        height: "100%",
+        paddingLeft: '0.2rem',
+        paddingRight: '0.2rem',
+        height: '100%',
         flex: item.value,
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        textAlign: "center",
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        textAlign: 'center',
       }}
     >
       <div
         style={{
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column",
-          height: "0.85rem",
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          height: '0.85rem',
         }}
       >
         {item.value}
       </div>
       <div
         style={{
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column",
-          height: "0.85rem",
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          height: '0.85rem',
         }}
       >
         {`(${Math.round((item.value * 10000) / sum) / 100}%)`}
@@ -50,16 +50,12 @@ interface Item {
 }
 
 interface Props {
-  data: Item[]
+  data: Item[];
 }
 
-const SingleBarChart: React.FC<Props> = ({data}) => {
+const SingleBarChart: React.FC<Props> = ({ data }) => {
   const sum = data.map((i) => i.value).reduce((a, b) => a + b);
-  return (
-    <span className={`${styles.bar}`}>
-      {data.map((item) => renderItem(item, sum))}
-    </span>
-  );
+  return <span className={`${styles.bar}`}>{data.map((item) => renderItem(item, sum))}</span>;
 };
 
 export default SingleBarChart;

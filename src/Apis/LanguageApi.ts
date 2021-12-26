@@ -1,5 +1,5 @@
-import { API_ROOT } from "../Constants";
-import { getAsync } from "../Utilities/HttpRequest";
+import { API_ROOT } from '../Constants';
+import { getAsync } from '../Utilities/HttpRequest';
 
 /**
  * get current user's languages

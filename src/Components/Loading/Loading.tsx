@@ -1,10 +1,10 @@
-import { CircularProgress } from "@mui/material";
-import React from "react";
-import classNames from "classnames";
-import styles from "./Loading.module.scss";
+import { CircularProgress } from '@mui/material';
+import React from 'react';
+import classNames from 'classnames';
+import styles from './Loading.module.scss';
 
 interface Props {
-  color?: "primary" | "secondary" | "inherit";
+  color?: 'primary' | 'secondary' | 'inherit';
   className?: string;
 }
 

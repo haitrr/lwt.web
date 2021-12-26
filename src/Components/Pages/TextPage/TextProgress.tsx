@@ -1,7 +1,7 @@
-import React from "react";
-import { Button } from "@mui/material";
-import { useHistory } from "react-router";
-import { TextItem } from "../../../Reducers/TextReducer";
+import React from 'react';
+import { Button } from '@mui/material';
+import { useHistory } from 'react-router';
+import { TextItem } from '../../../Reducers/TextReducer';
 
 function TextProgress(props: { text: TextItem }) {
   const { text } = props;
@@ -16,18 +16,14 @@ function TextProgress(props: { text: TextItem }) {
   return (
     <div
       style={{
-        display: "flex",
-        alignItems: "center",
-        flexDirection: "column",
-        justifyContent: "center",
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent: 'center',
       }}
     >
       <div>{`${percentage}%`}</div>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => history.push(`/text/read/${text.id}`)}
-      >
+      <Button variant="contained" color="primary" onClick={() => history.push(`/text/read/${text.id}`)}>
         Read
       </Button>
     </div>

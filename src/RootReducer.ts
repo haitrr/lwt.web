@@ -1,7 +1,7 @@
-import { combineReducers } from "redux";
-import textReducer, { TextState } from "./Reducers/TextReducer";
-import {UserLanguageSetting} from "./Reducers/UserReducer";
-import termReducer, {TermState} from "./Reducers/TermReducer";
+import { combineReducers } from 'redux';
+import textReducer, { TextState } from './Reducers/TextReducer';
+import { UserLanguageSetting } from './Reducers/UserReducer';
+import termReducer, { TermState } from './Reducers/TermReducer';
 
 export interface Language {
   code: string;
@@ -9,11 +9,10 @@ export interface Language {
   speakCode: string;
 }
 
-export interface LanguageState {
-}
+export interface LanguageState {}
 
 export interface UserSetting {
-  languageSettings: UserLanguageSetting[]
+  languageSettings: UserLanguageSetting[];
 }
 
 export interface UserState {

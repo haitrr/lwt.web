@@ -6,18 +6,16 @@ import {
   DialogContentText,
   DialogTitle,
   IconButton,
-} from "@mui/material";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import React from "react";
-import { TextItem } from "../../../Reducers/TextReducer";
-import { useMutation } from "react-query";
-import { deleteTextAsync } from "../../../Apis/TextApi";
+} from '@mui/material';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import React from 'react';
+import { TextItem } from '../../../Reducers/TextReducer';
+import { useMutation } from 'react-query';
+import { deleteTextAsync } from '../../../Apis/TextApi';
 
-interface DispatchProps {
-}
+interface DispatchProps {}
 
-interface OwnProps {
-}
+interface OwnProps {}
 
 interface StateProps {
   text: TextItem;
@@ -25,7 +23,6 @@ interface StateProps {
 }
 
 type Props = StateProps & DispatchProps & OwnProps;
-
 
 const DeleteTextButton: React.FC<Props> = ({ text, onDelete }) => {
   const [dialogOpen, setDialogOpen] = React.useState<boolean>(false);
@@ -38,12 +35,15 @@ const DeleteTextButton: React.FC<Props> = ({ text, onDelete }) => {
     setDialogOpen(false);
   };
 
-  const { mutate: deleteText, isLoading: deleting } = useMutation((id: number) => {
-    return deleteTextAsync(id);
-  }, { onSettled: handleClose, onSuccess: onDelete });
+  const { mutate: deleteText, isLoading: deleting } = useMutation(
+    (id: number) => {
+      return deleteTextAsync(id);
+    },
+    { onSettled: handleClose, onSuccess: onDelete },
+  );
 
   const handleConfirm = () => {
-    deleteText(text.id)
+    deleteText(text.id);
   };
 
   return (
@@ -57,22 +57,10 @@ const DeleteTextButton: React.FC<Props> = ({ text, onDelete }) => {
           <DialogContentText>{text.title}</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button
-            variant="contained"
-            autoFocus
-            disabled={deleting}
-            onClick={handleClose}
-            color="primary"
-          >
+          <Button variant="contained" autoFocus disabled={deleting} onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button
-            variant="contained"
-            disabled={deleting}
-            onClick={handleConfirm}
-            color="secondary"
-            autoFocus
-          >
+          <Button variant="contained" disabled={deleting} onClick={handleConfirm} color="secondary" autoFocus>
             Delete
           </Button>
         </DialogActions>

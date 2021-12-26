@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "./TextReadPage.module.scss";
+import React from 'react';
+import styles from './TextReadPage.module.scss';
 
 interface Props {
   title: string;

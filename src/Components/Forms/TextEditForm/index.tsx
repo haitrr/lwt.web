@@ -1,7 +1,7 @@
-import {Form, Formik, FormikProps} from "formik";
-import {Button, TextField} from "@mui/material";
-import React from "react";
-import LanguageSelect from "../../Inputs/LanguageSelect/LanguageSelect";
+import { Form, Formik, FormikProps } from 'formik';
+import { Button, TextField } from '@mui/material';
+import React from 'react';
+import LanguageSelect from '../../Inputs/LanguageSelect/LanguageSelect';
 
 interface Props {
   editDetail: any;
@@ -17,12 +17,11 @@ export interface FormValues {
   content: string;
 }
 
-
 /**
  * text create form
  */
 const TextEditForm: React.FC<Props> = (props) => {
-  const {editDetail, formRef, onSubmit, onCancel, submitting} = props;
+  const { editDetail, formRef, onSubmit, onCancel, submitting } = props;
 
   return (
     <Formik
@@ -31,23 +30,24 @@ const TextEditForm: React.FC<Props> = (props) => {
       initialValues={{
         title: editDetail.title,
         languageCode: editDetail.languageCode,
-        content: editDetail.content
-      }}>
-      {({values, handleChange}) => {
+        content: editDetail.content,
+      }}
+    >
+      {({ values, handleChange }) => {
         return (
           <Form>
-            <LanguageSelect value={values.languageCode} name="languageCode" onChange={handleChange}/>
+            <LanguageSelect value={values.languageCode} name="languageCode" onChange={handleChange} />
             <TextField
               name="title"
               variant="outlined"
               onChange={handleChange}
               value={values.title}
               label="Title"
-              style={{width: "100%", marginTop: "1rem"}}
+              style={{ width: '100%', marginTop: '1rem' }}
               placeholder="Title"
             />
             <TextField
-              style={{width: "100%", marginTop: "1rem"}}
+              style={{ width: '100%', marginTop: '1rem' }}
               name="content"
               value={values.content}
               onChange={handleChange}
@@ -58,22 +58,12 @@ const TextEditForm: React.FC<Props> = (props) => {
               minRows={10}
               placeholder="Please input text content here ..."
             />
-            <hr/>
-            <div style={{display: "flex", justifyContent: "space-between"}}>
-              <Button
-                disabled={submitting}
-                variant="contained"
-                color="secondary"
-                onClick={onCancel}
-              >
+            <hr />
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Button disabled={submitting} variant="contained" color="secondary" onClick={onCancel}>
                 Cancel
               </Button>
-              <Button
-                disabled={submitting}
-                variant="contained"
-                color="primary"
-                type="submit"
-              >
+              <Button disabled={submitting} variant="contained" color="primary" type="submit">
                 Save
               </Button>
             </div>

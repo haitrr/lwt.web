@@ -1,6 +1,6 @@
 /**
  * text filter form
  */
-import TextFilterForm from "./TextFilterForm";
+import TextFilterForm from './TextFilterForm';
 
 export default TextFilterForm;
