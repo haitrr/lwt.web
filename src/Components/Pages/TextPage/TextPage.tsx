@@ -29,7 +29,7 @@ const TextPage: React.FC<Props> = ({ history, location }) => {
 
   const { texts, isLoading, refetch } = useTexts(filters, page, itemPerPage);
   const onEdit = () => {
-    refetch();
+    refetch().then();
     setEditingText(null);
   };
 
