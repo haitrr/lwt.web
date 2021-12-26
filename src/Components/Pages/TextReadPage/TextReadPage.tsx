@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { connect, useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { readTextAction } from '../../../Actions/TextAction';
 import { setEditingTermAction } from '../../../Actions/TermAction';
 import styles from './TextReadPage.module.scss';
@@ -12,6 +12,7 @@ import { usePrevious } from '../../../Hooks/usePrevious';
 import { RootState } from '../../../RootReducer';
 import { Term } from '../../../Reducers/TextReducer';
 import useLanguages from '../../../Hooks/useLanguages';
+import { Helmet } from 'react-helmet';
 
 interface Props {
   match: any;
@@ -96,6 +97,9 @@ const TextReadPage: React.FC<Props> = ({ match }) => {
 
   return (
     <div className={styles.readPane} id="readPanel">
+      <Helmet>
+        <title>{title}</title>
+      </Helmet>
       <TextTitle title={title} />
       <TextStatistic textId={id} />
       <ContentPanel onSpeak={onSpeak} textId={id} />
