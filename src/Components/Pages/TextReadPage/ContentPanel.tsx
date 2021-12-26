@@ -26,6 +26,7 @@ interface Props {
 }
 
 const ContentPanel: React.FC<Props> = ({ textId, onSpeak }) => {
+  console.log('control panel');
   const dispatch = useDispatch();
   const { terms, begin, editingTerm, end, termCount } = useSelector((state: RootState) => {
     if (!state.text.readingText) {
@@ -151,7 +152,7 @@ const ContentPanel: React.FC<Props> = ({ textId, onSpeak }) => {
     if (terms[i]) {
       if (i % TermCountPerProgressPoint === 0) {
         termElements.push(
-          <TermObserver index={i}>
+          <TermObserver key={i} index={i}>
             <Term
               onSpeak={onSpeak}
               // eslint-disable-next-line react/no-array-index-key
@@ -181,7 +182,7 @@ const ContentPanel: React.FC<Props> = ({ textId, onSpeak }) => {
         {termElements}
         {/* begin loading */}
         {!terms[end] && <Loading className={styles.loading} />}
-        <ProgressBar />
+        <ProgressBar textId={textId} />
       </div>
       {!editingTerm && <GoToBookmarkButton onClick={goToBookmark} />}
     </>

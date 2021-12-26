@@ -13,6 +13,7 @@ import { RootState } from '../../../RootReducer';
 import { Term } from '../../../Reducers/TextReducer';
 import useLanguages from '../../../Hooks/useLanguages';
 import { Helmet } from 'react-helmet';
+import { useParams } from 'react-router';
 
 interface Props {
   match: any;
@@ -21,11 +22,10 @@ interface Props {
 /**
  * text read page.
  */
-const TextReadPage: React.FC<Props> = ({ match }) => {
-  const {
-    params: { textId },
-  } = match;
+const TextReadPage: React.FC<Props> = () => {
+  const { textId } = useParams<{ textId: string }>();
   const { terms, id, language, title, bookmark } = useSelector((state: RootState) => {
+    console.log('state');
     if (state.text.readingText) {
       return {
         terms: state.text.readingText.terms,
@@ -40,7 +40,7 @@ const TextReadPage: React.FC<Props> = ({ match }) => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(readTextAction(textId));
+    dispatch(readTextAction(Number.parseInt(textId, 10)));
     return () => {
       dispatch(setEditingTermAction(null));
     };
@@ -90,6 +90,8 @@ const TextReadPage: React.FC<Props> = ({ match }) => {
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(utt);
   };
+
+  console.log('read page');
 
   if (!id || !languages) {
     return <Loading />;

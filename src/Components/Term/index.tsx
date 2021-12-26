@@ -17,6 +17,7 @@ interface OwnProps {
 type Props = OwnProps;
 
 const Term: React.FC<Props> = ({ index, onSpeak }) => {
+  console.log('term');
   const dispatch = useDispatch();
   const { term, textId, bookmark, isLastBeginIndex } = useSelector((state: RootState) => {
     if (!state.text.readingText) {

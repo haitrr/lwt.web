@@ -1,49 +1,36 @@
-import React, { PropsWithChildren } from "react";
-import { useInView } from "react-intersection-observer";
-import { connect } from "react-redux";
-import { setViewingTermAction } from "../../Actions/TextAction";
-import { RootState } from "../../RootReducer";
+import React, { PropsWithChildren } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { useDispatch } from 'react-redux';
 
 interface OwnProps {
   index: number;
 }
 
-interface DispatchProps {
-  setViewingTerm: (index: number) => void;
-}
-
-type Props = OwnProps & DispatchProps;
+type Props = OwnProps;
 
 let setViewingTermTimeout: ReturnType<typeof setTimeout> | null;
 
-const handleTermVisible = (
-  setViewingTerm: (index: number) => void,
-  index: number
-) => {
-  if (setViewingTermTimeout) {
-    clearTimeout(setViewingTermTimeout);
-  }
-  setViewingTermTimeout = setTimeout(() => {
-    setViewingTerm(index);
-  }, 200);
-};
-
-const TermObserver: React.FC<PropsWithChildren<Props>> = ({
-  index,
-  children,
-  setViewingTerm,
-}) => {
+const TermObserver: React.FC<PropsWithChildren<Props>> = ({ index, children }) => {
   const { ref, inView } = useInView({
     threshold: 0,
   });
+  const dispatch = useDispatch();
+
+  const handleTermVisible = (index: number) => {
+    if (setViewingTermTimeout) {
+      clearTimeout(setViewingTermTimeout);
+    }
+    setViewingTermTimeout = setTimeout(() => {
+      // dispatch(setViewingTermAction(index));
+    }, 200);
+  };
 
   if (inView) {
-    handleTermVisible(setViewingTerm, index);
+    console.log(index);
+    handleTermVisible(index);
   }
 
   return <span ref={ref}>{children}</span>;
 };
 
-export default connect<void, DispatchProps, OwnProps, RootState>(null, {
-  setViewingTerm: setViewingTermAction,
-})(TermObserver);
+export default TermObserver;
