@@ -64,12 +64,10 @@
     "@types/react-router-dom": "^5.1.6",
     "@types/redux-actions": "^2.6.1",
     "@types/redux-promise": "^0.5.29",
-    "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
     "eslint": "^8.5.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react": "^7.28.0",
     "prettier": "^2.5.1"
   },
   "eslintConfig": {
@@ -85,8 +83,15 @@
       "react": "detect"
     },
     "extends": [
-      "plugin:@typescript-eslint/recommended",
+      "react-app",
       "plugin:prettier/recommended"
-    ]
+    ],
+    "rules": {
+      "prettier/prettier": "warn",
+      "@typescript-eslint/ban-types": "warn",
+      "@typescript-eslint/ban-ts-comment": "warn",
+      "@typescript-eslint/no-empty-interface": "warn",
+      "@typescript-eslint/no-empty-function": "warn"
+    }
   }
 }
