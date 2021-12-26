@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import styles from './Term.module.scss';
 import { setBookmarkAction, selectTermAction } from '../../Actions/TextAction';
@@ -29,7 +29,7 @@ const TermButton: React.FC<Props> = ({ bookmark, term, onClick }) => {
       id: state.text.readingText.id,
       isLastBeginIndex: state.text.readingText.termLastBeginIndex === term.index,
     };
-  });
+  }, shallowEqual);
 
   const onTermClick = (e: React.MouseEvent | React.KeyboardEvent) => {
     dispatch(selectTermAction(term.index));

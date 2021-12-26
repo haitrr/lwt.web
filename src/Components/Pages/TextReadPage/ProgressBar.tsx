@@ -1,8 +1,7 @@
 import React from 'react';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styles from './TextReadPage.module.scss';
 import { RootState } from '../../../RootReducer';
-import useTermCounts from '../../../Hooks/useTermCounts';
 import useTextTermsCount from '../../../Hooks/useTextTermsCount';
 import Loading from '../../Loading/Loading';
 
@@ -14,11 +13,9 @@ type Props = StateProps;
 
 const ProgressBar: React.FC<Props> = ({ textId }) => {
   const { termCount: total } = useTextTermsCount(textId);
-  const { current } = useSelector((state: RootState) => {
+  const current = useSelector((state: RootState) => {
     if (!state.text.readingText) throw new Error();
-    return {
-      current: state.text.readingText.viewingTermIndex,
-    };
+    return state.text.readingText.viewingTermIndex;
   });
 
   if (!total) {

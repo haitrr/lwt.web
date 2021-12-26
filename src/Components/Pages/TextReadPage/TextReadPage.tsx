@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { readTextAction } from '../../../Actions/TextAction';
 import { setEditingTermAction } from '../../../Actions/TermAction';
 import styles from './TextReadPage.module.scss';
@@ -24,8 +24,7 @@ interface Props {
  */
 const TextReadPage: React.FC<Props> = () => {
   const { textId } = useParams<{ textId: string }>();
-  const { terms, id, language, title, bookmark } = useSelector((state: RootState) => {
-    console.log('state');
+  const { terms, id, language, title } = useSelector((state: RootState) => {
     if (state.text.readingText) {
       return {
         terms: state.text.readingText.terms,
@@ -36,7 +35,7 @@ const TextReadPage: React.FC<Props> = () => {
       };
     }
     return { title: '' };
-  });
+  }, shallowEqual);
 
   const dispatch = useDispatch();
   useEffect(() => {

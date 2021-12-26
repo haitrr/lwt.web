@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Button, TextField } from '@mui/material';
 import TermContent from './TermContent';
 import LearningLevelSelect from '../../Inputs/LearningLevelSelect';
@@ -46,7 +46,7 @@ const TermEditForm: React.FC<Props> = ({ className }) => {
       index: state.term.editingTerm,
       textId: state.text.readingText.id,
     };
-  });
+  }, shallowEqual);
 
   const [dictionary, setDictionary] = React.useState({ lookingUpDictionary: false, lookedUpDictionary: false });
 

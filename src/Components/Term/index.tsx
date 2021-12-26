@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { getTermMeaningAction, setEditingTermAction } from '../../Actions/TermAction';
 import { getTermCountInTextAction } from '../../Actions/TextAction';
 import { TermLearningLevel } from '../../Enums';
@@ -30,7 +30,7 @@ const Term: React.FC<Props> = ({ index, onSpeak }) => {
       isLastBeginIndex: state.text.readingText.termLastBeginIndex === index,
       textId: state.text.readingText.id,
     };
-  });
+  }, shallowEqual);
   const handleHover = () => {
     if (term.meaning === null) {
       loadTermsMeaning();

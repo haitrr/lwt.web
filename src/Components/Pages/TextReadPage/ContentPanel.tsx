@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import styles from './TextReadPage.module.scss';
 import Term from '../../Term';
 import ProgressBar from './ProgressBar';
@@ -39,7 +39,7 @@ const ContentPanel: React.FC<Props> = ({ textId, onSpeak }) => {
       termCount: state.text.readingText.termCount,
       editingTerm: state.term.editingTerm,
     };
-  });
+  }, shallowEqual);
   React.useEffect(() => {
     if (window.innerWidth > 700) {
       // desktop

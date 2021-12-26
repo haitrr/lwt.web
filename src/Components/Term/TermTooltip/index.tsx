@@ -1,6 +1,6 @@
 import { Popper } from '@mui/material';
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { dictionaryTermMeaningAction, editTermAction } from '../../../Actions/TermAction';
 import { getNextLearningLevel, getPreviousLearningLevel } from '../../../Enums';
 import { selectTermAction, setBookmarkAction } from '../../../Actions/TextAction';
@@ -32,7 +32,7 @@ const TermTooltip: React.FC<Props> = ({ term, bookmark, onClick, onHover, index 
       readingLanguageCode: state.text.readingText.languageCode,
       textId: state.text.readingText.id,
     };
-  });
+  }, shallowEqual);
 
   const queryClient = useQueryClient();
 

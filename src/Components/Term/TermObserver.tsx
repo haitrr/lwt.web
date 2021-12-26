@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useDispatch } from 'react-redux';
+import { setViewingTermAction } from '../../Actions/TextAction';
 
 interface OwnProps {
   index: number;
@@ -21,12 +22,12 @@ const TermObserver: React.FC<PropsWithChildren<Props>> = ({ index, children }) =
       clearTimeout(setViewingTermTimeout);
     }
     setViewingTermTimeout = setTimeout(() => {
-      // dispatch(setViewingTermAction(index));
+      dispatch(setViewingTermAction(index));
     }, 200);
   };
 
   if (inView) {
-    console.log(index);
+    // console.log(index);
     handleTermVisible(index);
   }
 
