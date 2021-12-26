@@ -90,19 +90,19 @@ const TermEditForm: React.FC<Props> = ({ className }) => {
   }, [index, value?.content, value?.meaning]); // eslint-disable-line react-hooks/exhaustive-deps
   const queryClient = useQueryClient();
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = (values: any) => {
     const editedTerm = { ...value, ...values };
     if (!value.id) {
       dispatch(createTermAction(editedTerm));
-      await queryClient.fetchQuery({ queryKey: `textTermsCountByLL:${textId}` });
+      queryClient.fetchQuery({ queryKey: `textTermsCountByLL:${textId}` }).then();
     } else {
       dispatch(editTermAction(editedTerm));
-      await queryClient.fetchQuery({ queryKey: `textTermsCountByLL:${textId}` });
+      queryClient.fetchQuery({ queryKey: `textTermsCountByLL:${textId}` }).then();
     }
     dispatch(setEditingTermAction(null));
   };
 
-  const handleBetter = async (e: any) => {
+  const handleBetter = (e: any) => {
     const value = formRef.current!.values;
     e.preventDefault();
     const newValue = {
@@ -110,7 +110,7 @@ const TermEditForm: React.FC<Props> = ({ className }) => {
       learningLevel: getNextLearningLevel(value.learningLevel),
     };
     formRef.current?.setValues(newValue);
-    await handleSubmit(newValue);
+    handleSubmit(newValue);
   };
 
   const isActionDisabled = () => {
