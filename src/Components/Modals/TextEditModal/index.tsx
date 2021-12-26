@@ -1,10 +1,9 @@
 import { Modal, Paper } from '@mui/material';
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import TextEditForm, { FormValues } from '../../Forms/TextEditForm';
 import { editTextAction, getTextEditDetailAction } from '../../../Actions/TextAction';
 import { selectEditDetail } from '../../../Selectors/TextSelector';
-import { TextEditDetail } from '../../../Reducers/TextReducer';
 import { RootState } from '../../../RootReducer';
 import { FormikProps } from 'formik';
 
@@ -15,30 +14,15 @@ interface OwnProps {
   visible: boolean;
 }
 
-interface DispatchProps {
-  getEditDetail: (id: number) => void;
-  editText: (id: number, values: any) => Promise<any>;
-}
+type Props = OwnProps;
 
-interface StateProps {
-  editDetail?: TextEditDetail;
-}
-
-type Props = OwnProps & StateProps & DispatchProps;
-
-const TextEditModal: React.FC<Props> = ({
-  visible,
-  editDetail,
-  hide,
-  editingText,
-  getEditDetail,
-  editText,
-  onEdit,
-}) => {
+const TextEditModal: React.FC<Props> = ({ visible, hide, editingText, onEdit }) => {
+  const editDetail = useSelector((state: RootState) => selectEditDetail(state));
+  const dispatch = useDispatch();
   const [submitting, setSubmitting] = React.useState(false);
   React.useEffect(() => {
     if (editingText) {
-      getEditDetail(editingText);
+      dispatch(getTextEditDetailAction(editingText));
     }
   }, [editingText]); // eslint-disable-line react-hooks/exhaustive-deps
   React.useEffect(() => {
@@ -57,12 +41,11 @@ const TextEditModal: React.FC<Props> = ({
     setSubmitting(true);
     form?.validateForm(form?.values).then((errors) => {
       if (Object.keys(errors).length === 0) {
-        editText(editingText!, form?.values).then(() => {
-          onEdit();
-          setSubmitting(false);
-          form?.resetForm();
-          hide();
-        });
+        dispatch(editTextAction(editingText!, form!.values));
+        onEdit();
+        setSubmitting(false);
+        form?.resetForm();
+        hide();
       }
     });
   };
@@ -97,13 +80,4 @@ const TextEditModal: React.FC<Props> = ({
   );
 };
 
-// @ts-ignore
-export default connect<StateProps, DispatchProps, OwnProps, RootState>(
-  (state: RootState) => ({
-    editDetail: selectEditDetail(state),
-  }),
-  {
-    editText: editTextAction,
-    getEditDetail: getTextEditDetailAction,
-  },
-)(TextEditModal);
+export default TextEditModal;

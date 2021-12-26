@@ -65,7 +65,13 @@ export const deleteTextAction = createAction(TEXT_DELETED, async (textId: number
   }
 });
 
-export const editTextAction = createAction(TEXT_EDITED, async (id: number, text: Text) => {
+interface TextEditModel {
+  title: string;
+  languageCode: string;
+  content: string;
+}
+
+export const editTextAction = createAction(TEXT_EDITED, async (id: number, text: TextEditModel) => {
   try {
     await editTextAsync(id, text);
     toast.success('TextItem saved successfully.');
