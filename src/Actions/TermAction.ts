@@ -35,7 +35,7 @@ export const getTermAction = createAction(TERM_GET, async (id: number, index: nu
   }
 });
 
-export const setEditingTermAction = createAction(TERM_SET, (term: Term | null) => term);
+export const setEditingTermAction = createAction(TERM_SET, (termId: number | null) => termId);
 export const getEditingTermMeaningAction = createAction(
   TERM_EDITING_GET_MEANING,
   async (content: string, from: string, to: string) => {

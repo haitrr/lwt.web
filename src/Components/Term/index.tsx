@@ -1,47 +1,35 @@
-import React from "react";
-import {connect} from "react-redux";
-import {
-  getTermMeaningAction,
-  setEditingTermAction,
-} from "../../Actions/TermAction";
-import {getTermCountInTextAction} from "../../Actions/TextAction";
-import {TermLearningLevel} from "../../Enums";
-import TermButton from "./TermButton";
-import TermTooltip from "./TermTooltip";
-import SkippedTerm from "./SkippedTerm";
-import {RootState} from "../../RootReducer";
-import {Term as TermState} from "../../Reducers/TextReducer";
-
-interface StateProps {
-  textId: number;
-  bookmark: boolean;
-  isLastBeginIndex: boolean;
-  term: TermState;
-}
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getTermMeaningAction, setEditingTermAction } from '../../Actions/TermAction';
+import { getTermCountInTextAction } from '../../Actions/TextAction';
+import { TermLearningLevel } from '../../Enums';
+import TermButton from './TermButton';
+import TermTooltip from './TermTooltip';
+import SkippedTerm from './SkippedTerm';
+import { RootState } from '../../RootReducer';
+import { Term as TermState } from '../../Reducers/TextReducer';
 
 interface OwnProps {
   index: number;
   onSpeak: (term: TermState) => void;
 }
 
-interface DispatchProps {
-  setEditingTerm: Function;
-  getTermMeaning: (term: TermState, index: number) => void;
-  getTermCountInText: (termId: number, textId: number) => void;
-}
+type Props = OwnProps;
 
-type Props = StateProps & OwnProps & DispatchProps;
+const Term: React.FC<Props> = ({ index, onSpeak }) => {
+  const dispatch = useDispatch();
+  const { term, textId, bookmark, isLastBeginIndex } = useSelector((state: RootState) => {
+    if (!state.text.readingText) {
+      throw new Error();
+    }
 
-const Term: React.FC<Props> = (
-  {
-    term,
-    setEditingTerm,
-    getTermMeaning,
-    index,
-    getTermCountInText,
-    textId,
-    onSpeak, bookmark, isLastBeginIndex
-  }) => {
+    return {
+      term: state.text.readingText.terms[index],
+      bookmark: state.text.readingText.bookmark === index,
+      isLastBeginIndex: state.text.readingText.termLastBeginIndex === index,
+      textId: state.text.readingText.id,
+    };
+  });
   const handleHover = () => {
     if (term.meaning === null) {
       loadTermsMeaning();
@@ -54,7 +42,7 @@ const Term: React.FC<Props> = (
 
   const loadTermCountInText = () => {
     if (term.id && !term.count) {
-      getTermCountInText(term.id, textId);
+      dispatch(getTermCountInTextAction(term.id, textId));
     }
   };
 
@@ -66,7 +54,7 @@ const Term: React.FC<Props> = (
       term.learningLevel !== TermLearningLevel.Skipped &&
       term.learningLevel !== TermLearningLevel.WellKnow
     ) {
-      getTermMeaning(term, index);
+      dispatch(getTermMeaningAction(term, index));
     }
   };
 
@@ -77,27 +65,21 @@ const Term: React.FC<Props> = (
       loadTermCountInText();
     }
     if (term.meaning === null) {
-      getTermMeaning(term, index);
+      dispatch(getTermMeaningAction(term, index));
     }
     onSpeak(term);
-    setEditingTerm(index);
+    dispatch(setEditingTermAction(index));
   };
 
   if (term.learningLevel === TermLearningLevel.Skipped) {
-    return <SkippedTerm term={term} isLastBeginTerm={isLastBeginIndex}/>;
+    return <SkippedTerm term={term} isLastBeginTerm={isLastBeginIndex} />;
   }
   if (
     term.learningLevel === TermLearningLevel.WellKnow ||
     term.learningLevel === TermLearningLevel.Ignored ||
     window.innerWidth < 768
   ) {
-    return (
-      <TermButton
-        bookmark={bookmark}
-        term={term}
-        onClick={handleTermClick}
-      />
-    );
+    return <TermButton bookmark={bookmark} term={term} onClick={handleTermClick} />;
   }
 
   return (
@@ -110,34 +92,6 @@ const Term: React.FC<Props> = (
       bookmark={bookmark}
     />
   );
-}
+};
 
-export default connect(
-  (state: RootState, ownProps: OwnProps) => {
-    if (!state.text.readingText) {
-      throw new Error();
-    }
-
-    return {
-      term: state.text.readingText.terms[ownProps.index],
-      bookmark: state.text.readingText.bookmark === ownProps.index,
-      isLastBeginIndex:
-        state.text.readingText.termLastBeginIndex === ownProps.index,
-      textId: state.text.readingText.id,
-    };
-  },
-  {
-    setEditingTerm: setEditingTermAction,
-    getTermMeaning: getTermMeaningAction,
-    getTermCountInText: getTermCountInTextAction,
-  }
-)(React.memo(Term, (prevProps, nextProps) => {
-  const {term, bookmark, isLastBeginIndex} = prevProps;
-  return !(
-    nextProps.term.learningLevel !== term.learningLevel ||
-    nextProps.term.meaning !== term.meaning ||
-    nextProps.term.count !== term.count ||
-    nextProps.bookmark !== bookmark ||
-    isLastBeginIndex !== nextProps.isLastBeginIndex
-  );
-}));
+export default Term;
