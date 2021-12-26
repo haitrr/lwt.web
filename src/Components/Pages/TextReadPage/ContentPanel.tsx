@@ -1,23 +1,18 @@
-import React from "react";
-import {connect} from "react-redux";
-import styles from "./TextReadPage.module.scss";
-import Term from "../../Term";
-import ProgressBar from "./ProgressBar";
-import GoToBookmarkButton from "./GoToBookmarkButton";
-import {
-  getTextTermsAction,
-  setTermIndexBeginAction,
-  setViewingTermAction,
-  setTermIndexEndAction,
-} from "../../../Actions/TextAction";
-import {setEditingTermAction} from "../../../Actions/TermAction";
-import Loading from "../../Loading/Loading";
-import {LAST_BEGIN_INDEX_ID} from "../../Term/TermButton";
-import TermObserver from "../../Term/TermObserver";
-import {usePrevious} from "../../../Hooks/usePrevious";
-import {Term as TermItem} from '../../../Reducers/TextReducer'
-import {RootState} from "../../../RootReducer";
-import useDidMountEffect from "../../../Hooks/useDidMountEffect";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import styles from './TextReadPage.module.scss';
+import Term from '../../Term';
+import ProgressBar from './ProgressBar';
+import GoToBookmarkButton from './GoToBookmarkButton';
+import { getTextTermsAction, setTermIndexBeginAction, setTermIndexEndAction } from '../../../Actions/TextAction';
+import { setEditingTermAction } from '../../../Actions/TermAction';
+import Loading from '../../Loading/Loading';
+import { LAST_BEGIN_INDEX_ID } from '../../Term/TermButton';
+import TermObserver from '../../Term/TermObserver';
+import { usePrevious } from '../../../Hooks/usePrevious';
+import { Term as TermItem } from '../../../Reducers/TextReducer';
+import { RootState } from '../../../RootReducer';
+import useDidMountEffect from '../../../Hooks/useDidMountEffect';
 
 const TermCountPerProgressPoint = 50;
 
@@ -26,34 +21,24 @@ let renderingLast: any;
 let loadTerms: any;
 
 interface Props {
-  end: number;
-  setTermIndexEnd: Function;
-  begin: number;
-  termCount: number;
-  getTextTerms: Function;
   textId: number;
-  terms?: TermItem[],
-  editingTerm: number | null,
-  setEditingTerm: Function,
-  onSpeak: (t: TermItem) => void,
-  setViewingTerm: Function,
-  setTermIndexBegin: Function,
+  onSpeak: (t: TermItem) => void;
 }
 
-const ContentPanel: React.FC<Props> = (
-  {
-    end,
-    setTermIndexEnd,
-    begin,
-    termCount,
-    getTextTerms,
-    textId,
-    terms = [],
-    editingTerm = null,
-    setEditingTerm,
-    onSpeak,
-    setTermIndexBegin,
-  }) => {
+const ContentPanel: React.FC<Props> = ({ textId, onSpeak }) => {
+  const dispatch = useDispatch();
+  const { terms, begin, editingTerm, end, termCount } = useSelector((state: RootState) => {
+    if (!state.text.readingText) {
+      throw new Error('not reading text');
+    }
+    return {
+      terms: state.text.readingText.terms,
+      begin: state.text.readingText.termIndexBegin,
+      end: state.text.readingText.termIndexEnd,
+      termCount: state.text.readingText.termCount,
+      editingTerm: state.term.editingTerm,
+    };
+  });
   React.useEffect(() => {
     if (window.innerWidth > 700) {
       // desktop
@@ -64,45 +49,43 @@ const ContentPanel: React.FC<Props> = (
       displayTerms = 750;
       loadTerms = 150;
     }
-    setTermIndexBegin(Math.max(begin - Math.floor(displayTerms / 2), 0));
-    setTermIndexEnd(Math.min(end + displayTerms, termCount - 1));
+    dispatch(setTermIndexBeginAction(Math.max(begin - Math.floor(displayTerms / 2), 0)));
+    dispatch(setTermIndexEndAction(Math.min(end + displayTerms, termCount - 1)));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  }, []);
 
   const container = React.createRef<HTMLDivElement>();
-  const [loading, setLoading] = React.useState(true)
+  const [loading, setLoading] = React.useState(true);
 
-  const prevProps = usePrevious({begin, terms, end})
+  const prevProps = usePrevious({ begin, terms, end });
   useDidMountEffect(() => {
     if (prevProps?.begin !== undefined && begin < prevProps?.begin) {
-      getTextTerms(textId, begin, prevProps?.begin);
+      dispatch(getTextTermsAction(textId, begin, prevProps?.begin));
     }
 
     if (prevProps?.terms[begin] !== terms[begin]) {
       scrollToLast();
     }
-  }, [begin, prevProps, getTextTerms, terms, textId])
+  }, [begin, prevProps, terms, textId]);
 
   useDidMountEffect(() => {
     if (prevProps?.end !== undefined) {
       if (end > prevProps.end) {
-        getTextTerms(textId, prevProps.end, end);
+        dispatch(getTextTermsAction(textId, prevProps.end, end));
       }
     }
-  }, [end, textId, prevProps, getTextTerms])
+  }, [end, textId, prevProps]);
 
   React.useEffect(() => {
     // scroll to the bookmark ofter initial loading
     if (terms[begin] && terms[end] && loading) {
       setLoading(false);
-      const bookmarkEl = document.getElementById("bookmark");
+      const bookmarkEl = document.getElementById('bookmark');
       if (bookmarkEl) {
-        bookmarkEl.scrollIntoView({block: "center"});
+        bookmarkEl.scrollIntoView({ block: 'center' });
       }
     }
-
-  },[terms, begin, end, loading])
-
+  }, [terms, begin, end, loading]);
 
   const scrollToLast = () => {
     const lastBeginEl = document.getElementById(LAST_BEGIN_INDEX_ID);
@@ -115,20 +98,20 @@ const ContentPanel: React.FC<Props> = (
   };
 
   const goToBookmark = () => {
-    const bookmarkEl = document.getElementById("bookmark");
+    const bookmarkEl = document.getElementById('bookmark');
     if (bookmarkEl) {
-      bookmarkEl.scrollIntoView({block: "center", behavior: "smooth"});
+      bookmarkEl.scrollIntoView({ block: 'center', behavior: 'smooth' });
     }
   };
 
   const handleScroll = (e: any) => {
     e.stopPropagation();
     e.preventDefault();
-    if (e.target.id !== "contentPanel") {
+    if (e.target.id !== 'contentPanel') {
       return;
     }
     if (editingTerm) {
-      setEditingTerm(null);
+      dispatch(setEditingTermAction(null));
     }
     // loading
     if (!terms[begin] || !terms[end]) {
@@ -143,15 +126,14 @@ const ContentPanel: React.FC<Props> = (
     const top = e.target.scrollTop < 100;
     if (top) {
       if (begin > 0) {
-        setTermIndexBegin(Math.max(begin - loadTerms, 0));
+        dispatch(setTermIndexBeginAction(Math.max(begin - loadTerms, 0)));
         return;
       }
     }
-    const bottom =
-      e.target.scrollHeight - e.target.scrollTop < e.target.clientHeight + 100;
+    const bottom = e.target.scrollHeight - e.target.scrollTop < e.target.clientHeight + 100;
     if (bottom) {
       if (end < termCount - 1) {
-        setTermIndexEnd(Math.min(end + loadTerms, termCount - 1));
+        dispatch(setTermIndexEndAction(Math.min(end + loadTerms, termCount - 1)));
       }
     }
   };
@@ -159,8 +141,8 @@ const ContentPanel: React.FC<Props> = (
   // initial loading
   if ((!terms[begin] || !terms[end]) && loading) {
     return (
-      <div style={{height: "50%"}}>
-        <Loading/>
+      <div style={{ height: '50%' }}>
+        <Loading />
       </div>
     );
   }
@@ -176,7 +158,7 @@ const ContentPanel: React.FC<Props> = (
               key={i}
               index={i}
             />
-          </TermObserver>
+          </TermObserver>,
         );
       } else {
         termElements.push(
@@ -185,7 +167,7 @@ const ContentPanel: React.FC<Props> = (
             // eslint-disable-next-line react/no-array-index-key
             key={i}
             index={i}
-          />
+          />,
         );
       }
     }
@@ -193,42 +175,17 @@ const ContentPanel: React.FC<Props> = (
 
   return (
     <>
-      <div
-        onScroll={handleScroll}
-        id="contentPanel"
-        className={styles.contentPanel}
-        ref={container}
-      >
+      <div onScroll={handleScroll} id="contentPanel" className={styles.contentPanel} ref={container}>
         {/* end loading */}
-        {!terms[begin] && <Loading className={styles.loading}/>}
+        {!terms[begin] && <Loading className={styles.loading} />}
         {termElements}
         {/* begin loading */}
-        {!terms[end] && <Loading className={styles.loading}/>}
-        <ProgressBar/>
+        {!terms[end] && <Loading className={styles.loading} />}
+        <ProgressBar />
       </div>
-      {!editingTerm && <GoToBookmarkButton onClick={goToBookmark}/>}
+      {!editingTerm && <GoToBookmarkButton onClick={goToBookmark} />}
     </>
   );
-}
+};
 
-export default connect(
-  (state:RootState) => {
-    if(!state.text.readingText) {
-      throw new Error("not reading text")
-    }
-    return ({
-      terms: state.text.readingText.terms,
-      begin: state.text.readingText.termIndexBegin,
-      end: state.text.readingText.termIndexEnd,
-      termCount: state.text.readingText.termCount,
-      editingTerm: state.term.editingTerm,
-    });
-  },
-  {
-    getTextTerms: getTextTermsAction,
-    setTermIndexBegin: setTermIndexBeginAction,
-    setTermIndexEnd: setTermIndexEndAction,
-    setEditingTerm: setEditingTermAction,
-    setViewingTerm: setViewingTermAction,
-  }
-)(ContentPanel);
+export default ContentPanel;
