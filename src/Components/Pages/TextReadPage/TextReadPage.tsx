@@ -1,60 +1,57 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { readTextAction } from "../../../Actions/TextAction";
-import { setEditingTermAction } from "../../../Actions/TermAction";
-import styles from "./TextReadPage.module.scss";
-import TermEditForm from "../../Forms/TermEditForm";
-import ContentPanel from "./ContentPanel";
-import TextStatistic from "./TextStatistic";
-import TextTitle from "./TextTitle";
-import Loading from "../../Loading/Loading";
-import { usePrevious } from "../../../Hooks/usePrevious";
-import { RootState } from "../../../RootReducer";
-import { Term } from "../../../Reducers/TextReducer";
-import useLanguages from "../../../Hooks/useLanguages";
+import React, { useEffect } from 'react';
+import { connect, useSelector, useDispatch } from 'react-redux';
+import { readTextAction } from '../../../Actions/TextAction';
+import { setEditingTermAction } from '../../../Actions/TermAction';
+import styles from './TextReadPage.module.scss';
+import TermEditForm from '../../Forms/TermEditForm';
+import ContentPanel from './ContentPanel';
+import TextStatistic from './TextStatistic';
+import TextTitle from './TextTitle';
+import Loading from '../../Loading/Loading';
+import { usePrevious } from '../../../Hooks/usePrevious';
+import { RootState } from '../../../RootReducer';
+import { Term } from '../../../Reducers/TextReducer';
+import useLanguages from '../../../Hooks/useLanguages';
 
 interface Props {
-  readText: Function;
   match: any;
-  setEditingTerm: Function;
-  language?: string;
-  id?: number;
-  term: object;
-  terms?: Term[];
-  title: string;
 }
 
 /**
  * text read page.
  */
-const TextReadPage: React.FC<Props> = (
-  {
-    readText,
-    match,
-    setEditingTerm,
-    language,
-    id,
-    terms,
-    title
-  }) => {
-  const { params: { textId } } = match;
+const TextReadPage: React.FC<Props> = ({ match }) => {
+  const {
+    params: { textId },
+  } = match;
+  const { terms, id, language, title, bookmark } = useSelector((state: RootState) => {
+    if (state.text.readingText) {
+      return {
+        terms: state.text.readingText.terms,
+        language: state.text.readingText.languageCode,
+        id: state.text.readingText.id,
+        bookmark: state.text.readingText.bookmark,
+        title: state.text.readingText.title,
+      };
+    }
+    return { title: '' };
+  });
+
+  const dispatch = useDispatch();
   useEffect(() => {
-    readText(textId);
+    dispatch(readTextAction(textId));
     return () => {
-      setEditingTerm(null);
+      dispatch(setEditingTermAction(null));
     };
-  }, [textId, readText, setEditingTerm]);
+  }, [textId]);
 
-  const [utt] = React.useState(new SpeechSynthesisUtterance())
-
+  const [utt] = React.useState(new SpeechSynthesisUtterance());
 
   const { languages } = useLanguages();
-  const prevProps = usePrevious({ language })
+  const prevProps = usePrevious({ language });
   useEffect(() => {
     return () => {
-      const shouldSetLanguage =
-        !prevProps?.language ||
-        prevProps.language !== language;
+      const shouldSetLanguage = !prevProps?.language || prevProps.language !== language;
       if (shouldSetLanguage) {
         setSpeechVoice();
       }
@@ -67,19 +64,15 @@ const TextReadPage: React.FC<Props> = (
       const voices = window.speechSynthesis.getVoices();
       if (languageS) {
         utt.lang = languageS.speakCode;
-        if (languageS.speakCode === "zh-CN") {
-          const googleVoice = voices.find(
-            (v) => v.name === "Google 普通话（中国大陆）"
-          );
+        if (languageS.speakCode === 'zh-CN') {
+          const googleVoice = voices.find((v) => v.name === 'Google 普通话（中国大陆）');
           if (googleVoice) {
             utt.voice = googleVoice;
           } else {
             utt.voice = voices.find((v) => v.lang === languageS.speakCode) || null;
           }
-        } else if (languageS.speakCode === "en-US") {
-          const googleVoice = voices.find(
-            (v) => v.name === "Google US English"
-          );
+        } else if (languageS.speakCode === 'en-US') {
+          const googleVoice = voices.find((v) => v.name === 'Google US English');
           if (googleVoice) {
             utt.voice = googleVoice;
           } else {
@@ -109,30 +102,6 @@ const TextReadPage: React.FC<Props> = (
       {terms && <TermEditForm className={styles.termEditForm} />}
     </div>
   );
-}
+};
 
-export default connect(
-  (state: RootState) => {
-    if (state.text.readingText) {
-      return {
-        terms: state.text.readingText.terms,
-        language: state.text.readingText.languageCode,
-        id: state.text.readingText.id,
-        bookmark: state.text.readingText.bookmark,
-        title: state.text.readingText.title,
-      };
-    }
-    return {title: ""};
-  },
-  {
-    readText: readTextAction,
-    setEditingTerm: setEditingTermAction,
-  }
-)(React.memo(TextReadPage, (prevProps, nextProps) => {
-  const { terms, id, language } = prevProps;
-  return !(
-    terms !== nextProps.terms ||
-    id !== nextProps.id ||
-    language !== nextProps.language
-  )
-}))
+export default TextReadPage;
