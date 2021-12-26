@@ -85,8 +85,6 @@
       "react": "detect"
     },
     "extends": [
-      "react-app",
-      "plugin:react/recommended",
       "plugin:@typescript-eslint/recommended",
       "plugin:prettier/recommended"
     ]
