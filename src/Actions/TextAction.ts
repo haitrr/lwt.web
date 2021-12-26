@@ -65,7 +65,7 @@ export const deleteTextAction = createAction(TEXT_DELETED, async (textId: number
   }
 });
 
-interface TextEditModel {
+export interface TextEditModel {
   title: string;
   languageCode: string;
   content: string;

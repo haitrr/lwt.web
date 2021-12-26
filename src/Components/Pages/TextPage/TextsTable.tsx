@@ -26,7 +26,7 @@ dayjs.extend(utc);
 
 interface TextsTableProps {
   texts?: TextItem[];
-  onEdit: () => void;
+  onEdit: (id: number) => void;
   isLoading: boolean;
   reloadTexts: () => void;
 }

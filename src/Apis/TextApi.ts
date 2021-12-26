@@ -1,6 +1,6 @@
 import { TEXT_API } from '../Constants';
 import { deleteAsync, getAsync, postAsync, putAsync, patchAsync } from '../Utilities/HttpRequest';
-import { TextFilter } from '../Actions/TextAction';
+import { TextEditModel, TextFilter } from '../Actions/TextAction';
 import { TextItem } from '../Reducers/TextReducer';
 
 export type GetTextResponse = {
@@ -67,7 +67,7 @@ export async function deleteTextAsync(textId: number) {
   return deleteAsync(`${TEXT_API}/${textId}`);
 }
 
-export async function editTextAsync(id: number, text: Text) {
+export async function editTextAsync(id: number, text: TextEditModel) {
   return putAsync(TEXT_API, id, text);
 }
 
