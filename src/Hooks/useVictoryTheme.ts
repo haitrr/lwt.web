@@ -1,5 +1,6 @@
 import { useMediaQuery } from '@mui/material';
 import { VictoryTheme } from 'victory';
+import { SvgProperties } from 'csstype';
 
 const useVictoryTheme = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -12,9 +13,8 @@ const useVictoryTheme = () => {
         ...darkTheme.pie?.style,
         labels: {
           ...darkTheme.pie?.style?.labels,
-          // @ts-expect-error: wrong type definition from lib
           fill: white,
-        },
+        } as SvgProperties,
       },
     };
     return VictoryTheme.grayscale;
