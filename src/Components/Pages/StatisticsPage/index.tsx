@@ -1,28 +1,30 @@
 import TextCountChart from './TextCountChart';
 import TermCountChart from './TermCountChart';
-import { CSSProperties } from 'react';
-
-const styles: { container: CSSProperties } = {
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-  },
-};
+import TermCountByLearningLevelChart from './TermCountByLearningLevelChart';
+import { Grid } from '@mui/material';
 
 const StatisticsPage = () => {
   return (
-    <div style={styles.container}>
-      <div>Texts</div>
-      <div>
-        <TextCountChart />
-      </div>
-      <div>Terms</div>
-      <div>
-        <TermCountChart />
-      </div>
-    </div>
+    <Grid container spacing={2}>
+      <Grid item sm={6} lg={4}>
+        <div style={{ textAlign: 'center' }}>Texts</div>
+        <div>
+          <TextCountChart />
+        </div>
+      </Grid>
+      <Grid item sm={6} lg={4}>
+        <div style={{ textAlign: 'center' }}>Terms by languages</div>
+        <div>
+          <TermCountChart />
+        </div>
+      </Grid>
+      <Grid item sm={6} lg={4}>
+        <div style={{ textAlign: 'center' }}>Terms by learning levels</div>
+        <div>
+          <TermCountByLearningLevelChart />
+        </div>
+      </Grid>
+    </Grid>
   );
 };
 

@@ -42,3 +42,7 @@ export async function getTermMeaningAsync(id: number) {
 export async function getTermCountByLanguages(): Promise<{ [key: string]: number }> {
   return getAsync(`${TERM_API}/count`);
 }
+
+export async function getTermsCountByLearningLevels(): Promise<{ [key: string]: number }> {
+  return getAsync(`${TERM_API}/countByLearningLevel`);
+}
