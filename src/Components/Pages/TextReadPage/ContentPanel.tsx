@@ -26,7 +26,6 @@ interface Props {
 }
 
 const ContentPanel: React.FC<Props> = ({ textId, onSpeak }) => {
-  console.log('control panel');
   const dispatch = useDispatch();
   const { terms, begin, editingTerm, end, termCount } = useSelector((state: RootState) => {
     if (!state.text.readingText) {

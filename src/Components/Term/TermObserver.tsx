@@ -27,7 +27,6 @@ const TermObserver: React.FC<PropsWithChildren<Props>> = ({ index, children }) =
   };
 
   if (inView) {
-    // console.log(index);
     handleTermVisible(index);
   }
 

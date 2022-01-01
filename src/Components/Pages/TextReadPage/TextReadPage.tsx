@@ -90,8 +90,6 @@ const TextReadPage: React.FC<Props> = () => {
     window.speechSynthesis.speak(utt);
   };
 
-  console.log('read page');
-
   if (!id || !languages) {
     return <Loading />;
   }
