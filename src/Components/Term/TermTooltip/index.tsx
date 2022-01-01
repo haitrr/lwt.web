@@ -91,20 +91,22 @@ const TermTooltip: React.FC<Props> = ({ term, bookmark, onClick, onHover, index 
   const handleMouseEnter = (event: any) => {
     clearTimeout(hideTimout.current);
     clearTimeout(leavePopoverTimout.current);
-    setAnchorEl(event.currentTarget);
     if (term && !dictionaried && term.meaning === '') {
       // eslint-disable-next-line react/no-did-update-set-state
       dictionaryTimeout.current = setTimeout(() => {
         handleDictionaryTerm();
       }, 100);
     }
-    hoverTimeout.current = setTimeout(onHover, 100);
+    hoverTimeout.current = setTimeout(() => {
+      setAnchorEl(event.target);
+      onHover();
+    }, 200);
   };
 
   const handleMouseLeave = () => {
     hideTimout.current = setTimeout(() => {
       setAnchorEl(null);
-    }, 100);
+    }, 300);
     clearTimeout(hoverTimeout.current);
     clearTimeout(dictionaryTimeout.current);
   };
