@@ -49,10 +49,12 @@ const TermButton: React.FC<Props> = ({ bookmark, term, onClick }) => {
     termId = LAST_BEGIN_INDEX_ID;
   }
 
+  const importantLevel = Math.min(term.count, 49);
+
   const s =
     term.count && isLearningTerm(term.learningLevel)
       ? {
-          borderBottomColor: importantColors[Math.min(term.count, 49)],
+          borderBottomColor: importantColors[importantLevel],
         }
       : undefined;
 
@@ -68,6 +70,7 @@ const TermButton: React.FC<Props> = ({ bookmark, term, onClick }) => {
       onKeyDown={onTermClick}
     >
       {term.content}
+      {isLearningTerm(term.learningLevel) && <sup style={{ fontSize: '0.75rem' }}>{term.count}</sup>}
     </span>
   );
 };

@@ -8,10 +8,11 @@ interface Props {
 }
 
 const Title: React.FC<Props> = ({ term }) => {
+  const importantLevel = Math.min(term.count, 49);
   return (
     <span>
       {term.count ? (
-        <div style={{ color: importantColors[Math.min(term.count, 49)] }}>{`${term.count} in this text.`}</div>
+        <div style={{ color: importantColors[importantLevel] }}>{`${term.count} in this text.`}</div>
       ) : (
         <div>Loading term count</div>
       )}
