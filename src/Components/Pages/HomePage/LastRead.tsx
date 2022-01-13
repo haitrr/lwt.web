@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import useLastReadText from '../../../Hooks/useLastReadText';
 import { Link } from 'react-router-dom';
-import { Button } from '@mui/material';
+import { Button, Card, Typography } from '@mui/material';
 import React from 'react';
 
 const LastRead: React.VFC = () => {
@@ -22,14 +22,21 @@ const LastRead: React.VFC = () => {
   return (
     <div>
       <h2>Previously read</h2>
-      <h3>{data.title}</h3>
-      <h4>{`${data.language}`}</h4>
-      <h4>{`Done: ${data.bookmark}/${data.termCount}(${progressPercentage}%)`}</h4>
-      <Link style={{ textDecoration: 'none' }} to={`text/read/${data.id}`}>
-        <Button color="primary" variant="outlined">
-          Continue reading
-        </Button>
-      </Link>
+      <Card style={{ padding: '1rem', maxWidth: '20rem' }} variant="outlined">
+        <Typography style={{ fontWeight: 'bold', marginBottom: '1rem' }} component="h3">
+          {data.title}
+        </Typography>
+        <Typography style={{ marginBottom: '1rem' }} component="h4">{`${data.language}`}</Typography>
+        <Typography
+          style={{ marginBottom: '.5rem' }}
+          component="h4"
+        >{`Done: ${data.bookmark}/${data.termCount}(${progressPercentage}%)`}</Typography>
+        <Link style={{ textDecoration: 'none' }} to={`text/read/${data.id}`}>
+          <Button color="primary" variant="outlined">
+            Continue reading
+          </Button>
+        </Link>
+      </Card>
     </div>
   );
 };
