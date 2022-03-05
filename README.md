@@ -10,3 +10,8 @@ Web ui for lwt
 ```shell
 export REACT_APP_API_ROOT=<your BE url>
 ```
+
+# try demo here
+```
+https://lwt.hai.fyi
+```
