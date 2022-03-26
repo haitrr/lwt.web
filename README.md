@@ -11,7 +11,5 @@ Web ui for lwt
 export REACT_APP_API_ROOT=<your BE url>
 ```
 
-# try demo here
-```
+# try demo here/
 https://lwt.hai.fyi
-```
