@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import { logout } from '../Apis/UserApi';
 import { TOKEN_LOCAL_STORAGE_KEY } from '../Constants';
 
 function defaultResponseErrorHandler(response: any) {
@@ -12,6 +13,10 @@ function defaultResponseErrorHandler(response: any) {
       draggable: true,
       progress: undefined,
     });
+  } else if (response.status === 401) {
+    toast.error("you are not logged in")
+    logout();
+    window.location.replace("/login")
   } else if (response.status === 400) {
     response
       .json()
