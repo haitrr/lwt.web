@@ -66,25 +66,25 @@
 }
 
 .level[data-level='unknown'] {
-  --level-color: #f27573;
+  --level-color: var(--level-unknown);
 }
 .level[data-level='learning-1'] {
-  --level-color: #c786d3;
+  --level-color: var(--level-learning-1);
 }
 .level[data-level='learning-2'] {
-  --level-color: #4dabf5;
+  --level-color: var(--level-learning-2);
 }
 .level[data-level='learning-3'] {
-  --level-color: #33c9dc;
+  --level-color: var(--level-learning-3);
 }
 .level[data-level='learning-4'] {
-  --level-color: #a2cf6e;
+  --level-color: var(--level-learning-4);
 }
 .level[data-level='learning-5'] {
-  --level-color: #ffef62;
+  --level-color: var(--level-learning-5);
 }
 .level[data-level='well-known'] {
-  --level-color: whitesmoke;
+  --level-color: var(--level-well-known);
 }
 
 .pagination {

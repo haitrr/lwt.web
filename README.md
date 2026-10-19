@@ -1,21 +1,40 @@
 # lwt.web
 
-Web UI for [lwt](https://github.com/haitrr/lwt), being rewritten in Next.js (App Router, TypeScript).
-The previous Create React App version lives on `master`.
+[LWT](https://sourceforge.net/projects/lwt/)-style reading app: import texts, read them with every word colored by how well
+you know it, and track progress. Next.js (App Router, TypeScript) with MySQL; it replaces both the old React app and the
+.NET API in [haitrr/lwt](https://github.com/haitrr/lwt), and works on that API's existing database as is.
 
 ## Getting started
 
 ```shell
-cp .env.example .env.local   # point LWT_API_ROOT at your lwt API
+cp .env.example .env.local   # set DATABASE_URL and LWT_JWT_SECRET
 npm install
 npm run dev
 ```
 
-## How it talks to the API
+The app expects the schema the .NET API created (its EF Core migrations). For a fresh database, run the .NET API once
+against it, or restore a dump of the existing one.
 
-- Login/register are server actions (`src/lib/auth.ts`). The JWT from `POST /api/user/login` is stored in an httpOnly cookie.
-- Server components call the API with `apiFetch` (`src/lib/api.ts`), which forwards that token.
-- Client components call same-origin `/api/*`, which `src/app/api/[...path]/route.ts` proxies to `LWT_API_ROOT` with the token attached.
-- `src/proxy.ts` redirects signed-out visitors to `/login`.
+| Variable | |
+| --- | --- |
+| `DATABASE_URL` | MySQL 8 connection string, e.g. `mysql://user:pass@host:3306/lwt` |
+| `LWT_JWT_SECRET` | Secret for session tokens. Use the .NET API's `AppSettings:Secret` to keep its tokens valid. |
+| `LWT_DICTIONARY_API_ROOT` | Optional. Dictionary service for meaning suggestions (`GET {root}/dictionary/{word}?fromLang=&toLang=`). |
 
-See [MIGRATION.md](MIGRATION.md) for what has been ported.
+`npm test` runs the unit tests, `npm run lint` and `npm run typecheck` the static checks.
+
+## How it works
+
+- `src/server` is the backend: Drizzle on the existing tables (`db/schema.ts`), ASP.NET Identity compatible password
+  hashes (`auth/password.ts`), and the text, term and user logic ported from the .NET services.
+- New and edited texts are split into words in the background (`server/processing.ts`, started from
+  `src/instrumentation.ts`), 1000 words per step, like the .NET `TextTermProcessor`. Chinese uses a port of Jieba.Net's
+  segmenter with the same dictionary, Japanese uses kuromoji (IPADIC, as the old MeCab service did). The tests check
+  both against output recorded from the old API.
+- Pages are server components; mutations are server functions in `src/lib`.
+
+## Deploying
+
+`docker compose up` builds the app (Next.js standalone output) and starts it with MySQL. To move from the .NET API, point
+`DATABASE_URL` at its database and stop the old API and the Japanese segmenter service: both apps would otherwise split
+texts at the same time. See [MIGRATION.md](MIGRATION.md).

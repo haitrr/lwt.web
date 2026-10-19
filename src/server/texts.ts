@@ -116,7 +116,14 @@ export async function getTextEditDetail(id: number, userId: number): Promise<Tex
 export async function readText(id: number, session: Session): Promise<TextReadInfo> {
   const db = getDb();
   const [text] = await db
-    .select({ id: texts.id, title: texts.title, bookmark: texts.bookmark, languageCode: texts.languageCode, termCount: texts.termCount })
+    .select({
+      id: texts.id,
+      title: texts.title,
+      bookmark: texts.bookmark,
+      languageCode: texts.languageCode,
+      termCount: texts.termCount,
+      processedTermCount: texts.processedTermCount,
+    })
     .from(texts)
     .where(and(eq(texts.id, id), eq(texts.userId, session.userId)));
   if (!text) throw new UserError('Text not found.', 404);

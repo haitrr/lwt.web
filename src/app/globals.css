@@ -50,13 +50,35 @@ main {
   --border: #ddd;
   --accent: #1976d2;
   --danger: #c62828;
+  --text-secondary: #555;
+  /* Learning level colors, from the old app. */
+  --level-unknown: #f27573;
+  --level-learning-1: #c786d3;
+  --level-learning-2: #4dabf5;
+  --level-learning-3: #33c9dc;
+  --level-learning-4: #a2cf6e;
+  --level-learning-5: #ffef62;
+  --level-well-known: #d9d9d9;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --border: #333;
+    --text-secondary: #aaa;
+    --level-well-known: #555;
     color-scheme: dark;
   }
+}
+
+.card {
+  max-width: 22rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.card h3 {
+  margin-top: 0;
 }
 
 button,

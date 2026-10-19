@@ -6,11 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest run",
+    "typecheck": "next typegen && tsc --noEmit"
   },
   "dependencies": {
+    "compromise": "^14.19.0",
     "drizzle-orm": "^0.45.4",
-    "jieba-wasm": "^2.4.0",
     "jose": "^6.2.12",
     "kuromoji": "^0.1.2",
     "mysql2": "^3.24.6",
