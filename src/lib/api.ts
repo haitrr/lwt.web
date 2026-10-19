@@ -1,5 +1,6 @@
 import 'server-only';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import { API_ROOT, TOKEN_COOKIE } from './config';
 
 export class ApiError extends Error {
@@ -25,6 +26,9 @@ export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise
     },
     cache: 'no-store',
   });
+  if (res.status === 401) {
+    redirect('/login');
+  }
   if (!res.ok) {
     let message = res.statusText;
     try {

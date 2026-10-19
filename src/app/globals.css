@@ -12,7 +12,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--border);
 }
 
 .header nav {
@@ -44,4 +44,62 @@ main {
 
 .error {
   color: #c00;
+}
+
+:root {
+  --border: #ddd;
+  --accent: #1976d2;
+  --danger: #c62828;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --border: #333;
+    color-scheme: dark;
+  }
+}
+
+button,
+.button {
+  padding: 0.4rem 0.9rem;
+  border: none;
+  border-radius: 4px;
+  background: var(--accent);
+  color: white;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+}
+
+button.danger {
+  background: var(--danger);
+}
+
+input,
+select,
+textarea {
+  padding: 0.4rem;
+  font: inherit;
+}
+
+.filter,
+.row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.row {
+  justify-content: space-between;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 48rem;
 }
