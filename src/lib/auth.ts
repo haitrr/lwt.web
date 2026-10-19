@@ -2,10 +2,12 @@
 
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { apiFetch, ApiError } from './api';
+import { toFormState, type FormState } from './actionState';
 import { TOKEN_COOKIE } from './config';
+import { createSessionToken, setSessionCookie } from '@/server/auth/session';
+import { checkCredentials, signUp } from '@/server/users';
 
-export type AuthState = { error?: string } | undefined;
+export type AuthState = FormState;
 
 function readCredentials(formData: FormData) {
   return {
@@ -15,29 +17,19 @@ function readCredentials(formData: FormData) {
 }
 
 export async function login(_prev: AuthState, formData: FormData): Promise<AuthState> {
-  try {
-    const { token } = await apiFetch<{ token: string }>('/user/login', {
-      method: 'POST',
-      body: JSON.stringify(readCredentials(formData)),
-    });
-    (await cookies()).set(TOKEN_COOKIE, token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
-    });
-  } catch (e) {
-    return { error: e instanceof ApiError ? e.message : 'Could not reach the server.' };
-  }
+  const { userName, password } = readCredentials(formData);
+  const state = await toFormState(async () => {
+    const user = await checkCredentials(userName, password);
+    await setSessionCookie(await createSessionToken(user.id, user.userName));
+  }, { userName });
+  if (state) return state;
   redirect('/');
 }
 
 export async function register(_prev: AuthState, formData: FormData): Promise<AuthState> {
-  try {
-    await apiFetch('/user', { method: 'POST', body: JSON.stringify(readCredentials(formData)) });
-  } catch (e) {
-    return { error: e instanceof ApiError ? e.message : 'Could not reach the server.' };
-  }
+  const { userName, password } = readCredentials(formData);
+  const state = await toFormState(() => signUp(userName, password), { userName });
+  if (state) return state;
   redirect('/login');
 }
 

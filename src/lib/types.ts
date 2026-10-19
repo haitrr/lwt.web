@@ -40,3 +40,35 @@ export const LearningLevel = {
 export type LearningLevel = (typeof LearningLevel)[keyof typeof LearningLevel];
 
 export type TermCounts = Partial<Record<LearningLevel, number>>;
+
+export type TextReadInfo = {
+  id: number;
+  title: string;
+  languageCode: string;
+  bookmark: number | null;
+  termCount: number;
+};
+
+/** One token of a text in reading order; id/meaning/count are set when it is a real term. */
+export type TextTermView = {
+  id: number | null;
+  content: string;
+  learningLevel: LearningLevel;
+  index: number;
+  meaning: string | null;
+  count: number | null;
+};
+
+export type TermView = {
+  id: number;
+  content: string;
+  meaning: string;
+  learningLevel: LearningLevel;
+  languageCode: string;
+};
+
+export const LEARNING_LEVELS = Object.values(LearningLevel);
+
+export function isLearningLevel(value: string): value is LearningLevel {
+  return (LEARNING_LEVELS as string[]).includes(value);
+}

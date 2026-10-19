@@ -1,6 +1,8 @@
 import Link from 'next/link';
-import { apiFetch } from '@/lib/api';
-import { LearningLevel, type Language, type TermCounts, type TextItem, type TextList } from '@/lib/types';
+import { requireSession } from '@/server/auth/session';
+import { LANGUAGES, languageName } from '@/lib/languages';
+import { getTermCounts, listTexts } from '@/server/texts';
+import { LearningLevel, type TermCounts, type TextItem } from '@/lib/types';
 import TextFilter from './TextFilter';
 import DeleteTextButton from './DeleteTextButton';
 import RefreshWhileProcessing from './RefreshWhileProcessing';
@@ -23,8 +25,7 @@ const LEVEL_COLUMNS: [string, LearningLevel][] = [
 const relativeTime = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
 
 function timeAgo(iso: string) {
-  // The API returns UTC timestamps without a zone suffix.
-  const date = new Date(/[zZ]|[+-]\d\d:?\d\d$/.test(iso) ? iso : `${iso}Z`);
+  const date = new Date(iso);
   const days = Math.round((date.getTime() - Date.now()) / 86_400_000);
   if (Math.abs(days) >= 30) return relativeTime.format(Math.round(days / 30), 'month');
   return relativeTime.format(days, 'day');
@@ -63,27 +64,14 @@ export default async function TextsPage({ searchParams }: PageProps<'/text'>) {
   const title = typeof params.title === 'string' ? params.title : '';
   const languageCode = typeof params.languageCode === 'string' ? params.languageCode : '';
 
-  const query = new URLSearchParams({ page: String(page), itemPerPage: String(ITEMS_PER_PAGE) });
-  if (title) query.set('title', title);
-  if (languageCode) query.set('languageCode', languageCode);
-
-  const [texts, languages] = await Promise.all([
-    apiFetch<TextList>(`/text?${query}`),
-    apiFetch<Language[]>('/language'),
-  ]);
-  const counts = await Promise.all(
-    texts.items.map((t) =>
-      apiFetch<{ counts: TermCounts }>(`/text/${t.id}/term-counts`)
-        .then((r) => r.counts)
-        .catch(() => ({}) as TermCounts),
-    ),
-  );
-  const languageName = (code: string) => languages.find((l) => l.code === code)?.name ?? 'Unknown language';
+  const session = await requireSession();
+  const texts = await listTexts(session.userId, { title, languageCode }, page, ITEMS_PER_PAGE);
+  const counts = await Promise.all(texts.items.map((t) => getTermCounts(t.id, session.userId)));
   const pageCount = Math.max(1, Math.ceil(texts.total / ITEMS_PER_PAGE));
   const pageHref = (p: number) => {
-    const q = new URLSearchParams(query);
-    q.delete('itemPerPage');
-    q.set('page', String(p));
+    const q = new URLSearchParams({ page: String(p) });
+    if (title) q.set('title', title);
+    if (languageCode) q.set('languageCode', languageCode);
     return `/text?${q}`;
   };
 
@@ -96,7 +84,7 @@ export default async function TextsPage({ searchParams }: PageProps<'/text'>) {
         <Link href="/text/new" className="button">
           Add text
         </Link>
-        <TextFilter languages={languages} title={title} languageCode={languageCode} />
+        <TextFilter languages={LANGUAGES} title={title} languageCode={languageCode} />
       </div>
       <div className={styles.tableWrap}>
         <table className={styles.table}>

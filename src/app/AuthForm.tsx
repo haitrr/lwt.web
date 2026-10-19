@@ -18,7 +18,7 @@ export default function AuthForm({ title, action, alternate }: Props) {
       <form action={formAction}>
         <label>
           Username
-          <input name="userName" autoComplete="username" required />
+          <input name="userName" autoComplete="username" defaultValue={state?.values?.userName} required />
         </label>
         <label>
           Password

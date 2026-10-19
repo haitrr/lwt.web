@@ -15,17 +15,18 @@ type Props = {
 
 export default function TextForm({ languages, action, initial, submitLabel }: Props) {
   const [state, formAction, pending] = useActionState(action, undefined);
+  const values = state?.values ?? initial;
   return (
     <form action={formAction} className="stack">
       <LanguageSelect
         languages={languages}
         name="languageCode"
-        defaultValue={initial?.languageCode ?? ''}
+        defaultValue={values?.languageCode ?? ''}
         emptyLabel="Choose a language"
         required
       />
-      <input name="title" placeholder="Title" defaultValue={initial?.title} required />
-      <textarea name="content" rows={16} placeholder="Text content" defaultValue={initial?.content} required />
+      <input name="title" placeholder="Title" defaultValue={values?.title} required />
+      <textarea name="content" rows={16} placeholder="Text content" defaultValue={values?.content} required />
       {state?.error && <p className="error">{state.error}</p>}
       <div className="row">
         <Link href="/text">Cancel</Link>
